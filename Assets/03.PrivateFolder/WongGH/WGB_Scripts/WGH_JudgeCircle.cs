@@ -19,8 +19,8 @@ public class WGH_JudgeCircle : MonoBehaviour
     public bool _miss;
     private void Awake()
     {
-        _setLeftCheckPos = 3f;
-        _setRightCheckPos = 2f;
+        _setLeftCheckPos = 2f;
+        _setRightCheckPos = 3f;
     }
     private void Start()
     {

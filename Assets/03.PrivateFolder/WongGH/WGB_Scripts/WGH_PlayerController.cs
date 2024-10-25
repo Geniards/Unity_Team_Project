@@ -13,8 +13,8 @@ public class WGH_PlayerController : MonoBehaviour
     [SerializeField] Animator _anim;
     public Vector2 _groundPos { get; private set; }    // 땅의 위치값
     public Vector2 _jumPos { get; private set; }       // 점프 위치값
-    
 
+    [Header("기타")]
     private bool _isAir;                    // 체공 여부
     Coroutine _IsAirRountine;               // 체공 코루틴
     
