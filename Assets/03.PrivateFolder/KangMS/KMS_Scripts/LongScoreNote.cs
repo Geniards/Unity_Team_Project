@@ -70,9 +70,4 @@ public class LongScoreNote : Note
         Debug.Log("긴 점수 노트 실패");
         Destroy(gameObject);
     }
-
-    private void ShowEffect()
-    {
-        Debug.Log("이펙트 동작");
-    }
 }

@@ -11,8 +11,6 @@ public abstract class Note : MonoBehaviour
 
     protected bool _isHit = false;
 
-    public enum E_NoteDecision { None, Perfect, Great, Good, E_NOTEDECISION_MAX }
-
     public virtual void Initialize(Transform endPoint, float speed, float scoreValue)
     {
         this.endPoint = endPoint;
@@ -32,11 +30,15 @@ public abstract class Note : MonoBehaviour
 
         while(!_isHit && transform.position != endPoint.position)
         {
-            float distNode = (Time.time - startTime) * speed;
-            float ratioDist = distNode / moveNodeDistance;
-            transform.position = Vector3.Lerp(transform.position, endPoint.position, ratioDist);
+            //float distNode = (Time.time - startTime) * speed;
+            //float ratioDist = distNode / moveNodeDistance;
+            //transform.position = Vector3.Lerp(transform.position, endPoint.position, ratioDist);
             
-            if (ratioDist >= 1f)
+            // 매 프레임마다 일정한 속도로 좌측으로 이동
+            float step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, endPoint.position, step);
+
+            if (Vector3.Distance(transform.position, endPoint.position) < 0.001f)
             {
                 Destroy(gameObject);
                 yield break;

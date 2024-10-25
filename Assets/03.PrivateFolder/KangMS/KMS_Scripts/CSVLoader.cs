@@ -11,11 +11,27 @@ public class CSVLoader : MonoBehaviour
     [SerializeField] private TextAsset csvFile;
     private Dictionary<int, List<NotePattern>> _patternDictionary = new Dictionary<int, List<NotePattern>>();
 
+    private static bool _isLoaded = false;
+
+    private void Awake()
+    {
+        if (!_isLoaded)
+        {
+            LoadPatterns();
+            _isLoaded = true;
+        }
+        else
+        {
+            Debug.Log("CSV 데이터는 이미 로드되었습니다.");
+        }
+    }
+
     /// <summary>
     /// CSV 파일을 읽어들여 패턴을 파싱하고, Dictionary에 저장하는 역할
     /// </summary>
     public void LoadPatterns()
     {
+        Debug.Log("CSV 데이터 로드 시작...");
         StringReader reader = new StringReader(csvFile.text);
         bool isHeader = true;
         int rowNum = 1;
@@ -39,6 +55,7 @@ public class CSVLoader : MonoBehaviour
             _patternDictionary.Add(rowNum, notePatterns);
             rowNum++;
         }
+        Debug.Log("CSV 데이터 로드 완료.");
     }
 
     /// <summary>
@@ -59,6 +76,14 @@ public class CSVLoader : MonoBehaviour
 
         return notePatterns;
     }
+
+    /// <summary>
+    /// CSV에서 파싱한 데이터를 외부에서 접근
+    /// </summary>
+    public Dictionary<int, List<NotePattern>> GetPatternDictionary()
+    {
+        return _patternDictionary;
+    }
 }
 
 public class NotePattern
@@ -71,12 +96,4 @@ public class NotePattern
         this.position = position;
         this.noteType = noteType;
     }
-}
-
-public enum E_NoteType
-{
-    None,
-    Monster,
-    Obstacle,
-    E_NOTETYPE_MAX
 }
