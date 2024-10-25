@@ -72,11 +72,3 @@ public class NotePattern
         this.noteType = noteType;
     }
 }
-
-public enum E_NoteType
-{
-    None,
-    Monster,
-    Obstacle,
-    E_NOTETYPE_MAX
-}
