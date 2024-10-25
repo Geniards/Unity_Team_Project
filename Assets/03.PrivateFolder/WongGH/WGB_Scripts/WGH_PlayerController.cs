@@ -12,8 +12,8 @@ public class WGH_PlayerController : MonoBehaviour
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
-    public Vector2 _groundPos { get; private set; }    // 땅의 위치값
-    public Vector2 _jumPos { get; private set; }       // 점프 위치값
+    public Vector2 GroundPos { get; private set; }    // 땅의 위치값
+    public Vector2 JumPos { get; private set; }       // 점프 위치값
     Vector2 _rigidYPos;                                // 캐릭터 Y 높이값
     [SerializeField] GameObject _judgeCircle;
 
@@ -29,8 +29,8 @@ public class WGH_PlayerController : MonoBehaviour
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        _groundPos = new Vector2(transform.position.x, transform.position.y + 0.6f);    // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정
-        _jumPos = new Vector2(transform.position.x, transform.position.y + _jumpHeight);
+        GroundPos = new Vector2(transform.position.x, transform.position.y + 0.6f);    // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정
+        JumPos = new Vector2(transform.position.x, transform.position.y + _jumpHeight);
         _judgeCircle = FindAnyObjectByType<WGH_JudgeCircle>().gameObject;
     }
 
@@ -51,7 +51,7 @@ public class WGH_PlayerController : MonoBehaviour
         {
             _isAir = true;
             SetAnim("Jump");
-            _rigid.position = _jumPos;
+            _rigid.position = JumPos;
             // 체공 코루틴
             _IsAirRountine = StartCoroutine(InAirTime());
             
@@ -74,7 +74,7 @@ public class WGH_PlayerController : MonoBehaviour
 
             // 하강 공격
             SetAnim("FallAttack");
-            _rigid.position = _groundPos;
+            _rigid.position = GroundPos;
         }
     }
 
@@ -98,7 +98,9 @@ public class WGH_PlayerController : MonoBehaviour
         _rigid.isKinematic = false;
         yield break;
     }
-
+    /// <summary>
+    /// 애니메이션 시작 메서드
+    /// </summary>
     public void SetAnim(string animName)
     {
         _anim.Play(animName);

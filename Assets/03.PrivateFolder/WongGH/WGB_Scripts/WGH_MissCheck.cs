@@ -19,10 +19,10 @@ public class WGH_MissCheck : MonoBehaviour
         if(_jucgeCircle.enabled)
         {
             Debug.Log($"노트와 플레이어 거리{Vector2.Distance(_player.transform.position, _testNote.transform.position)}");
-            Debug.Log(Vector2.Distance(_player.transform.position, _jucgeCircle._testLeftPrefab.transform.position));
-            if (!_jucgeCircle._left &&
-                !_jucgeCircle._right &&
-                Vector2.Distance(_player.transform.position, _testNote.transform.position) < Vector2.Distance(_player.transform.position, _jucgeCircle._testLeftPrefab.transform.position))
+            Debug.Log(Vector2.Distance(_player.transform.position, _jucgeCircle.TestLeftPrefab.transform.position));
+            if (!_jucgeCircle.Left &&
+                !_jucgeCircle.Right &&
+                Vector2.Distance(_player.transform.position, _testNote.transform.position) < Vector2.Distance(_player.transform.position, _jucgeCircle.TestLeftPrefab.transform.position))
             {
                 Debug.Log("Miss");
             }

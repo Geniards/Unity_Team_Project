@@ -8,5 +8,7 @@ public class WGH_JudgeCircleTop : MonoBehaviour
     [SerializeField] float _setLeftCheckTopPos;     // 왼쪽 상단 체크지점 값 변경
     [SerializeField] float _setRightCheckTopPos;    // 오른쪽 상단 체크지점 값 변경
 
-
+    [SerializeField] WGH_PlayerController _player;
+    [SerializeField] Vector2 _circleTopRight;          // 오른쪽 상단 벡터 값
+    [SerializeField] Vector2 _circleTopLeft;           // 왼쪽 상단 벡터 값
 }

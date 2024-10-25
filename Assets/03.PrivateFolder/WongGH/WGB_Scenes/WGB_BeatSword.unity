@@ -258,7 +258,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498128440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6, y: 4.28, z: -0.051408343}
+  m_LocalPosition: {x: -3.4, y: 4.33, z: -0.051408343}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -660,7 +660,6 @@ MonoBehaviour:
   _player: {fileID: 0}
   _circleRight: {x: 0, y: 0}
   _circleLeft: {x: 0, y: 0}
-  _testLeftPrefab: {fileID: 7853677659491652709, guid: 83689b5ac87f33148b25c201f7bb29b5, type: 3}
   _testRightPrefab: {fileID: 6259692791261686498, guid: c6690eb2118b217489a793ce8612b2a5, type: 3}
   _right: 0
   _left: 0

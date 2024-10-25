@@ -11,12 +11,12 @@ public class WGH_JudgeCircle : MonoBehaviour
     [SerializeField] WGH_PlayerController _player;  
     [SerializeField] Vector2 _circleRight;          // ¿À¸¥ÂÊ ÇÏ´Ü º¤ÅÍ °ª
     [SerializeField] Vector2 _circleLeft;           // ¿ÞÂÊ ÇÏ´Ü º¤ÅÍ °ª
-    public GameObject _testLeftPrefab { get; private set; }
+    public GameObject TestLeftPrefab { get; private set; }
     [SerializeField] GameObject _testRightPrefab;
 
-    public bool _right;
-    public bool _left;
-    public bool _miss;
+    public bool Right { get; private set; }
+    public bool Left { get; private set; }
+    public bool Miss { get; private set; }
     private void Start()
     {
         _player = FindAnyObjectByType<WGH_PlayerController>();
@@ -27,10 +27,10 @@ public class WGH_JudgeCircle : MonoBehaviour
         // ¿À¸¥ÂÊ
         _circleRight = new Vector2( _player.transform.position.x + _setRightCheckPos, _player.transform.position.y);
         
-        if(_testLeftPrefab != null)
+        if(TestLeftPrefab != null)
         {
             // ¿ÞÂÊ ÇÁ¸®ÆÕ »ý¼º
-            Instantiate(_testLeftPrefab, _circleLeft, Quaternion.identity);
+            Instantiate(TestLeftPrefab, _circleLeft, Quaternion.identity);
         }
         
         if (_testRightPrefab != null)
@@ -43,15 +43,15 @@ public class WGH_JudgeCircle : MonoBehaviour
     private void Update()
     {
         Debug.DrawLine(_player.transform.position, _circleLeft );
-        if( _right && _left)
+        if( Right && Left)
         {
             Debug.Log("perfect");
         }
-        else if( !_right && _left )
+        else if( !Right && Left )
         {
             Debug.Log("good");
         }
-        else if (_right && !_left)
+        else if (Right && !Left)
         {
             Debug.Log("good");
         }

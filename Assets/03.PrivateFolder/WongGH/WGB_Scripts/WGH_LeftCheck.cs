@@ -14,11 +14,11 @@ public class WGH_LeftCheck : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _jucgeCircle._left = true;
+        //_jucgeCircle.Left = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _jucgeCircle._left = false;
+        //_jucgeCircle.Left = false;
     }
 }
