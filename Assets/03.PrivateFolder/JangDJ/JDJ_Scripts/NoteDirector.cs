@@ -5,6 +5,7 @@ using UnityEngine;
 public class NoteDirector : MonoBehaviour
 {
     [SerializeField] private NoteSpawner _spawner = null;
+    [SerializeField] private NoteSpawnPosController _posController = null;
 
     [SerializeField] private int _bpm;
     [SerializeField] private float _noteSpeed;
@@ -45,7 +46,7 @@ public class NoteDirector : MonoBehaviour
 
     private float CalculateDuration()
     {
-        float checkPointDist = _spawner.DistSpawnToCheck;
+        float checkPointDist = _posController.DistSpawnToCheck;
         return checkPointDist / _noteSpeed;
     }
 
