@@ -4,24 +4,19 @@ using UnityEngine;
 
 public class WGH_JudgeCircle : MonoBehaviour
 {
-    [Header("수치조절")]
-    [SerializeField] float _setLeftCheckPos;    // 왼쪽 체크지점 값 변경
-    [SerializeField] float _setRightCheckPos;   // 오른쪽 체크지점 값 변경
+    [Header("수치조절(하단)")]
+    [SerializeField] float _setLeftCheckPos;        // 왼쪽 하단 체크지점 값 변경
+    [SerializeField] float _setRightCheckPos;       // 오른쪽 하단 체크지점 값 변경
 
-    [SerializeField] WGH_PlayerController _player;
-    [SerializeField] Vector2 _circleRight;
-    [SerializeField] Vector2 _circleLeft;
-    public GameObject _testLeftPrefab;
+    [SerializeField] WGH_PlayerController _player;  
+    [SerializeField] Vector2 _circleRight;          // 오른쪽 하단 벡터 값
+    [SerializeField] Vector2 _circleLeft;           // 왼쪽 하단 벡터 값
+    public GameObject _testLeftPrefab { get; private set; }
     [SerializeField] GameObject _testRightPrefab;
 
     public bool _right;
     public bool _left;
     public bool _miss;
-    private void Awake()
-    {
-        _setLeftCheckPos = 2f;
-        _setRightCheckPos = 3f;
-    }
     private void Start()
     {
         _player = FindAnyObjectByType<WGH_PlayerController>();
@@ -43,7 +38,6 @@ public class WGH_JudgeCircle : MonoBehaviour
             // 오른쪽 프리팹 생성
             Instantiate(_testRightPrefab, _circleRight, Quaternion.identity);
         }
-            
     }
 
     private void Update()

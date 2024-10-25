@@ -80,7 +80,14 @@ public class WGH_PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // if(collision.collider.tag == "Ground")
+        //{
         _isAir = false;
+        //}
+        // if(collision.collider.tag == "Monster")
+        //{
+        // TODO : 피격판정
+        //}
     }
 
     // 체공 시간 조절 코루틴

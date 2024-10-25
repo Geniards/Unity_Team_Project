@@ -655,8 +655,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42e60851832bbd41add60667aa25794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _setLeftCheckPos: 0
-  _setRightCheckPos: 0
+  _setLeftCheckPos: 2
+  _setRightCheckPos: 3
   _player: {fileID: 0}
   _circleRight: {x: 0, y: 0}
   _circleLeft: {x: 0, y: 0}
