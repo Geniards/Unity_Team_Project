@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ScoreNote : Note
 {
+    private void Awake()
+    {
+        // test¿ë
+        Initialize(endPoint, speed, scoreValue);
+    }
+
     public override void OnHit(E_NoteDecision decision, bool isBoss = false)
     {
         if (!_isHit)
