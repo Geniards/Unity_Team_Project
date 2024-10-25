@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JudgeCircle : MonoBehaviour
+public class WGH_JudgeCircle : MonoBehaviour
 {
-    [SerializeField] PlayerController _player;
+    [SerializeField] WGH_PlayerController _player;
     [SerializeField] Vector2 _circleRight;
     [SerializeField] Vector2 _circleLeft;
 

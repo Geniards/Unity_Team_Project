@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
     [SerializeField] float _inAirTime = 0.3f;      // 체공시간
