@@ -32,10 +32,18 @@ public class WGH_JudgeCircle : MonoBehaviour
         // 坷弗率
         _circleRight = new Vector2( _player.transform.position.x + _setRightCheckPos, _player.transform.position.y);
         
-        // 哭率 橇府普 积己
-        Instantiate( _testLeftPrefab, _circleLeft, Quaternion.identity );
-        // 坷弗率 橇府普 积己
-        Instantiate( _testRightPrefab, _circleRight, Quaternion.identity );
+        if(_testLeftPrefab != null)
+        {
+            // 哭率 橇府普 积己
+            Instantiate(_testLeftPrefab, _circleLeft, Quaternion.identity);
+        }
+        
+        if (_testRightPrefab != null)
+        {
+            // 坷弗率 橇府普 积己
+            Instantiate(_testRightPrefab, _circleRight, Quaternion.identity);
+        }
+            
     }
 
     private void Update()

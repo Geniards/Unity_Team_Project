@@ -6,29 +6,46 @@ using UnityEngine;
 public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
-    [SerializeField] float _inAirTime = 0.3f;      // 체공시간
+    [SerializeField] float _inAirTime;                  // 체공시간
+    [SerializeField] float _jumpHeight;                 // 점프 시 플레이어의 높이 위치
 
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
     public Vector2 _groundPos { get; private set; }    // 땅의 위치값
     public Vector2 _jumPos { get; private set; }       // 점프 위치값
+    Vector2 _rigidYPos;                                // 캐릭터 Y 높이값
+    [SerializeField] GameObject _judgeCircle;
 
     [Header("기타")]
-    private bool _isAir;                    // 체공 여부
-    Coroutine _IsAirRountine;               // 체공 코루틴
+    private bool _isAir;                               // 체공 여부
+    Coroutine _IsAirRountine;                          // 체공 코루틴
     
     private void Awake()
     {
+        _inAirTime = 0.3f;
+        _jumpHeight = 5f; 
+
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _groundPos = new Vector2(transform.position.x, transform.position.y + 0.6f);    // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정
-        _jumPos = new Vector2(transform.position.x, transform.position.y + 5);
+        _jumPos = new Vector2(transform.position.x, transform.position.y + _jumpHeight);
+        _judgeCircle = FindAnyObjectByType<WGH_JudgeCircle>().gameObject;
     }
 
     private void Update()
     {
+        _rigidYPos = Camera.main.WorldToScreenPoint(_rigid.position);
+        if(_rigidYPos.y > Screen.height * 0.5f)
+        {
+            _judgeCircle.GetComponent<WGH_JudgeCircle>().enabled = false;
+        }
+        else if(_rigidYPos.y < Screen.height * 0.5f) 
+        {
+            _judgeCircle.GetComponent<WGH_JudgeCircle>().enabled = true;
+        }
+
         // 점프 키를 눌렀을 경우
         if(!_isAir && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.LeftControl))
         {
