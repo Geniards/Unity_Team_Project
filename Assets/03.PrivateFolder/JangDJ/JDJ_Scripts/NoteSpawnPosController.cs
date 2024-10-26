@@ -45,6 +45,21 @@ public class NoteSpawnPosController : MonoBehaviour
         _posesYvalues.Add(_bottomToIntervalSpawners.position.y + interval);
     }
 
+    private void Update()
+    {
+        for (int i = 0; i < _posesYvalues.Count; i++)
+        {
+            DrawRay(new Vector3(_startPos.position.x, _posesYvalues[i]),
+                Vector3.left, Color.green);
+        }
+
+        for (int i = 0; i < _posesXvalues.Count; i++)
+        {
+            DrawRay(new Vector3(_posesXvalues[i], _posesYvalues[_posesYvalues.Count-1]),
+                Vector3.down, Color.red);
+        }
+    }
+
     /// <summary>
     /// 원하는 각 지점의 위치값을 반환 받습니다.
     /// </summary>
@@ -59,5 +74,13 @@ public class NoteSpawnPosController : MonoBehaviour
     public Vector3 GetSpawnerPos(E_SpawnerPosY posY)
     {
         return GetSpawnerPos(E_SpawnerPosX.START, posY);
+    }
+
+    /// <summary>
+    /// 기획팀에 제시할 디버깅용 기능입니다.
+    /// </summary>
+    private void DrawRay(Vector3 startPos,Vector3 dir,Color color)
+    {
+        Debug.DrawRay(startPos, dir * 50f, color);
     }
 }

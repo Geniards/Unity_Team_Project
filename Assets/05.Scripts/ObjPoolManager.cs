@@ -45,6 +45,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
             { throw new System.Exception("프리팹 등록 오류 재확인 요망"); }
 
             newPool = new ObjectPool(INIT_POOL_COUNT, item.TargetPrefab);
+            _pools.Add(item.TargetPool, newPool);
         }
     }
 

@@ -7,11 +7,11 @@ public abstract class Note : MonoBehaviour
 {
     public float speed = 5f;
     public float scoreValue = 100;
-    public Transform endPoint;
+    public Vector3 endPoint;
 
     protected bool _isHit = false;
 
-    public virtual void Initialize(Transform endPoint, float speed, float scoreValue)
+    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue)
     {
         this.endPoint = endPoint;
         this.speed = speed;
@@ -25,10 +25,10 @@ public abstract class Note : MonoBehaviour
     /// </summary>
     protected virtual IEnumerator MoveToLeft()
     {
-        float moveNodeDistance = Vector3.Distance(transform.position, endPoint.position);
+        float moveNodeDistance = Vector3.Distance(transform.position, endPoint);
         float startTime = Time.time;
 
-        while(!_isHit && transform.position != endPoint.position)
+        while(!_isHit && transform.position != endPoint)
         {
             //float distNode = (Time.time - startTime) * speed;
             //float ratioDist = distNode / moveNodeDistance;
@@ -36,9 +36,9 @@ public abstract class Note : MonoBehaviour
             
             // 매 프레임마다 일정한 속도로 좌측으로 이동
             float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, endPoint.position, step);
+            transform.position = Vector3.MoveTowards(transform.position, endPoint, step);
 
-            if (Vector3.Distance(transform.position, endPoint.position) < 0.001f)
+            if (Vector3.Distance(transform.position, endPoint) < 0.001f)
             {
                 Destroy(gameObject);
                 yield break;

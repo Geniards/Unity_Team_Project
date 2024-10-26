@@ -344,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 604774381, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.04
+      value: 5.43
       objectReference: {fileID: 0}
     - target: {fileID: 1057111521, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
       propertyPath: m_Icon
@@ -357,6 +357,14 @@ PrefabInstance:
     - target: {fileID: 1057111522, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390069119, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.8999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569659721, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.83
       objectReference: {fileID: 0}
     - target: {fileID: 1807516737, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
       propertyPath: m_Icon
@@ -414,6 +422,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853026866566622138, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
+      propertyPath: _notePrefab
+      value: 
+      objectReference: {fileID: 1277046310534231115, guid: 0b5eca8cfa8e8c445989ef4e05520dc6, type: 3}
     - target: {fileID: 3853026866566622139, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
       propertyPath: m_Name
       value: NoteDirector
@@ -502,6 +514,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[0].TargetPool
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[0].TargetPrefab
+      value: 
+      objectReference: {fileID: 5834100206960461235, guid: 0b5eca8cfa8e8c445989ef4e05520dc6, type: 3}
     - target: {fileID: 6892206162165546811, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_Name
       value: Manager
