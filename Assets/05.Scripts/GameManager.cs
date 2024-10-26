@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance => _instance;
 
+    public static NoteDirector NoteDirector;
+
     // TODO 백그라운드 매니저 추가, 정빈님 작업 후 추가 예정
 
     private void Awake()

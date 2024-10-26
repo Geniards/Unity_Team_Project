@@ -17,6 +17,19 @@ public class NoteDirector : MonoBehaviour
 
     public int BPM => _bpm;
 
+    public Vector3 GetCheckPoses(E_SpawnerPosY posY)
+    {
+        return _posController.GetSpawnerPos(E_SpawnerPosX.CHECK, posY);
+    }
+
+    private void Start()
+    {
+        if (GameManager.NoteDirector != null)
+            Destroy(GameManager.NoteDirector);
+
+        GameManager.NoteDirector = this;
+    }
+
     /// <summary>
     /// 설정하는 BPM 과 노트 이동속도를 통해 내부 생성 간격을 초기화진행
     /// </summary>

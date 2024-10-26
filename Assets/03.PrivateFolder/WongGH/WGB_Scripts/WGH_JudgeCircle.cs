@@ -12,7 +12,9 @@ public class WGH_JudgeCircle : MonoBehaviour
 
     [Header("기타")]
     [SerializeField] WGH_PlayerController _player;
-    [SerializeField]
+    [SerializeField] private E_SpawnerPosY _judgePosY;
+    private Vector3 _judgeStandardPos;
+
     #region
     //[SerializeField] Vector2 _circleRight;          // 오른쪽 하단 벡터 값
     //[SerializeField] Vector2 _circleLeft;           // 왼쪽 하단 벡터 값
@@ -26,6 +28,11 @@ public class WGH_JudgeCircle : MonoBehaviour
     private void Start()
     {
         _player = FindAnyObjectByType<WGH_PlayerController>();
+        _judgeStandardPos = GameManager.NoteDirector.GetCheckPoses(_judgePosY);
+
+        //_standardCheckPoses[(int)E_SpawnerPosY.BOTTOM] = 가장 하단의 체크포인트 좌표
+        //_standardCheckPoses[(int)E_SpawnerPosY.MIDDLE] = 중단의 체크포인트 좌표
+        //_standardCheckPoses[(int)E_SpawnerPosY.TOP] = 가장 상단의 체크포인트 좌표
         #region
         // TODO : 기준점(checkPos, 판정원)을 기준으로 왼쪽, 오른쪽에 생성
 
