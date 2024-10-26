@@ -10,14 +10,13 @@ public abstract class Note : MonoBehaviour
     public Vector3 endPoint;
 
     protected bool _isHit = false;
+    public static bool isBoss = false;
 
     public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue)
     {
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
-
-        Debug.Log($"중심 :{transform.position}");
 
         StartCoroutine(MoveToLeft());
     }
@@ -53,7 +52,7 @@ public abstract class Note : MonoBehaviour
     /// <summary>
     /// 공통된 피격 판정에 대한 점수 처리
     /// </summary>
-    protected virtual void CalculateScore(E_NoteDecision decision, bool isBoss = false)
+    protected virtual void CalculateScore(E_NoteDecision decision)
     {
         if (isBoss)
         {
@@ -75,7 +74,7 @@ public abstract class Note : MonoBehaviour
     /// <summary>
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
-    public abstract void OnHit(E_NoteDecision decision, bool isBoss = false);
+    public abstract void OnHit(E_NoteDecision decision);
 
     /// <summary>
     // 이펙트 처리 (애니메이션 또는 파티클)

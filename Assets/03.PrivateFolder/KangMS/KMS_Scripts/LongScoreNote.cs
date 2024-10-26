@@ -31,7 +31,7 @@ public class LongScoreNote : Note
         }
     }
 
-    public override void OnHit(E_NoteDecision decision, bool isBoss = false)
+    public override void OnHit(E_NoteDecision decision)
     {
         if (!_isFailed)
         {
