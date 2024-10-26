@@ -37,6 +37,10 @@ public class WGH_PlayerController : MonoBehaviour
     private void Start()
     {
         _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
+        _judgeCircle.SetTopCircleOff();
+        _judgeCircle.SetMiddleCircleOff();
+        _judgeCircle.SetBottomCircleOn();
+
     }
     private void Update()
     {
@@ -50,38 +54,53 @@ public class WGH_PlayerController : MonoBehaviour
         //{
         //    _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
         //}
-
-        // 점프 키를 눌렀을 경우
-        if(!_isAir && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.LeftControl))
+        if(Input.GetKey(KeyCode.F) && Input.GetKey(KeyCode.J))
         {
-            _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.TOP);
-            _isAir = true;
-            SetAnim("Jump");
-            _rigid.position = JumPos;
-            // 체공 코루틴
-            _IsAirRountine = StartCoroutine(InAirTime());
-            
+            _judgeCircle.SetTopCircleOff();
+            _judgeCircle.SetMiddleCircleOn();
+            _judgeCircle.SetBottomCircleOff();
+            Debug.Log("중단");
         }
-
-        // 공격 키를 눌렀을 경우 && 땅에 있을 경우
-        if(_isAir == false && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
+        else
         {
-            // 하단 공격
-            SetAnim("GroundAttack");
-        }
-        // 공격 키를 눌렀을 경우 && 공중에 있을 경우
-        else if (_isAir && Input.GetKeyDown(KeyCode.J))
-        {
-            if (_IsAirRountine != null)
+            _judgeCircle.SetMiddleCircleOff();
+            // 점프 키를 눌렀을 경우
+            if (!_isAir && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.LeftControl))
             {
-                StopCoroutine(_IsAirRountine);
-                _rigid.isKinematic = false;
+                Debug.Log("점프");
+                _judgeCircle.SetTopCircleOn();
+                _judgeCircle.SetBottomCircleOff();
+                _isAir = true;
+                SetAnim("Jump");
+                _rigid.position = JumPos;
+                // 체공 코루틴
+                _IsAirRountine = StartCoroutine(InAirTime());
+
             }
-            _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
-            // 하강 공격
-            SetAnim("FallAttack");
-            _rigid.position = GroundPos;
+
+            // 공격 키를 눌렀을 경우 && 땅에 있을 경우
+            if (_isAir == false && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
+            {
+                Debug.Log("하단");
+                // 하단 공격
+                SetAnim("GroundAttack");
+            }
+            // 공격 키를 눌렀을 경우 && 공중에 있을 경우
+            else if (_isAir && Input.GetKeyDown(KeyCode.J))
+            {
+                _judgeCircle.SetTopCircleOff();
+                _judgeCircle.SetBottomCircleOn();
+                if (_IsAirRountine != null)
+                {
+                    StopCoroutine(_IsAirRountine);
+                    _rigid.isKinematic = false;
+                }
+                // 하강 공격
+                SetAnim("FallAttack");
+                _rigid.position = GroundPos;
+            }
         }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -89,8 +108,9 @@ public class WGH_PlayerController : MonoBehaviour
         //if(collision.)
         // if(collision.collider.tag == "Ground")
         //{
+        _judgeCircle.SetTopCircleOff();
+        _judgeCircle.SetBottomCircleOn();
         _isAir = false;
-        _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
         //}
         // if(collision.collider.tag == "Monster" || collision.collider.tag == "Obstacle")
         //{
