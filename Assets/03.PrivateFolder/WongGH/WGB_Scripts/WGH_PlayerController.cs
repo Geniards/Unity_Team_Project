@@ -6,8 +6,9 @@ using UnityEngine;
 public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
-    [SerializeField] float _inAirTime;                  // 체공시간
-    [SerializeField] float _jumpHeight;                 // 점프 시 플레이어의 높이 위치
+    [SerializeField] float _inAirTime;                  // 체공시간                         / 기준 값 : 0.3f
+    [SerializeField] float _fallAttackHeight;           // 하강 공격 시 플레이어의 높이 위치  / 기준 값 : 0.4f
+    [SerializeField] float _jumpHeight;                 // 점프 시 플레이어의 높이 위치      / 기준 값 : 5f
 
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
@@ -23,13 +24,13 @@ public class WGH_PlayerController : MonoBehaviour
     
     private void Awake()
     {
-        _inAirTime = 0.3f;
-        _jumpHeight = 5f; 
-
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        GroundPos = new Vector2(transform.position.x, transform.position.y + 0.6f);    // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정
+
+        // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정 => TODO : 값 인스펙터에서 조절할 수 있도록 변경
+        GroundPos = new Vector2(transform.position.x, transform.position.y + _fallAttackHeight);    
+        
         JumPos = new Vector2(transform.position.x, transform.position.y + _jumpHeight);
         _judgeCircle = FindAnyObjectByType<WGH_JudgeCircle>().gameObject;
     }
@@ -80,11 +81,12 @@ public class WGH_PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //if(collision.)
         // if(collision.collider.tag == "Ground")
         //{
         _isAir = false;
         //}
-        // if(collision.collider.tag == "Monster")
+        // if(collision.collider.tag == "Monster" || collision.collider.tag == "Obstacle")
         //{
         // TODO : 피격판정
         //}
