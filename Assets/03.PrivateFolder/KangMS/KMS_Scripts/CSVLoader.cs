@@ -2,13 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static TreeEditor.TreeEditorHelper;
 
-// 첫 번째 자리: 0(없음), 5(상단), 6(중단), 7(하단)
-// 두 번째 자리: 0(없음), 1(몬스터), 2(장애물)
+// 첫 번째 자리: 0(하단), 1(상단), 2(중단)
+// 두 번째 자리: 0(없음), 6(점수) 7(몬스터), 8(장애물), 9(동시버튼)
 
 public class CSVLoader : MonoBehaviour
 {
+    [Header("CSV_FILE")]
     [SerializeField] private TextAsset csvFile;
+    
+    [Header("1_CSV_NOTE_POS_INDEX")]
+    [SerializeField] private int _notePosStarIndex = 1;
+    [SerializeField] private int _notePosEndIndex = 3;
+
+    [Header("2_CSV_NOTE_TYPE_INDEX")]
+    [SerializeField] private int _noteTypeStartIndex = 6;
+    [SerializeField] private int _noteTypeEndIndex = 9;
+
     private Dictionary<int, List<NotePattern>> _patternDictionary = new Dictionary<int, List<NotePattern>>();
 
     private static bool _isLoaded = false;
@@ -50,7 +61,7 @@ public class CSVLoader : MonoBehaviour
             string patternString = values[1];
 
             // 패턴 파싱
-            List<NotePattern> notePatterns = ParsePatternString(patternString);
+            List<NotePattern> notePatterns = ParsePatternString(values[0], patternString);
 
             _patternDictionary.Add(rowNum, notePatterns);
             rowNum++;
@@ -61,20 +72,63 @@ public class CSVLoader : MonoBehaviour
     /// <summary>
     /// patternString을 받아서, 이를 NotePattern 리스트로 변환하는 함수
     /// </summary>
-    private List<NotePattern> ParsePatternString(string patternString)
+    private List<NotePattern> ParsePatternString(string values, string patternString)
     {
         List<NotePattern> notePatterns = new List<NotePattern>();
+        NotePattern currentPattern = new NotePattern();
 
         for(int i = 0; i < patternString.Length; i += 2)
         {
-            // 첫번째 위치, 두번째 타입
-            int position = int.Parse(patternString[i].ToString());
-            int noteType = int.Parse(patternString[i+1].ToString());
+            // 짝이 맞지 않는 경우는 무시
+            if (i + 1 >= patternString.Length)
+            {
+                Debug.LogError($"잘못된 패턴 데이터 길이: {patternString} , {patternString.Length}");
+                continue;
+            }
+            // 위치 값과 노트 타입 값 유효성 검사
+            if (int.TryParse(patternString[i].ToString(), out int position) &&
+                int.TryParse(patternString[i + 1].ToString(), out int noteType))
+            {
+                // n0 : 빈타입인 경우.
+                if (noteType == 0)
+                {
+                    currentPattern.AddNoteData(position, E_NoteType.None);
+                    continue;
+                }
 
-            NotePattern pattern = new NotePattern(position, (E_NoteType)noteType);
+                // 빈 타입이 아닌 경우
+                if (IsValidPosition(position) && IsValidNoteType(noteType))
+                {
+                    currentPattern.AddNoteData(position, (E_NoteType)(noteType - (_noteTypeStartIndex - 1)));
+                }
+                else
+                {
+                    Debug.LogWarning($"잘못된 위치 또는 노트 타입: 패턴={values}, 위치={position}, 타입={noteType}");
+                }
+            }
+            else
+            {
+                Debug.LogError("숫자로 변환할 수 없는 값이 포함되어 있음.");
+            }
         }
-
+        notePatterns.Add(currentPattern);
         return notePatterns;
+    }
+
+    /// <summary>
+    /// 위치 값이 유효한지 확인 (0, 1, 2)
+    /// </summary>
+    private bool IsValidPosition(int position)
+    {
+        return position >= _notePosStarIndex && position <= _notePosEndIndex;
+    }
+
+    /// <summary>
+    /// 노트 타입이 유효한지 확인 (6, 7, 8, 9)
+    /// </summary>
+    private bool IsValidNoteType(int noteType)
+    {
+        return noteType >= _noteTypeStartIndex && noteType <= _noteTypeEndIndex;
     }
 
     /// <summary>
@@ -86,12 +140,36 @@ public class CSVLoader : MonoBehaviour
     }
 }
 
+
+/// <summary>
+/// 다양한 패턴 데이터를 DataTable과 연계
+/// </summary>
 public class NotePattern
+{
+    public List<NoteData> Notes { get; private set; } = new List<NoteData>();
+
+    public void AddNoteData(int Position, E_NoteType noteType)
+    {
+        Notes.Add(new NoteData(Position, noteType));
+    }
+
+    public void AddNoteData(NoteData noteData)
+    {
+        Notes.Add(noteData);
+    }
+
+    public List<NoteData> GetNoteDataList()
+    {
+        return Notes;
+    }
+}
+
+public class NoteData
 {
     public int position;
     public E_NoteType noteType;
 
-    public NotePattern(int position, E_NoteType noteType)
+    public NoteData(int position, E_NoteType noteType)
     {
         this.position = position;
         this.noteType = noteType;
