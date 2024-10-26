@@ -15,6 +15,7 @@ public class WGH_JudgeCircle : MonoBehaviour
     private Vector3 _judgeStandardBottomPos;
     private Vector3 _judgeStandardMiddlePos;
     private Vector3 _judgeStandardTopPos;
+
     GameObject _greatCircleBottomObj;
     GameObject _perfectCircleBottomObj;
     GameObject _greatCircleMiddleObj;
@@ -28,6 +29,9 @@ public class WGH_JudgeCircle : MonoBehaviour
     CircleCollider2D _perfectCircleMiddleCollider;
     CircleCollider2D _greatCircleTopCollider;
     CircleCollider2D _perfectCircleTopCollider;
+
+    public bool _isGreatCircleIn;
+    public bool _isPerfectCircleIn;
     public void ChangeJudgePosY(E_SpawnerPosY posY)
     {
         this._judgePosY = posY;
@@ -99,36 +103,41 @@ public class WGH_JudgeCircle : MonoBehaviour
         _greatCircleBottomCollider = _greatCircleBottomObj.AddComponent<CircleCollider2D>();
         _greatCircleBottomCollider.radius = _greatRadius;
         _greatCircleBottomCollider.isTrigger = true;
-        _greatCircleBottomCollider.AddComponent<WGH_JudgeCircleCollider>();
+        _greatCircleBottomCollider.AddComponent<WGH_JudgeGreatCircleCollider>();
 
         _perfectCircleBottomObj = new GameObject("JudgeBottomCircle_Perfect");
         _perfectCircleBottomObj.transform.position = _judgeStandardBottomPos;
         _perfectCircleBottomCollider = _perfectCircleBottomObj.AddComponent<CircleCollider2D>();
         _perfectCircleBottomCollider.radius = _perfectRadius;
         _perfectCircleBottomCollider.isTrigger = true;
+        _perfectCircleBottomCollider.AddComponent<WGH_JudgePerfectCircleCollider>();
 
         _greatCircleMiddleObj = new GameObject("JudgeMiddleCircle_Great");
         _greatCircleMiddleObj.transform.position = _judgeStandardMiddlePos;
         _greatCircleMiddleCollider = _greatCircleMiddleObj.AddComponent<CircleCollider2D>();
         _greatCircleMiddleCollider.radius = _greatRadius;
         _greatCircleMiddleCollider.isTrigger = true;
+        _greatCircleMiddleCollider.AddComponent<WGH_JudgeGreatCircleCollider>();
 
         _perfectCircleMiddleObj = new GameObject("JudgeMiddleCircle_Perfect");
         _perfectCircleMiddleObj.transform.position = _judgeStandardMiddlePos;
         _perfectCircleMiddleCollider = _perfectCircleMiddleObj.AddComponent<CircleCollider2D>();
         _perfectCircleMiddleCollider.radius = _perfectRadius;
         _perfectCircleMiddleCollider.isTrigger = true;
+        _perfectCircleMiddleCollider.AddComponent<WGH_JudgePerfectCircleCollider>();
 
         _greatCircleTopObj = new GameObject("JudgeTopCircle_Great");
         _greatCircleTopObj.transform.position = _judgeStandardTopPos;
         _greatCircleTopCollider = _greatCircleTopObj.AddComponent<CircleCollider2D>();
         _greatCircleTopCollider.radius = _greatRadius;
         _greatCircleTopCollider.isTrigger = true;
+        _greatCircleTopCollider.AddComponent<WGH_JudgeGreatCircleCollider>();
 
         _perfectCircleTopObj = new GameObject("JudgeTopCircle_Perfect");
         _perfectCircleTopObj.transform.position = _judgeStandardTopPos;
         _perfectCircleTopCollider = _perfectCircleTopObj.AddComponent<CircleCollider2D>();
         _perfectCircleTopCollider.radius = _perfectRadius;
         _perfectCircleTopCollider.isTrigger = true;
+        _perfectCircleTopCollider.AddComponent<WGH_JudgePerfectCircleCollider>();
     }
 }

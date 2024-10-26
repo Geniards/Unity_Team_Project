@@ -59,7 +59,7 @@ public class WGH_PlayerController : MonoBehaviour
             _judgeCircle.SetTopCircleOff();
             _judgeCircle.SetMiddleCircleOn();
             _judgeCircle.SetBottomCircleOff();
-            Debug.Log("중단");
+            SetAnim("GroundAttack");
         }
         else
         {
@@ -67,7 +67,6 @@ public class WGH_PlayerController : MonoBehaviour
             // 점프 키를 눌렀을 경우
             if (!_isAir && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.LeftControl))
             {
-                Debug.Log("점프");
                 _judgeCircle.SetTopCircleOn();
                 _judgeCircle.SetBottomCircleOff();
                 _isAir = true;
@@ -81,7 +80,6 @@ public class WGH_PlayerController : MonoBehaviour
             // 공격 키를 눌렀을 경우 && 땅에 있을 경우
             if (_isAir == false && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
             {
-                Debug.Log("하단");
                 // 하단 공격
                 SetAnim("GroundAttack");
             }
@@ -101,6 +99,11 @@ public class WGH_PlayerController : MonoBehaviour
             }
         }
         
+    }
+
+    public void Attack()
+    {
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
