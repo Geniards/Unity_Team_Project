@@ -430,6 +430,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoteDirector
       objectReference: {fileID: 0}
+    - target: {fileID: 5914617451457267420, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
+      propertyPath: _bpm
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914617451457267420, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
+      propertyPath: _noteSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
 --- !u!1 &1978790276

@@ -19,7 +19,7 @@ public class NoteSpawnPosController : MonoBehaviour
     public float DistSpawnToCheck =>
         _posesXvalues[(int)E_SpawnerPosX.CHECK] - _posesXvalues[(int)E_SpawnerPosX.START];
 
-    private void Start()
+    private void Awake()
     {
         _posesXvalues = new List<float>();
         _posesYvalues = new List<float>();

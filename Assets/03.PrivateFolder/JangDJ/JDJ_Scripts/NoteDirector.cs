@@ -22,7 +22,7 @@ public class NoteDirector : MonoBehaviour
         return _posController.GetSpawnerPos(E_SpawnerPosX.CHECK, posY);
     }
 
-    private void Start()
+    private void Awake()
     {
         if (GameManager.NoteDirector != null)
             Destroy(GameManager.NoteDirector);
@@ -39,6 +39,7 @@ public class NoteDirector : MonoBehaviour
         //_noteSpeed = speed;
 
         _intervalSec = new WaitForSeconds(GetBPMtoIntervalSec());
+        _noteArriveDuration = CalculateArriveSec();
     }
 
     /// <summary>
@@ -57,33 +58,35 @@ public class NoteDirector : MonoBehaviour
         return 60f / _bpm;
     }
 
-    private float CalculateDuration()
+    private float CalculateArriveSec()
     {
         float checkPointDist = _posController.DistSpawnToCheck;
-        return checkPointDist / _noteSpeed;
+        return Mathf.Abs(checkPointDist / _noteSpeed);
     }
 
     private IEnumerator AutoSpawnRoutine()
     {
+        _spawner.RegistPattern(1); // 임시의 1
+
         yield return new WaitForSeconds(_prevDelay + _noteArriveDuration);
 
-        //while (true)
-        //{
-            //// 중간 스폰을 잠시 중단하는 방법 모색요망
-            //if(GameManager.Instance.IsPlaying == false)
-            //{
-            //    yield break;
-            //}
+        while (true)
+        {
+            // 중간 스폰을 잠시 중단하는 방법 모색요망
+            if (GameManager.Instance.IsPlaying == false)
+            {
+                yield break;
+            }
 
-            //if(_spawner.IsLastNote == true)
-            //{
-            //    _spawner.RegistPattern(Random.Range(0,???));
-            //}
+            if (_spawner.IsLastNote == true)
+            {
+                _spawner.RegistPattern(1); // 임시의 1
+            }
 
-            //_spawner.SpawnNote(_noteSpeed);
+            _spawner.SpawnNote(_noteSpeed);
 
-            //yield return _intervalSec;
-        //}
+            yield return _intervalSec;
+        }
     }
 
     private void OnDisable()

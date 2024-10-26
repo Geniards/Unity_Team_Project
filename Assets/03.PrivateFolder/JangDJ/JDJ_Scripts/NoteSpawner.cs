@@ -37,20 +37,20 @@ public class NoteSpawner : MonoBehaviour
     /// <summary>
     /// 요청받은 패턴 넘버를 기준으로 스폰되어야 할 노트 정보들을 스포너에 등록해둡니다.
     /// </summary>
-    //public void RegistPattern(int patternNumber) // 몇번 패턴인지
-    //{
-    // 해당 CSV 로 부터 해당 패턴의 정보를 불러온다.
-    // NotePattern 리스트 덩어리를 불러와서 자체를 복사 진행
+    public void RegistPattern(int patternNumber) // 몇번 패턴인지
+    {
+        //List<NotePattern> patterns = CSVLoader.GetPattern(patternNumber);
 
-    //_innerNoteList.Clear(); //  매번 삭제 부담스러움, 인덱스를 사용한다.
+        //for (int i = 0; i < patterns.Count; i++)
+        //{
+        //    _innerNoteList.Add(patterns[i]);
+        //}
 
-    //    List<NotePattern> patterns = CSVLoader.GetPattern(patternNumber);
-
-    //    for (int i = 0; i < patterns.Count; i++)
-    //    {
-    //        _innerNoteList.Add(patterns[i]);
-    //    }
-    //}
+        _innerNoteList.Add(new NotePattern(1, E_NoteType.Monster));
+        _innerNoteList.Add(new NotePattern(2, E_NoteType.Monster));
+        _innerNoteList.Add(new NotePattern(3, E_NoteType.Monster));
+        _innerNoteList.Add(new NotePattern(1, E_NoteType.Monster));
+    }
 
     /// <summary>
     /// 등록 되어있던 노트 스폰 목록요소를 실체화합니다.
