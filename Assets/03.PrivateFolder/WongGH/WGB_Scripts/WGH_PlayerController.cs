@@ -16,7 +16,7 @@ public class WGH_PlayerController : MonoBehaviour
     public Vector2 GroundPos { get; private set; }    // 땅의 위치값
     public Vector2 JumPos { get; private set; }       // 점프 위치값
     Vector2 _rigidYPos;                                // 캐릭터 Y 높이값
-    [SerializeField] GameObject _judgeCircle;
+    [SerializeField] WGH_JudgeCircle _judgeCircle;
 
     [Header("기타")]
     private bool _isAir;                               // 체공 여부
@@ -32,24 +32,29 @@ public class WGH_PlayerController : MonoBehaviour
         GroundPos = new Vector2(transform.position.x, transform.position.y + _fallAttackHeight);    
         
         JumPos = new Vector2(transform.position.x, transform.position.y + _jumpHeight);
-        _judgeCircle = FindAnyObjectByType<WGH_JudgeCircle>().gameObject;
+        _judgeCircle = FindAnyObjectByType<WGH_JudgeCircle>();
     }
-
+    private void Start()
+    {
+        _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
+    }
     private void Update()
     {
-        _rigidYPos = Camera.main.WorldToScreenPoint(_rigid.position);
-        if(_rigidYPos.y > Screen.height * 0.5f)
-        {
-            _judgeCircle.GetComponent<WGH_JudgeCircle>().enabled = false;
-        }
-        else if(_rigidYPos.y < Screen.height * 0.5f) 
-        {
-            _judgeCircle.GetComponent<WGH_JudgeCircle>().enabled = true;
-        }
+        // 플레이어 높이에 따른 CheckPosY 값 변경
+        //_rigidYPos = Camera.main.WorldToScreenPoint(_rigid.position);
+        //if(_rigidYPos.y > Screen.height * 0.5f)
+        //{
+        //    _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.TOP);
+        //}
+        //else if(_rigidYPos.y < Screen.height * 0.5f) 
+        //{
+        //    _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
+        //}
 
         // 점프 키를 눌렀을 경우
         if(!_isAir && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.LeftControl))
         {
+            _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.TOP);
             _isAir = true;
             SetAnim("Jump");
             _rigid.position = JumPos;
@@ -72,7 +77,7 @@ public class WGH_PlayerController : MonoBehaviour
                 StopCoroutine(_IsAirRountine);
                 _rigid.isKinematic = false;
             }
-
+            _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
             // 하강 공격
             SetAnim("FallAttack");
             _rigid.position = GroundPos;
@@ -85,6 +90,7 @@ public class WGH_PlayerController : MonoBehaviour
         // if(collision.collider.tag == "Ground")
         //{
         _isAir = false;
+        _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
         //}
         // if(collision.collider.tag == "Monster" || collision.collider.tag == "Obstacle")
         //{

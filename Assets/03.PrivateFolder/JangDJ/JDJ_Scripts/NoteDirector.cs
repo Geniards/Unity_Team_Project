@@ -22,7 +22,7 @@ public class NoteDirector : MonoBehaviour
         return _posController.GetSpawnerPos(E_SpawnerPosX.CHECK, posY);
     }
 
-    private void Start()
+    private void Awake()
     {
         if (GameManager.NoteDirector != null)
             Destroy(GameManager.NoteDirector);

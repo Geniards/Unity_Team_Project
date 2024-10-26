@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4725115233339851062}
   - component: {fileID: 4725115233339851061}
   m_Layer: 0
-  m_Name: WGH_Warrior_Sheet-Effect_6
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
