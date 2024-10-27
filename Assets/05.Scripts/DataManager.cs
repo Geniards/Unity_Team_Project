@@ -18,7 +18,6 @@ public class DataManager : MonoBehaviour, IManager
         _csvData.Initailize();
     }
 
-
     [SerializeField, Header("ºÐ´ç Beat")]
     private int _bpm = 120;
     public int BPM => _bpm;
@@ -27,13 +26,23 @@ public class DataManager : MonoBehaviour, IManager
     private int _gameSpeed = 1;
     public int GameSpeed => _gameSpeed;
 
+    private bool _isPlaying = false;
+    public bool IsPlaying => _isPlaying;
+
+    public int StageNumber => _stageData.StageNumber;
+
     public int ObjpoolInitCreateCount => 5;
+    public float BGMVolume => _settingData.BGMVolume;
+    public float SFXVolume => _settingData.SFXVolume;
+
+    public void SetPlayState(bool value) { _isPlaying = value; }
 
     public void SetPlayerHP(int value) { _stageData.PlayerHp = value; }
     public void AddPlayerHP(int value) { _stageData.PlayerHp += value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
     public void SetProgress(float value) { _stageData.StageProgress = value; }
     public void SetComboCount(int value) { _stageData.ComboCount = value; }
+    public void SetStageNumber(int value) { _stageData.StageNumber = value; }
 
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
     public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
@@ -47,6 +56,7 @@ public struct StageData
     public float StageProgress;
     public int Score;
     public int ComboCount;
+    public int StageNumber;
 }
 
 public struct GameSettingData
