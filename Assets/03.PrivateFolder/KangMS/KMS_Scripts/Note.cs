@@ -56,9 +56,6 @@ public abstract class Note : MonoBehaviour
                 yield break;
             }
 
-            // 테스트용 로그 출력
-            Debug.Log($"노트 이동 중 - 현재 dspTime: {currentDspTime}, 목표 시간: {endDspTime}");
-
             yield return null;
         }
     }
