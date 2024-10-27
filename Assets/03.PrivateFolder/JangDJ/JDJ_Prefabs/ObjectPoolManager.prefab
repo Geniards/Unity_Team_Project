@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3853026866566622139
+--- !u!1 &7861816634080009258
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3853026866566622137}
-  - component: {fileID: 3853026866566622138}
-  - component: {fileID: 5914617451457267420}
+  - component: {fileID: 3172325943173042434}
+  - component: {fileID: 103820919297703259}
   m_Layer: 0
-  m_Name: NoteDirector
+  m_Name: ObjectPoolManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3853026866566622137
+--- !u!4 &3172325943173042434
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3853026866566622139}
+  m_GameObject: {fileID: 7861816634080009258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,34 +32,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3853026866566622138
+--- !u!114 &103820919297703259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3853026866566622139}
+  m_GameObject: {fileID: 7861816634080009258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 960a00888a2aefa4a8a231e1a3f83d83, type: 3}
+  m_Script: {fileID: 11500000, guid: 818ed9fd5cce9084b95ae252b4718035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _topTrs: []
-  _midTrs: []
-  _botTrs: []
---- !u!114 &5914617451457267420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3853026866566622139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feb95fa3cf64c93468836aa10406f478, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 0}
-  _bpm: 0
-  _noteSpeed: 0
-  _prevDelay: 0
+  _prefabs:
+  - TargetPool: 0
+    TargetPrefab: {fileID: 438073467103788065, guid: c3f83187f670555478b15b2c631b51f4, type: 3}

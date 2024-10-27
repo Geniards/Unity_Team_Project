@@ -1,16 +1,24 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectManager : MonoBehaviour, IManager
+public class EffectManager : MonoBehaviour
 {
     public static EffectManager Instance { get; private set; }
-    
-    public void Init() 
-    {
-        Instance = this;
-    }
-
     [SerializeField] private List<GameObject> _effectPrefabs;
+
+    private void Awake()
+    {
+        if(Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void PlayEffect(int effectIndex, float effectTime, Vector3 pos, Quaternion quaternion)
     {

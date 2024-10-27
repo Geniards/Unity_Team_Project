@@ -22,7 +22,6 @@ public class ObjectPool
     {
         _myDirectory = new GameObject().transform;
         _myDirectory.SetParent(ObjPoolManager.Instance.transform);
-        _myDirectory.name = $"{_prefab.name} pool"; 
     }
 
     private void CreateObject(int createCount)

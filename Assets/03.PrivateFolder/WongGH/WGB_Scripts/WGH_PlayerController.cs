@@ -6,53 +6,35 @@ using UnityEngine;
 public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
-    [SerializeField] float _inAirTime;                  // 체공시간                         / 기준 값 : 0.3f
-    [SerializeField] float _fallAttackHeight;           // 하강 공격 시 플레이어의 높이 위치  / 기준 값 : 0.4f
-    [SerializeField] float _jumpHeight;                 // 점프 시 플레이어의 높이 위치      / 기준 값 : 5f
+    [SerializeField] float _inAirTime = 0.3f;      // 체공시간
 
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
-    public Vector2 GroundPos { get; private set; }    // 땅의 위치값
-    public Vector2 JumPos { get; private set; }       // 점프 위치값
-    Vector2 _rigidYPos;                                // 캐릭터 Y 높이값
-    [SerializeField] GameObject _judgeCircle;
+    public Vector2 _groundPos { get; private set; }    // 땅의 위치값
+    public Vector2 _jumPos { get; private set; }       // 점프 위치값
+    
 
-    [Header("기타")]
-    private bool _isAir;                               // 체공 여부
-    Coroutine _IsAirRountine;                          // 체공 코루틴
+    private bool _isAir;                    // 체공 여부
+    Coroutine _IsAirRountine;               // 체공 코루틴
     
     private void Awake()
     {
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-
-        // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정 => TODO : 값 인스펙터에서 조절할 수 있도록 변경
-        GroundPos = new Vector2(transform.position.x, transform.position.y + _fallAttackHeight);    
-        
-        JumPos = new Vector2(transform.position.x, transform.position.y + _jumpHeight);
-        _judgeCircle = FindAnyObjectByType<WGH_JudgeCircle>().gameObject;
+        _groundPos = new Vector2(transform.position.x, transform.position.y + 0.6f);    // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정
+        _jumPos = new Vector2(transform.position.x, transform.position.y + 5);
     }
 
     private void Update()
     {
-        _rigidYPos = Camera.main.WorldToScreenPoint(_rigid.position);
-        if(_rigidYPos.y > Screen.height * 0.5f)
-        {
-            _judgeCircle.GetComponent<WGH_JudgeCircle>().enabled = false;
-        }
-        else if(_rigidYPos.y < Screen.height * 0.5f) 
-        {
-            _judgeCircle.GetComponent<WGH_JudgeCircle>().enabled = true;
-        }
-
         // 점프 키를 눌렀을 경우
         if(!_isAir && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.LeftControl))
         {
             _isAir = true;
             SetAnim("Jump");
-            _rigid.position = JumPos;
+            _rigid.position = _jumPos;
             // 체공 코루틴
             _IsAirRountine = StartCoroutine(InAirTime());
             
@@ -75,21 +57,13 @@ public class WGH_PlayerController : MonoBehaviour
 
             // 하강 공격
             SetAnim("FallAttack");
-            _rigid.position = GroundPos;
+            _rigid.position = _groundPos;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if(collision.)
-        // if(collision.collider.tag == "Ground")
-        //{
         _isAir = false;
-        //}
-        // if(collision.collider.tag == "Monster" || collision.collider.tag == "Obstacle")
-        //{
-        // TODO : 피격판정
-        //}
     }
 
     // 체공 시간 조절 코루틴
@@ -100,9 +74,7 @@ public class WGH_PlayerController : MonoBehaviour
         _rigid.isKinematic = false;
         yield break;
     }
-    /// <summary>
-    /// 애니메이션 시작 메서드
-    /// </summary>
+
     public void SetAnim(string animName)
     {
         _anim.Play(animName);

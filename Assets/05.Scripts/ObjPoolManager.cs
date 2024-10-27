@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjPoolManager : MonoBehaviour, IManager
+public class ObjPoolManager : MonoBehaviour
 {
     /*
      * 풀링되어지는 대상
@@ -12,21 +12,33 @@ public class ObjPoolManager : MonoBehaviour, IManager
 
     public static ObjPoolManager Instance => _instance;
 
+    private void Awake()
+    {
+        if(_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     private const int INIT_POOL_COUNT = 5;
 
     private Dictionary<E_Pool, ObjectPool> _pools = new Dictionary<E_Pool, ObjectPool>();
     [SerializeField] private List<PrefabItem> _prefabs = null;
 
-    public void Init()
+    private void Start()
     {
-        _instance = this;
-        InitializePools();
+        Initalize();
     }
 
     /// <summary>
     /// 내부의 각 풀들을 초기화, 생성합니다.
     /// </summary>
-    public void InitializePools()
+    public void Initalize()
     {
         AutoRegistPools();
     }
@@ -45,7 +57,6 @@ public class ObjPoolManager : MonoBehaviour, IManager
             { throw new System.Exception("프리팹 등록 오류 재확인 요망"); }
 
             newPool = new ObjectPool(INIT_POOL_COUNT, item.TargetPrefab);
-            _pools.Add(item.TargetPool, newPool);
         }
     }
 
@@ -77,6 +88,4 @@ public class ObjPoolManager : MonoBehaviour, IManager
     {
         _pools[poolType].ReturnObj(obj);
     }
-
-    
 }

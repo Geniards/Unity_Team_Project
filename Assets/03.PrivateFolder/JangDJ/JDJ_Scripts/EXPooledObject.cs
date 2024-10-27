@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EXPooledObject : MonoBehaviour, IPoolingObj
 {
-    public E_Pool MyPoolType => E_Pool.MONSTER_NOTE;
+    public E_Pool MyPoolType => E_Pool.MONSTER;
 
     public void Return()
     {
