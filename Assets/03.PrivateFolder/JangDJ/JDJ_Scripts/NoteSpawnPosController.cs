@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class NoteSpawnPosController : MonoBehaviour
 {
-    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ X ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    [Header("³ëÆ®°¡ Áö³ª´Â À§Ä¡ Y ÁÂÇ¥ ±âÁØ")]
     [SerializeField] private Transform _startPos;
     [SerializeField] private Transform _checkPos;
     [SerializeField] private Transform _endPos;
 
-    [Space(20f), Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Y ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")] 
+    [Space(20f), Header("¹ÙÅÒ°ú Áß°£ ½ºÆùÀ§Ä¡ X ÁÂÇ¥ ±âÁØ")] 
     [SerializeField] private Transform _bottomPointPos;
     [SerializeField] private Transform _bottomToIntervalSpawners;
-
-    //[Space(20f)]
-    //[SerializeField] private float _startPosOffset;
 
     private List<double> _posesXvalues = null; // end , check , start
     private List<double> _posesYvalues = null; // bot , mid , top
 
-    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½
+    // ½ºÆùÁöÁ¡À¸·ÎºÎÅÍ Ã¼Å©Æ÷ÀÎÆ®±îÁöÀÇ °Å¸®
     public double DistSpawnToCheck =>
          _posesXvalues[(int)E_SpawnerPosX.START] - _posesXvalues[(int)E_SpawnerPosX.CHECK];
 
@@ -36,11 +33,27 @@ public class NoteSpawnPosController : MonoBehaviour
         _posesXvalues = new List<double>();
         _posesYvalues = new List<double>();
 
-        //_startPos.position = _startPos.position + Vector3.right * _startPosOffset;
-        _startPos.position = _checkPos.position + Vector3.right * 20;
+        SetSpawnPos();
 
         RegistXValues();
         RegistYValues();
+    }
+
+    private void SetSpawnPos()
+    {
+        float minOffsetX = 20f;
+        int speed = DataManager.Instance.GameSpeed;
+
+        for (int i = 1; i < 30; i++)
+        {
+            if(speed * i > minOffsetX)
+            {
+                _startPos.position = 
+                    _checkPos.position + Vector3.right * speed * i;
+
+                break;
+            }
+        }
     }
 
     private void RegistXValues()
@@ -62,8 +75,8 @@ public class NoteSpawnPosController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            _lock = true;
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //    _lock = true;
 
         for (int i = 0; i < _posesYvalues.Count; i++)
         {
@@ -79,7 +92,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Þ½ï¿½ï¿½Ï´ï¿½.
+    /// ³ëÆ® ½Ã½ºÅÛÀÇ ÇÙ½É ÁÂÇ¥°ªÀ» È®ÀÎÇÕ´Ï´Ù.
     /// </summary>
     public Vector3 GetSpawnerPos(E_SpawnerPosX posX, E_SpawnerPosY posY)
     {
@@ -87,7 +100,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Þ½ï¿½ï¿½Ï´ï¿½.
+    /// ½ºÆù ÁÂÇ¥¸¦ È®ÀÎÇÏ´Â ±â´É
     /// </summary>
     public Vector3 GetSpawnerPos(E_SpawnerPosY posY)
     {
@@ -95,7 +108,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// ï¿½ï¿½È¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
+    /// µð¹ö±×¿ë
     /// </summary>
     private void DrawRay(Vector3 startPos,Vector3 dir,Color color)
     {
@@ -126,7 +139,7 @@ public class NoteSpawnPosController : MonoBehaviour
             }
                 
 
-            //Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : {under} , ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ {over}");
+            //Debug.Log($"ÃÖÀú °Å¸® : {under} , ÃÖ°í °Å¸® {over}");
             //Debug.Log(Time.time);
 
             if (_lock)

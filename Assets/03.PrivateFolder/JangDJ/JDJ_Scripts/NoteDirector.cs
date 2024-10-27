@@ -7,14 +7,12 @@ public class NoteDirector : MonoBehaviour
     [SerializeField] private NoteSpawner _spawner = null;
     [SerializeField] private NoteSpawnPosController _posController = null;
 
-    [SerializeField] private int _bpm;
-    [SerializeField] private float _noteSpeed;
-    [ReadOnly(true)] private double _noteArriveDuration;
+    private int _bpm;
+    private float _noteSpeed;
+    private double _noteArriveDuration;
     [SerializeField] private float _prevDelay;
 
     private Coroutine _spawnRoutine = null;
-
-    public int BPM => _bpm;
 
     public Vector3 GetCheckPoses(E_SpawnerPosY posY)
     {
@@ -27,6 +25,8 @@ public class NoteDirector : MonoBehaviour
             Destroy(GameManager.NoteDirector);
 
         GameManager.NoteDirector = this;
+        _bpm = DataManager.Instance.BPM;
+        _noteSpeed = DataManager.Instance.GameSpeed;
     }
 
     public void Initailize()
@@ -34,6 +34,9 @@ public class NoteDirector : MonoBehaviour
         _noteArriveDuration = CalculateArriveSec();
     }
 
+    /// <summary>
+    /// 노트 생성을 시작합니다.
+    /// </summary>
     public void StartSpawnNotes()
     {
         if (_spawnRoutine != null)
