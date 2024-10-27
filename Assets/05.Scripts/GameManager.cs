@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
 
     public static NoteDirector NoteDirector;
 
-    [SerializeField] private AudioSource _source;
-
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
     {
@@ -53,11 +51,6 @@ public class GameManager : MonoBehaviour
         DataManager.Instance.SetPlayState(true);
         NoteDirector.Initailize();
         NoteDirector.StartSpawnNotes();
-    }
-
-    public void PlayMusic() // 임시 코드
-    {
-        _source.Play();
     }
 
     private void Update()

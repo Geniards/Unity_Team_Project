@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!82 &185137565 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 185137565, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+  m_PrefabInstance: {fileID: 1518096867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &404906197
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +367,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1083170230 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1083170230, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+  m_PrefabInstance: {fileID: 1518096867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1518096867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -369,6 +379,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 185137565, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083170228, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_Name
+      value: BGM // cureent volume 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083170230, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -413,11 +435,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _bgmSource
+      value: 
+      objectReference: {fileID: 1083170230}
+    - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _sfxSource
+      value: 
+      objectReference: {fileID: 185137565}
     - target: {fileID: 6892206162165546811, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_Name
       value: Manager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1482720528, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
 --- !u!1 &1641655490
 GameObject:

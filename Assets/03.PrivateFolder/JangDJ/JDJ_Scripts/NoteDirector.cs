@@ -64,7 +64,7 @@ public class NoteDirector : MonoBehaviour
                                                                                                  // 첫 번째 노트 생성 타이밍 설정
         nextSpawnTime = firstNoteTime;
         _spawner.RegistPattern(1); // 임시 테스트 코드
-        GameManager.Instance.PlayMusic(); // 임시 코드
+        SoundManager.Instance.PlayStageBGM();
 
         nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec();
 

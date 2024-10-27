@@ -16,6 +16,10 @@ public class DataManager : MonoBehaviour, IManager
         _instance = this;
         _csvData = new DataTable();
         _csvData.Initailize();
+
+        SetBGMVolume(1); // 유저 정보 저장시 변경
+        SetSFXVolume(1);
+        SetStageNumber(1);
     }
 
     [SerializeField, Header("분당 Beat")]
@@ -28,6 +32,11 @@ public class DataManager : MonoBehaviour, IManager
 
     private bool _isPlaying = false;
     public bool IsPlaying => _isPlaying;
+
+    // 볼륨을 서서히 조절하는 비율
+    public float SoundFadeRate => 0.2f;
+    // 한계값에 도달하는 시간
+    public float SoundTotalFadeTime => 1f;
 
     public int StageNumber => _stageData.StageNumber;
 
