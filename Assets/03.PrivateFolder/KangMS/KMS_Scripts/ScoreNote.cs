@@ -6,31 +6,6 @@ using UnityEngine;
 public class ScoreNote : Note, IPoolingObj, IReflective
 {
     public E_Pool MyPoolType => E_Pool.MONSTER_NOTE;
-    public E_NoteDecision NoteDecision;
-
-    /// <summary>
-    /// Test를 확인하기 위해 생성 추후 삭제 필요!
-    /// </summary>
-    private void Awake()
-    {
-        // test용
-        Initialize(endPoint, speed, scoreValue);
-    }
-    /// <summary>
-    /// Test를 확인하기 위해 생성 추후 삭제 필요!
-    /// </summary>
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            OnHit(NoteDecision);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            NoteDecision = E_NoteDecision.Perfect;
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            NoteDecision = E_NoteDecision.Great;
-    }
 
     public override void OnHit(E_NoteDecision decision)
     {
@@ -50,6 +25,6 @@ public class ScoreNote : Note, IPoolingObj, IReflective
 
     public void ReflectNote()
     {
-        
+        Debug.Log("반사노트(검기노트)에 대한 오브젝트 풀로 전환 후 해당 노트는 삭제시킨다.");
     }
 }

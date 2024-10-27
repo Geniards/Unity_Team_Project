@@ -2,54 +2,69 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+
 public abstract class Note : MonoBehaviour
 {
+    [Header("³ëÆ® ¼¼ºÎ Á¶Á¤")]
     public float speed = 5f;
     public float scoreValue = 100;
     public Vector3 endPoint;
+
+    [Header("Ãæµ¹ °¡´ÉÇÑ ³ëÆ® À¯/¹«")]
     public bool _isHit = false;
+    [Header("º¸½º Ãâ¿¬ À¯/¹«")]
     public static bool isBoss = false;
-    
+
     public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue)
     {
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
+
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
         double endDspTime = startDspTime + travelDuration;
+
         StartCoroutine(MoveToLeft(startDspTime, endDspTime));
     }
+
     /// <summary>
-    /// ?œì‘ê³??™ì‹œ??_endPointë¥??¥í•˜??? ì•„ê°€?„ë¡ ?¤ì •.
+    /// ½ÃÀÛ°ú µ¿½Ã¿¡ _endPoint¸¦ ÇâÇÏ¿© ³¯¾Æ°¡µµ·Ï ¼³Á¤.
     /// </summary>
     protected virtual IEnumerator MoveToLeft(double startDspTime, double endDspTime)
     {
         Vector3 startPosition = transform.position;
         Vector3 direction = (endPoint - startPosition).normalized;
         float totalDistance = Vector3.Distance(startPosition, endPoint);
-        Debug.Log($"ì¶œë°œ ?œê°„ : {AudioSettings.dspTime} , ?„ì°©?ˆì •?œê°„ : {(totalDistance / speed) + AudioSettings.dspTime}");
 
         while (!_isHit)
         {
             double currentDspTime = AudioSettings.dspTime;
-            // ?¨ì? ?œê°„??ë¹„ë??˜ì—¬ ë§??„ë ˆ???¼ì • ê±°ë¦¬ë§Œí¼ ?´ë™
+
+            // ³²Àº ½Ã°£¿¡ ºñ·ÊÇÏ¿© ¸Å ÇÁ·¹ÀÓ ÀÏÁ¤ °Å¸®¸¸Å­ ÀÌµ¿
             double elapsedTime = currentDspTime - startDspTime;
             float coveredDistance = Mathf.Min((float)(elapsedTime * speed), totalDistance);
+
             transform.position = startPosition + direction * coveredDistance;
+
+
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                Debug.Log($"?¸íŠ¸ê°€ ëª©í‘œ ì§€?ì— ?„ì°©?? ?„ì°© ?œê°„: {currentDspTime}");
-                //Destroy(gameObject);
+                Debug.Log($"³ëÆ®°¡ ¸ñÇ¥ ÁöÁ¡¿¡ µµÂøÇÔ, µµÂø ½Ã°£: {currentDspTime}");
+
+                Destroy(gameObject);
                 yield break;
             }
-            // ?ŒìŠ¤?¸ìš© ë¡œê·¸ ì¶œë ¥
-            //Debug.Log($"?¸íŠ¸ ?´ë™ ì¤?- ?„ì¬ dspTime: {currentDspTime}, ëª©í‘œ ?œê°„: {endDspTime}");
+
+            // Å×½ºÆ®¿ë ·Î±× Ãâ·Â
+            Debug.Log($"³ëÆ® ÀÌµ¿ Áß - ÇöÀç dspTime: {currentDspTime}, ¸ñÇ¥ ½Ã°£: {endDspTime}");
+
             yield return null;
         }
     }
+
     /// <summary>
-    /// ê³µí†µ???¼ê²© ?ì •???€???ìˆ˜ ì²˜ë¦¬
+    /// °øÅëµÈ ÇÇ°İ ÆÇÁ¤¿¡ ´ëÇÑ Á¡¼ö Ã³¸®
     /// </summary>
     protected virtual void CalculateScore(E_NoteDecision decision)
     {
@@ -61,24 +76,19 @@ public abstract class Note : MonoBehaviour
         {
             scoreValue *= (float)decision;
         }
-        Debug.Log($"Hit??ê²°ê³¼ : {decision}, ?ìˆ˜ : {scoreValue}");
+        Debug.Log($"HitµÈ °á°ú : {decision}, Á¡¼ö : {scoreValue}");
     }
+
     /// <summary>
-    /// ë²„íŠ¼ ?…ë ¥???°ë¥¸ ?ì • ì²˜ë¦¬
+    /// ¹öÆ° ÀÔ·Â¿¡ µû¸¥ ÆÇÁ¤ Ã³¸®
     /// </summary>
     public abstract void OnHit(E_NoteDecision decision);
+
     /// <summary>
-    // ?´í™??ì²˜ë¦¬ (? ë‹ˆë©”ì´???ëŠ” ?Œí‹°??
+    // ÀÌÆåÆ® Ã³¸® (¾Ö´Ï¸ŞÀÌ¼Ç ¶Ç´Â ÆÄÆ¼Å¬)
     /// </summary>
     protected void ShowEffect()
     {
-        Debug.Log("?´í™???™ì‘");
+        Debug.Log("ÀÌÆåÆ® µ¿ÀÛ");
     }
 }
-
-
-
-
-
-
-
