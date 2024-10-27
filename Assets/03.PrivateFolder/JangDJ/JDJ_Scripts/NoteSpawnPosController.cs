@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class NoteSpawnPosController : MonoBehaviour
 {
-    [Header("½ºÆ÷³ÊÀÇ ±âÁØ X °ªÀ» ÃøÁ¤ÇÏ±â À§ÇÑ Æ®·£½ºÆû")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ X ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private Transform _startPos;
     [SerializeField] private Transform _checkPos;
     [SerializeField] private Transform _endPos;
 
-    [Space(20f), Header("½ºÆ÷³ÊÀÇ ±âÁØ Y °ªÀ» ÃøÁ¤ÇÏ±â À§ÇÑ Æ®·£½ºÆû")] 
+    [Space(20f), Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Y ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")] 
     [SerializeField] private Transform _bottomPointPos;
     [SerializeField] private Transform _bottomToIntervalSpawners;
 
@@ -19,7 +19,7 @@ public class NoteSpawnPosController : MonoBehaviour
     private List<double> _posesXvalues = null; // end , check , start
     private List<double> _posesYvalues = null; // bot , mid , top
 
-    // ½ºÆù ½ÃÀÛÁöÁ¡À¸·Î ºÎÅÍ Ã¼Å©Æ÷ÀÎÆ®±îÁöÀÇ °Å¸®°ª
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½
     public double DistSpawnToCheck =>
          _posesXvalues[(int)E_SpawnerPosX.START] - _posesXvalues[(int)E_SpawnerPosX.CHECK];
 
@@ -79,7 +79,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// ¿øÇÏ´Â °¢ ÁöÁ¡ÀÇ À§Ä¡°ªÀ» ¹ÝÈ¯ ¹Þ½À´Ï´Ù.
+    /// ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Þ½ï¿½ï¿½Ï´ï¿½.
     /// </summary>
     public Vector3 GetSpawnerPos(E_SpawnerPosX posX, E_SpawnerPosY posY)
     {
@@ -87,7 +87,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// ¿øÇÏ´Â ³ôÀÌÀÇ ½ºÆù ½ÃÀÛÁöÁ¡ÀÇ À§Ä¡°ªÀ» ¹ÝÈ¯¹Þ½À´Ï´Ù.
+    /// ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Þ½ï¿½ï¿½Ï´ï¿½.
     /// </summary>
     public Vector3 GetSpawnerPos(E_SpawnerPosY posY)
     {
@@ -95,7 +95,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// ±âÈ¹ÆÀ¿¡ Á¦½ÃÇÒ µð¹ö±ë¿ë ±â´ÉÀÔ´Ï´Ù.
+    /// ï¿½ï¿½È¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
     /// </summary>
     private void DrawRay(Vector3 startPos,Vector3 dir,Color color)
     {
@@ -126,7 +126,7 @@ public class NoteSpawnPosController : MonoBehaviour
             }
                 
 
-            //Debug.Log($"ÃÖÀú ¿ÀÂ÷¹üÀ§ : {under} , ÃÖ°í ¿ÀÂ÷¹üÀ§ {over}");
+            //Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : {under} , ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ {over}");
             //Debug.Log(Time.time);
 
             if (_lock)

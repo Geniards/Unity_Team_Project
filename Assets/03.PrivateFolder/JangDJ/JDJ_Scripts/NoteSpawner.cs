@@ -12,13 +12,6 @@ public class NoteSpawner : MonoBehaviour
     public bool IsLastNote
         => _lastNoteIdx == _innerNoteList.Count - 1;
 
-    //// 기능 테스트용
-    [SerializeField,Space(20f),Header("기능테스트용")] 
-    private Note _notePrefab = null;
-
-
-    ////
-
     /// <summary>
     /// 스포너가 설정해야 할 값을 초기화 시킵니다.
     /// </summary>
