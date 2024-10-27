@@ -63,22 +63,14 @@ public class NoteDirector : MonoBehaviour
         double firstNoteTime = startDspTime + (GetBPMtoIntervalSec() * 4) - _noteArriveDuration; // 4박자 뒤의 첫 노트 생성 시간
                                                                                                  // 첫 번째 노트 생성 타이밍 설정
         nextSpawnTime = firstNoteTime;
-        _spawner.RegistPattern(1);
-        GameManager.Instance.PlayMusic();
-
-        //while (true)
-        //{
-        //    if (AudioSettings.dspTime >= restFourbeatTime)
-        //        break;
-
-        //    yield return null;
-        //}
+        _spawner.RegistPattern(1); // 임시 테스트 코드
+        GameManager.Instance.PlayMusic(); // 임시 코드
 
         nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec();
 
         while (true)
         {
-            if (GameManager.Instance.IsPlaying == false)
+            if (DataManager.Instance.IsPlaying == false)
             {
                 yield break;
             }
@@ -87,7 +79,7 @@ public class NoteDirector : MonoBehaviour
             {
                 if (_spawner.IsLastNote == true)
                 {
-                    _spawner.RegistPattern(1);
+                    _spawner.RegistPattern(1); // 임시 테스트 코드
                 }
 
                 _spawner.SpawnNote(_noteSpeed);

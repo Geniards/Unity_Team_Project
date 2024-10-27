@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using UnityEditor.iOS;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,31 +10,31 @@ public class GameManager : MonoBehaviour
 
     public static NoteDirector NoteDirector;
 
-    private int _stageNumber;
-    public int StageNumber => _stageNumber;
-
-    private bool _isPlaying = true;
-    public bool IsPlaying => _isPlaying;
-
     [SerializeField] private AudioSource _source;
-    // TODO 백그라운드 매니저 추가, 정빈님 작업 후 추가 예정
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Init()
+    {
+        if (_instance == null)
+        {
+            _instance = FindObjectOfType<GameManager>();
+            DontDestroyOnLoad(_instance.gameObject);
+
+            _instance.InitGameManager();
+        }
+    }
 
     private void Awake()
     {
-        if(_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
+        if (_instance != this)
             Destroy(this.gameObject);
-            return;
-        }
+    }
 
+    private void InitGameManager()
+    {
         InitializeManagers();
         Application.targetFrameRate = 60;
-        _stageNumber = 1; // 테스트용도
+        DataManager.Instance.SetStageNumber(1);
     }
 
     private void InitializeManagers()
@@ -40,9 +42,7 @@ public class GameManager : MonoBehaviour
         IManager[] managers = transform.GetComponents<IManager>();
 
         foreach (var manager in managers)
-        {
-            manager.Init();
-        }
+        { manager.Init(); }
     }
 
     /// <summary>
@@ -50,18 +50,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartStage()
     {
+        DataManager.Instance.SetPlayState(true);
         NoteDirector.Initailize();
         NoteDirector.StartSpawnNotes();
     }
 
-    public void PlayMusic()
+    public void PlayMusic() // 임시 코드
     {
         _source.Play();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // 임시 코드
             StartStage();
     }
 }
