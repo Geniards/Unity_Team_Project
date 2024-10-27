@@ -9,7 +9,7 @@ public abstract class Note : MonoBehaviour
     public float scoreValue = 100;
     public Vector3 endPoint;
 
-    protected bool _isHit = false;
+    public bool _isHit = false;
     public static bool isBoss = false;
 
     public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue)
@@ -18,32 +18,44 @@ public abstract class Note : MonoBehaviour
         this.speed = speed;
         this.scoreValue = scoreValue;
 
-        StartCoroutine(MoveToLeft());
+        double startDspTime = AudioSettings.dspTime;
+        double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
+        double endDspTime = startDspTime + travelDuration;
+
+        StartCoroutine(MoveToLeft(startDspTime, endDspTime));
     }
 
     /// <summary>
     /// 시작과 동시에 _endPoint를 향하여 날아가도록 설정.
     /// </summary>
-    protected virtual IEnumerator MoveToLeft()
+    protected virtual IEnumerator MoveToLeft(double startDspTime, double endDspTime)
     {
-        float moveNodeDistance = Vector3.Distance(transform.position, endPoint);
-        float startTime = Time.time;
+        Vector3 startPosition = transform.position;
+        Vector3 direction = (endPoint - startPosition).normalized;
+        float totalDistance = Vector3.Distance(startPosition, endPoint);
+        Debug.Log($"출발 시간 : {AudioSettings.dspTime} , 도착예정시간 : {(totalDistance / speed) + AudioSettings.dspTime}");
 
-        while(!_isHit && transform.position != endPoint)
+        while (!_isHit)
         {
-            //float distNode = (Time.time - startTime) * speed;
-            //float ratioDist = distNode / moveNodeDistance;
-            //transform.position = Vector3.Lerp(transform.position, endPoint.position, ratioDist);
-            
-            // 매 프레임마다 일정한 속도로 좌측으로 이동
-            float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, endPoint, step);
+            double currentDspTime = AudioSettings.dspTime;
 
-            if (Vector3.Distance(transform.position, endPoint) < 0.001f)
+            // 남은 시간에 비례하여 매 프레임 일정 거리만큼 이동
+            double elapsedTime = currentDspTime - startDspTime;
+            float coveredDistance = Mathf.Min((float)(elapsedTime * speed), totalDistance);
+
+            transform.position = startPosition + direction * coveredDistance;
+
+
+            if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
+                Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
+
                 Destroy(gameObject);
                 yield break;
             }
+
+            // 테스트용 로그 출력
+            //Debug.Log($"노트 이동 중 - 현재 dspTime: {currentDspTime}, 목표 시간: {endDspTime}");
 
             yield return null;
         }
@@ -56,17 +68,11 @@ public abstract class Note : MonoBehaviour
     {
         if (isBoss)
         {
-            if(decision == E_NoteDecision.Perfect)
-                scoreValue *= (int)(decision) * 2;
-            else
-                scoreValue *= (int)((float)decision - (float)decision * 0.1f) * 2;
+            scoreValue *= (float)decision * 2;
         }
         else
         {
-            if (decision == E_NoteDecision.Perfect)
-                scoreValue *= (int)(decision);
-            else
-                scoreValue *= (int)((float)decision - (float)decision * 0.1f);
+            scoreValue *= (float)decision;
         }
         Debug.Log($"Hit된 결과 : {decision}, 점수 : {scoreValue}");
     }
