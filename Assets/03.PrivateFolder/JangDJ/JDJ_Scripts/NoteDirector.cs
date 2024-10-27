@@ -5,31 +5,35 @@ using UnityEngine;
 public class NoteDirector : MonoBehaviour
 {
     [SerializeField] private NoteSpawner _spawner = null;
+    [SerializeField] private NoteSpawnPosController _posController = null;
 
     [SerializeField] private int _bpm;
     [SerializeField] private float _noteSpeed;
-    [ReadOnly(true)] private float _noteArriveDuration;
+    [ReadOnly(true)] private double _noteArriveDuration;
     [SerializeField] private float _prevDelay;
 
     private Coroutine _spawnRoutine = null;
-    private WaitForSeconds _intervalSec = null;
 
     public int BPM => _bpm;
 
-    /// <summary>
-    /// 설정하는 BPM 과 노트 이동속도를 통해 내부 생성 간격을 초기화진행
-    /// </summary>
-    public void Initailize()
+    public Vector3 GetCheckPoses(E_SpawnerPosY posY)
     {
-        //_bpm = bpm;
-        //_noteSpeed = speed;
-
-        _intervalSec = new WaitForSeconds(GetBPMtoIntervalSec());
+        return _posController.GetSpawnerPos(E_SpawnerPosX.CHECK, posY);
     }
 
-    /// <summary>
-    /// 스테이지 진행시 진행되는 동안 반복적으로 노트를 생성합니다.
-    /// </summary>
+    private void Awake()
+    {
+        if (GameManager.NoteDirector != null)
+            Destroy(GameManager.NoteDirector);
+
+        GameManager.NoteDirector = this;
+    }
+
+    public void Initailize()
+    {
+        _noteArriveDuration = CalculateArriveSec();
+    }
+
     public void StartSpawnNotes()
     {
         if (_spawnRoutine != null)
@@ -43,33 +47,54 @@ public class NoteDirector : MonoBehaviour
         return 60f / _bpm;
     }
 
-    private float CalculateDuration()
+    private double CalculateArriveSec()
     {
-        float checkPointDist = _spawner.DistSpawnToCheck;
-        return checkPointDist / _noteSpeed;
+        double checkPointDist = _posController.DistSpawnToCheck;
+        return Mathf.Abs((float)checkPointDist / _noteSpeed);
     }
 
     private IEnumerator AutoSpawnRoutine()
     {
-        yield return new WaitForSeconds(_prevDelay + _noteArriveDuration);
+        double nextSpawnTime = 0d;
+        double startDspTime = AudioSettings.dspTime;
+        double firstNoteTime = startDspTime + (GetBPMtoIntervalSec() * 4) - _noteArriveDuration; // 4박자 뒤의 첫 노트 생성 시간
+                                                                                                 // 첫 번째 노트 생성 타이밍 설정
+        nextSpawnTime = firstNoteTime;
+        _spawner.RegistPattern(1);
+        GameManager.Instance.PlayMusic();
 
         //while (true)
         //{
-            //// 중간 스폰을 잠시 중단하는 방법 모색요망
-            //if(GameManager.Instance.IsPlaying == false)
-            //{
-            //    yield break;
-            //}
+        //    if (AudioSettings.dspTime >= restFourbeatTime)
+        //        break;
 
-            //if(_spawner.IsLastNote == true)
-            //{
-            //    _spawner.RegistPattern(Random.Range(0,???));
-            //}
-
-            //_spawner.SpawnNote(_noteSpeed);
-
-            //yield return _intervalSec;
+        //    yield return null;
         //}
+
+        nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec();
+
+        while (true)
+        {
+            if (GameManager.Instance.IsPlaying == false)
+            {
+                yield break;
+            }
+
+            if(AudioSettings.dspTime >= nextSpawnTime)
+            {
+                if (_spawner.IsLastNote == true)
+                {
+                    _spawner.RegistPattern(1);
+                }
+
+                _spawner.SpawnNote(_noteSpeed);
+                _posController.NoteCheckRay();
+
+                nextSpawnTime += GetBPMtoIntervalSec();
+            }
+            
+            yield return null;
+        }
     }
 
     private void OnDisable()
