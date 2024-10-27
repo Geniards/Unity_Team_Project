@@ -18,6 +18,15 @@ public class DataManager : MonoBehaviour, IManager
         _csvData.Initailize();
     }
 
+
+    [SerializeField, Header("분당 Beat")]
+    private int _bpm = 120;
+    public int BPM => _bpm;
+
+    [SerializeField,Range(1,20),Header("전체 게임 속도")] 
+    private int _gameSpeed = 1;
+    public int GameSpeed => _gameSpeed;
+
     public int ObjpoolInitCreateCount => 5;
 
     public void SetPlayerHP(int value) { _stageData.PlayerHp = value; }
@@ -28,7 +37,6 @@ public class DataManager : MonoBehaviour, IManager
 
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
     public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
-    public void SetGameSpeed(float value) { _settingData.GameSpeed = value; }
 }
 
 public struct StageData
