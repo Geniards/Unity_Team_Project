@@ -29,9 +29,11 @@ public class ObjectPool
     {
         for (int i = 0; i < createCount; i++)
         {
-            _pool.Add(GameObject.Instantiate(_prefab));
-            _pool[i].transform.SetParent(_myDirectory.transform);
-            _pool[i].SetActive(false);
+            GameObject newObj = GameObject.Instantiate(_prefab);
+
+            _pool.Add(newObj);
+            newObj.transform.SetParent(_myDirectory.transform);
+            newObj.SetActive(false);
         }
     }
 
