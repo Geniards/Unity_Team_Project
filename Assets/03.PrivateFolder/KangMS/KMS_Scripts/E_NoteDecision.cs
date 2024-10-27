@@ -1,7 +1,8 @@
 public enum E_NoteDecision 
 { 
     None, 
-    Great, 
     Perfect, 
+    Great, 
+    Good, 
     E_NOTEDECISION_MAX 
 }
