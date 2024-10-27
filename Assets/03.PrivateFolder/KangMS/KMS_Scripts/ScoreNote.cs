@@ -8,7 +8,6 @@ public class ScoreNote : Note, IPoolingObj, IReflective
     public E_Pool MyPoolType => E_Pool.MONSTER;
     public E_NoteDecision NoteDecision;
 
-
     /// <summary>
     /// Test를 확인하기 위해 생성 추후 삭제 필요!
     /// </summary>
@@ -17,7 +16,9 @@ public class ScoreNote : Note, IPoolingObj, IReflective
         // test용
         Initialize(endPoint, speed, scoreValue);
     }
-
+    /// <summary>
+    /// Test를 확인하기 위해 생성 추후 삭제 필요!
+    /// </summary>
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.A))
