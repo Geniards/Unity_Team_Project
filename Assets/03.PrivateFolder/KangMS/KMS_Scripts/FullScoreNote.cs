@@ -5,15 +5,6 @@ using static Note;
 
 public class FullScoreNote : Note
 {
-    /// <summary>
-    /// Test를 확인하기 위해 생성 추후 삭제 필요!
-    /// </summary>
-    private void Awake()
-    {
-        // test용
-        Initialize(endPoint, speed, scoreValue);
-    }
-
     public override void OnHit(E_NoteDecision decision)
     {
         if (Input.GetKey(KeyCode.J) && Input.GetKey(KeyCode.F) && !_isHit && !isBoss)
