@@ -5,5 +5,6 @@ public enum E_Pool
     MONSTER_NOTE,
     OBSTACLE_NOTE,
     BACKGROUND_OBJECT,
+    HIT_VFX,
     E_POOL_Max
 }
