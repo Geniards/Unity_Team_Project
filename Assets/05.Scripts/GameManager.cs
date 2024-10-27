@@ -11,9 +11,10 @@ public class GameManager : MonoBehaviour
     private int _stageNumber;
     public int StageNumber => _stageNumber;
 
-    private bool _isPlaying;
+    private bool _isPlaying = true;
     public bool IsPlaying => _isPlaying;
 
+    [SerializeField] private AudioSource _source;
     // TODO 백그라운드 매니저 추가, 정빈님 작업 후 추가 예정
 
     private void Awake()
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         }
 
         InitializeManagers();
+        Application.targetFrameRate = 60;
         _stageNumber = 1; // 테스트용도
     }
 
@@ -50,6 +52,11 @@ public class GameManager : MonoBehaviour
     {
         NoteDirector.Initailize();
         NoteDirector.StartSpawnNotes();
+    }
+
+    public void PlayMusic()
+    {
+        _source.Play();
     }
 
     private void Update()

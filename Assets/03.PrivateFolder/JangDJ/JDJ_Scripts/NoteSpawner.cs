@@ -6,7 +6,7 @@ using UnityEngine;
 public class NoteSpawner : MonoBehaviour
 {
     [SerializeField] private NoteSpawnPosController _posController = null;
-    private List<NotePattern> _innerNoteList = null;
+    private List<NoteData> _innerNoteList = null;
     private int _lastNoteIdx = 0;
 
     public bool IsLastNote
@@ -26,7 +26,7 @@ public class NoteSpawner : MonoBehaviour
     {
         _lastNoteIdx = 0;
 
-        _innerNoteList = new List<NotePattern>();
+        _innerNoteList = new List<NoteData>();
     }
 
     private void Start()
@@ -46,10 +46,10 @@ public class NoteSpawner : MonoBehaviour
         //    _innerNoteList.Add(patterns[i]);
         //}
 
-        _innerNoteList.Add(new NotePattern(1, E_NoteType.Monster));
-        _innerNoteList.Add(new NotePattern(2, E_NoteType.Monster));
-        _innerNoteList.Add(new NotePattern(3, E_NoteType.Monster));
-        _innerNoteList.Add(new NotePattern(1, E_NoteType.Monster));
+        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
+        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
+        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
+        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
     }
 
     /// <summary>
@@ -60,39 +60,12 @@ public class NoteSpawner : MonoBehaviour
         if (_lastNoteIdx >= _innerNoteList.Count)
         { throw new System.Exception("등록된 노트가 없습니다."); }
 
-        NotePattern pattern = _innerNoteList[_lastNoteIdx];
-        Note note = GetNoteObject(pattern.noteType);
-        note.transform.position = GetNoteStartPosition(pattern.position);
+        NoteData data = _innerNoteList[_lastNoteIdx];
+        Note note = GetNoteObject(data.noteType);
+        note.transform.position = GetNoteStartPosition(data.position);
 
-        note.Initialize(GetNoteEndPosition(pattern.position), noteSpeed, 10f);
+        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f);
         _lastNoteIdx++;
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            NotePattern pat = new NotePattern(1, E_NoteType.Monster);
-            _innerNoteList.Add(pat);
-
-            SpawnNote(5);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            NotePattern pat = new NotePattern(2, E_NoteType.Monster);
-            _innerNoteList.Add(pat);
-
-            SpawnNote(5);
-        }
-
-        else if(Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            NotePattern pat = new NotePattern(3, E_NoteType.Monster);
-            _innerNoteList.Add(pat);
-
-            SpawnNote(5);
-        }
     }
 
     private Note GetNoteObject(E_NoteType type)
