@@ -9,6 +9,9 @@ public class WGH_PlayerController : MonoBehaviour
     [SerializeField] float _inAirTime;                  // 체공시간                         / 기준 값 : 0.3f
     [SerializeField] float _fallAttackHeight;           // 하강 공격 시 플레이어의 높이 위치  / 기준 값 : 0.4f
     [SerializeField] float _jumpHeight;                 // 점프 시 플레이어의 높이 위치      / 기준 값 : 5f
+    [SerializeField] int _maxHp;
+    [SerializeField] int _curHp;
+    [SerializeField] float _invincivilityTime;          // 무적시간
 
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
@@ -21,9 +24,12 @@ public class WGH_PlayerController : MonoBehaviour
     [Header("기타")]
     private bool _isAir;                               // 체공 여부
     Coroutine _IsAirRountine;                          // 체공 코루틴
+    bool _isDamaged;                                   // 피격 여부
     
     private void Awake()
     {
+        _maxHp = 3;
+        _curHp = _maxHp;
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
@@ -43,82 +49,116 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKey(KeyCode.F) && Input.GetKey(KeyCode.J))
+        if (!_isDamaged)
         {
-            _judgeCircle.SetTopCircleOff();
-            _judgeCircle.SetMiddleCircleOn();
-            _judgeCircle.SetBottomCircleOff();
-            SetAnim("GroundAttack");
+            if (Input.GetKey(KeyCode.F) && Input.GetKey(KeyCode.J))
+            {
+                _judgeCircle.SetTopCircleOff();
+                _judgeCircle.SetMiddleCircleOn();
+                _judgeCircle.SetBottomCircleOff();
+                SetAnim("GroundAttack");
+            }
+            else
+            {
+                _judgeCircle.SetMiddleCircleOff();      // Middle 판정 없애기
+
+                // 점프 키를 눌렀을 경우
+                if (Input.GetKey(KeyCode.F))
+                {
+                    _judgeCircle.SetTopCircleOn();      // Top 콜라이더 활성화
+                    _judgeCircle.SetBottomCircleOff();  // Bottom 콜라이더 비활성화
+                    _rigid.position = JumPos;           // 캐릭터가 지정한 위치로 순간이동
+
+                    if (!_isAir && !_judgeCircle._isGreatCircleIn)
+                    {
+                        SetAnim("Jump");
+                    }
+                    else if (_isAir && _judgeCircle._isGreatCircleIn)
+                    {
+                        SetAnim("JumpAttack1");
+                        if (_judgeCircle._isPerfectCircleIn)
+                        {
+                            _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
+                        }
+                        else if (_judgeCircle._isGreatCircleIn && !_judgeCircle._isPerfectCircleIn)
+                        {
+                            _judgeCircle.note.OnHit(E_NoteDecision.Great);
+                        }
+                    }
+
+                    _isAir = true;                      // 체공 상태
+                                                        // 체공 코루틴
+                    _IsAirRountine = StartCoroutine(InAirTime());
+                }
+
+                // 공격 키를 눌렀을 경우 && 땅에 있을 경우
+                if (!_isAir && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
+                {
+                    // 만약 judgecircle의 노트가 있고
+                    // 만약 judgecircle의 isperfect가 true라면 OnHit에 perfect를 전달
+                    // 그게 아니라면(else) great를 전달
+                    if (_judgeCircle._isPerfectCircleIn)
+                    {
+                        _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
+                    }
+                    else if (_judgeCircle._isGreatCircleIn && !_judgeCircle._isPerfectCircleIn)
+                    {
+                        _judgeCircle.note.OnHit(E_NoteDecision.Great);
+                    }
+                    // 하단 공격
+                    SetAnim("GroundAttack");
+
+                }
+                // 공격 키를 눌렀을 경우 && 공중에 있을 경우
+                if (_isAir && Input.GetKey(KeyCode.J))
+                {
+                    _judgeCircle.SetBottomCircleOn();
+                    _judgeCircle.SetTopCircleOff();
+                    if (_judgeCircle._isPerfectCircleIn)
+                    {
+                        _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
+
+                    }
+                    else if (_judgeCircle._isGreatCircleIn)
+                    {
+                        _judgeCircle.note.OnHit(E_NoteDecision.Great);
+                    }
+                    _rigid.position = GroundPos;
+                    // 하강 공격
+                    SetAnim("FallAttack");
+                    if (_IsAirRountine != null)
+                    {
+                        StopCoroutine(_IsAirRountine);
+                        _rigid.isKinematic = false;
+                    }
+                }
+
+            }
         }
         else
         {
-            _judgeCircle.SetMiddleCircleOff();
-            // 점프 키를 눌렀을 경우
-            if (!_isAir && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                _judgeCircle.SetTopCircleOn();      // Top 콜라이더 활성화
-                _judgeCircle.SetBottomCircleOff();  // Bottom 콜라이더 비활성화
-
-                _isAir = true;                      // 체공 상태
-                SetAnim("Jump");
-                _rigid.position = JumPos;           // 캐릭터가 지정한 위치로 순간이동
-                // 체공 코루틴
-                _IsAirRountine = StartCoroutine(InAirTime());
-
-            }
-
-            // 공격 키를 눌렀을 경우 && 땅에 있을 경우
-            if (_isAir == false && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
-            {
-                // 만약 judgecircle의 노트가 있고
-
-                // 만약 judgecircle의 isperfect가 true라면 OnHit에 perfect를 전달
-                // 그게 아니라면(else) great를 전달
-                if(_judgeCircle._isGreatCircleIn && _judgeCircle._isPerfectCircleIn)
-                {
-                    _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
-                }
-                else if(_judgeCircle._isGreatCircleIn && !_judgeCircle._isPerfectCircleIn)
-                {
-                    _judgeCircle.note.OnHit(E_NoteDecision.Great);
-                    Debug.Log("그레잇");
-                }
-                // 하단 공격
-                SetAnim("GroundAttack");
-            }
-
-            // 공격 키를 눌렀을 경우 && 공중에 있을 경우
-            else if (_isAir && Input.GetKeyDown(KeyCode.J))
-            {
-                _judgeCircle.SetTopCircleOff();
-                _judgeCircle.SetBottomCircleOn();
-                if (_IsAirRountine != null)
-                {
-                    StopCoroutine(_IsAirRountine);
-                    _rigid.isKinematic = false;
-                }
-                // 하강 공격
-                SetAnim("FallAttack");
-                _rigid.position = GroundPos;
-            }
+            // TODO : 플레이어 피격 애니메이션
+            SetAnim("Run");
         }
-        
     }
 
-    public void Attack()
-    {
-
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if(collision.)
+        // TODO : 땅에 tag 붙이기
         // if(collision.collider.tag == "Ground")
         //{
         _judgeCircle.SetTopCircleOff();
         _judgeCircle.SetBottomCircleOn();
         _isAir = false;
         //}
+        if(collision.collider.TryGetComponent(out Note note) && !_isDamaged)
+        {
+            _isDamaged = true;
+            _curHp -= 1;
+            StartCoroutine(Invincibility());
+            StartCoroutine(Clicker());
+        }
         // if(collision.collider.tag == "Monster" || collision.collider.tag == "Obstacle")
         //{
         // TODO : 피격판정
@@ -131,6 +171,26 @@ public class WGH_PlayerController : MonoBehaviour
         _rigid.isKinematic = true;
         yield return new WaitForSeconds(_inAirTime);
         _rigid.isKinematic = false;
+        yield break;
+    }
+
+    // 캐릭터 피격 깜빡거림
+    IEnumerator Clicker()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        yield return new WaitForSeconds(0.25f);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        yield return new WaitForSeconds(0.25f);
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        yield return new WaitForSeconds(0.25f);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        yield break;
+    }
+    // 무적
+    IEnumerator Invincibility()
+    {
+        yield return new WaitForSeconds(_invincivilityTime);
+        _isDamaged = false;
         yield break;
     }
     /// <summary>
