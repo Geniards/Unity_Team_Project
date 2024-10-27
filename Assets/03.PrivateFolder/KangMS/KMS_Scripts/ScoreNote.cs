@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ScoreNote : Note, IPoolingObj, IReflective
 {
-    public E_Pool MyPoolType => E_Pool.MONSTER_NOTE;
+    public E_Pool MyPoolType => E_Pool.SCORE_NOTE;
 
     public override void OnHit(E_NoteDecision decision)
     {
