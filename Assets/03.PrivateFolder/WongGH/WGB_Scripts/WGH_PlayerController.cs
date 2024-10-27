@@ -36,7 +36,6 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
         _judgeCircle.SetTopCircleOff();
         _judgeCircle.SetMiddleCircleOff();
         _judgeCircle.SetBottomCircleOn();
@@ -44,16 +43,6 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        // 플레이어 높이에 따른 CheckPosY 값 변경
-        //_rigidYPos = Camera.main.WorldToScreenPoint(_rigid.position);
-        //if(_rigidYPos.y > Screen.height * 0.5f)
-        //{
-        //    _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.TOP);
-        //}
-        //else if(_rigidYPos.y < Screen.height * 0.5f) 
-        //{
-        //    _judgeCircle.ChangeJudgePosY(E_SpawnerPosY.BOTTOM);
-        //}
         if(Input.GetKey(KeyCode.F) && Input.GetKey(KeyCode.J))
         {
             _judgeCircle.SetTopCircleOff();
@@ -67,11 +56,12 @@ public class WGH_PlayerController : MonoBehaviour
             // 점프 키를 눌렀을 경우
             if (!_isAir && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.LeftControl))
             {
-                _judgeCircle.SetTopCircleOn();
-                _judgeCircle.SetBottomCircleOff();
-                _isAir = true;
+                _judgeCircle.SetTopCircleOn();      // Top 콜라이더 활성화
+                _judgeCircle.SetBottomCircleOff();  // Bottom 콜라이더 비활성화
+
+                _isAir = true;                      // 체공 상태
                 SetAnim("Jump");
-                _rigid.position = JumPos;
+                _rigid.position = JumPos;           // 캐릭터가 지정한 위치로 순간이동
                 // 체공 코루틴
                 _IsAirRountine = StartCoroutine(InAirTime());
 
@@ -80,9 +70,23 @@ public class WGH_PlayerController : MonoBehaviour
             // 공격 키를 눌렀을 경우 && 땅에 있을 경우
             if (_isAir == false && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
             {
+                // 만약 judgecircle의 노트가 있고
+
+                // 만약 judgecircle의 isperfect가 true라면 OnHit에 perfect를 전달
+                // 그게 아니라면(else) great를 전달
+                if(_judgeCircle._isGreatCircleIn && _judgeCircle._isPerfectCircleIn)
+                {
+                    _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
+                }
+                else if(_judgeCircle._isGreatCircleIn && !_judgeCircle._isPerfectCircleIn)
+                {
+                    _judgeCircle.note.OnHit(E_NoteDecision.Great);
+                    Debug.Log("그레잇");
+                }
                 // 하단 공격
                 SetAnim("GroundAttack");
             }
+
             // 공격 키를 눌렀을 경우 && 공중에 있을 경우
             else if (_isAir && Input.GetKeyDown(KeyCode.J))
             {
