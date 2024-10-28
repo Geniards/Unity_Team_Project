@@ -23,10 +23,10 @@ public class WGH_PlayerController : MonoBehaviour
 
     [Header("기타")]
     private bool _isAir;                               // 체공 여부
-    bool _canJump = true;
+    bool _isCanJump = true;
     Coroutine _IsAirRountine;                          // 체공 코루틴
     bool _isDamaged;                                   // 피격 여부
-    float fpresstime = 0;
+    float _fPressTime = 0;
     private void Awake()
     {
         _maxHp = 3;
@@ -114,17 +114,17 @@ public class WGH_PlayerController : MonoBehaviour
                 // 점프 키를 눌렀을 경우
                 if (Input.GetKey(KeyCode.F))
                 {
-                    fpresstime += Time.deltaTime;
+                    _fPressTime += Time.deltaTime;
                     
-                    if (fpresstime >= 0.05f)
+                    if (_fPressTime >= 0.05f)
                     {
                         _isAir = true;                          // 체공 상태   
-                        if(_canJump)
+                        if(_isCanJump)
                         {
                             _rigid.position = JumPos;           // 캐릭터가 지정한 위치로 순간이동
                             _rigid.isKinematic = true;
                             _rigid.isKinematic = false;
-                            _canJump = false;
+                            _isCanJump = false;
                         }
                         
                         _IsAirRountine = StartCoroutine(InAirTime()); // 체공 코루틴
@@ -152,7 +152,7 @@ public class WGH_PlayerController : MonoBehaviour
                 }
                 else if(Input.GetKeyUp(KeyCode.F))
                 {
-                    fpresstime = 0;
+                    _fPressTime = 0;
                 }
             
                 // 공격 키를 눌렀을 경우 && 땅에 있을 경우
@@ -215,7 +215,7 @@ public class WGH_PlayerController : MonoBehaviour
         _judgeCircle.SetBottomCircleOn();
         if(collision.collider.TryGetComponent(out BoxCollider2D boxColllider))
         {
-            _canJump = true;
+            _isCanJump = true;
             _isAir = false;
         }
         
