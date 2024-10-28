@@ -22,4 +22,8 @@ public class LongScoreNote : Note
     {
         
     }
+
+    public override void OnDamage()
+    {
+    }
 }

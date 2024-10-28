@@ -17,6 +17,8 @@ public abstract class Note : MonoBehaviour
 
     public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue)
     {
+        gameObject.SetActive(true);
+
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
@@ -50,9 +52,9 @@ public abstract class Note : MonoBehaviour
 
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                //Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
+                Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
 
-                Destroy(gameObject);
+                gameObject.SetActive(false);
                 yield break;
             }
 
@@ -73,13 +75,14 @@ public abstract class Note : MonoBehaviour
         {
             scoreValue *= (float)decision;
         }
-        Debug.Log($"Hit된 결과 : {decision}, 점수 : {scoreValue}");
+        //Debug.Log($"Hit된 결과 : {decision}, 점수 : {scoreValue}");
     }
 
     /// <summary>
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
     public abstract void OnHit(E_NoteDecision decision);
+    public abstract void OnDamage();
 
     /// <summary>
     // 이펙트 처리 (애니메이션 또는 파티클)
