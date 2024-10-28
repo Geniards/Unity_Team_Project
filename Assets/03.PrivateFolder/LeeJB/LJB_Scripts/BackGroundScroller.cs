@@ -4,50 +4,49 @@ using UnityEngine;
 
 public class BackGroundScroller : MonoBehaviour
 {
-    [SerializeField] private float backgroundScrollSpeed = 1.0f;    // 배경 스크롤 속도
-    [SerializeField] private GameObject[] backgroundTiles;          // 기존 배경 타일 배열
-    private List<GameObject> _activeTiles = new List<GameObject>(); // 활성화된 타일 목록
-    private float _tileWidth;                                       // 타일의 너비
+    [SerializeField] private GameObject[] tiles;        
+    [SerializeField] private float _scrollSpeed = 1.0f; // 배경 스크롤 속도
+    [SerializeField] private float _tileWidth;          // 각 타일의 가로 길이
 
-    void Start()
+    private void Start()
     {
-        if (backgroundTiles.Length > 0)
+        // 초기 타일 배치
+       // for (int i = 0; i < tiles.Length; i++)
+       // {
+       //     tiles[i].transform.position = new Vector3(i * _tileWidth, tiles[i].transform.position.y, tiles[i].transform.position.z);
+       // }
+    }
+
+    private void Update()
+    {
+        MoveBackground();
+    }
+
+    // 배경을 왼쪽으로 이동시키고, 화면 밖으로 벗어난 타일을 재배치
+    private void MoveBackground()
+    {
+        for (int i = 0; i < tiles.Length; i++)
         {
-            _tileWidth = backgroundTiles[0].GetComponent<Renderer>().bounds.size.x;
-            InitializeExistingTiles();
+            tiles[i].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime;
+
+            // 화면 밖으로 벗어난 타일을 오른쪽 끝으로 재배치
+            if (tiles[i].transform.position.x <= -_tileWidth)
+            {
+                float rightMostX = GetRightMostTileX();
+                tiles[i].transform.position = new Vector3(rightMostX + _tileWidth, tiles[i].transform.position.y, tiles[i].transform.position.z);
+            }
         }
     }
 
-    void Update()
+    // 현재 가장 오른쪽에 있는 타일의 x 좌표를 찾음
+    private float GetRightMostTileX()
     {
-        ScrollBackground();                                       // 배경 스크롤 메서드 호출
-    }
-
-    private void InitializeExistingTiles()
-    {
-        // 이미 배치된 타일들을 _activeTiles 리스트에 추가
-        for (int i = 0; i < backgroundTiles.Length; i++)
+        float maxX = tiles[0].transform.position.x;
+        for (int i = 1; i < tiles.Length; i++)
         {
-            _activeTiles.Add(backgroundTiles[i]);
+            if (tiles[i].transform.position.x > maxX)
+                maxX = tiles[i].transform.position.x;
         }
-    }
-
-    private void ScrollBackground()
-    {
-        // 모든 타일을 왼쪽으로 이동
-        foreach (var tile in _activeTiles)
-        {
-            tile.transform.position += Vector3.left * backgroundScrollSpeed * Time.deltaTime;
-        }
-
-        // 첫 번째 타일이 화면을 벗어나면 위치를 오른쪽 끝으로 이동
-        if (_activeTiles[0].transform.position.x <= -_tileWidth)
-        {
-            GameObject firstTile = _activeTiles[0];
-            _activeTiles.RemoveAt(0); // 첫 번째 타일 제거
-            // 첫 번째 타일을 마지막 타일의 오른쪽 끝에 위치
-            firstTile.transform.position = _activeTiles[_activeTiles.Count - 1].transform.position + Vector3.right * _tileWidth;
-            _activeTiles.Add(firstTile); // 마지막에 추가
-        }
+        return maxX;
     }
 }
