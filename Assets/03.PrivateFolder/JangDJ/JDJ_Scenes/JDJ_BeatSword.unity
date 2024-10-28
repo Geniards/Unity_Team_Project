@@ -259,10 +259,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1807516738, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.66
-      objectReference: {fileID: 0}
     - target: {fileID: 1830079445, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
       propertyPath: maxobj
       value: 
@@ -451,7 +447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1354593522}
   - component: {fileID: 1354593523}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +641,8 @@ GameObject:
   - component: {fileID: 1782429146}
   - component: {fileID: 1782429148}
   - component: {fileID: 1782429147}
-  m_Layer: 0
+  - component: {fileID: 1782429149}
+  m_Layer: 11
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -696,6 +693,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 2.2968507, y: 2.2968507}
   m_Direction: 0
+--- !u!114 &1782429149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782429145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518aaa72c246fe0498fcf90fed86bac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1978790276
 GameObject:
   m_ObjectHideFlags: 0
