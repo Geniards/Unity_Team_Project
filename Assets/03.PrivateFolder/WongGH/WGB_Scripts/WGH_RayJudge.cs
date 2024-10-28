@@ -4,49 +4,14 @@ using UnityEngine;
 
 public class WGH_RayJudge : MonoBehaviour
 {
-    [Header("TOP RIGHT 거리")]
-    [SerializeField] float _distTopRightGreat;
-    [SerializeField] float _distTopRightPerfect;
+    [SerializeField] float _greatDistance;
+    [SerializeField] float _perfectDistance;
 
-    [Header("TOP LEFT 거리")]
-    [SerializeField] float _distTopLeftGreat;
-    [SerializeField] float _distTopLeftPerfect;
-
-    [Header("MIDDLE RIGHT 거리")]
-    [SerializeField] float _distMiddleRightGreat;
-    [SerializeField] float _distMiddleRightPerfect;
-
-    [Header("MIDDLE LEFT 거리")]
-    [SerializeField] float _distMiddleLeftGreat;
-    [SerializeField] float _distMiddleLeftPerfect;
-
-    [Header("BOTTOM RIGHT 거리")]
-    [SerializeField] float _distBottomRightGreat;
-    [SerializeField] float _distBottomRightPerfect;
-
-    [Header("BOTTOM LEFT 거리")]
-    [SerializeField] float _distBottomLeftGreat;
-    [SerializeField] float _distBottomLeftPerfect;
-
-    [SerializeField] Vector3 _checkTopPos;
-    [SerializeField] Vector3 _checkMiddlePos;
-    [SerializeField] Vector3 _checkBottomPos;
-
-    bool _topGreatLeft;
-    bool _topGreatRight;
-    bool _topPerfectLeft;
-    bool _topPerfectRight;
-    
-    bool _middleGreatLeft;
-    bool _middleGreatRight;
-    bool _middlePerfectLeft;
-    bool _middlePerfectRight;
-
-    bool _bottomGreatLeft;
-    bool _bottomGreatRight;
-    bool _bottomPerfectLeft;
-    bool _bottomPerfectRight;
-
+    Vector3 _checkTopPos;
+    Vector3 _checkMiddlePos;
+    Vector3 _checkBottomPos;
+    Vector3 _curPos;
+    Note _note;
     private void Start()
     {
         _checkTopPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.TOP);
@@ -56,80 +21,104 @@ public class WGH_RayJudge : MonoBehaviour
 
     private void Update()
     {
-        Vector3 _originTop = _checkTopPos;
-        Vector3 _originMiddle = _checkMiddlePos;
-        Vector3 _originBottom = _checkBottomPos;
-
-        if(Physics.Raycast(_originTop, Vector3.right, out RaycastHit hitTopRIght, _distTopRightGreat))
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            if(hitTopRIght.distance <= _distTopRightGreat)
+            CheckNote(_checkBottomPos);
+        }
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            CheckNote(_checkTopPos);
+
+        }
+        
+    }
+    /// <summary>
+    /// 노트판정 메서드
+    /// </summary>
+    /// <param name="checkPos"></param>
+    public void CheckNote(Vector3 checkPos)
+    {
+        this._curPos = checkPos;
+        //RaycastHit2D hitRight = Physics2D.Raycast(_curPos, Vector3.right, _greatDistance);
+        //RaycastHit2D hitLeft = Physics2D.Raycast(_curPos, Vector3.left, _greatDistance);
+        Vector2 aPoint = new Vector2(_curPos.x - _perfectDistance / 2, _curPos.y - _perfectDistance / 2);
+        Vector2 bPoint = new Vector2(_curPos.x + _perfectDistance / 2, _curPos.y + _perfectDistance / 2);
+        Collider2D[] hits = Physics2D.OverlapAreaAll(aPoint, bPoint);
+        Debug.DrawLine(aPoint,bPoint, Color.blue, 1f);
+        foreach (Collider2D hit in hits)
+        {
+            if(hit.TryGetComponent(out Note note))
             {
-                _topGreatRight = true;
-            }
-            else if(hitTopRIght.distance <= _distTopRightPerfect)
-            {
-                _topPerfectRight = true;
+                _note = note;
+                float _distance = Vector2.Distance(_curPos, hit.transform.position);
+                Debug.DrawLine(aPoint + new Vector2(0, _perfectDistance / 2), bPoint - new Vector2(0, _perfectDistance / 2), Color.blue, 1);
+                if (_distance <= _perfectDistance)
+                {
+                    _note.OnHit(E_NoteDecision.Perfect);
+                }
+                else if(_distance <= _greatDistance)
+                {
+                    _note.OnHit(E_NoteDecision.Great);
+                }
             }
         }
-
-        if (Physics.Raycast(_originTop, Vector3.left, out RaycastHit hitTopLeft, _distTopLeftGreat))
+        
+        // 양 옆에 노트가 있을 경우
+        //if(hitLeft.collider != null && hitRight.collider != null) 
+        //{
+        //    if (hitLeft.distance > hitRight.distance) // 왼쪽보다 오른쪽이 기준선에 더 가까울경우 == o  | o
+        //    {
+        //        CheckNoteRight(_curPos);
+        //    }
+        //    else if (hitLeft.distance < hitRight.distance)
+        //    {
+        //        CheckNoteLeft(_curPos);
+        //    }
+        //}
+        //// 좌측에만 노트가 있을 경우
+        //else if (hitLeft.collider != null)
+        //{
+        //    CheckNoteLeft(_curPos);
+        //}
+        //// 우측에만 노트가 있을 경우
+        //else if(hitRight.collider != null)
+        //{
+        //    CheckNoteRight(_curPos);
+        //}
+    }
+    public void CheckNoteRight(Vector3 checkPos)
+    {
+        this._curPos = checkPos;
+        RaycastHit2D hitRight = Physics2D.Raycast(_curPos, Vector3.right, _greatDistance);
+        if (hitRight.collider.TryGetComponent(out Note note1))
         {
-            if (hitTopLeft.distance <= _distTopLeftGreat)
+            _note = note1;
+            if (hitRight.distance <= _perfectDistance)
             {
-                _topGreatLeft = true;
+                _note.OnHit(E_NoteDecision.Perfect);
             }
-            else if (hitTopLeft.distance <= _distTopLeftGreat)
+            else if (hitRight.distance <= _greatDistance)
             {
-                _topPerfectLeft = true;
-            }
-        }
-
-        if (Physics.Raycast(_originMiddle, Vector3.right, out RaycastHit hitMiddleRIght, _distMiddleRightGreat))
-        {
-            if (hitMiddleRIght.distance <= _distMiddleRightGreat)
-            {
-                _middleGreatRight = true;
-            }
-            else if (hitMiddleRIght.distance <= _distMiddleRightGreat)
-            {
-                _middlePerfectRight = true;
-            }
-        }
-
-        if (Physics.Raycast(_originMiddle, Vector3.left, out RaycastHit hitMiddleLeft, _distMiddleLeftGreat))
-        {
-            if (hitMiddleLeft.distance <= _distMiddleLeftGreat)
-            {
-                _middleGreatLeft = true;
-            }
-            else if (hitMiddleLeft.distance <= _distMiddleLeftGreat)
-            {
-                _middlePerfectLeft = true;
-            }
-        }
-
-        if (Physics.Raycast(_originMiddle, Vector3.right, out RaycastHit hitBottomRIght, _distBottomRightGreat))
-        {
-            if (hitBottomRIght.distance <= _distBottomRightGreat)
-            {
-                _bottomGreatRight = true;
-            }
-            else if (hitBottomRIght.distance <= _distBottomRightGreat)
-            {
-                _bottomPerfectRight = true;
-            }
-        }
-
-        if (Physics.Raycast(_originMiddle, Vector3.right, out RaycastHit hitBottomLeft, _distBottomLeftGreat))
-        {
-            if (hitBottomLeft.distance <= _distBottomLeftGreat)
-            {
-                _bottomGreatLeft = true;
-            }
-            else if (hitBottomLeft.distance <= _distBottomLeftGreat)
-            {
-                _bottomPerfectLeft = true;
+                _note.OnHit(E_NoteDecision.Great);
             }
         }
     }
+    public void CheckNoteLeft(Vector3 checkPos)
+    {
+        this._curPos = checkPos;
+        RaycastHit2D hitLeft = Physics2D.Raycast(_curPos, Vector3.left, _greatDistance);
+        if (hitLeft.collider.TryGetComponent(out Note note2))
+        {
+            _note = note2;
+            if (hitLeft.distance <= _perfectDistance)
+            {
+                _note.OnHit(E_NoteDecision.Perfect);
+            }
+            else if (hitLeft.distance <= _greatDistance)
+            {
+                _note.OnHit(E_NoteDecision.Great);
+            }
+        }
+    }
+    
 }

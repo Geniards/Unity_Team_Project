@@ -19,7 +19,7 @@ public class WGH_PlayerController : MonoBehaviour
     public Vector2 GroundPos { get; private set; }    // 땅의 위치값
     public Vector2 JumPos { get; private set; }       // 점프 위치값
     Vector2 _rigidYPos;                                // 캐릭터 Y 높이값
-    [SerializeField] WGH_JudgeCircle _judgeCircle;
+   
 
     [Header("기타")]
     private bool _isAir;                               // 체공 여부
@@ -39,20 +39,18 @@ public class WGH_PlayerController : MonoBehaviour
         GroundPos = new Vector2(transform.position.x, transform.position.y + _fallAttackHeight);    
         
         JumPos = new Vector2(transform.position.x, transform.position.y + _jumpHeight);
-        _judgeCircle = FindAnyObjectByType<WGH_JudgeCircle>();
+        
     }
     private void Start()
     {
-        _judgeCircle.SetTopCircleOff();
-        _judgeCircle.SetMiddleCircleOff();
-        _judgeCircle.SetBottomCircleOn();
+        
 
     }
     private void Update()
     {
         if(!_isAir)
         {
-            _judgeCircle.SetBottomCircleOn();
+            
         }
         if (!_isDamaged)
         {
@@ -60,18 +58,9 @@ public class WGH_PlayerController : MonoBehaviour
             {
                 _rigid.position = GroundPos;
                 _rigid.isKinematic = true;
-                _judgeCircle.SetTopCircleOff();
-                _judgeCircle.SetMiddleCircleOn();
-                _judgeCircle.SetBottomCircleOff();
+                
                 SetAnim("JumpAttack2");
-                if (_judgeCircle._isPerfectCircleIn)
-                {
-                    _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
-                }
-                else if (_judgeCircle._isGreatCircleIn && !_judgeCircle._isPerfectCircleIn)
-                {
-                    _judgeCircle.note.OnHit(E_NoteDecision.Great);
-                }
+                
             }
             //else
             //{
@@ -129,25 +118,8 @@ public class WGH_PlayerController : MonoBehaviour
                         
                         _IsAirRountine = StartCoroutine(InAirTime()); // 체공 코루틴
 
-                        _judgeCircle.SetTopCircleOn();      // Top 콜라이더 활성화
-                        _judgeCircle.SetMiddleCircleOff();
-                        _judgeCircle.SetBottomCircleOff();  // Bottom 콜라이더 비활성화
-                        if (!_judgeCircle._isGreatCircleIn)
-                        {
-                            SetAnim("Jump");
-                        }
-                        else if (_judgeCircle._isGreatCircleIn)
-                        {
-                            SetAnim("JumpAttack1");
-                            if (_judgeCircle._isPerfectCircleIn)
-                            {
-                                _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
-                            }
-                            else if (_judgeCircle._isGreatCircleIn && !_judgeCircle._isPerfectCircleIn)
-                            {
-                                _judgeCircle.note.OnHit(E_NoteDecision.Great);
-                            }
-                        }
+                        
+                        
                     }
                 }
                 else if(Input.GetKeyUp(KeyCode.F))
@@ -158,15 +130,7 @@ public class WGH_PlayerController : MonoBehaviour
                 // 공격 키를 눌렀을 경우 && 땅에 있을 경우
                 if (!_isAir  && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
                 {
-                    _judgeCircle.SetMiddleCircleOff();
-                    if (_judgeCircle._isPerfectCircleIn)
-                    {
-                        _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
-                    }
-                    else if (_judgeCircle._isGreatCircleIn && !_judgeCircle._isPerfectCircleIn)
-                    {
-                        _judgeCircle.note.OnHit(E_NoteDecision.Great);
-                    }
+                   
                     // 하단 공격
                     SetAnim("GroundAttack");
             
@@ -174,18 +138,7 @@ public class WGH_PlayerController : MonoBehaviour
                 // 공격 키를 눌렀을 경우 && 공중에 있을 경우
                 if (_isAir && Input.GetKey(KeyCode.J) && !Input.GetKey(KeyCode.F))
                 {
-                    _judgeCircle.SetBottomCircleOn();
-                    _judgeCircle.SetMiddleCircleOff();
-                    _judgeCircle.SetTopCircleOff();
-                    if (_judgeCircle._isPerfectCircleIn)
-                    {
-                        _judgeCircle.note.OnHit(E_NoteDecision.Perfect);
-            
-                    }
-                    else if (_judgeCircle._isGreatCircleIn)
-                    {
-                        _judgeCircle.note.OnHit(E_NoteDecision.Great);
-                    }
+                    
                     _rigid.position = GroundPos;
                     
                     // 하강 공격
@@ -211,8 +164,7 @@ public class WGH_PlayerController : MonoBehaviour
         // TODO : 땅에 tag 붙이기
         // if(collision.collider.tag == "Ground")
         //{
-        _judgeCircle.SetTopCircleOff();
-        _judgeCircle.SetBottomCircleOn();
+        
         if(collision.collider.TryGetComponent(out BoxCollider2D boxColllider))
         {
             _isCanJump = true;
