@@ -239,8 +239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f966304f7385e4190debd477b5eb26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _greatDistance: 1.5
-  _perfectDistance: 1
+  _greatDistance: 0.4
+  _perfectDistance: 0.2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,11 +616,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6947623713489009007, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _bpm
-      value: 120
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6947623713489009007, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _gameSpeed
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}

@@ -6,12 +6,19 @@ public class WGH_RayJudge : MonoBehaviour
 {
     [SerializeField] float _greatDistance;
     [SerializeField] float _perfectDistance;
-
+    
     Vector3 _checkTopPos;
     Vector3 _checkMiddlePos;
     Vector3 _checkBottomPos;
     Vector3 _curPos;
+
     Note _note;
+
+    float _fPressTime;
+    float _jPressTime;
+    bool _isFpress;
+    bool _isJpress;
+
     private void Start()
     {
         _checkTopPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.TOP);
@@ -23,26 +30,46 @@ public class WGH_RayJudge : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            CheckNote(_checkBottomPos);
-        }
-        else if (Input.GetKeyDown(KeyCode.F))
-        {
-            CheckNote(_checkTopPos);
-
+            _jPressTime = Time.time;
+            _isJpress = true;
         }
         
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _fPressTime = Time.time;
+            _isFpress = true;
+        }
+        
+        if(Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJpress && _isFpress)
+        {
+            CheckNote(_checkMiddlePos);
+            _jPressTime = -1;
+            _fPressTime = -1;
+            _isJpress = false;
+            _isFpress = false;
+        }
+        else
+        {
+            if(_isJpress && !_isFpress && Input.GetKeyUp(KeyCode.J))
+            {
+                CheckNote(_checkBottomPos);
+                _isJpress = false;
+            }
+            if(_isFpress && !_isJpress && Input.GetKeyUp(KeyCode.F))
+            {
+                CheckNote(_checkTopPos);
+                _isFpress = false;
+            }
+        }
     }
     /// <summary>
     /// 노트판정 메서드
     /// </summary>
-    /// <param name="checkPos"></param>
     public void CheckNote(Vector3 checkPos)
     {
         this._curPos = checkPos;
-        //RaycastHit2D hitRight = Physics2D.Raycast(_curPos, Vector3.right, _greatDistance);
-        //RaycastHit2D hitLeft = Physics2D.Raycast(_curPos, Vector3.left, _greatDistance);
-        Vector2 aPoint = new Vector2(_curPos.x - _perfectDistance / 2, _curPos.y - _perfectDistance / 2);
-        Vector2 bPoint = new Vector2(_curPos.x + _perfectDistance / 2, _curPos.y + _perfectDistance / 2);
+        Vector2 aPoint = new Vector2(_curPos.x - _greatDistance / 2, _curPos.y - _greatDistance / 4);
+        Vector2 bPoint = new Vector2(_curPos.x + _greatDistance / 2, _curPos.y + _greatDistance / 4);
         Collider2D[] hits = Physics2D.OverlapAreaAll(aPoint, bPoint);
         Debug.DrawLine(aPoint,bPoint, Color.blue, 1f);
         foreach (Collider2D hit in hits)
@@ -51,40 +78,17 @@ public class WGH_RayJudge : MonoBehaviour
             {
                 _note = note;
                 float _distance = Vector2.Distance(_curPos, hit.transform.position);
-                Debug.DrawLine(aPoint + new Vector2(0, _perfectDistance / 2), bPoint - new Vector2(0, _perfectDistance / 2), Color.blue, 1);
+                Debug.DrawLine(aPoint + new Vector2(0, _greatDistance / 4), bPoint - new Vector2(0, _greatDistance / 4), Color.blue, 1);
                 if (_distance <= _perfectDistance)
                 {
                     _note.OnHit(E_NoteDecision.Perfect);
                 }
-                else if(_distance <= _greatDistance)
+                else if(_distance <= _greatDistance + 0.1f)
                 {
                     _note.OnHit(E_NoteDecision.Great);
                 }
             }
         }
-        
-        // 양 옆에 노트가 있을 경우
-        //if(hitLeft.collider != null && hitRight.collider != null) 
-        //{
-        //    if (hitLeft.distance > hitRight.distance) // 왼쪽보다 오른쪽이 기준선에 더 가까울경우 == o  | o
-        //    {
-        //        CheckNoteRight(_curPos);
-        //    }
-        //    else if (hitLeft.distance < hitRight.distance)
-        //    {
-        //        CheckNoteLeft(_curPos);
-        //    }
-        //}
-        //// 좌측에만 노트가 있을 경우
-        //else if (hitLeft.collider != null)
-        //{
-        //    CheckNoteLeft(_curPos);
-        //}
-        //// 우측에만 노트가 있을 경우
-        //else if(hitRight.collider != null)
-        //{
-        //    CheckNoteRight(_curPos);
-        //}
     }
     public void CheckNoteRight(Vector3 checkPos)
     {
