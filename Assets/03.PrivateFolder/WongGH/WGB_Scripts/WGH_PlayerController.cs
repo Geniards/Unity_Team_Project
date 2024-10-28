@@ -248,13 +248,13 @@ public class WGH_PlayerController : MonoBehaviour
     IEnumerator Clicker()
     {
         //gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.2f);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         yield return new WaitForSeconds(0.25f);
         //gameObject.GetComponent<SpriteRenderer>().enabled = true;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
         yield return new WaitForSeconds(0.25f);
         //gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.2f);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         yield return new WaitForSeconds(0.25f);
         //gameObject.GetComponent<SpriteRenderer>().enabled = true;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
