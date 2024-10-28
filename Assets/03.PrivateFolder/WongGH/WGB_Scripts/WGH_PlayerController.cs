@@ -23,6 +23,7 @@ public class WGH_PlayerController : MonoBehaviour
 
     [Header("기타")]
     private bool _isAir;                               // 체공 여부
+    bool _canJump = true;
     Coroutine _IsAirRountine;                          // 체공 코루틴
     bool _isDamaged;                                   // 피격 여부
     float fpresstime = 0;
@@ -55,7 +56,6 @@ public class WGH_PlayerController : MonoBehaviour
         }
         if (!_isDamaged)
         {
-            
             if(Input.GetKey(KeyCode.J) && Input.GetKey(KeyCode.F))
             {
                 _rigid.position = GroundPos;
@@ -119,14 +119,24 @@ public class WGH_PlayerController : MonoBehaviour
                     if (fpresstime >= 0.05f)
                     {
                         _isAir = true;                          // 체공 상태   
+                        if(_canJump)
+                        {
+                            _rigid.position = JumPos;           // 캐릭터가 지정한 위치로 순간이동
+                            _rigid.isKinematic = true;
+                            _rigid.isKinematic = false;
+                            _canJump = false;
+                        }
+                        
+                        _IsAirRountine = StartCoroutine(InAirTime()); // 체공 코루틴
+
                         _judgeCircle.SetTopCircleOn();      // Top 콜라이더 활성화
                         _judgeCircle.SetMiddleCircleOff();
                         _judgeCircle.SetBottomCircleOff();  // Bottom 콜라이더 비활성화
-                        if (/*!_isAir &&*/ !_judgeCircle._isGreatCircleIn)
+                        if (!_judgeCircle._isGreatCircleIn)
                         {
                             SetAnim("Jump");
                         }
-                        else if (_isAir && _judgeCircle._isGreatCircleIn)
+                        else if (_judgeCircle._isGreatCircleIn)
                         {
                             SetAnim("JumpAttack1");
                             if (_judgeCircle._isPerfectCircleIn)
@@ -138,13 +148,6 @@ public class WGH_PlayerController : MonoBehaviour
                                 _judgeCircle.note.OnHit(E_NoteDecision.Great);
                             }
                         }
-
-                        _rigid.position = JumPos;           // 캐릭터가 지정한 위치로 순간이동
-                        _rigid.isKinematic = true;
-                        _rigid.isKinematic = false;
-
-
-                        _IsAirRountine = StartCoroutine(InAirTime()); // 체공 코루틴
                     }
                 }
                 else if(Input.GetKeyUp(KeyCode.F))
@@ -212,6 +215,7 @@ public class WGH_PlayerController : MonoBehaviour
         _judgeCircle.SetBottomCircleOn();
         if(collision.collider.TryGetComponent(out BoxCollider2D boxColllider))
         {
+            _canJump = true;
             _isAir = false;
         }
         
@@ -243,13 +247,17 @@ public class WGH_PlayerController : MonoBehaviour
     // 캐릭터 피격 깜빡거림
     IEnumerator Clicker()
     {
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        //gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.2f);
         yield return new WaitForSeconds(0.25f);
-        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        //gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
         yield return new WaitForSeconds(0.25f);
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        //gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.2f);
         yield return new WaitForSeconds(0.25f);
-        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        //gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
         yield break;
     }
     // 무적
