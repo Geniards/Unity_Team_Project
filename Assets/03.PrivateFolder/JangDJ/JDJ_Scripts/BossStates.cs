@@ -21,7 +21,7 @@ public class BossIntoField : BossState, IState
 
     public void Enter()
     {
-        _duration = 8f;
+        _duration = 10f;
         _time = 0;
         _t = 0;
         _destination = GameManager.NoteDirector.GetBossPoses(E_SpawnerPosY.MIDDLE);
@@ -49,8 +49,8 @@ public class BossIntoField : BossState, IState
 
 public class BossIdle : BossState, IState
 {
-    private const float MIN_MOVE_WAIT_TIME = 4;
-    private const float MAX_MOVE_WAIT_TIME = 8;
+    private const float MIN_MOVE_WAIT_TIME = 2;
+    private const float MAX_MOVE_WAIT_TIME = 5;
 
     public BossIdle(BossController boss) : base(boss)
     {
@@ -96,7 +96,7 @@ public class BossMove : BossState, IState
     {
         _time = 0;
         _t = 0;
-        _duration = 9f;
+        _duration = 4f;
         int rand = Random.Range(0, (int)E_SpawnerPosY.E_SpawnerPosY_MAX);
         _destination = GameManager.NoteDirector.GetBossPoses((E_SpawnerPosY)rand);
     }
@@ -160,20 +160,19 @@ public class BossRushReady : BossState, IState
     {
         _time = 0;
         _t = 0;
-        _duration = 12f;
+        _duration = 3f;
         _destination = GameManager.NoteDirector.GetBossPoses(E_SpawnerPosY.MIDDLE);
     }
 
     public void Exit()
     {
-        _boss.SetState(_boss.RushState);
     }
 
     public void Update()
     {
         if (_t >= 1)
         {
-            _boss.SetState(_boss.IdleState);
+            _boss.SetState(_boss.RushState);
             return;
         }
 
@@ -197,34 +196,35 @@ public class BossRush : BossState, IState
     private float _time;
     private float _t;
     private float _duration;
+    private Vector3 _startPosition;
     private Vector3 _destination;
 
     public void Enter()
     {
         _time = 0;
         _t = 0;
-        _duration = 3f;
+        _duration = 0.2f;
+        _startPosition = _boss.transform.position;
         _destination = new Vector3(-5, 0, 0);
     }
 
     public void Exit()
     {
-        _boss.SetState(_boss.ClosedPlayerState);
     }
 
     public void Update()
     {
-        if (_t >= 1)
+        if (_time >= _duration)
         {
-            _boss.SetState(_boss.IdleState);
+            _boss.transform.position = _destination; 
+            _boss.SetState(_boss.ClosedPlayerState);
             return;
         }
 
         _time += Time.deltaTime;
-        _t = Mathf.Clamp01(_time / _duration);
+        float t = _time / _duration;
 
-        _boss.transform.position =
-            Vector3.Lerp(_boss.transform.position, _destination, _t);
+        _boss.transform.position = Vector3.Lerp(_startPosition, _destination, t);
     }
 }
 
@@ -240,7 +240,7 @@ public class BossClosedPlayer : BossState, IState
     }
 
     // Èçµé¸² ¸ð¼Ç, Ä«¸Þ¶ó ÁÜ?
-    private float _shakePower = 2f;
+    private float _shakePower = 0.14f;
     private float _duration;
     private float _timer;
     private Vector3 _initPos;
@@ -250,11 +250,16 @@ public class BossClosedPlayer : BossState, IState
     {
         _timer = 0;
         _initPos = _boss.transform.position;
+        GameManager.Instance.CamMove(_initPos + Vector3.forward * -10, 0.07f);
+        GameManager.Instance.ZoomIn(0.1f,3.6f);
+        
     }
 
     public void Exit()
     {
-
+        GameManager.Instance.CamMove(new Vector3(0, 1, -10f), 0.07f);
+        GameManager.Instance.ZoomIn(0.1f, 5f);
+        
     }
 
     public void Update()
@@ -267,6 +272,8 @@ public class BossClosedPlayer : BossState, IState
 
         _randPos = new Vector3(Random.Range(_shakePower * -1, _shakePower),
             Random.Range(_shakePower * -1, _shakePower));
+
+        _randPos += _initPos;
 
         _boss.transform.position = _randPos;
 

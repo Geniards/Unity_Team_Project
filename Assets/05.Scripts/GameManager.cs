@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -50,6 +52,59 @@ public class GameManager : MonoBehaviour
         NoteDirector.Initailize();
         NoteDirector.StartSpawnNotes();
     }
+
+    public void ZoomIn(float duration, float size)
+    {
+        StartCoroutine(CamZoomRoutine(duration, size));
+    }
+
+    private IEnumerator CamZoomRoutine(float duration, float size)
+    {
+        float time = 0;
+        float t = 0;
+        float initSize = Camera.main.orthographicSize;
+
+        while (true)
+        {
+            if (t >= 1)
+                break;
+
+            time += Time.deltaTime;
+            t = Mathf.Clamp01(time / duration);
+
+            Camera.main.orthographicSize = Mathf.Lerp
+                (initSize, size, t);
+
+            yield return null;
+        }
+    }
+
+    public void CamMove(Vector3 pos, float duration)
+    {
+        StartCoroutine(CamMoveRoutine(pos, duration));
+    }
+
+    private IEnumerator CamMoveRoutine(Vector3 pos, float duration)
+    {
+        float time = 0;
+        float t = 0;
+        Vector3 initPos = Camera.main.transform.position;
+
+        while (true)
+        {
+            if (t >= 1)
+                break;
+
+            time += Time.deltaTime;
+            t = Mathf.Clamp01(time / duration);
+
+            Camera.main.transform.position
+                = Vector3.Lerp(initPos, pos, t);
+
+            yield return null;
+        }
+    }
+
 
     private void Update()
     {
