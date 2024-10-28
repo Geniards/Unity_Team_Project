@@ -23,7 +23,7 @@ public class BackGroundScroller : MonoBehaviour
     }
 
     /// <summary>
-    /// 배경 타일을 왼쪽으로 이동시키고, 위치가 벗어나면 재배치합니다.
+    /// 백그라운드 타일을 왼쪽으로 이동시키고 재배치
     /// </summary>
     private void MoveBackground()
     {
@@ -41,7 +41,7 @@ public class BackGroundScroller : MonoBehaviour
     }
 
     /// <summary>
-    /// 가장 오른쪽에 위치한 타일의 X 좌표값을 반환합니다.
+    /// 가장 오른쪽에 위치한 타일 X좌표값을 반환
     /// </summary>
     private float GetRightMostTile()
     {
