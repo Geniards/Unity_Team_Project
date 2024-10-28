@@ -1,8 +1,10 @@
 public enum E_Pool
 {
     NONE = -1,
-    MONSTER,
-    OBSTACLE,
-    BACKGROUND,
+    SCORE_NOTE,
+    MONSTER_NOTE,
+    OBSTACLE_NOTE,
+    BACKGROUND_OBJECT,
+    HIT_VFX,
     E_POOL_Max
 }

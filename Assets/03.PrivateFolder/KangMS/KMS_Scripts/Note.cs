@@ -5,39 +5,53 @@ using UnityEngine;
 
 public abstract class Note : MonoBehaviour
 {
+    [Header("노트 세부 조정")]
     public float speed = 5f;
     public float scoreValue = 100;
-    public Transform endPoint;
+    public Vector3 endPoint;
 
-    protected bool _isHit = false;
+    [Header("충돌 가능한 노트 유/무")]
+    public bool _isHit = false;
+    [Header("보스 출연 유/무")]
+    public static bool isBoss = false;
 
-    public enum E_NoteDecision { None, Perfect, Great, Good, E_NOTEDECISION_MAX }
-
-    public virtual void Initialize(Transform endPoint, float speed, float scoreValue)
+    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue)
     {
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
 
-        StartCoroutine(MoveToLeft());
+        double startDspTime = AudioSettings.dspTime;
+        double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
+        double endDspTime = startDspTime + travelDuration;
+
+        StartCoroutine(MoveToLeft(startDspTime, endDspTime));
     }
 
     /// <summary>
     /// 시작과 동시에 _endPoint를 향하여 날아가도록 설정.
     /// </summary>
-    protected virtual IEnumerator MoveToLeft()
+    protected virtual IEnumerator MoveToLeft(double startDspTime, double endDspTime)
     {
-        float moveNodeDistance = Vector3.Distance(transform.position, endPoint.position);
-        float startTime = Time.time;
+        Vector3 startPosition = transform.position;
+        Vector3 direction = (endPoint - startPosition).normalized;
+        float totalDistance = Vector3.Distance(startPosition, endPoint);
 
-        while(!_isHit && transform.position != endPoint.position)
+        while (!_isHit)
         {
-            float distNode = (Time.time - startTime) * speed;
-            float ratioDist = distNode / moveNodeDistance;
-            transform.position = Vector3.Lerp(transform.position, endPoint.position, ratioDist);
-            
-            if (ratioDist >= 1f)
+            double currentDspTime = AudioSettings.dspTime;
+
+            // 남은 시간에 비례하여 매 프레임 일정 거리만큼 이동
+            double elapsedTime = currentDspTime - startDspTime;
+            float coveredDistance = Mathf.Min((float)(elapsedTime * speed), totalDistance);
+
+            transform.position = startPosition + direction * coveredDistance;
+
+
+            if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
+                //Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
+
                 Destroy(gameObject);
                 yield break;
             }
@@ -49,21 +63,15 @@ public abstract class Note : MonoBehaviour
     /// <summary>
     /// 공통된 피격 판정에 대한 점수 처리
     /// </summary>
-    protected virtual void CalculateScore(E_NoteDecision decision, bool isBoss = false)
+    protected virtual void CalculateScore(E_NoteDecision decision)
     {
         if (isBoss)
         {
-            if(decision == E_NoteDecision.Perfect)
-                scoreValue *= (int)(decision) * 2;
-            else
-                scoreValue *= (int)((float)decision - (float)decision * 0.1f) * 2;
+            scoreValue *= (float)decision * 2;
         }
         else
         {
-            if (decision == E_NoteDecision.Perfect)
-                scoreValue *= (int)(decision);
-            else
-                scoreValue *= (int)((float)decision - (float)decision * 0.1f);
+            scoreValue *= (float)decision;
         }
         Debug.Log($"Hit된 결과 : {decision}, 점수 : {scoreValue}");
     }
@@ -71,7 +79,7 @@ public abstract class Note : MonoBehaviour
     /// <summary>
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
-    public abstract void OnHit(E_NoteDecision decision, bool isBoss = false);
+    public abstract void OnHit(E_NoteDecision decision);
 
     /// <summary>
     // 이펙트 처리 (애니메이션 또는 파티클)
