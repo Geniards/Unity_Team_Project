@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using UnityEditor.iOS;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -31,7 +29,7 @@ public class GameManager : MonoBehaviour
     private void InitGameManager()
     {
         InitializeManagers();
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 120;
         DataManager.Instance.SetStageNumber(1);
     }
 
