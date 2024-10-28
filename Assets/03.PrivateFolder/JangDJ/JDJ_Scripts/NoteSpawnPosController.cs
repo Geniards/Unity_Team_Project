@@ -7,6 +7,7 @@ public class NoteSpawnPosController : MonoBehaviour
     [Header("노트가 지나는 위치 Y 좌표 기준")]
     [SerializeField] private Transform _startPos;
     [SerializeField] private Transform _checkPos;
+    [SerializeField] private Transform _bossPos;
     [SerializeField] private Transform _endPos;
 
     [Space(20f), Header("바텀과 중간 스폰위치 X 좌표 기준")] 
@@ -34,9 +35,11 @@ public class NoteSpawnPosController : MonoBehaviour
         _posesYvalues = new List<double>();
 
         SetSpawnPos();
-
+        
         RegistXValues();
         RegistYValues();
+
+        CheckCorrectPos();
     }
 
     private void SetSpawnPos()
@@ -56,9 +59,59 @@ public class NoteSpawnPosController : MonoBehaviour
         }
     }
 
+    private void CheckCorrectPos()
+    {
+        bool IsInCheck(Vector3 pos)
+        {
+            Vector3 tempPos = Camera.main.WorldToViewportPoint(pos);
+
+            if (0 <= tempPos.x && tempPos.x <= 1)
+            {
+                if (0 <= tempPos.y && tempPos.y <= 1)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        if(IsInCheck(_endPos.position) == true)
+        { throw new System.Exception("End 좌표가 화면 영역 내에 배치됨"); }
+        else if(IsInCheck(_checkPos.position) == false)
+        { throw new System.Exception("Check 좌표가 화면 영역 외에 배치됨"); }
+        else if (IsInCheck(_bossPos.position) == false)
+        { throw new System.Exception("BossStay 좌표가 화면 영역 외에 배치됨"); }
+        else if (IsInCheck(_startPos.position) == true)
+        { throw new System.Exception("Start 좌표가 화면 영역 내에 배치됨"); }
+        else if (IsInCheck(_bottomPointPos.position) == false)
+        { throw new System.Exception("BotPoint 좌표가 화면 영역 외에 배치됨"); }
+        else if (IsInCheck(_bottomToIntervalSpawners.position) == false)
+        { throw new System.Exception("BotToInterval 좌표가 화면 영역 외에 배치됨"); }
+
+        for (int i = _posesXvalues.Count-2; i >= 0; i--)
+        {
+            if (_posesXvalues[i] < _posesXvalues[i+1])
+            {   
+                throw new System.Exception($"" +
+                    $"{(E_SpawnerPosX)(i + 1)} 위치가 {(E_SpawnerPosX)(i)} 보다 앞에 배치되었습니다.");
+            }
+        }
+
+        for (int i = 0; i < _posesYvalues.Count-2; i++)
+        {
+            if (_posesYvalues[i] > _posesYvalues[i+1])
+            {
+                throw new System.Exception($"" +
+                    $"{(E_SpawnerPosY)(i)} 위치가 {(E_SpawnerPosY)(i+1)} 보다 위에 배치되었습니다.");
+            }
+        }
+    }
+
     private void RegistXValues()
     {
         _posesXvalues.Add(_startPos.position.x);
+        _posesXvalues.Add(_bossPos.position.x);
         _posesXvalues.Add(_checkPos.position.x);
         _posesXvalues.Add(_endPos.position.x);
     }
@@ -86,7 +139,7 @@ public class NoteSpawnPosController : MonoBehaviour
 
         for (int i = 0; i < _posesXvalues.Count; i++)
         {
-            DrawRay(new Vector3((float)_posesXvalues[i], (float)_posesYvalues[_posesYvalues.Count-1]),
+            DrawRay(new Vector3((float)_posesXvalues[i], (float)_posesYvalues[_posesYvalues.Count - 1]),
                 Vector3.down, Color.red);
         }
     }

@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1057111522}
   m_Layer: 0
-  m_Name: IntervalChecker
+  m_Name: BotToInterval
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3853026866566622137}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1390069118
 GameObject:
@@ -91,7 +91,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3853026866566622137}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1569659720
 GameObject:
@@ -122,7 +122,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3853026866566622137}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1807516737
 GameObject:
@@ -134,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1807516738}
   m_Layer: 0
-  m_Name: BottomPos
+  m_Name: BotPoint
   m_TagString: Untagged
   m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -148,12 +148,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1807516737}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.82, y: -1.1, z: 0}
+  m_LocalPosition: {x: 4.92, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3853026866566622137}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3853026866566622139
 GameObject:
@@ -187,6 +187,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 604774381}
+  - {fileID: 3898895563074567093}
   - {fileID: 1390069119}
   - {fileID: 1569659721}
   - {fileID: 1807516738}
@@ -208,8 +209,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawner: {fileID: 3853026866566622138}
   _posController: {fileID: 1830079445}
-  _bpm: 0
-  _noteSpeed: 0
   _prevDelay: 0
 --- !u!114 &3853026866566622138
 MonoBehaviour:
@@ -238,6 +237,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPos: {fileID: 604774381}
   _checkPos: {fileID: 1390069119}
+  _bossPos: {fileID: 3898895563074567093}
   _endPos: {fileID: 1569659721}
   _bottomPointPos: {fileID: 1807516738}
   _bottomToIntervalSpawners: {fileID: 1057111522}
+  minobj: {fileID: 0}
+  maxobj: {fileID: 0}
+--- !u!1 &8720144820374829752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3898895563074567093}
+  m_Layer: 0
+  m_Name: BossPos
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3898895563074567093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8720144820374829752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.85, y: 2.66, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3853026866566622137}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
