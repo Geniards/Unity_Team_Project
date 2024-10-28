@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class BackgroundManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] backgrounds;     // 스테이지별 배경 배열
@@ -38,3 +39,4 @@ public class BackgroundManager : MonoBehaviour
         }
     }
 }
+*/
