@@ -41,30 +41,24 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Back
+  - name: BackGround 7
     uniqueID: 3747146677
     locked: 0
-  - name: Back1
-    uniqueID: 1623629587
-    locked: 0
-  - name: Middle
-    uniqueID: 4169269557
-    locked: 0
-  - name: Middle1
-    uniqueID: 2082572061
-    locked: 0
-  - name: Middle2
-    uniqueID: 934315
-    locked: 0
-  - name: Middle3
-    uniqueID: 3435038007
-    locked: 0
-  - name: Middle4
-    uniqueID: 3614215527
-    locked: 0
-  - name: Middle5
-    uniqueID: 1889092811
-    locked: 0
-  - name: Fore
+  - name: BackGround 6
     uniqueID: 3210779831
+    locked: 0
+  - name: BackGround 5
+    uniqueID: 2456901705
+    locked: 0
+  - name: BackGround 4
+    uniqueID: 2060387217
+    locked: 0
+  - name: BackGround 3
+    uniqueID: 4128666609
+    locked: 0
+  - name: BackGround 2
+    uniqueID: 1982381303
+    locked: 0
+  - name: BackGround 1
+    uniqueID: 94749897
     locked: 0
