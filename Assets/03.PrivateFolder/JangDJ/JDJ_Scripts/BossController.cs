@@ -9,95 +9,60 @@ public class BossController : MonoBehaviour
     private E_SpawnerPosY _curPos = E_SpawnerPosY.NONE;
     private E_SpawnerPosY _nextPos = E_SpawnerPosY.NONE;
 
-    private E_BossState _state = E_BossState.NONE;
-    public E_BossState State
+    public IState CurrentState { get; private set; }
+    public BossIntoField IntoField;
+    public BossIdle IdleState;
+    public BossAttack AttackState;
+    public BossMove MoveState;
+    public BossRush RushState;
+    public BossRushReady RushReadyState;
+    public BossClosedPlayer ClosedPlayerState;
+
+    public BossStat Stat => _stat;
+
+    private void Start()
     {
-        set
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        InitStates();
+        SetInitState(IntoField);
+    }
+
+    private void InitStates()
+    {
+        IntoField = new BossIntoField(this);
+        IdleState = new BossIdle(this);
+        AttackState = new BossAttack(this);
+        MoveState = new BossMove(this);
+        RushState = new BossRush(this);
+        RushReadyState = new BossRushReady(this);
+        ClosedPlayerState = new BossClosedPlayer(this,5);
+    }
+
+    private void SetInitState(IState state)
+    {
+        this.CurrentState = state;
+        this.CurrentState.Enter();
+    }
+
+    public void SetState(IState nextState)
+    {
+        CurrentState.Exit();
+        CurrentState = nextState;
+        CurrentState.Enter();
+    }
+
+    private void Update()
+    {
+        if (CurrentState != null)
+            CurrentState.Update();
+
+        if(Input.GetKeyDown(KeyCode.A))
         {
-            _state = value;
-
-            switch (_state)
-            {
-                case E_BossState.IDLE:
-                    OnIdle();
-                    break;
-                case E_BossState.MOVE:
-                    OnMove();
-                    break;
-                case E_BossState.ATTACK:
-                    OnAttack();
-                    break;
-                case E_BossState.RUSHREADY:
-                    OnRushReady();
-                    break;
-                case E_BossState.RUSH:
-                    OnRush();
-                    break;
-                case E_BossState.DEAD:
-                    OnDead();
-                    break;
-                case E_BossState.RECOVER:
-                    OnRecover();
-                    break;
-                case E_BossState.ONDAMAGED:
-                    OnDamaged();
-                    break;
-            }
+            SetState(RushReadyState);
         }
-    }
-
-    private void OnIdle()
-    {
-
-    }
-
-    private IEnumerator SelectNextMoveY()
-    {
-        int rand;
-
-        while (true)
-        {
-            rand = Random.Range(0, (int)E_SpawnerPosY.E_SpawnerPosY_MAX);
-
-            if(_nextPos != (E_SpawnerPosY)rand)
-            {
-
-            }
-        }
-    }
-
-    private void OnMove()
-    {
-
-    }
-
-    private void OnAttack()
-    {
-
-    }
-
-    private void OnRushReady()
-    {
-
-    }
-
-    private void OnRush()
-    {
-
-    }
-
-    private void OnDead()
-    {
-
-    }
-
-    private void OnRecover()
-    {
-
-    }
-
-    private void OnDamaged()
-    {
-
     }
 }

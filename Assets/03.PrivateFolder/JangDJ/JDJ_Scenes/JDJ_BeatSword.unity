@@ -600,6 +600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 6947623713489009007, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _bpm
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1482720528, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
@@ -661,7 +665,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1782429145}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 16.2, y: -1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -715,7 +719,7 @@ MonoBehaviour:
     _moveSpeed: 0
     _restCount: 0
     _attackCount: 0
-  _movement: {fileID: 0}
+  _movement: {fileID: 1782429147}
 --- !u!1 &1978790276
 GameObject:
   m_ObjectHideFlags: 0
