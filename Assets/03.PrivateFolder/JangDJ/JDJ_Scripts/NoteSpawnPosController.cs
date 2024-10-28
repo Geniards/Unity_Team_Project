@@ -195,8 +195,8 @@ public class NoteSpawnPosController : MonoBehaviour
             //Debug.Log($"최저 거리 : {under} , 최고 거리 {over}");
             //Debug.Log(Time.time);
 
-            if (_lock)
-                Time.timeScale = 0;
+            //if (_lock)
+            //    Time.timeScale = 0;
         }
         
     }

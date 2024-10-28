@@ -530,7 +530,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 185137565, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_Volume
-      value: 0.3
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 1083170228, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_Name
@@ -538,7 +538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1083170230, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_Volume
-      value: 0.3
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_RootOrder
@@ -582,6 +582,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[0].TargetPool
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
@@ -705,6 +709,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518aaa72c246fe0498fcf90fed86bac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stat:
+    _hp: 0
+    _name: 
+    _moveSpeed: 0
+    _restCount: 0
+    _attackCount: 0
+  _movement: {fileID: 0}
 --- !u!1 &1978790276
 GameObject:
   m_ObjectHideFlags: 0

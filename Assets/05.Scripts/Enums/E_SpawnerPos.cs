@@ -2,8 +2,8 @@ public enum E_SpawnerPosX
 {
     NONE = -1,
     START,
-    CHECK,
     BOSS,
+    CHECK,
     END,
     E_SpawnerPosX_MAX
 }

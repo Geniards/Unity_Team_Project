@@ -39,10 +39,10 @@ public class NoteSpawner : MonoBehaviour
         //    _innerNoteList.Add(patterns[i]);
         //}
 
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
+        _innerNoteList.Add(new NoteData(1, E_NoteType.Score));
+        _innerNoteList.Add(new NoteData(2, E_NoteType.Score));
+        _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
+        _innerNoteList.Add(new NoteData(1, E_NoteType.Score));
     }
 
     /// <summary>
@@ -67,6 +67,8 @@ public class NoteSpawner : MonoBehaviour
         {
             case E_NoteType.None:
                 return null;
+            case E_NoteType.Score:
+                return ObjPoolManager.Instance.GetObject<Note>(E_Pool.SCORE_NOTE);
             case E_NoteType.Monster:
                 return ObjPoolManager.Instance.GetObject<Note>(E_Pool.MONSTER_NOTE);
             case E_NoteType.Obstacle:
