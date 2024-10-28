@@ -50,7 +50,7 @@ public abstract class Note : MonoBehaviour
 
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
+                //Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
 
                 Destroy(gameObject);
                 yield break;
