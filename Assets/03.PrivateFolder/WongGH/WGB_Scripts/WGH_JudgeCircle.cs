@@ -34,8 +34,8 @@ public class WGH_JudgeCircle : MonoBehaviour
 
     public bool _isGreatCircleIn;
     public bool _isPerfectCircleIn;
-    
-    private void Start()
+
+    private void Awake()
     {
         _player = FindAnyObjectByType<WGH_PlayerController>();
         _judgeStandardBottomPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.BOTTOM);
@@ -44,8 +44,14 @@ public class WGH_JudgeCircle : MonoBehaviour
         //_standardCheckPoses[(int)E_SpawnerPosY.BOTTOM] = 가장 하단의 체크포인트 좌표
         //_standardCheckPoses[(int)E_SpawnerPosY.MIDDLE] = 중단의 체크포인트 좌표
         //_standardCheckPoses[(int)E_SpawnerPosY.TOP] = 가장 상단의 체크포인트 좌표
-        
         CreatCircle();
+    }
+
+    private void Start()
+    {
+        
+
+        //();
     }
 
 

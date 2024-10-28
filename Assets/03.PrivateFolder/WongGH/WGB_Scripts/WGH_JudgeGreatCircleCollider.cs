@@ -13,7 +13,7 @@ public class WGH_JudgeGreatCircleCollider : MonoBehaviour
     {
         if(collision.TryGetComponent(out Note note))
         {
-            Debug.Log("great Ãæµ¹!");
+            //Debug.Log("great Ãæµ¹!");
             _JudgeCircle.note = note;
             _JudgeCircle._isGreatCircleIn = true;
         }
@@ -31,7 +31,7 @@ public class WGH_JudgeGreatCircleCollider : MonoBehaviour
         {
             _JudgeCircle.note = null;
             _JudgeCircle._isGreatCircleIn = false;
-            Debug.Log("great ¹þ¾î³²!");
+            //Debug.Log("great ¹þ¾î³²!");
         }
     }
 }

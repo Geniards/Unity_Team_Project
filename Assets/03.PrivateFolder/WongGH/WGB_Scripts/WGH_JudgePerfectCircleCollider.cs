@@ -14,7 +14,7 @@ public class WGH_JudgePerfectCircleCollider : MonoBehaviour
         if(collision.TryGetComponent(out Note note))
         {
             _JudgeCircle._isPerfectCircleIn = true;
-            Debug.Log("perfect Ãæµ¹!");
+            //Debug.Log("perfect Ãæµ¹!");
         }
     }
     
@@ -23,7 +23,7 @@ public class WGH_JudgePerfectCircleCollider : MonoBehaviour
         if (collision.TryGetComponent(out Note note))
         {
             _JudgeCircle._isPerfectCircleIn = false;
-            Debug.Log("perfect ¹þ¾î³²!");
+            //Debug.Log("perfect ¹þ¾î³²!");
         }
     }
 }
