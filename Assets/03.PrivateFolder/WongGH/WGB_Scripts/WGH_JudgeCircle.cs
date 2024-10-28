@@ -29,7 +29,7 @@ public class WGH_JudgeCircle : MonoBehaviour
     CircleCollider2D _perfectCircleMiddleCollider;
     CircleCollider2D _greatCircleTopCollider;
     CircleCollider2D _perfectCircleTopCollider;
-    // TODO : 노트 데이터를 갖고있어야 함
+
     public Note note;
 
     public bool _isGreatCircleIn;
@@ -38,13 +38,9 @@ public class WGH_JudgeCircle : MonoBehaviour
     private void Start()
     {
         _player = FindAnyObjectByType<WGH_PlayerController>();
-        //_judgeStandardBottomPos = GameManager.NoteDirector.GetCheckPoses(_judgePosY);
         _judgeStandardBottomPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _judgeStandardMiddlePos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _judgeStandardTopPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.TOP);
-
-        
-        
         //_standardCheckPoses[(int)E_SpawnerPosY.BOTTOM] = 가장 하단의 체크포인트 좌표
         //_standardCheckPoses[(int)E_SpawnerPosY.MIDDLE] = 중단의 체크포인트 좌표
         //_standardCheckPoses[(int)E_SpawnerPosY.TOP] = 가장 상단의 체크포인트 좌표
@@ -52,9 +48,6 @@ public class WGH_JudgeCircle : MonoBehaviour
         CreatCircle();
     }
 
-    private void Update()
-    {
-    }
 
     #region
     /// <summary>
