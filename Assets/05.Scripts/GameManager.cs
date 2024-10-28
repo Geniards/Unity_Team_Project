@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using UnityEditor.iOS;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
