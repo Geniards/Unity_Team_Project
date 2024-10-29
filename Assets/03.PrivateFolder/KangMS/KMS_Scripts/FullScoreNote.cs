@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Note;
 
-public class FullScoreNote : Note
+public class FullScoreNote : Note, IPoolingObj
 {
-    public override void OnDamage()
+    public E_Pool MyPoolType => E_Pool.SCORE_NOTE;
+
+    public override float OnDamage()
     {
-        
+        return damage;
     }
 
     public override void OnHit(E_NoteDecision decision)
     {
-        if (Input.GetKey(KeyCode.J) && Input.GetKey(KeyCode.F) && !_isHit && !isBoss)
+        if (!_isHit)
         {
             _isHit = true;
-            Debug.Log("전체 점수노트 Hit!"); 
             CalculateScore(decision);
-            Debug.Log("점수 : " + scoreValue);
             ShowEffect();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
+    }
+
+    public void Return()
+    {
+        ObjPoolManager.Instance.ReturnObj(MyPoolType, this.gameObject);
     }
 }

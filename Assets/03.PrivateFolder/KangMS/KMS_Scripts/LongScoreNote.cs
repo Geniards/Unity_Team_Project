@@ -20,13 +20,13 @@ public class LongScoreNote : Note
         Initialize(endPoint, speed, scoreValue, 10);
     }
 
-    public override void Initialize(Vector3 endPoint, float speed, float scoreValue, float length = 0)
-    {
-        base.Initialize(endPoint, speed, scoreValue, length);
-        _noteLength = length;
-        SetNoteLength();
-        lastDspTime = AudioSettings.dspTime;
-    }
+    //public override void Initialize(Vector3 endPoint, float speed, float scoreValue, float length = 0)
+    //{
+    //    base.Initialize(endPoint, speed, scoreValue, length);
+    //    _noteLength = length;
+    //    SetNoteLength();
+    //    lastDspTime = AudioSettings.dspTime;
+    //}
 
     private void Start()
     {
@@ -110,7 +110,8 @@ public class LongScoreNote : Note
         _isTouching = false;
     }
 
-    public override void OnDamage()
+    public override float OnDamage()
     {
+        return damage;
     }
 }
