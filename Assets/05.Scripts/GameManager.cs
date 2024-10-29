@@ -48,6 +48,12 @@ public class GameManager : MonoBehaviour
     public void StartStage()
     {
         DataManager.Instance.SetPlayState(true);
+
+        if (NoteDirector == null)
+        {
+            return;
+        }
+
         NoteDirector.Initailize();
         NoteDirector.StartSpawnNotes();
     }
