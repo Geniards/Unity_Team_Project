@@ -8,6 +8,7 @@ public abstract class Note : MonoBehaviour
     [Header("노트 세부 조정")]
     public float speed = 5f;
     public float scoreValue = 100;
+    public float damage = 0;
     public Vector3 endPoint;
 
     [Header("충돌 가능한 노트 유/무")]
@@ -19,13 +20,14 @@ public abstract class Note : MonoBehaviour
     protected bool isMoving = true;
     protected float length;
 
-    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float length = 0)
+    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0, float length = 0)
     {
         gameObject.SetActive(true);
 
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
+        this.damage = damage;
         this.length = length;
 
         double startDspTime = AudioSettings.dspTime;
@@ -87,7 +89,7 @@ public abstract class Note : MonoBehaviour
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
     public abstract void OnHit(E_NoteDecision decision);
-    public abstract void OnDamage();
+    public abstract float OnDamage();
 
     /// <summary>
     // 이펙트 처리 (애니메이션 또는 파티클)
