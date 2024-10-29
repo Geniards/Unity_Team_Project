@@ -8,4 +8,6 @@ public class BossStat
     [SerializeField] private float _moveSpeed;
     [SerializeField] private int _restCount;
     [SerializeField] private int _attackCount;
+
+    public float MoveSpeed => _moveSpeed;
 }

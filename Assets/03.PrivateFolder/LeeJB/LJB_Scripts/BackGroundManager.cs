@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackGroundManager : MonoBehaviour
+/*
+public class BackgroundManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] backgrounds;     // 스테이지별 배경 배열
     [SerializeField] private GameObject[] floors;          // 스테이지별 바닥 배열
@@ -38,3 +39,4 @@ public class BackGroundManager : MonoBehaviour
         }
     }
 }
+*/

@@ -14,9 +14,24 @@ public class NoteDirector : MonoBehaviour
 
     private Coroutine _spawnRoutine = null;
 
+    private bool _isSkipSpawn = false;
+
+    /// <summary>
+    /// 다음 박자부터 스폰을 중단합니다.
+    /// </summary>
+    public void SetSpawnSkip(bool isSkip)
+    {
+        _isSkipSpawn = isSkip;
+    }
+
     public Vector3 GetCheckPoses(E_SpawnerPosY posY)
     {
         return _posController.GetSpawnerPos(E_SpawnerPosX.CHECK, posY);
+    }
+
+    public Vector3 GetBossPoses(E_SpawnerPosY posY)
+    {
+        return _posController.GetSpawnerPos(E_SpawnerPosX.BOSS, posY);
     }
 
     private void Awake()
@@ -82,8 +97,10 @@ public class NoteDirector : MonoBehaviour
                     _spawner.RegistPattern(1); // 임시 테스트 코드
                 }
 
-                _spawner.SpawnNote(_noteSpeed);
-                _posController.NoteCheckRay();
+                if(_isSkipSpawn == false)
+                    _spawner.SpawnNote(_noteSpeed);
+                
+                //_posController.NoteCheckRay();
 
                 nextSpawnTime += GetBPMtoIntervalSec();
             }
