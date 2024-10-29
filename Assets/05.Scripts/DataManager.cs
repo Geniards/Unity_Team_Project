@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour, IManager
@@ -37,6 +38,8 @@ public class DataManager : MonoBehaviour, IManager
     public float SoundFadeRate => 0.2f;
     // 한계값에 도달하는 시간
     public float SoundTotalFadeTime => 1f;
+    // 현재 재생되고 있는 음원의 총 길이
+    public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
 
     public int StageNumber => _stageData.StageNumber;
 
@@ -48,9 +51,10 @@ public class DataManager : MonoBehaviour, IManager
     public float StageProgress => _stageData.StageProgress;
 
     public void SetPlayState(bool value) { _isPlaying = value; }
+    public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
 
     public void SetPlayerHP(float value) { _stageData.PlayerHp = value; }
-    public void AddPlayerHP(float value) { _stageData.PlayerHp += value; }
+    public void SetBossHP(float value) { _stageData.BossHp = value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
     public void SetProgress(float value) { _stageData.StageProgress = value; }
     public void SetComboCount(int value) { _stageData.ComboCount = value; }
@@ -65,12 +69,13 @@ public class DataManager : MonoBehaviour, IManager
 public struct StageData
 {
     public float PlayerHp;
-    public int BossHp;
+    public float BossHp;
     public E_NoteDecision Judge;
     public float StageProgress;
     public int Score;
     public int ComboCount;
     public int StageNumber;
+    public float CurrentBGMClipLength;
 }
 
 public struct GameSettingData

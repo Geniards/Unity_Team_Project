@@ -22,7 +22,7 @@ public class BossController : MonoBehaviour
 
     public BossStat Stat => _stat;
 
-    private void Start()
+    private void Start() // 임시
     {
         Initialize();
     }
@@ -31,6 +31,12 @@ public class BossController : MonoBehaviour
     {
         InitStates();
         SetInitState(IntoField);
+        RegistMyData();
+    }
+
+    private void RegistMyData()
+    {
+        DataManager.Instance.SetBossHP(_stat.Hp);
     }
 
     private void InitStates()

@@ -380,6 +380,8 @@ MonoBehaviour:
   _prefabs:
   - TargetPool: 0
     TargetPrefab: {fileID: 5834100206960461235, guid: 7fd8510fa7c854d40a582d59e7a80726, type: 3}
+  - TargetPool: 5
+    TargetPrefab: {fileID: 7180226562935275493, guid: 6d31fe1e5322e404190d2b699fb80813, type: 3}
 --- !u!114 &6892206162165546789
 MonoBehaviour:
   m_ObjectHideFlags: 0
