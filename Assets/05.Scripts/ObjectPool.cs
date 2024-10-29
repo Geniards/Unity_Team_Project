@@ -65,6 +65,7 @@ public class ObjectPool
     public void ReturnObj(GameObject obj)
     {
         obj.SetActive(false);
+        obj.transform.SetParent(_myDirectory);
         _pool.Add(obj);
     }
 }

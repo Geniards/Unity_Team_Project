@@ -6,7 +6,7 @@ public class C : MonoBehaviour
 {
     private void Start()
     {
-        EventManager.Instance.AddAction(E_Event.CLICK, Scale);
+        EventManager.Instance.AddAction(E_Event.CLICK, Scale, this);
     }
 
     public void Scale()

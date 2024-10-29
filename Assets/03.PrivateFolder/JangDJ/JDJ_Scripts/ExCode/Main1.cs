@@ -8,5 +8,6 @@ public class Main1 : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
             EventManager.Instance.PlayEvent(E_Event.CLICK);
+        
     }
 }

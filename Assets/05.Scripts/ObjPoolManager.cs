@@ -57,6 +57,14 @@ public class ObjPoolManager : MonoBehaviour, IManager
         return GetObject<GameObject>(poolType);
     }
 
+    public GameObject GetObject(E_Pool poolType, Transform parent)
+    {
+        GameObject obj = GetObject(poolType);
+        obj.transform.SetParent(parent);
+
+        return obj;
+    }
+
     /// <summary>
     /// 요청하는 오브젝트 풀을 대상으로 객체의 컴포넌트를 반환받습니다.
     /// </summary>

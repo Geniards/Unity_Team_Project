@@ -7,7 +7,7 @@ public class B : MonoBehaviour
 {
     private void Start()
     {
-        EventManager.Instance.AddAction(E_Event.CLICK, Rotate);
+        EventManager.Instance.AddAction(E_Event.CLICK, Rotate, this);
     }
 
     private void Rotate()

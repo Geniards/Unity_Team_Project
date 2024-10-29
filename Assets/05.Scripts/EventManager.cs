@@ -8,37 +8,62 @@ public class EventManager : MonoBehaviour, IManager
     private static EventManager _instance = null;
     public static EventManager Instance => _instance;
 
+    private Transform _mainDirectory = null;
+    private Dictionary<E_Event, Transform> _directorys =
+        new Dictionary<E_Event, Transform>();
+
+    private Dictionary<E_Event, List<EventContainer>> _events
+        = new Dictionary<E_Event, List<EventContainer>>();
+
     public void Init()
     {
         _instance = this;
+        _mainDirectory = new GameObject().transform;
+        _mainDirectory.SetParent(transform);
+        _mainDirectory.name = "EventList";
     }
 
-    private Dictionary<E_Event, List<Action>> _eventsTable 
-        = new Dictionary<E_Event, List<Action>>();
+    private void CreateDirectory(E_Event eventName)
+    {
+        if (_directorys.ContainsKey(eventName) == true)
+            return;
 
+        Transform newDir = new GameObject().transform;
+
+        _directorys.Add(eventName, newDir);
+        newDir.SetParent(_mainDirectory);
+        newDir.name = $"{eventName}";
+    }
+
+    /// <summary>
+    /// 해당 이벤트를 호출시킵니다.
+    /// </summary>
     public void PlayEvent(E_Event eventType)
     {
-        foreach (var action in _eventsTable[eventType])
+        foreach (var eventObject in _events[eventType])
         {
-            action();
+            eventObject.Run();
         }
     }
 
     /// <summary>
     /// 대상 이벤트 호출시 동작할 기능을 추가합니다.
     /// </summary>
-    public void AddAction(E_Event eventType, Action action)
+    public void AddAction(E_Event eventType, Action action, MonoBehaviour user)
     {
-        if (_eventsTable.ContainsKey(eventType) == false)
-            _eventsTable.Add(eventType, new List<Action>());
-
-        if (_eventsTable[eventType].Contains(action))
+        // 기존 이벤트 정보가 없었다면 새로운 경로등록 후 이벤트목록 생성
+        if (_events.ContainsKey(eventType) == false)
         {
-            Debug.Log("이미 등록된 이벤트 재등록 요청중");
-            return;
+            CreateDirectory(eventType);
+            _events.Add(eventType, new List<EventContainer>());
         }
 
-        _eventsTable[eventType].Add(action);
+        EventContainer newEvent = ObjPoolManager.Instance.
+            GetObject<EventContainer>(E_Pool.EVENT);
+        newEvent.transform.SetParent(_directorys[eventType]);
+
+        newEvent.Initialize(action, user);
+        _events[eventType].Add(newEvent);
     }
 
     /// <summary>
@@ -46,11 +71,19 @@ public class EventManager : MonoBehaviour, IManager
     /// </summary>
     public void RemoveAction(E_Event eventType, Action action)
     {
-        if (_eventsTable.ContainsKey(eventType) == false ||
-            _eventsTable[eventType].Contains(action) == false)
-                throw new Exception("대상 이벤트가 없으나 기능을 삭제하려 합니다.");
+        if(_events.ContainsKey(eventType) == false)
+            throw new Exception("대상 이벤트가 없으나 기능을 삭제하려 합니다.");
 
-        _eventsTable[eventType].Remove(action);
+        foreach (var eventObject in _events[eventType])
+        {
+            if(eventObject.IsSameAction(action))
+            {
+                eventObject.Return();
+                return;
+            }
+        }
+
+        throw new Exception("대상 이벤트가 없으나 기능을 삭제하려 합니다.");
     }
 
     /// <summary>
@@ -58,7 +91,10 @@ public class EventManager : MonoBehaviour, IManager
     /// </summary>
     public void ClearEvent(E_Event eventType)
     {
-        _eventsTable[eventType] = new List<Action>();
+        foreach (var eventObject in _events[eventType])
+        {
+            eventObject.Return();
+        }
     }
 
     /// <summary>
@@ -66,7 +102,13 @@ public class EventManager : MonoBehaviour, IManager
     /// </summary>
     public void ClearAllEvents()
     {
-        _eventsTable = new Dictionary<E_Event, List<Action>>();
+        foreach (var eventList in _events)
+        {
+            foreach (var eventObject in eventList.Value)
+            {
+                eventObject.Return();
+            }
+        }
     }
 
     /// <summary>
@@ -74,23 +116,12 @@ public class EventManager : MonoBehaviour, IManager
     /// </summary>
     public void CleanNulls()
     {
-        foreach (var table in _eventsTable)
+        foreach (var eventList in _events)
         {
-            List<Action> tempList = new List<Action>();
-
-            for (int i = 0; i < table.Value.Count; i++)
+            foreach (var eventObject in eventList.Value)
             {
-                if (table.Value[i] == null)
-                {
-                    Debug.Log("널이 검출됨");
-                    continue;
-                }
-                    
-
-                tempList.Add(table.Value[i]);
+                eventObject.AutoDestroy();
             }
-
-            _eventsTable[table.Key] = tempList;
         }
     }
 }

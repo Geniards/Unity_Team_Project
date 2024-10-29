@@ -6,5 +6,6 @@ public enum E_Pool
     OBSTACLE_NOTE,
     BACKGROUND_OBJECT,
     HIT_VFX,
+    EVENT,
     E_POOL_Max
 }
