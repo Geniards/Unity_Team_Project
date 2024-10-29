@@ -44,10 +44,13 @@ public class DataManager : MonoBehaviour, IManager
     public float BGMVolume => _settingData.BGMVolume;
     public float SFXVolume => _settingData.SFXVolume;
 
+    public float PlayerHp => _stageData.PlayerHp;
+    public float StageProgress => _stageData.StageProgress;
+
     public void SetPlayState(bool value) { _isPlaying = value; }
 
-    public void SetPlayerHP(int value) { _stageData.PlayerHp = value; }
-    public void AddPlayerHP(int value) { _stageData.PlayerHp += value; }
+    public void SetPlayerHP(float value) { _stageData.PlayerHp = value; }
+    public void AddPlayerHP(float value) { _stageData.PlayerHp += value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
     public void SetProgress(float value) { _stageData.StageProgress = value; }
     public void SetComboCount(int value) { _stageData.ComboCount = value; }
@@ -55,11 +58,13 @@ public class DataManager : MonoBehaviour, IManager
 
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
     public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
+
+    
 }
 
 public struct StageData
 {
-    public int PlayerHp;
+    public float PlayerHp;
     public int BossHp;
     public E_NoteDecision Judge;
     public float StageProgress;
@@ -74,6 +79,7 @@ public struct GameSettingData
     public float SFXVolume;
     public float GameSpeed;
 }
+
 
 
 

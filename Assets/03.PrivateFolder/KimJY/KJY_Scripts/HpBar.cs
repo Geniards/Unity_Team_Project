@@ -12,10 +12,18 @@ public class HpBar : MonoBehaviour
         
     private void Start()
     {
-        curHp = initHp;
+        if (DataManager.Instance != null)
+        {
+            curHp = DataManager.Instance.PlayerHp;
+        }
+        else
+        {
+            Debug.LogWarning("DataManager.Instance가 초기화되지 않았습니다. initHp로 초기화합니다.");
+            curHp = initHp;
+        }
     }
 
-    private void Update() // 프레임마다 업데이트
+    private void Update() 
     {
         hpBar.fillAmount = GetPortion();
     }

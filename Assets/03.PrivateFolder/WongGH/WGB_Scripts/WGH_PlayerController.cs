@@ -16,15 +16,15 @@ public class WGH_PlayerController : MonoBehaviour
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
-
+    [SerializeField] WGH_RayJudge _judge;
     Vector3 _startPos;
     public Vector2 GroundPos { get; private set; }    // 땅의 위치값
     public Vector2 JumPos { get; private set; }       // 점프 위치값
 
-    bool _isFPress;
-    bool _isJPress;
-    float _fPressTime;
-    float _jPressTime;
+    bool _isFPress;                                    // f 입력 여부
+    bool _isJPress;                                    // j 입력 여부
+    float _fPressTime;                                 // f 입력 시간을 받을 값
+    float _jPressTime;                                 // j 입력 시간을 받을 값
 
 
     private bool _isAir;                               // 체공 여부
@@ -46,6 +46,21 @@ public class WGH_PlayerController : MonoBehaviour
     private void Start()
     {
         _startPos = transform.position;
+        _judge = FindAnyObjectByType<WGH_RayJudge>();
+    }
+
+    IEnumerator JumpAnimCheck()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if(_judge.Note != null)
+        {
+            
+        }
+        else
+        {
+
+        }
+        yield break;
     }
     private void Update()
     {
@@ -74,6 +89,8 @@ public class WGH_PlayerController : MonoBehaviour
             }
             if(_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
             {
+                // TODO : 노트가 판정원에 있으면 실행 X 된다는 조건 추가
+                // 코루틴으로 시간텀을 둬서 판단을 해야할지 고민..
                 _rigid.position = JumPos;
                 SetAnim("Jump");
                 _isFPress = false;
