@@ -8,7 +8,7 @@ public class MonsterNote : Note, IPoolingObj
 
     public override float OnDamage()
     {
-        Debug.Log($"¸ó½ºÅÍ¿Í Ãæµ¹! µ¥¹ÌÁö : {damage} Àü´Ş");
+        Debug.Log($"ëª¬ìŠ¤í„°ì™€ ì¶©ëŒ! ë°ë¯¸ì§€ : {damage} ì „ë‹¬");
         return damage;
     }
 

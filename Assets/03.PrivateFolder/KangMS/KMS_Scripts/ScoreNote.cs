@@ -25,7 +25,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
 
     public void ReflectNote()
     {
-        Debug.Log("¹İ»ç³ëÆ®(°Ë±â³ëÆ®)¿¡ ´ëÇÑ ¿ÀºêÁ§Æ® Ç®·Î ÀüÈ¯ ÈÄ ÇØ´ç ³ëÆ®´Â »èÁ¦½ÃÅ²´Ù.");
+        Debug.Log("ë°˜ì‚¬ë…¸íŠ¸(ê²€ê¸°ë…¸íŠ¸)ì— ëŒ€í•œ ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ì „í™˜ í›„ í•´ë‹¹ ë…¸íŠ¸ëŠ” ì‚­ì œì‹œí‚¨ë‹¤.");
     }
 
     public override float OnDamage(){ return damage; }
