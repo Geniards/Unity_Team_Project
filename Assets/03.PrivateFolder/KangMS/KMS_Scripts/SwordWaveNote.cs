@@ -5,6 +5,8 @@ using UnityEngine;
 public class SwordWaveNote : Note
 {
     public Transform testTrransform;
+    private bool a = false; // test변수
+    private double lastDspTime;
 
     /// <summary>
     /// 보스의 위치를 목표로 초기화
@@ -17,53 +19,55 @@ public class SwordWaveNote : Note
         this.damage = damage;
 
         gameObject.SetActive(true);
-        double startDspTime = AudioSettings.dspTime;
-        double travelDuration = Vector3.Distance(transform.position, bossTransform.position) / speed;
-        double endDspTime = startDspTime + travelDuration;
-
-        StartCoroutine(MoveToLeft(startDspTime, endDspTime));
+        lastDspTime = AudioSettings.dspTime;
+        // test변수
+        a = true;
     }
-
-
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        // test
+        if (a)
         {
-            InitializeSwordWave(testTrransform, speed, scoreValue, damage);
+            moveBoss();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            testTrransform.position = new Vector3(7, -4, 0);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            testTrransform.position = new Vector3(7, 0, 0);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            testTrransform.position = new Vector3(7, 4, 0);
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            testTrransform.position = new Vector3(0, 0, 0);
     }
 
-    /// <summary>
-    /// 보스 위치에 따라 지속적으로 목표 지점 갱신
-    /// </summary>
-    protected override IEnumerator MoveToLeft(double startDspTime, double endDspTime)
+    private void moveBoss()
     {
-        Vector3 startPosition = transform.position;
-        float totalDistance = Vector3.Distance(startPosition, endPoint);
+        if (testTrransform == null || _isHit)
+            return;
 
-        while (!_isHit && isMoving)
+        // DSP 시간 기반 이동
+        double currentDspTime = AudioSettings.dspTime;
+        double deltaTime = currentDspTime - lastDspTime;
+        lastDspTime = currentDspTime;
+
+        // 이동 계산: deltaTime을 사용하여 속도에 따라 이동
+        float step = speed * (float)deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, testTrransform.position, step);
+
+        // 보스 위치에 도달하면 타격 처리
+        if (Vector3.Distance(transform.position, testTrransform.position) < 0.1f)
         {
-            Vector3 currentEndPoint = endPoint;  // 보스 위치 업데이트
-            Vector3 direction = (currentEndPoint - startPosition).normalized;
-
-            double currentDspTime = AudioSettings.dspTime;
-            double elapsedTime = currentDspTime - startDspTime;
-            float coveredDistance = Mathf.Min((float)(elapsedTime * speed), totalDistance);
-
-            transform.position = startPosition + direction * coveredDistance;
-
-            // 보스 위치에 도달하면 노트 비활성화
-            if (Vector3.Distance(transform.position, currentEndPoint) <= 0.1f)
-            {
-                Debug.Log("보스에 도달하여 데미지 전달");
-                OnDamage();  // 데미지 전달
-                gameObject.SetActive(false);
-                yield break;
-            }
-
-            yield return null;
+            HitBoss();
         }
     }
+
+    private void HitBoss()
+    {
+        Debug.Log("보스에게 데미지를 입혔습니다!");
+        gameObject.SetActive(false);
+    }
+
     public override float OnDamage()
     {
         Debug.Log($"데미지 전달! 데미지 : {damage}");
