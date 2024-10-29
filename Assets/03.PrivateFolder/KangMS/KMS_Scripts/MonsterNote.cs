@@ -20,6 +20,7 @@ public class MonsterNote : Note, IPoolingObj
             CalculateScore(decision);
             ShowEffect();
             gameObject.SetActive(false);
+            Return();
         }
     }
 

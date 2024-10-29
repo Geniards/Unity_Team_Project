@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
 
 // 첫 번째 자리: 0(하단), 1(상단), 2(중단)
 // 두 번째 자리: 0(없음), 6(점수) 7(몬스터), 8(장애물), 9(동시버튼)
@@ -11,7 +10,7 @@ public class CSVLoader : MonoBehaviour
 {
     [Header("CSV_FILE")]
     [SerializeField] private TextAsset csvFile;
-    
+
     [Header("1_CSV_NOTE_POS_INDEX")]
     [SerializeField] private int _notePosStarIndex = 1;
     [SerializeField] private int _notePosEndIndex = 3;
@@ -47,11 +46,11 @@ public class CSVLoader : MonoBehaviour
         bool isHeader = true;
         int rowNum = 1;
 
-        while(reader.Peek() > -1)
+        while (reader.Peek() > -1)
         {
             string line = reader.ReadLine();
 
-            if(isHeader)
+            if (isHeader)
             {
                 isHeader = false;
                 continue;
@@ -77,7 +76,7 @@ public class CSVLoader : MonoBehaviour
         List<NotePattern> notePatterns = new List<NotePattern>();
         NotePattern currentPattern = new NotePattern();
 
-        for(int i = 0; i < patternString.Length; i += 2)
+        for (int i = 0; i < patternString.Length; i += 2)
         {
             // 짝이 맞지 않는 경우는 무시
             if (i + 1 >= patternString.Length)
