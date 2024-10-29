@@ -689,10 +689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stat:
     _hp: 0
-    _name: 
     _moveSpeed: 0
-    _restCount: 0
-    _attackCount: 0
   _movement: {fileID: 1782429147}
 --- !u!1 &1978790276
 GameObject:

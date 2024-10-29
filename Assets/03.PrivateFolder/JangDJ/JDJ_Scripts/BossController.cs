@@ -64,24 +64,18 @@ public class BossController : MonoBehaviour
         Destroy(this.gameObject); // 임시
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.TryGetComponent<Note>(out Note note))
+        {
+            float damageValue = note.OnDamage();
+            _stat.AddHp(damageValue);
+        }
+    }
+
     private void Update()
     {
         if (CurrentState != null)
             CurrentState.Update();
-
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            SetState(RushReadyState);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SetState(RecoverState);
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            SetState(DeadState);
-        }
     }
 }
