@@ -14,7 +14,7 @@ public abstract class Note : MonoBehaviour
     [Header("충돌 가능한 노트 유/무")]
     public bool _isHit = false;
     [Header("보스 출연 유/무")]
-    public static bool isBoss = false;
+    public static bool isBoss = false;   //false가 기본값
 
     // 이동상태 제어 변수.
     protected bool isMoving = true;
