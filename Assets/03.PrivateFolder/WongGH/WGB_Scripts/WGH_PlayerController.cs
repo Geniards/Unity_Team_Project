@@ -110,9 +110,10 @@ public class WGH_PlayerController : MonoBehaviour
                         {
                             SetAnim("GroundAttack");
                         }
-                        else if (!_isAir)
+                        else if (_isAir)
                         {
                             SetAnim("FallAttack");
+                            _rigid.position = _startPos;
                         }
                         _isJPress = false;
                     }
