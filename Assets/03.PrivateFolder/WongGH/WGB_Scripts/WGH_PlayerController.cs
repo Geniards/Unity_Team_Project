@@ -5,40 +5,41 @@ using UnityEngine;
 
 public class WGH_PlayerController : MonoBehaviour
 {
-    [Header("¼öÄ¡Á¶Àı")]
-    [SerializeField] float _inAirTime;                  // Ã¼°ø½Ã°£                         / ±âÁØ °ª : 0.3f
-    [SerializeField] float _jumpHeight;                 // Á¡ÇÁ ½Ã ÇÃ·¹ÀÌ¾îÀÇ ³ôÀÌ À§Ä¡      / ±âÁØ °ª : 5f
+    [Header("ìˆ˜ì¹˜ì¡°ì ˆ")]
+    [SerializeField] float _inAirTime;                  // ì²´ê³µì‹œê°„                         / ê¸°ì¤€ ê°’ : 0.3f
+    [SerializeField] float _jumpHeight;                 // ì í”„ ì‹œ í”Œë ˆì´ì–´ì˜ ë†’ì´ ìœ„ì¹˜      / ê¸°ì¤€ ê°’ : 5f
     [SerializeField] int _maxHp;
     [SerializeField] int _curHp;
-    [SerializeField] float _clikerTime;                 // ±ôºıÀÓ ¼Óµµ
-    [SerializeField] float _invincivilityTime;          // ¹«Àû½Ã°£
+    [SerializeField] float _clikerTime;                 // ê¹œë¹¡ì„ ì†ë„
+    [SerializeField] float _invincivilityTime;          // ë¬´ì ì‹œê°„
 
-    [Header("ÂüÁ¶")]
+    [Header("ì°¸ì¡°")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
     [SerializeField] WGH_RayJudge _judge;
     Vector3 _startPos;
-    public Vector2 GroundPos { get; private set; }    // ¶¥ÀÇ À§Ä¡°ª
-    public Vector2 JumPos { get; private set; }       // Á¡ÇÁ À§Ä¡°ª
+    public Vector2 GroundPos { get; private set; }    // ë•…ì˜ ìœ„ì¹˜ê°’
+    public Vector2 JumPos { get; private set; }       // ì í”„ ìœ„ì¹˜ê°’
 
-    bool _isFPress;                                    // f ÀÔ·Â ¿©ºÎ
-    bool _isJPress;                                    // j ÀÔ·Â ¿©ºÎ
-    float _fPressTime;                                 // f ÀÔ·Â ½Ã°£À» ¹ŞÀ» °ª
-    float _jPressTime;                                 // j ÀÔ·Â ½Ã°£À» ¹ŞÀ» °ª
+    bool _isFPress;                                    // f ì…ë ¥ ì—¬ë¶€
+    bool _isJPress;                                    // j ì…ë ¥ ì—¬ë¶€
+    float _fPressTime;                                 // f ì…ë ¥ ì‹œê°„ì„ ë°›ì„ ê°’
+    float _jPressTime;                                 // j ì…ë ¥ ì‹œê°„ì„ ë°›ì„ ê°’
 
+    bool _isDied;                                      // ì‚¬ë§ì—¬ë¶€
 
-    private bool _isAir;                               // Ã¼°ø ¿©ºÎ
+    private bool _isAir;                               // ì²´ê³µ ì—¬ë¶€
     bool _isCanJump = true;
-    Coroutine _IsAirRountine;                          // Ã¼°ø ÄÚ·çÆ¾
-    bool _isDamaged;                                   // ÇÇ°İ ¿©ºÎ
+    Coroutine _IsAirRountine;                          // ì²´ê³µ ì½”ë£¨í‹´
+    bool _isDamaged;                                   // í”¼ê²© ì—¬ë¶€
     private void Awake()
     {
         _curHp = _maxHp;
-        // ÂüÁ¶
+        // ì°¸ì¡°
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
 
-        // ÇÏ°­ÇÏ´Â ´À³¦ÀÌ µé°Ô »ìÂ¦ À§¿¡¼­ ¶³¾îÁöµµ·Ï °ª ¼³Á¤
+        // í•˜ê°•í•˜ëŠ” ëŠë‚Œì´ ë“¤ê²Œ ì‚´ì§ ìœ„ì—ì„œ ë–¨ì–´ì§€ë„ë¡ ê°’ ì„¤ì •
         GroundPos = transform.position + new Vector3(0, 0.2f, 0);    
         JumPos = transform.position + new Vector3(0, _jumpHeight, 0);
         
@@ -49,53 +50,70 @@ public class WGH_PlayerController : MonoBehaviour
         _judge = FindAnyObjectByType<WGH_RayJudge>();
     }
 
+    void Die()
+    {
+        SetAnim("Die");
+        _isDied = true;
+    }
+
     IEnumerator JumpAnimCheck()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.08f);
         if(_judge.Note != null)
         {
-            
+            _rigid.position = JumPos;
+            SetAnim("JumpAttack1");
+            _isAir = true;
         }
-        else
+        else if(_judge.Note == null) 
         {
-
+            _rigid.position = JumPos;
+            SetAnim("Jump1");
+            _isAir = true;
         }
         yield break;
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.J))
+        if(_curHp <= 0)
         {
-            _jPressTime = Time.time;
-            _isJPress = true;
+            Die();
         }
-        if(Input.GetKeyDown(KeyCode.F))
+        if(!_isDied)
         {
-            _fPressTime = Time.time;
-            _isFPress = true;
-        }
-        if(Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJPress && _isFPress)
-        {
-            SetAnim("JumpAttack2");
-            _isJPress = false;
-            _isFPress = false;
-        }
-        else
-        {
-            if(_isJPress && !_isFPress && Input.GetKeyUp(KeyCode.J))
+            if (Input.GetKeyDown(KeyCode.J))
             {
-                SetAnim("GroundAttack");
-                _isJPress = false;
+                _jPressTime = Time.time;
+                _isJPress = true;
             }
-            if(_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                // TODO : ³ëÆ®°¡ ÆÇÁ¤¿ø¿¡ ÀÖÀ¸¸é ½ÇÇà X µÈ´Ù´Â Á¶°Ç Ãß°¡
-                // ÄÚ·çÆ¾À¸·Î ½Ã°£ÅÒÀ» µÖ¼­ ÆÇ´ÜÀ» ÇØ¾ßÇÒÁö °í¹Î..
-                _rigid.position = JumPos;
-                SetAnim("Jump");
+                _fPressTime = Time.time;
+                _isFPress = true;
+            }
+            if (Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJPress && _isFPress)
+            {
+                SetAnim("MiddleAttack");
+                _isJPress = false;
                 _isFPress = false;
             }
+            else
+            {
+                if (_isJPress && !_isFPress && Input.GetKeyUp(KeyCode.J))
+                {
+                    SetAnim("GroundAttack");
+                    _isJPress = false;
+                }
+                if (_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
+                {
+                    // TODO : ë…¸íŠ¸ê°€ íŒì •ì›ì— ìˆìœ¼ë©´ ì‹¤í–‰ X ëœë‹¤ëŠ” ì¡°ê±´ ì¶”ê°€
+                    // ì½”ë£¨í‹´ìœ¼ë¡œ ì‹œê°„í…€ì„ ë‘¬ì„œ íŒë‹¨ì„ í•´ì•¼í• ì§€ ê³ ë¯¼..
+                    StartCoroutine(JumpAnimCheck());
+                    _isFPress = false;
+                }
+            }
         }
+        
         //if(!_isAir)
         //{
         //    
@@ -110,28 +128,28 @@ public class WGH_PlayerController : MonoBehaviour
         //        SetAnim("JumpAttack2");
         //        
         //    }
-        //    // µ¿½Ã Å¬¸¯ÀÌ ¾Æ´Ò °æ¿ì
+        //    // ë™ì‹œ í´ë¦­ì´ ì•„ë‹ ê²½ìš°
         //    else
         //    {
-        //        // Áß´Ü °ø°İ¶§ Ä×´ø kinematic ´Ù½Ã ²ô±â
+        //        // ì¤‘ë‹¨ ê³µê²©ë•Œ ì¼°ë˜ kinematic ë‹¤ì‹œ ë„ê¸°
         //        _rigid.isKinematic = false;
         //
-        //        // Á¡ÇÁ Å°¸¦ ´­·¶À» °æ¿ì
+        //        // ì í”„ í‚¤ë¥¼ ëˆŒë €ì„ ê²½ìš°
         //        if (Input.GetKey(KeyCode.F))
         //        {
         //            _fPressTime += Time.deltaTime;
         //
         //            if (_fPressTime >= 0.05f)
         //            {
-        //                _isAir = true;                          // Ã¼°ø »óÅÂ   
+        //                _isAir = true;                          // ì²´ê³µ ìƒíƒœ   
         //                if (_isCanJump)
         //                {
-        //                    _rigid.position = JumPos;           // Ä³¸¯ÅÍ°¡ ÁöÁ¤ÇÑ À§Ä¡·Î ¼ø°£ÀÌµ¿
+        //                    _rigid.position = JumPos;           // ìºë¦­í„°ê°€ ì§€ì •í•œ ìœ„ì¹˜ë¡œ ìˆœê°„ì´ë™
         //                    _rigid.isKinematic = true;
         //                    _rigid.isKinematic = false;
         //                    _isCanJump = false;
         //                }
-        //                _IsAirRountine = StartCoroutine(InAirTime()); // Ã¼°ø ÄÚ·çÆ¾
+        //                _IsAirRountine = StartCoroutine(InAirTime()); // ì²´ê³µ ì½”ë£¨í‹´
         //            }
         //        }
         //        else if (Input.GetKeyUp(KeyCode.F))
@@ -139,18 +157,18 @@ public class WGH_PlayerController : MonoBehaviour
         //            _fPressTime = 0;
         //        }
         //    
-        //        // °ø°İ Å°¸¦ ´­·¶À» °æ¿ì && ¶¥¿¡ ÀÖÀ» °æ¿ì
+        //        // ê³µê²© í‚¤ë¥¼ ëˆŒë €ì„ ê²½ìš° && ë•…ì— ìˆì„ ê²½ìš°
         //        if (!_isAir  && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
         //        {
-        //            // ÇÏ´Ü °ø°İ
+        //            // í•˜ë‹¨ ê³µê²©
         //            SetAnim("GroundAttack");
         //        }
-        //        // °ø°İ Å°¸¦ ´­·¶À» °æ¿ì && °øÁß¿¡ ÀÖÀ» °æ¿ì
+        //        // ê³µê²© í‚¤ë¥¼ ëˆŒë €ì„ ê²½ìš° && ê³µì¤‘ì— ìˆì„ ê²½ìš°
         //        if (_isAir && Input.GetKey(KeyCode.J) && !Input.GetKey(KeyCode.F))
         //        {
         //            _rigid.position = GroundPos;
         //            
-        //            // ÇÏ°­ °ø°İ
+        //            // í•˜ê°• ê³µê²©
         //            SetAnim("FallAttack");
         //            if (_IsAirRountine != null)
         //            {
@@ -162,7 +180,7 @@ public class WGH_PlayerController : MonoBehaviour
         //}
         //else
         //{
-        //    // TODO : ÇÃ·¹ÀÌ¾î ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç
+        //    // TODO : í”Œë ˆì´ì–´ í”¼ê²© ì• ë‹ˆë©”ì´ì…˜
         //    SetAnim("Run");
         //}
     }
@@ -170,7 +188,7 @@ public class WGH_PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // TODO : ¶¥¿¡ tag ºÙÀÌ±â
+        // TODO : ë•…ì— tag ë¶™ì´ê¸°
         // if(collision.collider.tag == "Ground")
         //{
         
@@ -183,20 +201,20 @@ public class WGH_PlayerController : MonoBehaviour
         //}
         if(collision.collider.TryGetComponent(out Note note) && !_isDamaged)
         {
+            SetAnim("OnDamage");
             _isDamaged = true;
-            _rigid.position = new Vector2(GroundPos.x, GroundPos.y);
-            _rigid.isKinematic = true;
+            
             _curHp -= 1;
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
         }
         // if(collision.collider.tag == "Monster" || collision.collider.tag == "Obstacle")
         //{
-        // TODO : ÇÇ°İÆÇÁ¤
+        // TODO : í”¼ê²©íŒì •
         //}
     }
 
-    // Ã¼°ø ½Ã°£ Á¶Àı ÄÚ·çÆ¾
+    // ì²´ê³µ ì‹œê°„ ì¡°ì ˆ ì½”ë£¨í‹´
     IEnumerator InAirTime()
     {
         _rigid.isKinematic = true;
@@ -205,7 +223,7 @@ public class WGH_PlayerController : MonoBehaviour
         yield break;
     }
 
-    // Ä³¸¯ÅÍ ÇÇ°İ ±ôºı°Å¸²
+    // ìºë¦­í„° í”¼ê²© ê¹œë¹¡ê±°ë¦¼
     IEnumerator Clicker()
     {
         //gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -221,7 +239,7 @@ public class WGH_PlayerController : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
         yield break;
     }
-    // ¹«Àû
+    // ë¬´ì 
     IEnumerator Invincibility()
     {
         yield return new WaitForSeconds(_invincivilityTime);
@@ -230,7 +248,7 @@ public class WGH_PlayerController : MonoBehaviour
         yield break;
     }
     /// <summary>
-    /// ¾Ö´Ï¸ŞÀÌ¼Ç ½ÃÀÛ ¸Ş¼­µå
+    /// ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘ ë©”ì„œë“œ
     /// </summary>
     public void SetAnim(string animName)
     {
