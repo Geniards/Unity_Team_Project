@@ -15,13 +15,18 @@ public abstract class Note : MonoBehaviour
     [Header("보스 출연 유/무")]
     public static bool isBoss = false;
 
-    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue)
+    // 이동상태 제어 변수.
+    protected bool isMoving = true;
+    protected float length;
+
+    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float length = 0)
     {
         gameObject.SetActive(true);
 
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
+        this.length = length;
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
@@ -39,7 +44,7 @@ public abstract class Note : MonoBehaviour
         Vector3 direction = (endPoint - startPosition).normalized;
         float totalDistance = Vector3.Distance(startPosition, endPoint);
 
-        while (!_isHit)
+        while (!_isHit && isMoving && Vector3.Distance(transform.position, endPoint) > 0.001f)
         {
             double currentDspTime = AudioSettings.dspTime;
 
