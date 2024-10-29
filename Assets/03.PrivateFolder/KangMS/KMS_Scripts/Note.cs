@@ -15,11 +15,18 @@ public abstract class Note : MonoBehaviour
     [Header("보스 출연 유/무")]
     public static bool isBoss = false;
 
-    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue)
+    // 이동상태 제어 변수.
+    protected bool isMoving = true;
+    protected float length;
+
+    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float length = 0)
     {
+        gameObject.SetActive(true);
+
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
+        this.length = length;
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
@@ -37,7 +44,7 @@ public abstract class Note : MonoBehaviour
         Vector3 direction = (endPoint - startPosition).normalized;
         float totalDistance = Vector3.Distance(startPosition, endPoint);
 
-        while (!_isHit)
+        while (!_isHit && isMoving && Vector3.Distance(transform.position, endPoint) > 0.001f)
         {
             double currentDspTime = AudioSettings.dspTime;
 
@@ -50,9 +57,9 @@ public abstract class Note : MonoBehaviour
 
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                //Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
+                Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
 
-                Destroy(gameObject);
+                gameObject.SetActive(false);
                 yield break;
             }
 
@@ -73,13 +80,14 @@ public abstract class Note : MonoBehaviour
         {
             scoreValue *= (float)decision;
         }
-        Debug.Log($"Hit된 결과 : {decision}, 점수 : {scoreValue}");
+        //Debug.Log($"Hit된 결과 : {decision}, 점수 : {scoreValue}");
     }
 
     /// <summary>
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
     public abstract void OnHit(E_NoteDecision decision);
+    public abstract void OnDamage();
 
     /// <summary>
     // 이펙트 처리 (애니메이션 또는 파티클)

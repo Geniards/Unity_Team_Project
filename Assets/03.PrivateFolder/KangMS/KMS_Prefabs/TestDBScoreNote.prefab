@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7342004287573658669}
   - component: {fileID: 7801604157113629979}
   - component: {fileID: 4056803752376068565}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestDBScoreNote
   m_TagString: Untagged
   m_Icon: {fileID: 0}

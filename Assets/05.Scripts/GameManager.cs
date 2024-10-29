@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -44,7 +43,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ºÅ×ÀÌÁö¸¦ ÁøÇà½ÃÅµ´Ï´Ù.
+    /// ìŠ¤í…Œì´ì§€ë¥¼ ì§„í–‰ì‹œí‚µë‹ˆë‹¤.
     /// </summary>
     public void StartStage()
     {
@@ -108,7 +107,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // ÀÓ½Ã ÄÚµå
+        if (Input.GetMouseButtonDown(0)) // ì„ì‹œ ì½”ë“œ
             StartStage();
     }
 }

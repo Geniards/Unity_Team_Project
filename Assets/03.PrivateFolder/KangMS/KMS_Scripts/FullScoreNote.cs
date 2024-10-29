@@ -5,6 +5,11 @@ using static Note;
 
 public class FullScoreNote : Note
 {
+    public override void OnDamage()
+    {
+        
+    }
+
     public override void OnHit(E_NoteDecision decision)
     {
         if (Input.GetKey(KeyCode.J) && Input.GetKey(KeyCode.F) && !_isHit && !isBoss)
