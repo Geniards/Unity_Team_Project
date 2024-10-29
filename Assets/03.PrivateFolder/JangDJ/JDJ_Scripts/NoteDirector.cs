@@ -24,6 +24,11 @@ public class NoteDirector : MonoBehaviour
         _isSkipSpawn = isSkip;
     }
 
+    public Vector3 GetStartSpawnPoses(E_SpawnerPosY posY)
+    {
+        return _posController.GetSpawnerPos(E_SpawnerPosX.START, posY);
+    }
+
     public Vector3 GetCheckPoses(E_SpawnerPosY posY)
     {
         return _posController.GetSpawnerPos(E_SpawnerPosX.CHECK, posY);

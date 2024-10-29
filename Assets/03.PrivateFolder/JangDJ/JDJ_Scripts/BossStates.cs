@@ -289,19 +289,39 @@ public class BossDead : BossState, IState
     {
     }
 
+    private float _time;
+    private float _t;
+    private float _duration;
+    private Vector3 _startPosition;
+    private Vector3 _destination;
+
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        _time = 0;
+        _t = 0;
+        _duration = 0.2f;
+        _startPosition = _boss.transform.position;
+        _destination = GameManager.NoteDirector.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void Update()
     {
-        throw new System.NotImplementedException();
+        if (_time >= _duration)
+        {
+            _boss.transform.position = _destination;
+            _boss.Dead();
+            return;
+        }
+
+        _time += Time.deltaTime;
+        float t = _time / _duration;
+
+        _boss.transform.position = Vector3.Lerp(_startPosition, _destination, t);
     }
 }
 
@@ -310,20 +330,39 @@ public class BossRecover : BossState, IState
     public BossRecover(BossController boss) : base(boss)
     {
     }
+    private float _time;
+    private float _t;
+    private float _duration;
+    private Vector3 _startPosition;
+    private Vector3 _destination;
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        _time = 0;
+        _t = 0;
+        _duration = 0.2f;
+        _startPosition = _boss.transform.position;
+        _destination = GameManager.NoteDirector.GetBossPoses(E_SpawnerPosY.BOTTOM);
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void Update()
     {
-        throw new System.NotImplementedException();
+        if (_time >= _duration)
+        {
+            _boss.transform.position = _destination;
+            _boss.SetState(_boss.MoveState);
+            return;
+        }
+
+        _time += Time.deltaTime;
+        float t = _time / _duration;
+
+        _boss.transform.position = Vector3.Lerp(_startPosition, _destination, t);
     }
 }
 

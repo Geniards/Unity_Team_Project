@@ -17,6 +17,8 @@ public class BossController : MonoBehaviour
     public BossRush RushState;
     public BossRushReady RushReadyState;
     public BossClosedPlayer ClosedPlayerState;
+    public BossDead DeadState;
+    public BossRecover RecoverState;
 
     public BossStat Stat => _stat;
 
@@ -40,6 +42,8 @@ public class BossController : MonoBehaviour
         RushState = new BossRush(this);
         RushReadyState = new BossRushReady(this);
         ClosedPlayerState = new BossClosedPlayer(this,5);
+        DeadState = new BossDead(this);
+        RecoverState = new BossRecover(this);
     }
 
     private void SetInitState(IState state)
@@ -55,6 +59,11 @@ public class BossController : MonoBehaviour
         CurrentState.Enter();
     }
 
+    public void Dead()
+    {
+        Destroy(this.gameObject); // юс╫ц
+    }
+
     private void Update()
     {
         if (CurrentState != null)
@@ -63,6 +72,16 @@ public class BossController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.A))
         {
             SetState(RushReadyState);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SetState(RecoverState);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            SetState(DeadState);
         }
     }
 }
