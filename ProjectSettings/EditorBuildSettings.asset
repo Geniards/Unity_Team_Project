@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/03.PrivateFolder/KimJY/KJY_Scenes/01.StartScene.unity
+    guid: a61ff660866eb304aac503137d5c7fa0
+  - enabled: 1
+    path: Assets/03.PrivateFolder/KimJY/KJY_Scenes/02.LoadScene.unity
+    guid: 8186c64e823d5094ea161b27e86ef493
+  - enabled: 1
+    path: Assets/03.PrivateFolder/KimJY/KJY_Scenes/03.LobbyScene.unity
+    guid: 1d0f11bc5d39a4b4b9c436ef7917fd47
   m_configObjects: {}
