@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HpBar : MonoBehaviour
+public class HpBar : MonoBehaviour, IValuableUI
 {
     public float curHp;
     public float initHp;
-    public float maxHp;
+    public float maxHp = 200;
     public Image hpBar;
         
     private void Start()
     {
-        if (DataManager.Instance != null)
-        {
-            curHp = DataManager.Instance.PlayerHp;
-        }
-        else
-        {
-            Debug.LogWarning("DataManager.Instance가 초기화되지 않았습니다. initHp로 초기화합니다.");
-            curHp = initHp;
-        }
+        SetValue(200);
+    }
+
+    public void SetValue(float value)
+    {
+        hpBar.fillAmount = value;
     }
 
     private void Update() 

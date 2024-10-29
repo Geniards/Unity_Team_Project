@@ -250,14 +250,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.16567612, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cfe3f59a8aad0e74b806c1d29c8f32ae, type: 3}
+  m_Sprite: {fileID: -6506105160274925290, guid: 25ca2528409a30f4e827cb2d05c772bb, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curProgress: 0
   initProgress: 0
-  maxProgress: 0
+  maxProgress: 100
   progressBar: {fileID: 255244483}
 --- !u!1 &295986755
 GameObject:
@@ -485,7 +485,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6550432720726904964, guid: 1e8ffb2f21a909b46bb2883ddb8a7b21, type: 3}
+  m_Sprite: {fileID: 1100476230708988374, guid: 89aff9e18247bb647979c8e71d9dc5c7, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -515,9 +515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f8afcd09bd7544aaaf8aebfcc551a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHp: 80
-  initHp: 100
-  maxHp: 100
+  curHp: 200
+  initHp: 200
+  maxHp: 200
   hpBar: {fileID: 322972574}
 --- !u!1 &434471801
 GameObject:
@@ -1539,7 +1539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -34, y: -38}
+  m_AnchoredPosition: {x: -28.7, y: -31}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2062309852
