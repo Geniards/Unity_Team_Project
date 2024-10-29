@@ -49,42 +49,16 @@ public class WGH_PlayerController : MonoBehaviour
         _startPos = transform.position;
         _judge = FindAnyObjectByType<WGH_RayJudge>();
     }
-
-    void Die()
-    {
-        SetAnim("Die");
-        IsDied = true;
-        gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-        gameObject.GetComponent<Collider2D>().enabled = false;
-    }
-
-    IEnumerator JumpAnimCheck()
-    {
-        yield return new WaitForSeconds(0.1f);
-        if(_judge.Note != null)
-        {
-            _isAir = true;
-            _rigid.position = JumPos;
-            SetAnim("JumpAttack1");
-        }
-        else if(_judge.Note == null) 
-        {
-            _isAir = true;
-            _rigid.position = JumPos;
-            SetAnim("Jump1");
-        }
-        yield break;
-    }
+    
     private void Update()
     {
-        
         if(_curHp <= 0 && !IsDied)
         {
-            Die();
+            StartCoroutine(Die());
         }
-        if (!IsDied)
+        if (!IsDied)                                // 캐릭터가 사망상태가 아니면 입력가능
         {
-            if (!IsDamaged)
+            if (!IsDamaged)                         // 캐릭터가 피격상태가 아니면 입력가능
             {
                 if (Input.GetKeyDown(KeyCode.J))
                 {
@@ -119,8 +93,6 @@ public class WGH_PlayerController : MonoBehaviour
                     }
                     if (_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
                     {
-                        // TODO : 노트가 판정원에 있으면 실행 X 된다는 조건 추가
-                        // 코루틴으로 시간텀을 둬서 판단을 해야할지 고민..
                         if (!_isAir)
                         {
                             StartCoroutine(JumpAnimCheck());
@@ -135,75 +107,6 @@ public class WGH_PlayerController : MonoBehaviour
                 return;
             }
         }
-        //if(!_isAir)
-        //{
-        //    
-        //}
-        //if (!_isDamaged)
-        //{
-        //    if(Input.GetKey(KeyCode.J) && Input.GetKey(KeyCode.F))
-        //    {
-        //        _rigid.position = GroundPos;
-        //        _rigid.isKinematic = true;
-        //        
-        //        SetAnim("JumpAttack2");
-        //        
-        //    }
-        //    // 동시 클릭이 아닐 경우
-        //    else
-        //    {
-        //        // 중단 공격때 켰던 kinematic 다시 끄기
-        //        _rigid.isKinematic = false;
-        //
-        //        // 점프 키를 눌렀을 경우
-        //        if (Input.GetKey(KeyCode.F))
-        //        {
-        //            _fPressTime += Time.deltaTime;
-        //
-        //            if (_fPressTime >= 0.05f)
-        //            {
-        //                _isAir = true;                          // 체공 상태   
-        //                if (_isCanJump)
-        //                {
-        //                    _rigid.position = JumPos;           // 캐릭터가 지정한 위치로 순간이동
-        //                    _rigid.isKinematic = true;
-        //                    _rigid.isKinematic = false;
-        //                    _isCanJump = false;
-        //                }
-        //                _IsAirRountine = StartCoroutine(InAirTime()); // 체공 코루틴
-        //            }
-        //        }
-        //        else if (Input.GetKeyUp(KeyCode.F))
-        //        {
-        //            _fPressTime = 0;
-        //        }
-        //    
-        //        // 공격 키를 눌렀을 경우 && 땅에 있을 경우
-        //        if (!_isAir  && Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.RightControl))
-        //        {
-        //            // 하단 공격
-        //            SetAnim("GroundAttack");
-        //        }
-        //        // 공격 키를 눌렀을 경우 && 공중에 있을 경우
-        //        if (_isAir && Input.GetKey(KeyCode.J) && !Input.GetKey(KeyCode.F))
-        //        {
-        //            _rigid.position = GroundPos;
-        //            
-        //            // 하강 공격
-        //            SetAnim("FallAttack");
-        //            if (_IsAirRountine != null)
-        //            {
-        //                StopCoroutine(_IsAirRountine);
-        //                _rigid.isKinematic = false;
-        //            }
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    // TODO : 플레이어 피격 애니메이션
-        //    SetAnim("Run");
-        //}
     }
 
 
@@ -228,7 +131,7 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Note note) && !IsDamaged)
+        if (collision.gameObject.TryGetComponent(out Note note) && !IsDamaged && !IsDied)
         {
             SetAnim("OnDamage");
             IsDamaged = true;
@@ -250,16 +153,12 @@ public class WGH_PlayerController : MonoBehaviour
     // 캐릭터 피격 깜빡거림
     IEnumerator Clicker()
     {
-        //gameObject.GetComponent<SpriteRenderer>().enabled = false;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         yield return new WaitForSeconds(_clikerTime);
-        //gameObject.GetComponent<SpriteRenderer>().enabled = true;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
         yield return new WaitForSeconds(_clikerTime);
-        //gameObject.GetComponent<SpriteRenderer>().enabled = false;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         yield return new WaitForSeconds(_clikerTime);
-        //gameObject.GetComponent<SpriteRenderer>().enabled = true;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
         yield break;
     }
@@ -269,6 +168,36 @@ public class WGH_PlayerController : MonoBehaviour
         SetAnim("Run");
         yield return new WaitForSeconds(_invincivilityTime);
         IsDamaged = false;
+        yield break;
+    }
+
+    IEnumerator Die()
+    {
+        gameObject.GetComponent<Collider2D>().enabled = false;
+        _rigid.position = _startPos + new Vector3(0, -0.3f, 0);
+        SetAnim("Die");
+        IsDied = true;
+        yield return new WaitForSeconds(0.05f);
+        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+        yield break;
+    }
+
+    IEnumerator JumpAnimCheck()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (_judge.Note != null)
+        {
+            _isAir = true;
+            _rigid.position = JumPos;
+            SetAnim("JumpAttack1");
+        }
+        else if (_judge.Note == null)
+        {
+            _isAir = true;
+            _rigid.position = JumPos;
+            SetAnim("Jump1");
+        }
         yield break;
     }
     /// <summary>
