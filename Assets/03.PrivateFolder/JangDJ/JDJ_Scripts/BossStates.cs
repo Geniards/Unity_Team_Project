@@ -122,7 +122,7 @@ public class BossMove : BossState, IState
     }
 }
 
-// ¹ÌÁ¤
+// ë¯¸ì •
 public class BossAttack : BossState, IState
 {
     public BossAttack(BossController boss) : base(boss)
@@ -185,7 +185,7 @@ public class BossRushReady : BossState, IState
 }
 
 /// <summary>
-/// ¹ÚÀÚ¿¡ ¸Â°Ô µµÂøÇØ¾ßÇÔ
+/// ë°•ìì— ë§ê²Œ ë„ì°©í•´ì•¼í•¨
 /// </summary>
 public class BossRush : BossState, IState
 {
@@ -240,7 +240,7 @@ public class BossClosedPlayer : BossState, IState
         _cam = Camera.main.GetComponent<CamMovement>();
     }
 
-    // Èçµé¸² ¸ğ¼Ç, Ä«¸Ş¶ó ÁÜ?
+    // í”ë“¤ë¦¼ ëª¨ì…˜, ì¹´ë©”ë¼ ì¤Œ?
     private float _shakePower = 0.14f;
     private float _duration;
     private float _timer;

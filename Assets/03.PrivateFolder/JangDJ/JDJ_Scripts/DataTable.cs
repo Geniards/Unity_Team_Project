@@ -7,7 +7,7 @@ public class DataTable
     private Dictionary<int, List<NotePattern>> _patternTable = null;
 
     /// <summary>
-    /// µ¥ÀÌÅÍ Å×ÀÌºíÀÇ ÃÊ±âÈ­¸¦ ÁøÇàÇÕ´Ï´Ù.
+    /// ë°ì´í„° í…Œì´ë¸”ì˜ ì´ˆê¸°í™”ë¥¼ ì§„í–‰í•©ë‹ˆë‹¤.
     /// </summary>
     public void Initailize()
     {
@@ -15,7 +15,7 @@ public class DataTable
     }
 
     /// <summary>
-    /// µ¥ÀÌÅÍ Å×ÀÌºí¿¡ ÆĞÅÏ Á¤º¸¸¦ µî·ÏÇÕ´Ï´Ù.
+    /// ë°ì´í„° í…Œì´ë¸”ì— íŒ¨í„´ ì •ë³´ë¥¼ ë“±ë¡í•©ë‹ˆë‹¤.
     /// </summary>
     public void RegistPattern(int stageNumber, NotePattern pattern)
     {

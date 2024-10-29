@@ -61,7 +61,7 @@ public class BossController : MonoBehaviour
 
     public void Dead()
     {
-        Destroy(this.gameObject); // ÀÓ½Ã
+        Destroy(this.gameObject); // ìž„ì‹œ
     }
 
     private void Update()

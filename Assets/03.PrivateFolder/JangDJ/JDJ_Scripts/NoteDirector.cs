@@ -17,7 +17,7 @@ public class NoteDirector : MonoBehaviour
     private bool _isSkipSpawn = false;
 
     /// <summary>
-    /// ´ÙÀ½ ¹ÚÀÚºÎÅÍ ½ºÆùÀ» Áß´ÜÇÕ´Ï´Ù.
+    /// ë‹¤ìŒ ë°•ìë¶€í„° ìŠ¤í°ì„ ì¤‘ë‹¨í•©ë‹ˆë‹¤.
     /// </summary>
     public void SetSpawnSkip(bool isSkip)
     {
@@ -55,7 +55,7 @@ public class NoteDirector : MonoBehaviour
     }
 
     /// <summary>
-    /// ³ëÆ® »ı¼ºÀ» ½ÃÀÛÇÕ´Ï´Ù.
+    /// ë…¸íŠ¸ ìƒì„±ì„ ì‹œì‘í•©ë‹ˆë‹¤.
     /// </summary>
     public void StartSpawnNotes()
     {
@@ -80,10 +80,10 @@ public class NoteDirector : MonoBehaviour
     {
         double nextSpawnTime = 0d;
         double startDspTime = AudioSettings.dspTime;
-        double firstNoteTime = startDspTime + (GetBPMtoIntervalSec() * 4) - _noteArriveDuration; // 4¹ÚÀÚ µÚÀÇ Ã¹ ³ëÆ® »ı¼º ½Ã°£
-                                                                                                 // Ã¹ ¹øÂ° ³ëÆ® »ı¼º Å¸ÀÌ¹Ö ¼³Á¤
+        double firstNoteTime = startDspTime + (GetBPMtoIntervalSec() * 4) - _noteArriveDuration; // 4ë°•ì ë’¤ì˜ ì²« ë…¸íŠ¸ ìƒì„± ì‹œê°„
+                                                                                                 // ì²« ë²ˆì§¸ ë…¸íŠ¸ ìƒì„± íƒ€ì´ë° ì„¤ì •
         nextSpawnTime = firstNoteTime;
-        _spawner.RegistPattern(1); // ÀÓ½Ã Å×½ºÆ® ÄÚµå
+        _spawner.RegistPattern(1); // ì„ì‹œ í…ŒìŠ¤íŠ¸ ì½”ë“œ
         SoundManager.Instance.PlayStageBGM();
 
         nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec();
@@ -99,7 +99,7 @@ public class NoteDirector : MonoBehaviour
             {
                 if (_spawner.IsLastNote == true)
                 {
-                    _spawner.RegistPattern(1); // ÀÓ½Ã Å×½ºÆ® ÄÚµå
+                    _spawner.RegistPattern(1); // ì„ì‹œ í…ŒìŠ¤íŠ¸ ì½”ë“œ
                 }
 
                 if(_isSkipSpawn == false)

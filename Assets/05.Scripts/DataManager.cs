@@ -17,25 +17,25 @@ public class DataManager : MonoBehaviour, IManager
         _csvData = new DataTable();
         _csvData.Initailize();
 
-        SetBGMVolume(1); // À¯Àú Á¤º¸ ÀúÀå½Ã º¯°æ
+        SetBGMVolume(1); // ìœ ì € ì •ë³´ ì €ì¥ì‹œ ë³€ê²½
         SetSFXVolume(1);
         SetStageNumber(1);
     }
 
-    [SerializeField, Header("ºĞ´ç Beat")]
+    [SerializeField, Header("ë¶„ë‹¹ Beat")]
     private int _bpm = 120;
     public int BPM => _bpm;
 
-    [SerializeField,Range(1,20),Header("ÀüÃ¼ °ÔÀÓ ¼Óµµ")] 
+    [SerializeField,Range(1,20),Header("ì „ì²´ ê²Œì„ ì†ë„")] 
     private int _gameSpeed = 1;
     public int GameSpeed => _gameSpeed;
 
     private bool _isPlaying = false;
     public bool IsPlaying => _isPlaying;
 
-    // º¼·ıÀ» ¼­¼­È÷ Á¶ÀıÇÏ´Â ºñÀ²
+    // ë³¼ë¥¨ì„ ì„œì„œíˆ ì¡°ì ˆí•˜ëŠ” ë¹„ìœ¨
     public float SoundFadeRate => 0.2f;
-    // ÇÑ°è°ª¿¡ µµ´ŞÇÏ´Â ½Ã°£
+    // í•œê³„ê°’ì— ë„ë‹¬í•˜ëŠ” ì‹œê°„
     public float SoundTotalFadeTime => 1f;
 
     public int StageNumber => _stageData.StageNumber;

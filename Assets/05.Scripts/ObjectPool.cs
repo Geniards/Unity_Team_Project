@@ -38,7 +38,7 @@ public class ObjectPool
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Ç®·Î ºÎÅÍ ¿ÀºêÁ§Æ®¸¦ ¹İÈ¯¹Ş½À´Ï´Ù.
+    /// ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ë¶€í„° ì˜¤ë¸Œì íŠ¸ë¥¼ ë°˜í™˜ë°›ìŠµë‹ˆë‹¤.
     /// </summary>
     public GameObject GetObject()
     {
@@ -60,7 +60,7 @@ public class ObjectPool
     }
 
     /// <summary>
-    /// ÇØ´ç ¿ÀºêÁ§Æ®¸¦ ´ë»ó Ç®·Î ¹İÈ¯½ÃÅµ´Ï´Ù.
+    /// í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ë¥¼ ëŒ€ìƒ í’€ë¡œ ë°˜í™˜ì‹œí‚µë‹ˆë‹¤.
     /// </summary>
     public void ReturnObj(GameObject obj)
     {
