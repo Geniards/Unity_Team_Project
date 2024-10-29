@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 92239763}
   - component: {fileID: 92239762}
   m_Layer: 0
-  m_Name: Background 0
+  m_Name: Object Tile 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,8 +194,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1615509077
-  m_SortingLayer: 8
-  m_SortingOrder: 1000
+  m_SortingLayer: 1
+  m_SortingOrder: 1007
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0.04000002, z: 0}
   m_MaxChunkCount: 16
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 491343862}
   - component: {fileID: 491343861}
   m_Layer: 0
-  m_Name: Object Scroller (4)
+  m_Name: Object Scroller 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 551421052}
   - component: {fileID: 551421051}
   m_Layer: 0
-  m_Name: Background 1
+  m_Name: Object Tile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -519,8 +519,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 94749897
-  m_SortingLayer: 7
-  m_SortingOrder: 1001
+  m_SortingLayer: 0
+  m_SortingOrder: 1006
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.0069999695, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 826318648}
   - component: {fileID: 826318647}
   m_Layer: 0
-  m_Name: Background 2
+  m_Name: Object Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -871,8 +871,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1982381303
-  m_SortingLayer: 6
-  m_SortingOrder: 1002
+  m_SortingLayer: 0
+  m_SortingOrder: 1005
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.0069999695, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1141,7 +1141,7 @@ GameObject:
   - component: {fileID: 847658124}
   - component: {fileID: 847658123}
   m_Layer: 0
-  m_Name: Background 4
+  m_Name: Buliding Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1201,8 +1201,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2060387217
-  m_SortingLayer: 4
-  m_SortingOrder: 1004
+  m_SortingLayer: 0
+  m_SortingOrder: 1003
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 1.5192308, y: 1.8461537, z: 0}
   m_MaxChunkCount: 16
@@ -1383,7 +1383,7 @@ GameObject:
   - component: {fileID: 849448931}
   - component: {fileID: 849448930}
   m_Layer: 0
-  m_Name: Background 5
+  m_Name: Floor Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1443,8 +1443,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1838065591
-  m_SortingLayer: 3
-  m_SortingOrder: 1005
+  m_SortingLayer: 0
+  m_SortingOrder: 1002
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 1, z: 0}
   m_MaxChunkCount: 16
@@ -3223,7 +3223,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1318402675
-  m_SortingLayer: 9
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3263,7 +3263,7 @@ GameObject:
   - component: {fileID: 1295399017}
   - component: {fileID: 1295399016}
   m_Layer: 0
-  m_Name: Background 3
+  m_Name: Buliding Tile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3323,8 +3323,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -166300687
-  m_SortingLayer: 5
-  m_SortingOrder: 1003
+  m_SortingLayer: 0
+  m_SortingOrder: 1004
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 1.1492537, y: 0.86567163, z: 0}
   m_MaxChunkCount: 16
@@ -3558,7 +3558,7 @@ GameObject:
   - component: {fileID: 1382928947}
   - component: {fileID: 1382928946}
   m_Layer: 0
-  m_Name: Background  Scroller
+  m_Name: Back Building Scroller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3606,7 +3606,7 @@ GameObject:
   - component: {fileID: 1560682716}
   - component: {fileID: 1560682715}
   m_Layer: 0
-  m_Name: Object Scroller (2)
+  m_Name: Buliding Scroller 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3655,7 +3655,7 @@ GameObject:
   - component: {fileID: 1648486556}
   - component: {fileID: 1648486555}
   m_Layer: 0
-  m_Name: Background 7
+  m_Name: Cloud Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3715,8 +3715,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -547820619
-  m_SortingLayer: 1
-  m_SortingOrder: 1007
+  m_SortingLayer: 0
+  m_SortingOrder: 1000
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 2.009804, y: 1.382353, z: 0}
   m_MaxChunkCount: 16
@@ -3937,7 +3937,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1318402675
-  m_SortingLayer: 9
+  m_SortingLayer: 2
   m_SortingOrder: 999
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3985,6 +3985,63 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1806197590
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546811, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_Name
+      value: Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
 --- !u!1 &1838059402
 GameObject:
   m_ObjectHideFlags: 0
@@ -3996,7 +4053,7 @@ GameObject:
   - component: {fileID: 1838059404}
   - component: {fileID: 1838059403}
   m_Layer: 0
-  m_Name: Object Scroller
+  m_Name: Floor Scroller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4044,7 +4101,7 @@ GameObject:
   - component: {fileID: 1964568049}
   - component: {fileID: 1964568048}
   m_Layer: 0
-  m_Name: Object Scroller (1)
+  m_Name: Buliding Scroller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4093,7 +4150,7 @@ GameObject:
   - component: {fileID: 2026711114}
   - component: {fileID: 2026711113}
   m_Layer: 0
-  m_Name: Background 6
+  m_Name: Back Building Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4153,8 +4210,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1084187465
-  m_SortingLayer: 2
-  m_SortingOrder: 1006
+  m_SortingLayer: 0
+  m_SortingOrder: 1001
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 2.009804, y: 1.382353, z: 0}
   m_MaxChunkCount: 16
@@ -4290,7 +4347,7 @@ GameObject:
   - component: {fileID: 2077496215}
   - component: {fileID: 2077496214}
   m_Layer: 0
-  m_Name: Object Scroller (3)
+  m_Name: Object Scroller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
