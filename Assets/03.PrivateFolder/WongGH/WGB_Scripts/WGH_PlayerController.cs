@@ -58,23 +58,32 @@ public class WGH_PlayerController : MonoBehaviour
 
     IEnumerator JumpAnimCheck()
     {
-        yield return new WaitForSeconds(0.08f);
+        yield return new WaitForSeconds(0.1f);
         if(_judge.Note != null)
         {
+            _isAir = true;
             _rigid.position = JumPos;
             SetAnim("JumpAttack1");
-            _isAir = true;
         }
         else if(_judge.Note == null) 
         {
+            _isAir = true;
             _rigid.position = JumPos;
             SetAnim("Jump1");
-            _isAir = true;
         }
         yield break;
     }
     private void Update()
     {
+        //if(_judge.Note != null)
+        //{
+        //    Debug.Log(_judge.Note.name);
+        //}
+        //else
+        //{
+        //    Debug.Log("노트가 없습니다");
+        //}
+        
         if(_curHp <= 0)
         {
             Die();
@@ -101,17 +110,32 @@ public class WGH_PlayerController : MonoBehaviour
             {
                 if (_isJPress && !_isFPress && Input.GetKeyUp(KeyCode.J))
                 {
-                    SetAnim("GroundAttack");
+                    if(!_isAir)
+                    {
+                        SetAnim("GroundAttack");
+                    }
+                    else if(!_isAir)
+                    {
+                        SetAnim("FallAttack");
+                    }
                     _isJPress = false;
                 }
                 if (_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
                 {
                     // TODO : 노트가 판정원에 있으면 실행 X 된다는 조건 추가
                     // 코루틴으로 시간텀을 둬서 판단을 해야할지 고민..
-                    StartCoroutine(JumpAnimCheck());
+                    if(!_isAir)
+                    { 
+                        StartCoroutine(JumpAnimCheck());
+                    }
                     _isFPress = false;
                 }
             }
+        }
+        else
+        {
+            Debug.Log("사망");
+            return;
         }
         
         //if(!_isAir)
@@ -199,21 +223,24 @@ public class WGH_PlayerController : MonoBehaviour
         }
         
         //}
-        if(collision.collider.TryGetComponent(out Note note) && !_isDamaged)
-        {
-            SetAnim("OnDamage");
-            _isDamaged = true;
-            
-            _curHp -= 1;
-            StartCoroutine(Invincibility());
-            StartCoroutine(Clicker());
-        }
+        
         // if(collision.collider.tag == "Monster" || collision.collider.tag == "Obstacle")
         //{
         // TODO : 피격판정
         //}
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Note note) && !_isDamaged)
+        {
+            SetAnim("OnDamage");
+            _isDamaged = true;
 
+            _curHp -= 1;
+            StartCoroutine(Invincibility());
+            StartCoroutine(Clicker());
+        }
+    }
     // 체공 시간 조절 코루틴
     IEnumerator InAirTime()
     {

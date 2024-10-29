@@ -28,6 +28,14 @@ public class WGH_RayJudge : MonoBehaviour
 
     private void Update()
     {
+        if(Note != null)
+        {
+            Debug.Log(Note.name);
+        }
+        else if(Note == null)
+        {
+            Debug.Log("ÎÖ∏Ìä∏Í∞Ä ÏóÜÏäµÎãàÎã§");
+        }
         if (Input.GetKeyDown(KeyCode.J))
         {
             _jPressTime = Time.time;
@@ -63,7 +71,7 @@ public class WGH_RayJudge : MonoBehaviour
         }
     }
     /// <summary>
-    /// ≥Î∆Æ∆«¡§ ∏ﬁº≠µÂ
+    /// ÎÖ∏Ìä∏ÌåêÏ†ï Î©îÏÑúÎìú
     /// </summary>
     public void CheckNote(Vector3 checkPos)
     {
@@ -72,6 +80,12 @@ public class WGH_RayJudge : MonoBehaviour
         Vector2 bPoint = new Vector2(_curPos.x + _greatDistance / 2, _curPos.y + _greatDistance / 4);
         Collider2D[] hits = Physics2D.OverlapAreaAll(aPoint, bPoint);
         Debug.DrawLine(aPoint,bPoint, Color.blue, 1f);
+
+        if(hits.Length == 0 )
+        {
+            Note = null;
+        }
+
         foreach (Collider2D hit in hits)
         {
             if(hit.TryGetComponent(out Note note))
@@ -87,10 +101,6 @@ public class WGH_RayJudge : MonoBehaviour
                 {
                     Note.OnHit(E_NoteDecision.Great);
                 }
-            }
-            else
-            {
-                Note = null;
             }
         }
     }
