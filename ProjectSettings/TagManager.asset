@@ -41,3 +41,30 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackGround 7
+    uniqueID: 3747146677
+    locked: 0
+  - name: BackGround 6
+    uniqueID: 3210779831
+    locked: 0
+  - name: BackGround 5
+    uniqueID: 2456901705
+    locked: 0
+  - name: BackGround 4
+    uniqueID: 2060387217
+    locked: 0
+  - name: BackGround 3
+    uniqueID: 4128666609
+    locked: 0
+  - name: BackGround 2
+    uniqueID: 1982381303
+    locked: 0
+  - name: BackGround 1
+    uniqueID: 94749897
+    locked: 0
+  - name: BackGround 0
+    uniqueID: 2679458219
+    locked: 0
+  - name: Test
+    uniqueID: 2976564621
+    locked: 0
