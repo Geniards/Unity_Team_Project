@@ -26,12 +26,12 @@ public class WGH_PlayerController : MonoBehaviour
     float _fPressTime;                                 // f 입력 시간을 받을 값
     float _jPressTime;                                 // j 입력 시간을 받을 값
 
-    bool _isDied;                                      // 사망여부
-
+    public bool IsDied { get; private set; }           // 사망여부
+    public bool IsDamaged { get; private set; }        // 피격 여부
     private bool _isAir;                               // 체공 여부
     bool _isCanJump = true;
     Coroutine _IsAirRountine;                          // 체공 코루틴
-    bool _isDamaged;                                   // 피격 여부
+    
     private void Awake()
     {
         _curHp = _maxHp;
@@ -53,7 +53,9 @@ public class WGH_PlayerController : MonoBehaviour
     void Die()
     {
         SetAnim("Die");
-        _isDied = true;
+        IsDied = true;
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+        gameObject.GetComponent<Collider2D>().enabled = false;
     }
 
     IEnumerator JumpAnimCheck()
@@ -75,69 +77,63 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        //if(_judge.Note != null)
-        //{
-        //    Debug.Log(_judge.Note.name);
-        //}
-        //else
-        //{
-        //    Debug.Log("노트가 없습니다");
-        //}
         
-        if(_curHp <= 0)
+        if(_curHp <= 0 && !IsDied)
         {
             Die();
         }
-        if(!_isDied)
+        if (!IsDied)
         {
-            if (Input.GetKeyDown(KeyCode.J))
+            if (!IsDamaged)
             {
-                _jPressTime = Time.time;
-                _isJPress = true;
-            }
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                _fPressTime = Time.time;
-                _isFPress = true;
-            }
-            if (Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJPress && _isFPress)
-            {
-                SetAnim("MiddleAttack");
-                _isJPress = false;
-                _isFPress = false;
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    _jPressTime = Time.time;
+                    _isJPress = true;
+                }
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    _fPressTime = Time.time;
+                    _isFPress = true;
+                }
+                if (Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJPress && _isFPress)
+                {
+                    SetAnim("MiddleAttack");
+                    _isJPress = false;
+                    _isFPress = false;
+                }
+                else
+                {
+                    if (_isJPress && !_isFPress && Input.GetKeyUp(KeyCode.J))
+                    {
+                        if (!_isAir)
+                        {
+                            SetAnim("GroundAttack");
+                        }
+                        else if (!_isAir)
+                        {
+                            SetAnim("FallAttack");
+                        }
+                        _isJPress = false;
+                    }
+                    if (_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
+                    {
+                        // TODO : 노트가 판정원에 있으면 실행 X 된다는 조건 추가
+                        // 코루틴으로 시간텀을 둬서 판단을 해야할지 고민..
+                        if (!_isAir)
+                        {
+                            StartCoroutine(JumpAnimCheck());
+                        }
+                        _isFPress = false;
+                    }
+                }
             }
             else
             {
-                if (_isJPress && !_isFPress && Input.GetKeyUp(KeyCode.J))
-                {
-                    if(!_isAir)
-                    {
-                        SetAnim("GroundAttack");
-                    }
-                    else if(!_isAir)
-                    {
-                        SetAnim("FallAttack");
-                    }
-                    _isJPress = false;
-                }
-                if (_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
-                {
-                    // TODO : 노트가 판정원에 있으면 실행 X 된다는 조건 추가
-                    // 코루틴으로 시간텀을 둬서 판단을 해야할지 고민..
-                    if(!_isAir)
-                    { 
-                        StartCoroutine(JumpAnimCheck());
-                    }
-                    _isFPress = false;
-                }
+                Debug.Log("사망");
+                return;
             }
         }
-        else
-        {
-            Debug.Log("사망");
-            return;
-        }
-        
         //if(!_isAir)
         //{
         //    
@@ -231,10 +227,10 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Note note) && !_isDamaged)
+        if (collision.gameObject.TryGetComponent(out Note note) && !IsDamaged)
         {
             SetAnim("OnDamage");
-            _isDamaged = true;
+            IsDamaged = true;
 
             _curHp -= 1;
             StartCoroutine(Invincibility());
@@ -269,9 +265,9 @@ public class WGH_PlayerController : MonoBehaviour
     // 무적
     IEnumerator Invincibility()
     {
+        SetAnim("Run");
         yield return new WaitForSeconds(_invincivilityTime);
-        _isDamaged = false;
-        _rigid.isKinematic = false;
+        IsDamaged = false;
         yield break;
     }
     /// <summary>

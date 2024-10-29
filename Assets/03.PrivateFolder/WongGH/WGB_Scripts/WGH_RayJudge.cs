@@ -13,60 +13,59 @@ public class WGH_RayJudge : MonoBehaviour
     Vector3 _curPos;
 
     public Note Note { get; private set; }
-
+    WGH_PlayerController _playerController;
     float _fPressTime;
     float _jPressTime;
     bool _isFpress;
     bool _isJpress;
-
+    
     private void Start()
     {
         _checkTopPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.TOP);
         _checkMiddlePos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _checkBottomPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.BOTTOM);
+        _playerController = FindAnyObjectByType<WGH_PlayerController>();
     }
 
     private void Update()
     {
-        if(Note != null)
+        if (!_playerController.IsDied)
         {
-            Debug.Log(Note.name);
-        }
-        else if(Note == null)
-        {
-            Debug.Log("노트가 없습니다");
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            _jPressTime = Time.time;
-            _isJpress = true;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            _fPressTime = Time.time;
-            _isFpress = true;
-        }
-        
-        if(Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJpress && _isFpress)
-        {
-            CheckNote(_checkMiddlePos);
-            _jPressTime = -1;
-            _fPressTime = -1;
-            _isJpress = false;
-            _isFpress = false;
-        }
-        else
-        {
-            if(_isJpress && !_isFpress && Input.GetKeyUp(KeyCode.J))
+            if (!_playerController.IsDamaged)
             {
-                CheckNote(_checkBottomPos);
-                _isJpress = false;
-            }
-            if(_isFpress && !_isJpress && Input.GetKeyUp(KeyCode.F))
-            {
-                CheckNote(_checkTopPos);
-                _isFpress = false;
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    _jPressTime = Time.time;
+                    _isJpress = true;
+                }
+
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    _fPressTime = Time.time;
+                    _isFpress = true;
+                }
+
+                if (Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJpress && _isFpress)
+                {
+                    CheckNote(_checkMiddlePos);
+                    _jPressTime = -1;
+                    _fPressTime = -1;
+                    _isJpress = false;
+                    _isFpress = false;
+                }
+                else
+                {
+                    if (_isJpress && !_isFpress && Input.GetKeyUp(KeyCode.J))
+                    {
+                        CheckNote(_checkBottomPos);
+                        _isJpress = false;
+                    }
+                    if (_isFpress && !_isJpress && Input.GetKeyUp(KeyCode.F))
+                    {
+                        CheckNote(_checkTopPos);
+                        _isFpress = false;
+                    }
+                }
             }
         }
     }
