@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -43,24 +43,19 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ºÅ×ÀÌÁöÀÇ ³»ºÎ±â´ÉÀ» µ¿ÀÛ½ÃÅµ´Ï´Ù.
+    /// ìŠ¤í…Œì´ì§€ë¥¼ ì§„í–‰ì‹œí‚µë‹ˆë‹¤.
     /// </summary>
     public void StartStage()
     {
         DataManager.Instance.SetPlayState(true);
-
-        if (NoteDirector == null)
-        {
-            return;
-        }
-
         NoteDirector.Initailize();
         NoteDirector.StartSpawnNotes();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // ?„ì‹œ ì½”ë“œ
+        if (Input.GetKeyDown(KeyCode.Space)) // ì„ì‹œ
             StartStage();
     }
+
 }
