@@ -12,7 +12,7 @@ public class WGH_RayJudge : MonoBehaviour
     Vector3 _checkBottomPos;
     Vector3 _curPos;
 
-    Note _note;
+    public Note Note { get; private set; }
 
     float _fPressTime;
     float _jPressTime;
@@ -76,53 +76,57 @@ public class WGH_RayJudge : MonoBehaviour
         {
             if(hit.TryGetComponent(out Note note))
             {
-                _note = note;
+                Note = note;
                 float _distance = Vector2.Distance(_curPos, hit.transform.position);
                 Debug.DrawLine(aPoint + new Vector2(0, _greatDistance / 4), bPoint - new Vector2(0, _greatDistance / 4), Color.blue, 1);
                 if (_distance <= _perfectDistance)
                 {
-                    _note.OnHit(E_NoteDecision.Perfect);
+                    Note.OnHit(E_NoteDecision.Perfect);
                 }
                 else if(_distance <= _greatDistance + 0.1f)
                 {
-                    _note.OnHit(E_NoteDecision.Great);
+                    Note.OnHit(E_NoteDecision.Great);
                 }
             }
-        }
-    }
-    public void CheckNoteRight(Vector3 checkPos)
-    {
-        this._curPos = checkPos;
-        RaycastHit2D hitRight = Physics2D.Raycast(_curPos, Vector3.right, _greatDistance);
-        if (hitRight.collider.TryGetComponent(out Note note1))
-        {
-            _note = note1;
-            if (hitRight.distance <= _perfectDistance)
+            else
             {
-                _note.OnHit(E_NoteDecision.Perfect);
-            }
-            else if (hitRight.distance <= _greatDistance)
-            {
-                _note.OnHit(E_NoteDecision.Great);
+                Note = null;
             }
         }
     }
-    public void CheckNoteLeft(Vector3 checkPos)
-    {
-        this._curPos = checkPos;
-        RaycastHit2D hitLeft = Physics2D.Raycast(_curPos, Vector3.left, _greatDistance);
-        if (hitLeft.collider.TryGetComponent(out Note note2))
-        {
-            _note = note2;
-            if (hitLeft.distance <= _perfectDistance)
-            {
-                _note.OnHit(E_NoteDecision.Perfect);
-            }
-            else if (hitLeft.distance <= _greatDistance)
-            {
-                _note.OnHit(E_NoteDecision.Great);
-            }
-        }
-    }
+    //public void CheckNoteRight(Vector3 checkPos)
+    //{
+    //    this._curPos = checkPos;
+    //    RaycastHit2D hitRight = Physics2D.Raycast(_curPos, Vector3.right, _greatDistance);
+    //    if (hitRight.collider.TryGetComponent(out Note note1))
+    //    {
+    //        _note = note1;
+    //        if (hitRight.distance <= _perfectDistance)
+    //        {
+    //            _note.OnHit(E_NoteDecision.Perfect);
+    //        }
+    //        else if (hitRight.distance <= _greatDistance)
+    //        {
+    //            _note.OnHit(E_NoteDecision.Great);
+    //        }
+    //    }
+    //}
+    //public void CheckNoteLeft(Vector3 checkPos)
+    //{
+    //    this._curPos = checkPos;
+    //    RaycastHit2D hitLeft = Physics2D.Raycast(_curPos, Vector3.left, _greatDistance);
+    //    if (hitLeft.collider.TryGetComponent(out Note note2))
+    //    {
+    //        _note = note2;
+    //        if (hitLeft.distance <= _perfectDistance)
+    //        {
+    //            _note.OnHit(E_NoteDecision.Perfect);
+    //        }
+    //        else if (hitLeft.distance <= _greatDistance)
+    //        {
+    //            _note.OnHit(E_NoteDecision.Great);
+    //        }
+    //    }
+    //}
     
 }

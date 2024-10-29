@@ -153,6 +153,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &617765543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 617765544}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &617765544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617765543}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.68, y: -0.19, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1575601832}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,17 +285,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 31983053855074680, guid: 3903107bfa7be2d4389195542270b506, type: 3}
+      propertyPath: m_SortingOrder
+      value: -500
+      objectReference: {fileID: 0}
     - target: {fileID: 31983053855074681, guid: 3903107bfa7be2d4389195542270b506, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 31983053855074681, guid: 3903107bfa7be2d4389195542270b506, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.85
+      value: -4.66
       objectReference: {fileID: 0}
     - target: {fileID: 31983053855074681, guid: 3903107bfa7be2d4389195542270b506, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.22
+      value: -0.88
       objectReference: {fileID: 0}
     - target: {fileID: 31983053855074681, guid: 3903107bfa7be2d4389195542270b506, type: 3}
       propertyPath: m_LocalPosition.z
@@ -597,6 +632,11 @@ PrefabInstance:
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 185137565, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
   m_PrefabInstance: {fileID: 1550525053}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1575601832 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 31983053855074681, guid: 3903107bfa7be2d4389195542270b506, type: 3}
+  m_PrefabInstance: {fileID: 931932764}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1712781895
 GameObject:
