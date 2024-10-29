@@ -237,6 +237,7 @@ public class BossClosedPlayer : BossState, IState
     public BossClosedPlayer(BossController boss, float shakeDuration) : base(boss)
     {
         this._duration = shakeDuration;
+        _cam = Camera.main.GetComponent<CamMovement>();
     }
 
     // Èçµé¸² ¸ð¼Ç, Ä«¸Þ¶ó ÁÜ?
@@ -245,20 +246,21 @@ public class BossClosedPlayer : BossState, IState
     private float _timer;
     private Vector3 _initPos;
     private Vector3 _randPos;
+    private CamMovement _cam;
 
     public void Enter()
     {
         _timer = 0;
         _initPos = _boss.transform.position;
-        GameManager.Instance.CamMove(_initPos + Vector3.forward * -10, 0.07f);
-        GameManager.Instance.ZoomIn(0.1f,3.6f);
+        _cam.Move(_initPos + Vector3.forward * -10, 0.07f);
+        _cam.ZoomIn(0.1f,3.6f);
         
     }
 
     public void Exit()
     {
-        GameManager.Instance.CamMove(new Vector3(0, 1, -10f), 0.07f);
-        GameManager.Instance.ZoomIn(0.1f, 5f);
+        _cam.Move(new Vector3(0, 1, -10f), 0.07f);
+        _cam.ZoomIn(0.1f, 5f);
         
     }
 
