@@ -12,7 +12,15 @@ public class ProgressBar : MonoBehaviour
         
     private void Start()
     {
-        curProgress = initProgress;
+        if (DataManager.Instance != null)
+        {
+            curProgress = DataManager.Instance.StageProgress;
+        }
+        else
+        {
+            Debug.LogWarning("DataManager.Instance가 초기화되지 않았습니다. initProgress로 초기화합니다.");
+            curProgress = initProgress;
+        }
     }
 
     private void Update() 
