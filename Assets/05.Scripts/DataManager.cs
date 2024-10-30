@@ -21,6 +21,7 @@ public class DataManager : MonoBehaviour, IManager
         SetBGMVolume(1); // 유저 정보 저장시 변경
         SetSFXVolume(1);
         SetStageNumber(1);
+        SetBGMClipLength(0);
     }
 
     [SerializeField, Header("분당 Beat")]
@@ -48,7 +49,9 @@ public class DataManager : MonoBehaviour, IManager
     public float SFXVolume => _settingData.SFXVolume;
 
     public float PlayerHp => _stageData.PlayerHp;
-    public float StageProgress => _stageData.StageProgress;
+    public float StageProgress => _stageData.StageProgress; // 0 ~ 1
+    // 해당 값 변경시 프로그래스 바의 SetValue 값을 전달시킨다.
+    public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
 
     public void SetPlayState(bool value) { _isPlaying = value; }
     public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
@@ -56,13 +59,18 @@ public class DataManager : MonoBehaviour, IManager
     public void SetPlayerHP(float value) { _stageData.PlayerHp = value; }
     public void SetBossHP(float value) { _stageData.BossHp = value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
-    public void SetProgress(float value) { _stageData.StageProgress = value; }
     public void SetComboCount(int value) { _stageData.ComboCount = value; }
     public void SetStageNumber(int value) { _stageData.StageNumber = value; }
+    public void SetProgress(float current) 
+    { 
+        if(CurrentBGMClipLength == 0)
+        { throw new System.Exception("프로그래스 동기화 순서 문제발생"); }
+
+        _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
+    }
 
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
     public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
-
     
 }
 
@@ -76,6 +84,7 @@ public struct StageData
     public int ComboCount;
     public int StageNumber;
     public float CurrentBGMClipLength;
+    public float CurrentPlayingTime;
 }
 
 public struct GameSettingData

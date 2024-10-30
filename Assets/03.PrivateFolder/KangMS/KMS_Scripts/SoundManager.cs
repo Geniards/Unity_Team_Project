@@ -18,7 +18,7 @@ public class SoundManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// ½ºÅ×ÀÌÁö¾ÀÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö È­¸é¿¡¼­ Á¦°øÇÏ´Â À½¿øÀ» Àç»ıÇÕ´Ï´Ù.
+    /// ìŠ¤í…Œì´ì§€ì”¬ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ í™”ë©´ì—ì„œ ì œê³µí•˜ëŠ” ìŒì›ì„ ì¬ìƒí•©ë‹ˆë‹¤.
     /// </summary>
     public void PlayLobbyBGM(E_SceneType sceneType)
     {
@@ -27,24 +27,25 @@ public class SoundManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// ½ºÅ×ÀÌÁö ¹øÈ£¿¡ ¸Â´Â À½¿øÀ» Àç»ıÇÕ´Ï´Ù.
+    /// ìŠ¤í…Œì´ì§€ ë²ˆí˜¸ì— ë§ëŠ” ìŒì›ì„ ì¬ìƒí•©ë‹ˆë‹¤.
     /// </summary>
     public void PlayStageBGM()
     {
         _bgmSource.clip = Resources.Load<AudioClip>
             ($"{BGM_PATH}{DataManager.Instance.StageNumber}");
         _bgmSource.Play();
+        DataManager.Instance.SetBGMClipLength(_bgmSource.clip.length);
     }
 
     /// <summary>
-    /// À½¾ÇÀ» Áß´Ü½ÃÅµ´Ï´Ù.
+    /// ìŒì•…ì„ ì¤‘ë‹¨ì‹œí‚µë‹ˆë‹¤.
     /// </summary>
     public void StopBGM() { _bgmSource.Stop(); }
 
     /// <summary>
-    /// ¼­¼­È÷ À½¿øº¼·ıÀ» Á¶ÀıÇÕ´Ï´Ù.
+    /// ì„œì„œíˆ ìŒì›ë³¼ë¥¨ì„ ì¡°ì ˆí•©ë‹ˆë‹¤.
     /// </summary>
-    /// <param name="value">true = fadeIn À¸·Î ÃÖ´ë º¼·ı±îÁö ¼­¼­È÷ ¿Ã¸²</param>
+    /// <param name="value">true = fadeIn ìœ¼ë¡œ ìµœëŒ€ ë³¼ë¥¨ê¹Œì§€ ì„œì„œíˆ ì˜¬ë¦¼</param>
     public void FadeBGM(bool value)
     {
         if (_fadeRoutine != null)
