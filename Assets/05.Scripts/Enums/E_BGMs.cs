@@ -1,7 +1,8 @@
 public enum E_StageBGM
 {
     NONE = -1,
-    NORMAL_1,
+    TEST_NORMAL_01,
+    //NORMAL_1,
     BOSS_1,
 
 

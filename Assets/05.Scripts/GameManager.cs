@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     private Coroutine _stageTimeRoutine;
     private WaitForSeconds _timerIntervalSec;
+    private float _checkInterval = 0.1f;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(_instance.gameObject);
 
             _instance.InitGameManager();
+
+            
         }
     }
 
@@ -34,7 +38,7 @@ public class GameManager : MonoBehaviour
     private void InitGameManager()
     {
         InitializeManagers();
-        _timerIntervalSec = new WaitForSeconds(1f);
+        _timerIntervalSec = new WaitForSeconds(_checkInterval);
         Application.targetFrameRate = 120;
         DataManager.Instance.SetStageNumber(1);
     }
@@ -69,6 +73,8 @@ public class GameManager : MonoBehaviour
         float timer = 0;
         float breakPoint = DataManager.Instance.CurrentBGMClipLength -
             DataManager.Instance.SkipSpawnTimeOffset;
+        //float breakDuration = DataManager.Instance.SkipSpawnTimeOffset / 
+        //    DataManager.Instance.CurrentBGMClipLength;
         bool isBreaked = false;
 
         while (true)
@@ -76,10 +82,11 @@ public class GameManager : MonoBehaviour
             DataManager.Instance.SetProgress(timer);
 
             yield return _timerIntervalSec;
-            timer += Time.deltaTime;
+            timer += _checkInterval;
 
-            if (timer >= breakPoint && isBreaked)
+            if (timer >= breakPoint && isBreaked == false)
             {
+                SoundManager.Instance.FadeBGM(false, 4f);
                 NoteDirector.SetSpawnSkip(true);
                 isBreaked = true;
             }
@@ -93,12 +100,14 @@ public class GameManager : MonoBehaviour
     {
         if (_stageTimeRoutine != null)
             StopCoroutine(_stageTimeRoutine);
+
+        SoundManager.Instance.PlayBossBGM();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) // 임시
-            StartStage(E_StageBGM.NORMAL_1);
+            StartStage(E_StageBGM.TEST_NORMAL_01);
     }
 
 }
