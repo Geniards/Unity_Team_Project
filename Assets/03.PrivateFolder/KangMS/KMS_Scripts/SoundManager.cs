@@ -3,18 +3,22 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour, IManager
 {
-    private const string BGM_PATH = "BGMs/";
+    private const string BGM_STAGE_PATH = "BGMs/Stage/";
+    private const string BGM_MAIN_PATH = "BGMs/Main/";
 
     public static SoundManager Instance {  get; private set; }
 
     [SerializeField] private AudioSource _bgmSource;
     [SerializeField] private AudioSource _sfxSource;
+    [SerializeField] private SFXList _sfxList;
+    private E_StageBGM _currentStageBgm = E_StageBGM.NONE;
 
     private Coroutine _fadeRoutine;
 
     public void Init() 
     { 
         Instance = this;
+        _currentStageBgm = E_StageBGM.NONE;
     }
 
     /// <summary>
@@ -22,19 +26,27 @@ public class SoundManager : MonoBehaviour, IManager
     /// </summary>
     public void PlayLobbyBGM(E_SceneType sceneType)
     {
-        _bgmSource.clip = Resources.Load<AudioClip>($"{BGM_PATH}{sceneType.ToString()}");
+        _bgmSource.clip = Resources.Load<AudioClip>($"{BGM_STAGE_PATH}{sceneType.ToString()}");
         _bgmSource.Play();
     }
 
     /// <summary>
     /// 스테이지 번호에 맞는 음원을 재생합니다.
     /// </summary>
-    public void PlayStageBGM()
+    public void PlayBGM(E_StageBGM bgmType)
     {
         _bgmSource.clip = Resources.Load<AudioClip>
-            ($"{BGM_PATH}{DataManager.Instance.StageNumber}");
+            ($"{BGM_STAGE_PATH}{bgmType}");
         _bgmSource.Play();
         DataManager.Instance.SetBGMClipLength(_bgmSource.clip.length);
+        _currentStageBgm = bgmType;
+    }
+
+    public void PlayBGM(E_MainBGM bgmType)
+    {
+        _bgmSource.clip = Resources.Load<AudioClip>
+            ($"{BGM_STAGE_PATH}{bgmType}");
+        _bgmSource.Play();
     }
 
     /// <summary>
@@ -93,5 +105,48 @@ public class SoundManager : MonoBehaviour, IManager
         }
     }
 
-    public void PlaySFX(AudioClip clip) { _sfxSource.PlayOneShot(clip); }
+    private IEnumerator SirenRoutine(float length)
+    {
+        float timer = length;
+        int count = 0;
+
+        while (true)
+        {
+            if (count >= DataManager.Instance.SirenCount)
+                break;
+
+            if(timer <= 0)
+            {
+                timer = length;
+                count++;
+            }
+
+            timer -= Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator PlayBossBGMRoutine()
+    {
+        float oneLoopLength = _sfxList[E_SFX.SIREN].length;
+
+        yield return SirenRoutine(oneLoopLength);
+
+        GameManager.NoteDirector.SetSpawnSkip(false);
+        PlayBGM(_currentStageBgm + 1);
+    }
+
+    public void PlayBossBGM()
+    {
+        StartCoroutine(PlayBossBGMRoutine());
+    }
+
+    /// <summary>
+    /// SFX 타입의 음원을 재생합니다.
+    /// </summary>
+    public void PlaySFX(E_SFX sfxType) 
+    {
+        _sfxSource.PlayOneShot(_sfxList[sfxType]);
+    }
 }

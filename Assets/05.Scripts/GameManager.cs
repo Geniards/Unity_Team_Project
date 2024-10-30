@@ -50,31 +50,46 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 스테이지를 진행시킵니다.
     /// </summary>
-    public void StartStage()
+    public void StartStage(E_StageBGM bgm)
     {
         DataManager.Instance.SetPlayState(true);
         NoteDirector.Initailize();
-        NoteDirector.StartSpawnNotes();
-        _stageTimeRoutine = StartCoroutine(StartTimer());
+        NoteDirector.StartSpawnNotes(bgm);
+        _stageTimeRoutine = StartCoroutine(StartProgressTimer());
+
+        Debug.Log(DataManager.Instance.CurrentBGMClipLength);
+        Debug.Log(DataManager.Instance.SkipSpawnTimeOffset);
     }
 
     /// <summary>
     /// 스테이지 진행시 현재 진행도를 확인하기 위한 코루틴
     /// </summary>
-    private IEnumerator StartTimer()
+    private IEnumerator StartProgressTimer()
     {
-        float Timer = 0;
+        float timer = 0;
+        float breakPoint = DataManager.Instance.CurrentBGMClipLength -
+            DataManager.Instance.SkipSpawnTimeOffset;
+        bool isBreaked = false;
 
         while (true)
         {
-            DataManager.Instance.SetProgress(Timer);
+            DataManager.Instance.SetProgress(timer);
 
             yield return _timerIntervalSec;
-            Timer += Time.deltaTime;
+            timer += Time.deltaTime;
+
+            if (timer >= breakPoint && isBreaked)
+            {
+                NoteDirector.SetSpawnSkip(true);
+                isBreaked = true;
+            }
         }
     }
     
-    private void StopTimer() // 스테이지 종료시 반드시 호출
+    /// <summary>
+    /// 진행시간의 타이머를 종료시킵니다.
+    /// </summary>
+    public void StopProgressTimer()
     {
         if (_stageTimeRoutine != null)
             StopCoroutine(_stageTimeRoutine);
@@ -83,7 +98,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) // 임시
-            StartStage();
+            StartStage(E_StageBGM.NORMAL_1);
     }
 
 }

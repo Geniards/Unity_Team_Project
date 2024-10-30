@@ -11,6 +11,7 @@ public enum E_VFX
 public enum E_SFX
 {
     NONE=-1,
+    SIREN,
     SCORE,
     MONSTER,
     LONGNOTE,

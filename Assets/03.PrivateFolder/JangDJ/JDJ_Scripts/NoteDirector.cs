@@ -11,7 +11,8 @@ public class NoteDirector : MonoBehaviour
     private float _noteSpeed;
     private double _noteArriveDuration;
     [SerializeField] private float _prevDelay;
-
+    private float _beatInterval;
+    public float BeatInterval => _beatInterval;
     private Coroutine _spawnRoutine = null;
 
     private bool _isSkipSpawn = false;
@@ -57,12 +58,12 @@ public class NoteDirector : MonoBehaviour
     /// <summary>
     /// 노트 생성을 시작합니다.
     /// </summary>
-    public void StartSpawnNotes()
+    public void StartSpawnNotes(E_StageBGM bgm)
     {
         if (_spawnRoutine != null)
             StopCoroutine(_spawnRoutine);
 
-        _spawnRoutine = StartCoroutine(AutoSpawnRoutine());
+        _spawnRoutine = StartCoroutine(AutoSpawnRoutine(bgm));
     }
 
     private float GetBPMtoIntervalSec()
@@ -76,15 +77,16 @@ public class NoteDirector : MonoBehaviour
         return Mathf.Abs((float)checkPointDist / _noteSpeed);
     }
 
-    private IEnumerator AutoSpawnRoutine()
+    private IEnumerator AutoSpawnRoutine(E_StageBGM bgm)
     {
         double nextSpawnTime = 0d;
         double startDspTime = AudioSettings.dspTime;
-        double firstNoteTime = startDspTime + (GetBPMtoIntervalSec() * 4) - _noteArriveDuration; // 4박자 뒤의 첫 노트 생성 시간
+        _beatInterval = GetBPMtoIntervalSec();
+        double firstNoteTime = startDspTime + (_beatInterval * 4) - _noteArriveDuration; // 4박자 뒤의 첫 노트 생성 시간
                                                                                                  // 첫 번째 노트 생성 타이밍 설정
         nextSpawnTime = firstNoteTime;
         _spawner.RegistPattern(1); // 임시 테스트 코드
-        SoundManager.Instance.PlayStageBGM();
+        SoundManager.Instance.PlayBGM(bgm);
 
         nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec();
 
@@ -105,8 +107,6 @@ public class NoteDirector : MonoBehaviour
                 if(_isSkipSpawn == false)
                     _spawner.SpawnNote(_noteSpeed);
                 
-                //_posController.NoteCheckRay();
-
                 nextSpawnTime += GetBPMtoIntervalSec();
             }
             

@@ -450,6 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1354593522}
   - component: {fileID: 1354593523}
+  - component: {fileID: 1354593524}
   m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
@@ -524,6 +525,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1354593524
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354593521}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 55f7cdcd78f02a14ea1242155d40058c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1518096867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -575,6 +597,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _sfxList._sfxList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _sfxList._sfxList.Array.data[0]._sfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 1d3d50b421223884690cb2677af9de3b, type: 3}
     - target: {fileID: 6892206162165546811, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_Name
       value: Manager
@@ -624,6 +654,7 @@ GameObject:
   - component: {fileID: 1782429148}
   - component: {fileID: 1782429147}
   - component: {fileID: 1782429149}
+  - component: {fileID: 1782429150}
   m_Layer: 11
   m_Name: Boss
   m_TagString: Untagged
@@ -691,6 +722,18 @@ MonoBehaviour:
     _hp: 0
     _moveSpeed: 0
   _movement: {fileID: 1782429147}
+--- !u!114 &1782429150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782429145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b90188e9519954db705608b9eb77aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1978790276
 GameObject:
   m_ObjectHideFlags: 0
