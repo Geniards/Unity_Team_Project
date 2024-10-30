@@ -5,19 +5,20 @@ using UnityEngine;
 public class SwordWaveNote : Note
 {
     [Header("보스의 위치")]
-    public Transform bossTrransform;
+    public Transform bossTransform;
     private double lastDspTime;
 
     /// <summary>
     /// 보스의 위치를 목표로 초기화
     /// </summary>
-    public void InitializeSwordWave(float speed, float scoreValue, float damage)
+    public void InitializeSwordWave(Transform bossTransform, float speed, float scoreValue, float damage)
     {
         this.speed = speed;
         this.scoreValue = scoreValue;
         this.damage = damage;
+        this.bossTransform = bossTransform;
 
-        if (!bossTrransform) Debug.Log("보스위치가 존재하지 않습니다.");
+        if (!bossTransform) Debug.Log("보스위치가 존재하지 않습니다.");
 
         gameObject.SetActive(true);
         lastDspTime = AudioSettings.dspTime;
@@ -25,12 +26,12 @@ public class SwordWaveNote : Note
 
     private void Update()
     {
-        moveBoss();
+        moveAttackBoss();
     }
 
-    private void moveBoss()
+    private void moveAttackBoss()
     {
-        if (bossTrransform == null || _isHit)
+        if (bossTransform == null || _isHit)
             return;
 
         // DSP 시간 기반 이동
@@ -38,17 +39,19 @@ public class SwordWaveNote : Note
         double deltaTime = currentDspTime - lastDspTime;
         lastDspTime = currentDspTime;
 
-        // 이동 계산: deltaTime을 사용하여 속도에 따라 이동
         float step = speed * (float)deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, bossTrransform.position, step);
+        transform.position = Vector3.MoveTowards(transform.position, bossTransform.position, step);
 
         // 보스 방향으로 회전
-        Vector3 directionToBoss = (bossTrransform.position - transform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToBoss);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, step);
+        Vector3 directionToBoss = (bossTransform.position - transform.position).normalized;
+
+        //두 지점 간의 방향을 각도로 변환(Atan사용이유)
+        float angle = Mathf.Atan2(directionToBoss.y, directionToBoss.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+
 
         // 보스 위치에 도달하면 타격 처리
-        if (Vector3.Distance(transform.position, bossTrransform.position) < 0.1f)
+        if (Vector3.Distance(transform.position, bossTransform.position) < 0.1f)
         {
             HitBoss();
         }
