@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour, IValuableUI
 {
-    public float curProgress;
-    public float initProgress;
-    public float maxProgress;
     public Image progressBar;
         
     private void Start()
@@ -18,15 +15,5 @@ public class ProgressBar : MonoBehaviour, IValuableUI
     public void SetValue(float value)
     { 
         progressBar.fillAmount = value;
-    }
-
-    private void Update() 
-    {
-        progressBar.fillAmount = GetPrgPortion();
-    }
-
-    private float GetPrgPortion()
-    {
-        return curProgress / maxProgress; 
     }
 }

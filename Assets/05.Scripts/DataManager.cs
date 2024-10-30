@@ -48,13 +48,24 @@ public class DataManager : MonoBehaviour, IManager
     public float StageProgress => _stageData.StageProgress;
 
     public void SetPlayState(bool value) { _isPlaying = value; }
+    public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
 
     public void SetPlayerHP(float value) { _stageData.PlayerHp = value; }
     public void AddPlayerHP(float value) { _stageData.PlayerHp += value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
-    public void SetProgress(float value) { _stageData.StageProgress = value; }
     public void SetComboCount(int value) { _stageData.ComboCount = value; }
     public void SetStageNumber(int value) { _stageData.StageNumber = value; }
+    public void SetProgress(float current)
+    {
+        if(CurrentBGMClipLength == 0)
+        { throw new System.Exception("프로그레스 동기화 순서 문제발생"); }
+
+        _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
+        UIManager.Instance.SetProgressValue(_stageData.StageProgress);
+
+        if (_stageData.StageProgress >= 1)
+            GameManager.Instance.StopProgressTimer();
+    }
 
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
     public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
