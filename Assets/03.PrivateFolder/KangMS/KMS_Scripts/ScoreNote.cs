@@ -7,20 +7,10 @@ public class ScoreNote : Note, IPoolingObj, IReflective
 {
     [Header("검기 노트 프리팹")]
     [SerializeField] private GameObject swordWaveNotePrefab;
-    [SerializeField] private Transform bossTransform;
+
     public E_Pool MyPoolType => E_Pool.SCORE_NOTE;
 
-    //테스트 코드 삭제요망
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-            Initialize(endPoint, speed, scoreValue);
-
-        if (Input.GetKeyDown(KeyCode.S))
-            OnHit(E_NoteDecision.Perfect);
-    }
-
-    public override void OnHit(E_NoteDecision decision)
+    public override void OnHit(E_NoteDecision decision, E_Boutton button)
     {
         if (!_isHit)
         {
@@ -50,7 +40,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
         {
             GameObject swordWaveNote = Instantiate(swordWaveNotePrefab, transform.position, Quaternion.identity);
             SwordWaveNote swordWave = swordWaveNote.GetComponent<SwordWaveNote>();
-            swordWave.InitializeSwordWave(bossTransform, speed, scoreValue, damage); // 보스 위치를 목표로 설정
+            swordWave.InitializeSwordWave(speed, scoreValue, damage); // 보스 위치를 목표로 설정
         }
     }
 
