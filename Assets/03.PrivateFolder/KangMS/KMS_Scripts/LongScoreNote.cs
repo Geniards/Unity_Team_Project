@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LongScoreNote : Note
 {
-    [Header("³ëÆ®ÇüÅÂ")]
+    [Header("ë…¸íŠ¸í˜•íƒœ")]
     [SerializeField] private Transform head;  
     [SerializeField] private Transform tail;  
     [SerializeField] private Transform body;  
@@ -37,7 +37,7 @@ public class LongScoreNote : Note
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            OnHit(E_NoteDecision.Perfect);
+            OnHit(E_NoteDecision.Perfect, E_Boutton.None);
         }
 
         if(Input.GetKeyUp(KeyCode.A))
@@ -47,7 +47,7 @@ public class LongScoreNote : Note
     }
 
     /// <summary>
-    /// ·Õ ³ëÆ®ÀÇ ±æÀÌ¿¡ ¸Â°Ô ¸Ó¸®¿Í ²¿¸® À§Ä¡ Á¶Á¤.
+    /// ë¡± ë…¸íŠ¸ì˜ ê¸¸ì´ì— ë§ê²Œ ë¨¸ë¦¬ì™€ ê¼¬ë¦¬ ìœ„ì¹˜ ì¡°ì •.
     /// </summary>
     private void SetNoteLength()
     {
@@ -59,18 +59,18 @@ public class LongScoreNote : Note
         maskLayer.position = body.position;
     }
 
-    public override void OnHit(E_NoteDecision decision)
+    public override void OnHit(E_NoteDecision decision, E_Boutton boutton)
     {
         if (!_isTouching && !isMoving)
         {
             _isTouching = true;
             isMoving = false;
-            StartCoroutine(LongNoteCoroutine(decision));  // ·Õ ³ëÆ® ÁøÇà
+            StartCoroutine(LongNoteCoroutine(decision));  // ë¡± ë…¸íŠ¸ ì§„í–‰
         }
     }
 
     /// <summary>
-    /// ÅÍÄ¡°¡ À¯ÁöµÇ´Â µ¿¾È ¸öÅëÀ» ÁÙÀÌ°í, ÅÍÄ¡¸¦ ³õÀ¸¸é ½ÇÆĞ·Î Ã³¸®.
+    /// í„°ì¹˜ê°€ ìœ ì§€ë˜ëŠ” ë™ì•ˆ ëª¸í†µì„ ì¤„ì´ê³ , í„°ì¹˜ë¥¼ ë†“ìœ¼ë©´ ì‹¤íŒ¨ë¡œ ì²˜ë¦¬.
     /// </summary>
     private IEnumerator LongNoteCoroutine(E_NoteDecision decision)
     {
@@ -97,13 +97,13 @@ public class LongScoreNote : Note
         }
         else
         {
-            Debug.Log("·Õ ³ëÆ® ½ÇÆĞ");
+            Debug.Log("ë¡± ë…¸íŠ¸ ì‹¤íŒ¨");
             Destroy(gameObject);
         }
     }
 
     /// <summary>
-    /// ÅÍÄ¡¸¦ ³õÀ¸¸é ½ÇÆĞ·Î Ã³¸®
+    /// í„°ì¹˜ë¥¼ ë†“ìœ¼ë©´ ì‹¤íŒ¨ë¡œ ì²˜ë¦¬
     /// </summary>
     public void ReleaseTouch()
     {

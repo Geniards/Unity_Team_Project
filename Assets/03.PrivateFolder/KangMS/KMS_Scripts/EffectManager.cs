@@ -11,7 +11,7 @@ public class EffectManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// ¿äÃ» ÁÂÇ¥¿¡ ÀÌÆåÆ®¸¦ Àç»ıÇÕ´Ï´Ù.
+    /// ìš”ì²­ ì¢Œí‘œì— ì´í™íŠ¸ë¥¼ ì¬ìƒí•©ë‹ˆë‹¤.
     /// </summary>
     public void PlayFX(Vector3 requestPos)
     {
@@ -21,10 +21,10 @@ public class EffectManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// Follow Å¸ÀÔÇü ÀÌÆåÆ® Àç»ı¿¬ÃâÀ» À§ÇÑ ¸Ş¼­µå·Î
-    /// ¹Ì¿Ï¼º ±â´ÉÀÔ´Ï´Ù.
+    /// Follow íƒ€ì…í˜• ì´í™íŠ¸ ì¬ìƒì—°ì¶œì„ ìœ„í•œ ë©”ì„œë“œë¡œ
+    /// ë¯¸ì™„ì„± ê¸°ëŠ¥ì…ë‹ˆë‹¤.
     /// </summary>
-    public void PlayFX(Transform requestTr) // È°¿ë¼º °í·ÁÁß
+    public void PlayFX(Transform requestTr) // í™œìš©ì„± ê³ ë ¤ì¤‘
     {
         ParticleSystem fx = ObjPoolManager.Instance.GetObject<ParticleSystem>(E_Pool.HIT_VFX);
         fx.transform.SetParent(requestTr);

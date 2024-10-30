@@ -1,9 +1,9 @@
 public enum E_NoteType
 {
-    None,               // ΐεΎΦΉ° Ύψΐ½
-    Score,              // Α΅Όφ³λΖ®
-    Monster,            // Έσ½ΊΕΝ ³λΖ®
-    Obstacle,           // ΐεΎΦΉ° ³λΖ®
-    ConcurrentScore,    // µΏ½ΓΑ΅Όφ ³λΖ®
+    None,               // μ¥μ• λ¬Ό μ—†μ
+    Score,              // μ μλ…ΈνΈ
+    Monster,            // λª¬μ¤ν„° λ…ΈνΈ
+    Obstacle,           // μ¥μ• λ¬Ό λ…ΈνΈ
+    ConcurrentScore,    // λ™μ‹μ μ λ…ΈνΈ
     E_NOTETYPE_MAX
 }

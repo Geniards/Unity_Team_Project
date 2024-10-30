@@ -8,11 +8,11 @@ public class ObstacleNote : Note, IPoolingObj
 
     public override float OnDamage()
     {
-        Debug.Log($"Àå¾Ö¹°°ú Ãæµ¹! µ¥¹ÌÁö : {damage} Àü´Ş");
+        Debug.Log($"ì¥ì• ë¬¼ê³¼ ì¶©ëŒ! ë°ë¯¸ì§€ : {damage} ì „ë‹¬");
         return damage;
     }
 
-    public override void OnHit(E_NoteDecision decision) { Debug.Log("ºÎ¼­ÁöÁö ¾Ê½À´Ï´Ù."); }
+    public override void OnHit(E_NoteDecision decision, E_Boutton button) { Debug.Log("ë¶€ì„œì§€ì§€ ì•ŠìŠµë‹ˆë‹¤."); }
 
     public void Return()
     {
