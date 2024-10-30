@@ -7,6 +7,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
 {
     [Header("검기 노트 프리팹")]
     [SerializeField] private GameObject swordWaveNotePrefab;
+    [SerializeField] private Transform bossTransform;
 
     public E_Pool MyPoolType => E_Pool.SCORE_NOTE;
 
@@ -23,7 +24,6 @@ public class ScoreNote : Note, IPoolingObj, IReflective
                 ReflectNote();
             }
 
-            gameObject.SetActive(false);
             Return();
         }
     }
@@ -40,9 +40,15 @@ public class ScoreNote : Note, IPoolingObj, IReflective
         {
             GameObject swordWaveNote = Instantiate(swordWaveNotePrefab, transform.position, Quaternion.identity);
             SwordWaveNote swordWave = swordWaveNote.GetComponent<SwordWaveNote>();
-            swordWave.InitializeSwordWave(speed, scoreValue, damage); // 보스 위치를 목표로 설정
+            swordWave.InitializeSwordWave(bossTransform, speed, scoreValue, damage); // 보스 위치를 목표로 설정
         }
     }
 
-    public override float OnDamage(){ return damage; }
+    public override float GetDamage(){ return damage; }
+
+    public override void ReturnToPool()
+    {
+        NoteMediator.Instance.Unregister(this); // 중재자에서 노트 제거
+        Return();
+    }
 }

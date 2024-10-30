@@ -4,11 +4,8 @@ public enum E_Event
     CLICK, // 예제 타입
     SPAWN_STOP,
     NOTE_CLEAR,
-
     PLAYERDEAD,
-    
     ENTERBOSS,
     BOSSDEAD,
-
     E_EVENT_MAX,
 }

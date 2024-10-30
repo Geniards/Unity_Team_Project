@@ -74,7 +74,7 @@ public class BossController : MonoBehaviour
     {
         if(collision.collider.TryGetComponent<Note>(out Note note))
         {
-            float damageValue = note.OnDamage();
+            float damageValue = note.GetDamage();
             _stat.AddHp(damageValue);
         }
     }

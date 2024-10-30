@@ -11,6 +11,7 @@ public class DBScoreNote : Note, IPoolingObj
 
     private bool _upHit = false;
     private bool _downHit = false;
+    private E_NoteDecision _decision;
 
     public E_Pool MyPoolType => E_Pool.DBSCORE_NOTE;
 
@@ -39,28 +40,38 @@ public class DBScoreNote : Note, IPoolingObj
         }
     }
 
-    public override float OnDamage()
+    public override float GetDamage()
     {
         return damage;
     }
 
     public override void OnHit(E_NoteDecision decision, E_Boutton button)
     {
+
         if (button == E_Boutton.F_BOUTTON)
         {
-            upNote.OnHit(decision, E_Boutton.None);
             _upHit = true;
             Debug.Log("F On");
+
+            if (_upHit && _downHit)
+            {
+                DBHit(_decision);
+            }
+
+            upNote.OnHit(decision, E_Boutton.None);
         }
         if (button == E_Boutton.J_BOUTTON)
         {
-            downNote.OnHit(decision, E_Boutton.None);
             _downHit = true;
             Debug.Log("J On");
+            
+            if (_upHit && _downHit)
+            {
+                DBHit(_decision);
+            }
+            
+            downNote.OnHit(decision, E_Boutton.None);
         }
-
-        if (_upHit && _downHit)
-            DBHit(decision);
     } 
 
     private void DBHit(E_NoteDecision decision)
@@ -73,11 +84,21 @@ public class DBScoreNote : Note, IPoolingObj
             CalculateScore(decision);
             ShowEffect();
             gameObject.SetActive(false);
+            Debug.Log("DB노트 사라짐.");
         }
     }
 
     public void Return()
     {
         ObjPoolManager.Instance.ReturnObj(MyPoolType, this.gameObject);
+    }
+
+    /// <summary>
+    /// NoteMediator에서 등록된 노트를 제거하고 objPool로 반환.
+    /// </summary>
+    public override void ReturnToPool()
+    {
+        NoteMediator.Instance.Unregister(this);
+        Return();
     }
 }

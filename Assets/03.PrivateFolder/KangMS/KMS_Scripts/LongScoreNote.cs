@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * 현재 상태는 테스트 코드 상태입니다.
+ * 추후 변경사항이 있으니 주의해주세요.
+ */
 public class LongScoreNote : Note
 {
     [Header("노트형태")]
@@ -110,8 +114,14 @@ public class LongScoreNote : Note
         _isTouching = false;
     }
 
-    public override float OnDamage()
+    public override float GetDamage()
     {
         return damage;
+    }
+
+    public override void ReturnToPool()
+    {
+        //NoteMediator.Instance.Unregister(this); // 중재자에서 노트 제거
+        //Return();
     }
 }
