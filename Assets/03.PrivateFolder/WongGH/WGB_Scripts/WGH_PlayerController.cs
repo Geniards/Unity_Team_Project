@@ -8,7 +8,6 @@ public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
     [SerializeField] float _inAirTime;                  // 체공시간                         / 기준 값 : 0.3f
-    [SerializeField] float _jumpHeight;                 // 점프 시 플레이어의 높이 위치      / 기준 값 : 5f
     [SerializeField] int _maxHp;
     [SerializeField] int _curHp;
     [SerializeField] float _clikerTime;                 // 깜빡임 속도
@@ -21,8 +20,6 @@ public class WGH_PlayerController : MonoBehaviour
 
     public Vector3 PlayerFrontBoss { get; private set; }
     Vector3 _startPos;
-    public Vector2 GroundPos { get; private set; }    // 땅의 위치값
-    public Vector2 JumPos { get; private set; }       // 점프 위치값
 
     bool _isFPress;                                    // f 입력 여부
     bool _isJPress;                                    // j 입력 여부
@@ -32,24 +29,19 @@ public class WGH_PlayerController : MonoBehaviour
     
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
-    public bool IsAir { get; private set; }                               // 체공 여부
-    Coroutine _IsAirRountine;                          // 체공 코루틴
+    public bool IsAir { get; private set; }            // 체공 여부
     
     private void Awake()
     {
         _curHp = _maxHp;
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
-        _anim = GetComponent<Animator>();
-
-        // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정
-        GroundPos = transform.position + new Vector3(0, 0.2f, 0);    
+        _anim = GetComponent<Animator>();  
     }
     private void Start()
     {
         PlayerFrontBoss = transform.GetChild(0).transform.position;
         _startPos = transform.position;
-        JumPos = transform.position + new Vector3(0, _jumpHeight, 0);
         _judge = FindAnyObjectByType<WGH_AreaJudge>();
     }
     
@@ -97,9 +89,7 @@ public class WGH_PlayerController : MonoBehaviour
     public IEnumerator InAirTime()
     {
         _rigid.isKinematic = true;
-        //_rigid.bodyType = RigidbodyType2D.Static;
         yield return new WaitForSeconds(_inAirTime);
-        //_rigid.bodyType = RigidbodyType2D.Dynamic;
         _rigid.isKinematic = false;
         yield break;
     }
@@ -133,8 +123,7 @@ public class WGH_PlayerController : MonoBehaviour
         _rigid.position = _startPos;
         SetAnim("Die");
         yield return new WaitForSeconds(0.02f);
-        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        Destroy(_rigid);
 
         yield break;
     }
