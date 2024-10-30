@@ -7,8 +7,7 @@ using UnityEngine;
 public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
-    [SerializeField] float _inAirTime;                  // 체공시간                         / 기준 값 : 0.3f
-    [SerializeField] float _jumpHeight;                 // 점프 시 플레이어의 높이 위치      / 기준 값 : 5f
+    [SerializeField, Range(0, 0.1f)] float _inAirTime;  // 체공시간                         
     [SerializeField] int _maxHp;
     [SerializeField] int _curHp;
     [SerializeField] float _clikerTime;                 // 깜빡임 속도
@@ -17,12 +16,10 @@ public class WGH_PlayerController : MonoBehaviour
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
-    [SerializeField] WGH_AreaJudge _judge;
+     
 
     public Vector3 PlayerFrontBoss { get; private set; }
     Vector3 _startPos;
-    public Vector2 GroundPos { get; private set; }    // 땅의 위치값
-    public Vector2 JumPos { get; private set; }       // 점프 위치값
 
     bool _isFPress;                                    // f 입력 여부
     bool _isJPress;                                    // j 입력 여부
@@ -32,35 +29,55 @@ public class WGH_PlayerController : MonoBehaviour
     
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
-    public bool IsAir { get; private set; }                               // 체공 여부
-    Coroutine _IsAirRountine;                          // 체공 코루틴
+    public bool IsAir { get; private set; }            // 체공 여부
     
     private void Awake()
     {
         _curHp = _maxHp;
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
-        _anim = GetComponent<Animator>();
-
-        // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정
-        GroundPos = transform.position + new Vector3(0, 0.2f, 0);    
+        _anim = GetComponent<Animator>();  
     }
     private void Start()
     {
-        PlayerFrontBoss = transform.GetChild(0).transform.position;
+        PlayerFrontBoss = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _startPos = transform.position;
-        JumPos = transform.position + new Vector3(0, _jumpHeight, 0);
-        _judge = FindAnyObjectByType<WGH_AreaJudge>();
     }
     
     private void Update()
     {
+        ConfrontBoss();
         if (_curHp <= 0 && !IsDied)
         {
             StartCoroutine(Die());
         }
     }
-    
+    /// <summary>
+    /// 보스 직면 메서드
+    /// </summary>
+    private void ConfrontBoss()
+    {
+        Vector3 bossMeetPos = new Vector3(GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE).x, transform.position.y, 0);
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            SetAnim("ConfrontBoss");
+            transform.position = Vector3.MoveTowards(transform.position, bossMeetPos, 10 * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            SetAnim("ConfrontBoss");
+            if(Mathf.Abs(transform.position.x - bossMeetPos.x) > 1f)
+            transform.position = Vector3.Lerp(transform.position, bossMeetPos, 0.1f);
+        }
+        else if (Input.GetKey(KeyCode.Alpha3))
+        {
+            SetAnim("ConfrontBoss");
+            if (Mathf.Abs(transform.position.x - bossMeetPos.x) > 1f)
+            {
+                transform.position = Vector3.Lerp(transform.position, bossMeetPos, 0.1f);
+            }
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -87,8 +104,9 @@ public class WGH_PlayerController : MonoBehaviour
             SetAnim("OnDamage");
             IsDamaged = true;
 
-            _curHp -= 1;
+            _curHp -= 1; // 임의의 데미지
             // TODO : 민성님께 받아올 데미지를 입는 부분
+            // GetDamage();
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
         }
@@ -97,9 +115,7 @@ public class WGH_PlayerController : MonoBehaviour
     public IEnumerator InAirTime()
     {
         _rigid.isKinematic = true;
-        //_rigid.bodyType = RigidbodyType2D.Static;
         yield return new WaitForSeconds(_inAirTime);
-        //_rigid.bodyType = RigidbodyType2D.Dynamic;
         _rigid.isKinematic = false;
         yield break;
     }
@@ -114,6 +130,11 @@ public class WGH_PlayerController : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         yield return new WaitForSeconds(_clikerTime);
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+        yield return new WaitForSeconds(_clikerTime);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
+        yield return new WaitForSeconds(_clikerTime);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+
         yield break;
     }
     // 무적
@@ -128,13 +149,13 @@ public class WGH_PlayerController : MonoBehaviour
     IEnumerator Die()
     {
         // 이벤트 (캐릭터 사망) 등록
+        // EventManager.Instance.PlayEvent(E_Event.PlayerDie);
         IsDied = true;
         
         _rigid.position = _startPos;
         SetAnim("Die");
         yield return new WaitForSeconds(0.02f);
-        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        Destroy(_rigid);
 
         yield break;
     }
