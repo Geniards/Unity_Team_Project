@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 6613640825803915909}
   - component: {fileID: 6613640825803915906}
   m_Layer: 5
-  m_Name: 'HP Bar Background '
+  m_Name: HP_PRG_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

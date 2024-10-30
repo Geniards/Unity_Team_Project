@@ -43,6 +43,7 @@ public class DataManager : MonoBehaviour, IManager
     public int ObjpoolInitCreateCount => 5;
     public float BGMVolume => _settingData.BGMVolume;
     public float SFXVolume => _settingData.SFXVolume;
+    public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
 
     public float PlayerHp => _stageData.PlayerHp;
     public float StageProgress => _stageData.StageProgress;
@@ -82,6 +83,7 @@ public struct StageData
     public int Score;
     public int ComboCount;
     public int StageNumber;
+    public float CurrentBGMClipLength;
 }
 
 public struct GameSettingData

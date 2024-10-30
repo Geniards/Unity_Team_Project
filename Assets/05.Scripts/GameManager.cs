@@ -110,6 +110,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StopProgressTimer()
+    {
+
+    }
+
 
     private void Update()
     {
