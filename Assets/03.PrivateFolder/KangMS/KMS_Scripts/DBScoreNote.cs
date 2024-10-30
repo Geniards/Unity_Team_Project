@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Note;
 
-public class FullScoreNote : Note, IPoolingObj
+public class DBScoreNote : Note, IPoolingObj
 {
-    public E_Pool MyPoolType => E_Pool.SCORE_NOTE;
+    public E_Pool MyPoolType => E_Pool.DBSCORE_NOTE;
 
     public override float OnDamage()
     {
