@@ -7,7 +7,7 @@ using UnityEngine;
 public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
-    [SerializeField] float _inAirTime;                  // 체공시간                         / 기준 값 : 0.3f
+    [SerializeField, Range(0, 0.1f)] float _inAirTime;  // 체공시간                         
     [SerializeField] int _maxHp;
     [SerializeField] int _curHp;
     [SerializeField] float _clikerTime;                 // 깜빡임 속도
@@ -16,7 +16,6 @@ public class WGH_PlayerController : MonoBehaviour
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
-    [SerializeField] WGH_AreaJudge _judge;
      
 
     public Vector3 PlayerFrontBoss { get; private set; }
@@ -43,17 +42,42 @@ public class WGH_PlayerController : MonoBehaviour
     {
         PlayerFrontBoss = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _startPos = transform.position;
-        _judge = FindAnyObjectByType<WGH_AreaJudge>();
     }
     
     private void Update()
     {
+        ConfrontBoss();
         if (_curHp <= 0 && !IsDied)
         {
             StartCoroutine(Die());
         }
     }
-    
+    /// <summary>
+    /// 보스 직면 메서드
+    /// </summary>
+    private void ConfrontBoss()
+    {
+        Vector3 bossMeetPos = new Vector3(GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.BOTTOM).x, transform.position.y - 1, 0);
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            SetAnim("ConfrontBoss");
+            transform.position = Vector3.MoveTowards(transform.position, bossMeetPos, 10 * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            SetAnim("ConfrontBoss");
+            if(Mathf.Abs(transform.position.x - bossMeetPos.x) > 1f)
+            transform.position = Vector3.Lerp(transform.position, bossMeetPos, 0.1f);
+        }
+        else if (Input.GetKey(KeyCode.Alpha3))
+        {
+            SetAnim("ConfrontBoss");
+            if (Mathf.Abs(transform.position.x - bossMeetPos.x) > 1f)
+            {
+                transform.position = Vector3.Lerp(transform.position, bossMeetPos, 0.1f);
+            }
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -80,8 +104,9 @@ public class WGH_PlayerController : MonoBehaviour
             SetAnim("OnDamage");
             IsDamaged = true;
 
-            _curHp -= 1;
+            _curHp -= 1; // 임의의 데미지
             // TODO : 민성님께 받아올 데미지를 입는 부분
+            // GetDamage();
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
         }
@@ -124,6 +149,7 @@ public class WGH_PlayerController : MonoBehaviour
     IEnumerator Die()
     {
         // 이벤트 (캐릭터 사망) 등록
+        // EventManager.Instance.PlayEvent(E_Event.PlayerDie);
         IsDied = true;
         
         _rigid.position = _startPos;
