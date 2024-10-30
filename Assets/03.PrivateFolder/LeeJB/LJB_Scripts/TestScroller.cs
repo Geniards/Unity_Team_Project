@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /* 백그라운드 오브젝트 랜덤 생성 기본 틀 작성. 추 후에 여유 있을 시 구현 예정
-public class TestScroller : MonoBehaviour
+public class TestScroller : MonoBehaviour 
 {
     [SerializeField] private GameObject[] Tiles;         // 타일 프리팹
     [SerializeField] private float ScrollSpeed;          // 스크롤 속도

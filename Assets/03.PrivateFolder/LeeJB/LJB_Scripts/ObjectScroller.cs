@@ -36,8 +36,8 @@ public class ObjectScroller : MonoBehaviour
     [SerializeField] private ObjectGroup[] _objectGroups;    // 그룹 오브젝트를 관리하는 배열
     [SerializeField] private Transform _parentTransform;     // 자식으로 생성할 부모 오브젝트의 위치 참조
     [SerializeField] private float _scrollDelay;             // 실행 후 스크롤까지의 지연 시간
-    [SerializeField] private float _destroyOffset;     // 부모 오브젝트 위치 기준으로 제거할 위치 오프셋
-    [SerializeField] private float _spawnOffset;       // 부모 오브젝트 위치 기준으로 생성할 위치 오프셋
+    [SerializeField] private float _destroyOffset;           // 부모 오브젝트 위치 기준으로 제거할 위치 오프셋
+    [SerializeField] private float _spawnOffset;             // 부모 오브젝트 위치 기준으로 생성할 위치 오프셋
 
     private bool _isScroller = false;
     private List<GameObject> _spawnedObjects = new List<GameObject>();
@@ -70,7 +70,7 @@ public class ObjectScroller : MonoBehaviour
             GameObject obj = _spawnedObjects[i];
             obj.transform.position += Vector3.left * group.GetScrollSpeed() * Time.deltaTime;
 
-            // 부모 오브젝트 위치 기준으로 설정 범위만큼 왼쪽을 벗어난 오브젝트는 제거
+            // 부모 오브젝트 위치 기준으로 설정 범위만큼 벗어난 오브젝트는 제거
             if (obj.transform.position.x <= _parentTransform.position.x - _destroyOffset)
             {
                 Destroy(obj);
@@ -93,7 +93,8 @@ public class ObjectScroller : MonoBehaviour
         float rightMostX = _spawnedObjects.Count > 0 ? GetRightMostObjectPosition(group) : _parentTransform.position.x;
         float randomSpacing = Random.Range(group.GetMinSpacing(), group.GetMaxSpacing());
 
-        newObj.transform.position = new Vector3(rightMostX + randomSpacing, newObj.transform.position.y, newObj.transform.position.z);
+        // 새 오브젝트의 Y축 위치를 prefab 원본 위치로 유지
+        newObj.transform.position = new Vector3(rightMostX + randomSpacing, prefab.transform.position.y, newObj.transform.position.z);
         _spawnedObjects.Add(newObj);
     }
 
