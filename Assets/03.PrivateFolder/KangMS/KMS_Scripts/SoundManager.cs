@@ -68,7 +68,12 @@ public class SoundManager : MonoBehaviour, IManager
         else
             _fadeRoutine = StartCoroutine(FadeOutBGMVolume());
     }
-    
+     
+     public void SetBGMVolume(float value)
+     {
+        _bgmSource.volume = value;
+        DataManager.Instance.SetBGMVolume(value);
+     }
 
     private IEnumerator FadeInBGMVolume()
     {
