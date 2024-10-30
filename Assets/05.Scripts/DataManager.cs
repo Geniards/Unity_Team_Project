@@ -12,6 +12,8 @@ public class DataManager : MonoBehaviour, IManager
     private StageData _stageData;
     private GameSettingData _settingData;
 
+    public Vector3 ContactPos => GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+
     public void Init()
     {
         _instance = this;
@@ -41,6 +43,7 @@ public class DataManager : MonoBehaviour, IManager
     public float SoundTotalFadeTime => 1f;
     // 현재 재생되고 있는 음원의 총 길이
     public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
+    public int SirenCount = 5;
 
     public int StageNumber => _stageData.StageNumber;
 
@@ -52,10 +55,12 @@ public class DataManager : MonoBehaviour, IManager
     public float StageProgress => _stageData.StageProgress; // 0 ~ 1
     // 해당 값 변경시 프로그래스 바의 SetValue 값을 전달시킨다.
     public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
+    public float SkipSpawnTimeOffset => GameManager.NoteDirector.BeatInterval * 8f;
+    //120bpm 일경우 음원종료 4 초전에 스폰중단
 
     public void SetPlayState(bool value) { _isPlaying = value; }
     public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
-
+    
     public void SetPlayerHP(float value) { _stageData.PlayerHp = value; }
     public void SetBossHP(float value) { _stageData.BossHp = value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
@@ -67,6 +72,9 @@ public class DataManager : MonoBehaviour, IManager
         { throw new System.Exception("프로그래스 동기화 순서 문제발생"); }
 
         _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
+
+        if (_stageData.StageProgress >= 1)
+            GameManager.Instance.StopProgressTimer();
     }
 
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
