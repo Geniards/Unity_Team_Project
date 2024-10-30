@@ -24,7 +24,7 @@ public class BossIntoField : BossState, IState
         _duration = 10f;
         _time = 0;
         _t = 0;
-        _destination = GameManager.NoteDirector.GetBossPoses(E_SpawnerPosY.MIDDLE);
+        _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.MIDDLE);
     }
 
     public void Exit()
@@ -98,7 +98,7 @@ public class BossMove : BossState, IState
         _t = 0;
         _duration = 4f;
         int rand = Random.Range(0, (int)E_SpawnerPosY.E_SpawnerPosY_MAX);
-        _destination = GameManager.NoteDirector.GetBossPoses((E_SpawnerPosY)rand);
+        _destination = GameManager.Director.GetBossPoses((E_SpawnerPosY)rand);
     }
 
     public void Exit()
@@ -122,7 +122,7 @@ public class BossMove : BossState, IState
     }
 }
 
-// πÃ¡§
+// ÎØ∏Ï†ï
 public class BossAttack : BossState, IState
 {
     public BossAttack(BossController boss) : base(boss)
@@ -161,7 +161,7 @@ public class BossRushReady : BossState, IState
         _time = 0;
         _t = 0;
         _duration = 3f;
-        _destination = GameManager.NoteDirector.GetBossPoses(E_SpawnerPosY.MIDDLE);
+        _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.MIDDLE);
     }
 
     public void Exit()
@@ -185,7 +185,7 @@ public class BossRushReady : BossState, IState
 }
 
 /// <summary>
-/// π⁄¿⁄ø° ∏¬∞‘ µµ¬¯«ÿæﬂ«‘
+/// Î∞ïÏûêÏóê ÎßûÍ≤å ÎèÑÏ∞©Ìï¥ÏïºÌï®
 /// </summary>
 public class BossRush : BossState, IState
 {
@@ -237,28 +237,30 @@ public class BossClosedPlayer : BossState, IState
     public BossClosedPlayer(BossController boss, float shakeDuration) : base(boss)
     {
         this._duration = shakeDuration;
+        _cam = Camera.main.GetComponent<CamMovement>();
     }
 
-    // »ÁµÈ∏≤ ∏º«, ƒ´∏ﬁ∂Û ¡‹?
+    // ÌùîÎì§Î¶º Î™®ÏÖò, Ïπ¥Î©îÎùº Ï§å?
     private float _shakePower = 0.14f;
     private float _duration;
     private float _timer;
     private Vector3 _initPos;
     private Vector3 _randPos;
+    private CamMovement _cam;
 
     public void Enter()
     {
         _timer = 0;
         _initPos = _boss.transform.position;
-        GameManager.Instance.CamMove(_initPos + Vector3.forward * -10, 0.07f);
-        GameManager.Instance.ZoomIn(0.1f,3.6f);
+        _cam.Move(_initPos + Vector3.forward * -10, 0.07f);
+        _cam.ZoomIn(0.1f,3.6f);
         
     }
 
     public void Exit()
     {
-        GameManager.Instance.CamMove(new Vector3(0, 1, -10f), 0.07f);
-        GameManager.Instance.ZoomIn(0.1f, 5f);
+        _cam.Move(new Vector3(0, 1, -10f), 0.07f);
+        _cam.ZoomIn(0.1f, 5f);
         
     }
 
@@ -287,19 +289,39 @@ public class BossDead : BossState, IState
     {
     }
 
+    private float _time;
+    private float _t;
+    private float _duration;
+    private Vector3 _startPosition;
+    private Vector3 _destination;
+
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        _time = 0;
+        _t = 0;
+        _duration = 0.2f;
+        _startPosition = _boss.transform.position;
+        _destination = GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void Update()
     {
-        throw new System.NotImplementedException();
+        if (_time >= _duration)
+        {
+            _boss.transform.position = _destination;
+            _boss.Dead();
+            return;
+        }
+
+        _time += Time.deltaTime;
+        float t = _time / _duration;
+
+        _boss.transform.position = Vector3.Lerp(_startPosition, _destination, t);
     }
 }
 
@@ -308,20 +330,39 @@ public class BossRecover : BossState, IState
     public BossRecover(BossController boss) : base(boss)
     {
     }
+    private float _time;
+    private float _t;
+    private float _duration;
+    private Vector3 _startPosition;
+    private Vector3 _destination;
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        _time = 0;
+        _t = 0;
+        _duration = 0.2f;
+        _startPosition = _boss.transform.position;
+        _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.BOTTOM);
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void Update()
     {
-        throw new System.NotImplementedException();
+        if (_time >= _duration)
+        {
+            _boss.transform.position = _destination;
+            _boss.SetState(_boss.MoveState);
+            return;
+        }
+
+        _time += Time.deltaTime;
+        float t = _time / _duration;
+
+        _boss.transform.position = Vector3.Lerp(_startPosition, _destination, t);
     }
 }
 

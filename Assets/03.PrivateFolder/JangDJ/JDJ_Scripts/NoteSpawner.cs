@@ -13,7 +13,7 @@ public class NoteSpawner : MonoBehaviour
         => _lastNoteIdx == _innerNoteList.Count - 1;
 
     /// <summary>
-    /// ½ºÆ÷³Ê°¡ ¼³Á¤ÇØ¾ß ÇÒ °ªÀ» ÃÊ±âÈ­ ½ÃÅµ´Ï´Ù.
+    /// ìŠ¤í¬ë„ˆê°€ ì„¤ì •í•´ì•¼ í•  ê°’ì„ ì´ˆê¸°í™” ì‹œí‚µë‹ˆë‹¤.
     /// </summary>
     public void Initalize()
     {
@@ -28,9 +28,9 @@ public class NoteSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// ¿äÃ»¹ŞÀº ÆĞÅÏ ³Ñ¹ö¸¦ ±âÁØÀ¸·Î ½ºÆùµÇ¾î¾ß ÇÒ ³ëÆ® Á¤º¸µéÀ» ½ºÆ÷³Ê¿¡ µî·ÏÇØµÓ´Ï´Ù.
+    /// ìš”ì²­ë°›ì€ íŒ¨í„´ ë„˜ë²„ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ìŠ¤í°ë˜ì–´ì•¼ í•  ë…¸íŠ¸ ì •ë³´ë“¤ì„ ìŠ¤í¬ë„ˆì— ë“±ë¡í•´ë‘¡ë‹ˆë‹¤.
     /// </summary>
-    public void RegistPattern(int patternNumber) // ¸î¹ø ÆĞÅÏÀÎÁö
+    public void RegistPattern(int patternNumber) // ëª‡ë²ˆ íŒ¨í„´ì¸ì§€
     {
         //List<NotePattern> patterns = CSVLoader.GetPattern(patternNumber);
 
@@ -40,18 +40,18 @@ public class NoteSpawner : MonoBehaviour
         //}
 
         _innerNoteList.Add(new NoteData(1, E_NoteType.Score));
-        _innerNoteList.Add(new NoteData(2, E_NoteType.Score));
+        _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
         _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
         _innerNoteList.Add(new NoteData(1, E_NoteType.Score));
     }
 
     /// <summary>
-    /// µî·Ï µÇ¾îÀÖ´ø ³ëÆ® ½ºÆù ¸ñ·Ï¿ä¼Ò¸¦ ½ÇÃ¼È­ÇÕ´Ï´Ù.
+    /// ë“±ë¡ ë˜ì–´ìˆë˜ ë…¸íŠ¸ ìŠ¤í° ëª©ë¡ìš”ì†Œë¥¼ ì‹¤ì²´í™”í•©ë‹ˆë‹¤.
     /// </summary>
     public void SpawnNote(float noteSpeed)
     {
         if (_lastNoteIdx >= _innerNoteList.Count)
-        { throw new System.Exception("µî·ÏµÈ ³ëÆ®°¡ ¾ø½À´Ï´Ù."); }
+        { throw new System.Exception("ë“±ë¡ëœ ë…¸íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤."); }
 
         NoteData data = _innerNoteList[_lastNoteIdx];
         Note note = GetNoteObject(data.noteType);
@@ -75,7 +75,7 @@ public class NoteSpawner : MonoBehaviour
                 return ObjPoolManager.Instance.GetObject<Note>(E_Pool.OBSTACLE_NOTE);
         }
 
-        throw new System.Exception("Àß¸øµÈ ³ëÆ® ¿äÃ»");
+        throw new System.Exception("ì˜ëª»ëœ ë…¸íŠ¸ ìš”ì²­");
     }
 
     private Vector3 GetNoteStartPosition(int posNumber)
@@ -91,7 +91,7 @@ public class NoteSpawner : MonoBehaviour
             case 3:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.BOTTOM);
         }
-        throw new System.Exception("Àß¸øµÈ ³ëÆ® À§Ä¡ ¿äÃ»");
+        throw new System.Exception("ì˜ëª»ëœ ë…¸íŠ¸ ìœ„ì¹˜ ìš”ì²­");
     }
 
     private Vector3 GetNoteEndPosition(int posNumber)
@@ -108,7 +108,7 @@ public class NoteSpawner : MonoBehaviour
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.BOTTOM);
         }
 
-        throw new System.Exception("Àß¸øµÈ ³ëÆ® À§Ä¡ ¿äÃ»");
+        throw new System.Exception("ì˜ëª»ëœ ë…¸íŠ¸ ìœ„ì¹˜ ìš”ì²­");
     }
 
 

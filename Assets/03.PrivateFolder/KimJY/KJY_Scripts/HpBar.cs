@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HpBar : MonoBehaviour
+public class HpBar : MonoBehaviour, IValuableUI
 {
     public float curHp;
     public float initHp;
-    public float maxHp;
+    public float maxHp = 200;
     public Image hpBar;
         
     private void Start()
     {
-        curHp = initHp;
+        SetValue(200);
     }
 
-    private void Update() // 프레임마다 업데이트
+    public void SetValue(float value)
+    {
+        hpBar.fillAmount = value;
+    }
+
+    private void Update() 
     {
         hpBar.fillAmount = GetPortion();
     }

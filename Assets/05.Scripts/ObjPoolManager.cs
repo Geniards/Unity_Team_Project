@@ -4,15 +4,13 @@ using UnityEngine;
 public class ObjPoolManager : MonoBehaviour, IManager
 {
     /*
-     * Ç®¸µµÇ¾îÁö´Â ´ë»ó
-     * ¸ó½ºÅÍ, Àå¾Ö¹°, ÀÌÆåÆ®, ¹é±×¶ó¿îµå¿ë ¿ÀºêÁ§Æ®??
+     * í’€ë§ë˜ì–´ì§€ëŠ” ëŒ€ìƒ
+     * ëª¬ìŠ¤í„°, ì¥ì• ë¬¼, ì´í™íŠ¸, ë°±ê·¸ë¼ìš´ë“œìš© ì˜¤ë¸Œì íŠ¸??
      */
 
     private static ObjPoolManager _instance = null;
 
     public static ObjPoolManager Instance => _instance;
-
-    private const int INIT_POOL_COUNT = 5;
 
     private Dictionary<E_Pool, ObjectPool> _pools = new Dictionary<E_Pool, ObjectPool>();
     [SerializeField] private List<PrefabItem> _prefabs = null;
@@ -24,7 +22,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// ³»ºÎÀÇ °¢ Ç®µéÀ» ÃÊ±âÈ­, »ı¼ºÇÕ´Ï´Ù.
+    /// ë‚´ë¶€ì˜ ê° í’€ë“¤ì„ ì´ˆê¸°í™”, ìƒì„±í•©ë‹ˆë‹¤.
     /// </summary>
     public void InitializePools()
     {
@@ -42,23 +40,31 @@ public class ObjPoolManager : MonoBehaviour, IManager
 
             if (E_Pool.NONE >= item.TargetPool || item.TargetPool >= E_Pool.E_POOL_Max 
                 || item.TargetPrefab == null)
-            { throw new System.Exception("ÇÁ¸®ÆÕ µî·Ï ¿À·ù ÀçÈ®ÀÎ ¿ä¸Á"); }
+            { throw new System.Exception("í”„ë¦¬íŒ¹ ë“±ë¡ ì˜¤ë¥˜ ì¬í™•ì¸ ìš”ë§"); }
 
-            newPool = new ObjectPool(INIT_POOL_COUNT, item.TargetPrefab);
+            newPool = new ObjectPool(DataManager.Instance.ObjpoolInitCreateCount, item.TargetPrefab);
             _pools.Add(item.TargetPool, newPool);
         }
     }
 
     /// <summary>
-    /// ¿äÃ»ÇÏ´Â ¿ÀºêÁ§Æ® Ç®À» ´ë»óÀ¸·Î °´Ã¼¸¦ ¹İÈ¯ ¹Ş½À´Ï´Ù.
+    /// ìš”ì²­í•˜ëŠ” ì˜¤ë¸Œì íŠ¸ í’€ì„ ëŒ€ìƒìœ¼ë¡œ ê°ì²´ë¥¼ ë°˜í™˜ ë°›ìŠµë‹ˆë‹¤.
     /// </summary>
     public GameObject GetObject(E_Pool poolType)
     {
         return GetObject<GameObject>(poolType);
     }
 
+    public GameObject GetObject(E_Pool poolType, Transform parent)
+    {
+        GameObject obj = GetObject(poolType);
+        obj.transform.SetParent(parent);
+
+        return obj;
+    }
+
     /// <summary>
-    /// ¿äÃ»ÇÏ´Â ¿ÀºêÁ§Æ® Ç®À» ´ë»óÀ¸·Î °´Ã¼ÀÇ ÄÄÆ÷³ÍÆ®¸¦ ¹İÈ¯¹Ş½À´Ï´Ù.
+    /// ìš”ì²­í•˜ëŠ” ì˜¤ë¸Œì íŠ¸ í’€ì„ ëŒ€ìƒìœ¼ë¡œ ê°ì²´ì˜ ì»´í¬ë„ŒíŠ¸ë¥¼ ë°˜í™˜ë°›ìŠµë‹ˆë‹¤.
     /// </summary>
     public T GetObject<T>(E_Pool poolType)
     {
@@ -67,11 +73,11 @@ public class ObjPoolManager : MonoBehaviour, IManager
         if (obj.TryGetComponent<T>(out T type))
             return type;
 
-        throw new System.Exception("´ë»ó Ç®¸µ ¿ÀºêÁ§Æ®ÀÇ ¿äÃ»ÇÏ´Â ÄÄÆ÷³ÍÆ®°¡ ¾øÀ½");
+        throw new System.Exception("ëŒ€ìƒ í’€ë§ ì˜¤ë¸Œì íŠ¸ì˜ ìš”ì²­í•˜ëŠ” ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŒ");
     }
 
     /// <summary>
-    /// Á¤ÇØÁø Ç®Å¸ÀÔÀ» ±â¹İÀ¸·Î ÀÚ½Å¿¡°Ô ¸Â´Â Ç®À» Ã£¾Æ ¹İÈ¯½ÃÅµ´Ï´Ù.
+    /// ì •í•´ì§„ í’€íƒ€ì…ì„ ê¸°ë°˜ìœ¼ë¡œ ìì‹ ì—ê²Œ ë§ëŠ” í’€ì„ ì°¾ì•„ ë°˜í™˜ì‹œí‚µë‹ˆë‹¤.
     /// </summary>
     public void ReturnObj(E_Pool poolType,GameObject obj)
     {

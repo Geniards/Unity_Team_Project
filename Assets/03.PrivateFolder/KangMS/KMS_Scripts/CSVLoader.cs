@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
 
-// Ã¹ ¹øÂ° ÀÚ¸®: 0(ÇÏ´Ü), 1(»ó´Ü), 2(Áß´Ü)
-// µÎ ¹øÂ° ÀÚ¸®: 0(¾øÀ½), 6(Á¡¼ö) 7(¸ó½ºÅÍ), 8(Àå¾Ö¹°), 9(µ¿½Ã¹öÆ°)
+// ì²« ë²ˆì§¸ ìë¦¬: 0(í•˜ë‹¨), 1(ìƒë‹¨), 2(ì¤‘ë‹¨)
+// ë‘ ë²ˆì§¸ ìë¦¬: 0(ì—†ìŒ), 6(ì ìˆ˜) 7(ëª¬ìŠ¤í„°), 8(ì¥ì• ë¬¼), 9(ë™ì‹œë²„íŠ¼)
 
 public class CSVLoader : MonoBehaviour
 {
     [Header("CSV_FILE")]
     [SerializeField] private TextAsset csvFile;
-    
+
     [Header("1_CSV_NOTE_POS_INDEX")]
     [SerializeField] private int _notePosStarIndex = 1;
     [SerializeField] private int _notePosEndIndex = 3;
@@ -33,25 +32,25 @@ public class CSVLoader : MonoBehaviour
         }
         else
         {
-            Debug.Log("CSV µ¥ÀÌÅÍ´Â ÀÌ¹Ì ·ÎµåµÇ¾ú½À´Ï´Ù.");
+            Debug.Log("CSV ë°ì´í„°ëŠ” ì´ë¯¸ ë¡œë“œë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
     }
 
     /// <summary>
-    /// CSV ÆÄÀÏÀ» ÀĞ¾îµé¿© ÆĞÅÏÀ» ÆÄ½ÌÇÏ°í, Dictionary¿¡ ÀúÀåÇÏ´Â ¿ªÇÒ
+    /// CSV íŒŒì¼ì„ ì½ì–´ë“¤ì—¬ íŒ¨í„´ì„ íŒŒì‹±í•˜ê³ , Dictionaryì— ì €ì¥í•˜ëŠ” ì—­í• 
     /// </summary>
     public void LoadPatterns()
     {
-        Debug.Log("CSV µ¥ÀÌÅÍ ·Îµå ½ÃÀÛ...");
+        Debug.Log("CSV ë°ì´í„° ë¡œë“œ ì‹œì‘...");
         StringReader reader = new StringReader(csvFile.text);
         bool isHeader = true;
         int rowNum = 1;
 
-        while(reader.Peek() > -1)
+        while (reader.Peek() > -1)
         {
             string line = reader.ReadLine();
 
-            if(isHeader)
+            if (isHeader)
             {
                 isHeader = false;
                 continue;
@@ -60,55 +59,55 @@ public class CSVLoader : MonoBehaviour
             string[] values = line.Split(',');
             string patternString = values[1];
 
-            // ÆĞÅÏ ÆÄ½Ì
+            // íŒ¨í„´ íŒŒì‹±
             List<NotePattern> notePatterns = ParsePatternString(values[0], patternString);
 
             _patternDictionary.Add(rowNum, notePatterns);
             rowNum++;
         }
-        Debug.Log("CSV µ¥ÀÌÅÍ ·Îµå ¿Ï·á.");
+        Debug.Log("CSV ë°ì´í„° ë¡œë“œ ì™„ë£Œ.");
     }
 
     /// <summary>
-    /// patternStringÀ» ¹Ş¾Æ¼­, ÀÌ¸¦ NotePattern ¸®½ºÆ®·Î º¯È¯ÇÏ´Â ÇÔ¼ö
+    /// patternStringì„ ë°›ì•„ì„œ, ì´ë¥¼ NotePattern ë¦¬ìŠ¤íŠ¸ë¡œ ë³€í™˜í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     private List<NotePattern> ParsePatternString(string values, string patternString)
     {
         List<NotePattern> notePatterns = new List<NotePattern>();
         NotePattern currentPattern = new NotePattern();
 
-        for(int i = 0; i < patternString.Length; i += 2)
+        for (int i = 0; i < patternString.Length; i += 2)
         {
-            // Â¦ÀÌ ¸ÂÁö ¾Ê´Â °æ¿ì´Â ¹«½Ã
+            // ì§ì´ ë§ì§€ ì•ŠëŠ” ê²½ìš°ëŠ” ë¬´ì‹œ
             if (i + 1 >= patternString.Length)
             {
-                Debug.LogError($"Àß¸øµÈ ÆĞÅÏ µ¥ÀÌÅÍ ±æÀÌ: {patternString} , {patternString.Length}");
+                Debug.LogError($"ì˜ëª»ëœ íŒ¨í„´ ë°ì´í„° ê¸¸ì´: {patternString} , {patternString.Length}");
                 continue;
             }
-            // À§Ä¡ °ª°ú ³ëÆ® Å¸ÀÔ °ª À¯È¿¼º °Ë»ç
+            // ìœ„ì¹˜ ê°’ê³¼ ë…¸íŠ¸ íƒ€ì… ê°’ ìœ íš¨ì„± ê²€ì‚¬
             if (int.TryParse(patternString[i].ToString(), out int position) &&
                 int.TryParse(patternString[i + 1].ToString(), out int noteType))
             {
-                // n0 : ºóÅ¸ÀÔÀÎ °æ¿ì.
+                // n0 : ë¹ˆíƒ€ì…ì¸ ê²½ìš°.
                 if (noteType == 0)
                 {
                     currentPattern.AddNoteData(position, E_NoteType.None);
                     continue;
                 }
 
-                // ºó Å¸ÀÔÀÌ ¾Æ´Ñ °æ¿ì
+                // ë¹ˆ íƒ€ì…ì´ ì•„ë‹Œ ê²½ìš°
                 if (IsValidPosition(position) && IsValidNoteType(noteType))
                 {
                     currentPattern.AddNoteData(position, (E_NoteType)(noteType - (_noteTypeStartIndex - 1)));
                 }
                 else
                 {
-                    Debug.LogWarning($"Àß¸øµÈ À§Ä¡ ¶Ç´Â ³ëÆ® Å¸ÀÔ: ÆĞÅÏ={values}, À§Ä¡={position}, Å¸ÀÔ={noteType}");
+                    Debug.LogWarning($"ì˜ëª»ëœ ìœ„ì¹˜ ë˜ëŠ” ë…¸íŠ¸ íƒ€ì…: íŒ¨í„´={values}, ìœ„ì¹˜={position}, íƒ€ì…={noteType}");
                 }
             }
             else
             {
-                Debug.LogError("¼ıÀÚ·Î º¯È¯ÇÒ ¼ö ¾ø´Â °ªÀÌ Æ÷ÇÔµÇ¾î ÀÖÀ½.");
+                Debug.LogError("ìˆ«ìë¡œ ë³€í™˜í•  ìˆ˜ ì—†ëŠ” ê°’ì´ í¬í•¨ë˜ì–´ ìˆìŒ.");
             }
         }
         notePatterns.Add(currentPattern);
@@ -116,7 +115,7 @@ public class CSVLoader : MonoBehaviour
     }
 
     /// <summary>
-    /// À§Ä¡ °ªÀÌ À¯È¿ÇÑÁö È®ÀÎ (0, 1, 2)
+    /// ìœ„ì¹˜ ê°’ì´ ìœ íš¨í•œì§€ í™•ì¸ (0, 1, 2)
     /// </summary>
     private bool IsValidPosition(int position)
     {
@@ -124,7 +123,7 @@ public class CSVLoader : MonoBehaviour
     }
 
     /// <summary>
-    /// ³ëÆ® Å¸ÀÔÀÌ À¯È¿ÇÑÁö È®ÀÎ (6, 7, 8, 9)
+    /// ë…¸íŠ¸ íƒ€ì…ì´ ìœ íš¨í•œì§€ í™•ì¸ (6, 7, 8, 9)
     /// </summary>
     private bool IsValidNoteType(int noteType)
     {
@@ -132,7 +131,7 @@ public class CSVLoader : MonoBehaviour
     }
 
     /// <summary>
-    /// CSV¿¡¼­ ÆÄ½ÌÇÑ µ¥ÀÌÅÍ¸¦ ¿ÜºÎ¿¡¼­ Á¢±Ù
+    /// CSVì—ì„œ íŒŒì‹±í•œ ë°ì´í„°ë¥¼ ì™¸ë¶€ì—ì„œ ì ‘ê·¼
     /// </summary>
     public Dictionary<int, List<NotePattern>> GetPatternDictionary()
     {
@@ -142,7 +141,7 @@ public class CSVLoader : MonoBehaviour
 
 
 /// <summary>
-/// ´Ù¾çÇÑ ÆĞÅÏ µ¥ÀÌÅÍ¸¦ DataTable°ú ¿¬°è
+/// ë‹¤ì–‘í•œ íŒ¨í„´ ë°ì´í„°ë¥¼ DataTableê³¼ ì—°ê³„
 /// </summary>
 public class NotePattern
 {

@@ -3,94 +3,167 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour, IManager
 {
-    private const string BGM_PATH = "BGMs/";
+    private const string BGM_STAGE_PATH = "BGMs/Stage/";
+    private const string BGM_MAIN_PATH = "BGMs/Main/";
 
     public static SoundManager Instance {  get; private set; }
 
     [SerializeField] private AudioSource _bgmSource;
     [SerializeField] private AudioSource _sfxSource;
+    [SerializeField] private SFXList _sfxList;
+    private E_StageBGM _currentStageBgm = E_StageBGM.NONE;
 
     private Coroutine _fadeRoutine;
 
     public void Init() 
     { 
         Instance = this;
+        _currentStageBgm = E_StageBGM.NONE;
     }
 
     /// <summary>
-    /// ½ºÅ×ÀÌÁö¾ÀÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö È­¸é¿¡¼­ Á¦°øÇÏ´Â À½¿øÀ» Àç»ıÇÕ´Ï´Ù.
+    /// ìŠ¤í…Œì´ì§€ì”¬ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ í™”ë©´ì—ì„œ ì œê³µí•˜ëŠ” ìŒì›ì„ ì¬ìƒí•©ë‹ˆë‹¤.
     /// </summary>
     public void PlayLobbyBGM(E_SceneType sceneType)
     {
-        _bgmSource.clip = Resources.Load<AudioClip>($"{BGM_PATH}{sceneType.ToString()}");
+        _bgmSource.clip = Resources.Load<AudioClip>($"{BGM_STAGE_PATH}{sceneType.ToString()}");
         _bgmSource.Play();
     }
 
     /// <summary>
-    /// ½ºÅ×ÀÌÁö ¹øÈ£¿¡ ¸Â´Â À½¿øÀ» Àç»ıÇÕ´Ï´Ù.
+    /// ìŠ¤í…Œì´ì§€ ë²ˆí˜¸ì— ë§ëŠ” ìŒì›ì„ ì¬ìƒí•©ë‹ˆë‹¤.
     /// </summary>
-    public void PlayStageBGM()
+    public void PlayBGM(E_StageBGM bgmType)
+    {
+        _bgmSource.loop = false;
+
+        _bgmSource.clip = Resources.Load<AudioClip>
+            ($"{BGM_STAGE_PATH}{bgmType}");
+        _bgmSource.Play();
+        DataManager.Instance.SetBGMClipLength(_bgmSource.clip.length);
+        _currentStageBgm = bgmType;
+    }
+
+    public void PlayBGM(E_MainBGM bgmType)
     {
         _bgmSource.clip = Resources.Load<AudioClip>
-            ($"{BGM_PATH}{DataManager.Instance.StageNumber}");
+            ($"{BGM_STAGE_PATH}{bgmType}");
         _bgmSource.Play();
     }
 
     /// <summary>
-    /// À½¾ÇÀ» Áß´Ü½ÃÅµ´Ï´Ù.
+    /// ìŒì•…ì„ ì¤‘ë‹¨ì‹œí‚µë‹ˆë‹¤.
     /// </summary>
     public void StopBGM() { _bgmSource.Stop(); }
 
     /// <summary>
-    /// ¼­¼­È÷ À½¿øº¼·ıÀ» Á¶ÀıÇÕ´Ï´Ù.
+    /// ì„œì„œíˆ ìŒì›ë³¼ë¥¨ì„ ì¡°ì ˆí•©ë‹ˆë‹¤.
     /// </summary>
-    /// <param name="value">true = fadeIn À¸·Î ÃÖ´ë º¼·ı±îÁö ¼­¼­È÷ ¿Ã¸²</param>
-    public void FadeBGM(bool value)
+    /// <param name="value">true = fadeIn ìœ¼ë¡œ ìµœëŒ€ ë³¼ë¥¨ê¹Œì§€ ì„œì„œíˆ ì˜¬ë¦¼</param>
+    public void FadeBGM(bool value,float duration = 1)
     {
         if (_fadeRoutine != null)
             StopCoroutine(_fadeRoutine);
 
         if (value == true)
-            _fadeRoutine = StartCoroutine(FadeInBGMVolume());
+            _fadeRoutine = StartCoroutine(FadeInBGMVolume(duration));
         else
-            _fadeRoutine = StartCoroutine(FadeOutBGMVolume());
+            _fadeRoutine = StartCoroutine(FadeOutBGMVolume(duration));
     }
-    
+     
+     public void SetBGMVolume(float value)
+     {
+        _bgmSource.volume = value;
+        DataManager.Instance.SetBGMVolume(value);
+     }
 
-    private IEnumerator FadeInBGMVolume()
+    private IEnumerator FadeInBGMVolume(float duration)
     {
         float target = DataManager.Instance.BGMVolume;
+        float timer = 0;
+        float amount = target / duration;
 
         while (true)
         {
             if (_bgmSource.volume >= target)
                 break;
 
-            _bgmSource.volume =
-                Mathf.Lerp(_bgmSource.volume, target, DataManager.Instance.SoundTotalFadeTime * Time.deltaTime);
+            _bgmSource.volume += amount * Time.deltaTime;
+
+            yield return null;
+        }
+
+        _bgmSource.volume = target;
+    }
+
+    private IEnumerator FadeOutBGMVolume(float duration)
+    {
+        float target = 0;
+        float timer = 0;
+        float amount = _bgmSource.volume / duration;
+
+        while (true)
+        {
+            if (_bgmSource.volume <= target)
+                break;
+
+            _bgmSource.volume -= amount * Time.deltaTime;
+            yield return null;
+        }
+
+        _bgmSource.volume = target;
+    }
+
+    private IEnumerator SirenRoutine(float length)
+    {
+        float timer = length;
+        int count = 0;
+
+        PlaySFX(E_SFX.SIREN);
+
+        while (true)
+        {
+            if (count >= DataManager.Instance.SirenCount)
+                break;
+            else
+                
+
+            if(timer <= 0)
+            {
+                timer = length;
+                count++;
+                PlaySFX(E_SFX.SIREN);
+            }
+
+            timer -= Time.deltaTime;
 
             yield return null;
         }
     }
 
-    private IEnumerator FadeOutBGMVolume()
+    private IEnumerator PlayBossBGMRoutine()
     {
-        float target = 0;
+        float oneLoopLength = _sfxList[E_SFX.SIREN].length;
 
-        while (true)
-        {
-            while (true)
-            {
-                if (_bgmSource.volume <= target)
-                    break;
+        yield return SirenRoutine(oneLoopLength);
 
-                _bgmSource.volume =
-                Mathf.Lerp(_bgmSource.volume, target, DataManager.Instance.SoundTotalFadeTime * Time.deltaTime);
+        FadeBGM(true, 3f);
 
-                yield return null;
-            }
-        }
+        GameManager.Director.SetSpawnSkip(false);
+        PlayBGM(_currentStageBgm + 1);
+        _bgmSource.loop = true;
     }
 
-    public void PlaySFX(AudioClip clip) { _sfxSource.PlayOneShot(clip); }
+    public void PlayBossBGM()
+    {
+        StartCoroutine(PlayBossBGMRoutine());
+    }
+
+    /// <summary>
+    /// SFX íƒ€ì…ì˜ ìŒì›ì„ ì¬ìƒí•©ë‹ˆë‹¤.
+    /// </summary>
+    public void PlaySFX(E_SFX sfxType) 
+    {
+        _sfxSource.PlayOneShot(_sfxList[sfxType]);
+    }
 }

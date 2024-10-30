@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5802797365101118907}
   - component: {fileID: 7342004287573658669}
   - component: {fileID: 1277046310534231115}
-  - component: {fileID: 2177986823800561936}
+  - component: {fileID: -1118770262940998914}
   m_Layer: 6
   m_Name: TestScoreNote
   m_TagString: Untagged
@@ -139,7 +139,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76c2cf800c3daf3429a483749cb59a30, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -185,8 +185,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   scoreValue: 100
+  damage: 0
   endPoint: {x: 0, y: 0, z: 0}
   _isHit: 0
+  swordWaveNotePrefab: {fileID: 5133934954417080037, guid: 27ff8d254d5ce5e42a3fe138d731613f, type: 3}
 --- !u!58 &-1118770262940998914
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -203,24 +205,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!50 &5235041493194072002
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5834100206960461235}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

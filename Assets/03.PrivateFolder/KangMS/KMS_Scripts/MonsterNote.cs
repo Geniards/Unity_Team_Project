@@ -6,24 +6,31 @@ public class MonsterNote : Note, IPoolingObj
 {
     public E_Pool MyPoolType => E_Pool.MONSTER_NOTE;
 
-    public override void OnDamage()
+    public override float GetDamage()
     {
-        Debug.Log("¸ó½ºÅÍ¿Í Ãæµ¹ µ¥¹ÌÁö Àü´Ş");
+        Debug.Log($"ëª¬ìŠ¤í„°ì™€ ì¶©ëŒ! ë°ë¯¸ì§€ : {damage} ì „ë‹¬");
+        return damage;
     }
 
-    public override void OnHit(E_NoteDecision decision)
+    public override void OnHit(E_NoteDecision decision, E_Boutton button)
     {
         if (!_isHit)
         {
             _isHit = true;
             CalculateScore(decision);
             ShowEffect();
-            gameObject.SetActive(false);
+            Return();
         }
     }
 
     public void Return()
     {
         ObjPoolManager.Instance.ReturnObj(MyPoolType, this.gameObject);
+    }
+
+    public override void ReturnToPool()
+    {
+        GameManager.Mediator.Unregister(this);
+        Return();
     }
 }

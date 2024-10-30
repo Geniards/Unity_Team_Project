@@ -17,10 +17,12 @@ public class BossController : MonoBehaviour
     public BossRush RushState;
     public BossRushReady RushReadyState;
     public BossClosedPlayer ClosedPlayerState;
+    public BossDead DeadState;
+    public BossRecover RecoverState;
 
     public BossStat Stat => _stat;
 
-    private void Start()
+    private void Start() // 임시
     {
         Initialize();
     }
@@ -29,6 +31,12 @@ public class BossController : MonoBehaviour
     {
         InitStates();
         SetInitState(IntoField);
+        RegistMyData();
+    }
+
+    private void RegistMyData()
+    {
+        DataManager.Instance.SetBossHP(_stat.Hp);
     }
 
     private void InitStates()
@@ -40,6 +48,8 @@ public class BossController : MonoBehaviour
         RushState = new BossRush(this);
         RushReadyState = new BossRushReady(this);
         ClosedPlayerState = new BossClosedPlayer(this,5);
+        DeadState = new BossDead(this);
+        RecoverState = new BossRecover(this);
     }
 
     private void SetInitState(IState state)
@@ -55,14 +65,23 @@ public class BossController : MonoBehaviour
         CurrentState.Enter();
     }
 
+    public void Dead()
+    {
+        Destroy(this.gameObject); // 임시
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.TryGetComponent<Note>(out Note note))
+        {
+            float damageValue = note.GetDamage();
+            _stat.AddHp(damageValue);
+        }
+    }
+
     private void Update()
     {
         if (CurrentState != null)
             CurrentState.Update();
-
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            SetState(RushReadyState);
-        }
     }
 }

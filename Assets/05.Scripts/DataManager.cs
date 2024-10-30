@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour, IManager
@@ -11,47 +12,74 @@ public class DataManager : MonoBehaviour, IManager
     private StageData _stageData;
     private GameSettingData _settingData;
 
+    public Vector3 ContactPos => GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+
     public void Init()
     {
         _instance = this;
         _csvData = new DataTable();
         _csvData.Initailize();
 
-        SetBGMVolume(1); // À¯Àú Á¤º¸ ÀúÀå½Ã º¯°æ
-        SetSFXVolume(1);
+        SetBGMVolume(0.2f); // ìœ ì € ì •ë³´ ì €ìž¥ì‹œ ë³€ê²½
+        SetSFXVolume(0.2f);
         SetStageNumber(1);
+        SetBGMClipLength(0);
     }
 
-    [SerializeField, Header("ºÐ´ç Beat")]
+    [SerializeField, Header("ë¶„ë‹¹ Beat")]
     private int _bpm = 120;
     public int BPM => _bpm;
 
-    [SerializeField,Range(1,20),Header("ÀüÃ¼ °ÔÀÓ ¼Óµµ")] 
+    [SerializeField,Range(1,20),Header("ì „ì²´ ê²Œìž„ ì†ë„")] 
     private int _gameSpeed = 1;
     public int GameSpeed => _gameSpeed;
 
     private bool _isPlaying = false;
     public bool IsPlaying => _isPlaying;
 
-    // º¼·ýÀ» ¼­¼­È÷ Á¶ÀýÇÏ´Â ºñÀ²
+    // ë³¼ë¥¨ì„ ì„œì„œížˆ ì¡°ì ˆí•˜ëŠ” ë¹„ìœ¨
     public float SoundFadeRate => 0.2f;
-    // ÇÑ°è°ª¿¡ µµ´ÞÇÏ´Â ½Ã°£
+    // í•œê³„ê°’ì— ë„ë‹¬í•˜ëŠ” ì‹œê°„
     public float SoundTotalFadeTime => 1f;
+    // í˜„ìž¬ ìž¬ìƒë˜ê³  ìžˆëŠ” ìŒì›ì˜ ì´ ê¸¸ì´
+    public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
+    public int SirenCount = 5;
 
     public int StageNumber => _stageData.StageNumber;
 
-    public int ObjpoolInitCreateCount => 5;
+    public int ObjpoolInitCreateCount => 15;
     public float BGMVolume => _settingData.BGMVolume;
     public float SFXVolume => _settingData.SFXVolume;
 
-    public void SetPlayState(bool value) { _isPlaying = value; }
+    public float PlayerHp => _stageData.PlayerHp;
+    public float StageProgress => _stageData.StageProgress; // 0 ~ 1
+    // í•´ë‹¹ ê°’ ë³€ê²½ì‹œ í”„ë¡œê·¸ëž˜ìŠ¤ ë°”ì˜ SetValue ê°’ì„ ì „ë‹¬ì‹œí‚¨ë‹¤.
+    public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
+    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 12f;
+    //120bpm ì¼ê²½ìš° ìŒì›ì¢…ë£Œ 12 ì´ˆì „ì— ìŠ¤í°ì¤‘ë‹¨
 
-    public void SetPlayerHP(int value) { _stageData.PlayerHp = value; }
-    public void AddPlayerHP(int value) { _stageData.PlayerHp += value; }
+    public void SetPlayState(bool value) { _isPlaying = value; }
+    public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
+    
+    public void SetPlayerHP(float value) { 
+        _stageData.PlayerHp = value; 
+        //ui.playerhpbar.setvalue(value);
+    }
+    public void SetBossHP(float value) { _stageData.BossHp = value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
-    public void SetProgress(float value) { _stageData.StageProgress = value; }
     public void SetComboCount(int value) { _stageData.ComboCount = value; }
     public void SetStageNumber(int value) { _stageData.StageNumber = value; }
+    public void SetProgress(float current) 
+    { 
+        if(CurrentBGMClipLength == 0)
+        { throw new System.Exception("í”„ë¡œê·¸ëž˜ìŠ¤ ë™ê¸°í™” ìˆœì„œ ë¬¸ì œë°œìƒ"); }
+
+        _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
+        //UIManager.Instance.SetProgressValue(_stageData.StageProgress);
+
+        if (_stageData.StageProgress >= 1)
+            GameManager.Instance.StopProgressTimer();
+    }
 
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
     public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
@@ -59,13 +87,15 @@ public class DataManager : MonoBehaviour, IManager
 
 public struct StageData
 {
-    public int PlayerHp;
-    public int BossHp;
+    public float PlayerHp;
+    public float BossHp;
     public E_NoteDecision Judge;
     public float StageProgress;
     public int Score;
     public int ComboCount;
     public int StageNumber;
+    public float CurrentBGMClipLength;
+    public float CurrentPlayingTime;
 }
 
 public struct GameSettingData
@@ -74,6 +104,7 @@ public struct GameSettingData
     public float SFXVolume;
     public float GameSpeed;
 }
+
 
 
 
