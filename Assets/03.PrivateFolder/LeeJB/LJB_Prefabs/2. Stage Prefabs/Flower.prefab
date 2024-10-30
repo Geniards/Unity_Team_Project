@@ -1,0 +1,539 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3271319509196360013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3271319509196360019}
+  - component: {fileID: 3271319509196360018}
+  - component: {fileID: 2228749312366541487}
+  m_Layer: 0
+  m_Name: Flower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3271319509196360019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3271319509196360013}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 19.359177, y: -4.51, z: 0.184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1742700284316474358}
+  - {fileID: 8207652252808576759}
+  - {fileID: 771295965702695664}
+  - {fileID: 2291958719645427948}
+  - {fileID: 7833329440169160353}
+  - {fileID: 8351514673751717368}
+  - {fileID: 4884841319325578984}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &3271319509196360018
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3271319509196360013}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 959a212560725a44d8fb9d25f705b5fe, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300148, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.78125, y: 1.5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!210 &2228749312366541487
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3271319509196360013}
+  m_Enabled: 1
+  m_SortingLayerID: -1615509077
+  m_SortingLayer: 1
+  m_SortingOrder: 1002
+--- !u!1001 &334133529832850406
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3271319509196360019}
+    m_Modifications:
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.9959488
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449989371459468563, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+      propertyPath: m_Name
+      value: PF Village Props - Wheat 03
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+--- !u!4 &8207652252808576759 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8449989371459468561, guid: 509904856eb32294bafa98aaa34e7cad, type: 3}
+  m_PrefabInstance: {fileID: 334133529832850406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &670549406473273240
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3271319509196360019}
+    m_Modifications:
+    - target: {fileID: 1252305866948338796, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_Name
+      value: PF Village Props - Wheat 04
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.2319336
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.027286291
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+--- !u!4 &1742700284316474358 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1252305866948338798, guid: 2bb474423b7223b418263a45d9e30c37, type: 3}
+  m_PrefabInstance: {fileID: 670549406473273240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &800364666797403899
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3271319509196360019}
+    m_Modifications:
+    - target: {fileID: 8718402855558798082, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_Name
+      value: PF Village Props - Sunflower 02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.3196945
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.024517536
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.013999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+--- !u!4 &8351514673751717368 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8718402855558798083, guid: ff900ffa9b2f4f24ba409f480d443a5f, type: 3}
+  m_PrefabInstance: {fileID: 800364666797403899}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1427055234175912984
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3271319509196360019}
+    m_Modifications:
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5891762
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.015634656
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.016000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766747585874754290, guid: 4271870da150c7e41b453305f372a659, type: 3}
+      propertyPath: m_Name
+      value: PF Village Props - Sunflower 01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4271870da150c7e41b453305f372a659, type: 3}
+--- !u!4 &4884841319325578984 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5766747585874754288, guid: 4271870da150c7e41b453305f372a659, type: 3}
+  m_PrefabInstance: {fileID: 1427055234175912984}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3071511765096596894
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3271319509196360019}
+    m_Modifications:
+    - target: {fileID: 2311474937122172780, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_Name
+      value: PF Village Props - Wheat 02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.9236832
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.027286291
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+--- !u!4 &771295965702695664 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2311474937122172782, guid: d408ba5f0b259df4db68a8d20da89838, type: 3}
+  m_PrefabInstance: {fileID: 3071511765096596894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4907251267355597551
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3271319509196360019}
+    m_Modifications:
+    - target: {fileID: 2931734061904081996, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_Name
+      value: PF Village Props - Sunflower 03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.3915997
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.013643146
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.016000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+--- !u!4 &7833329440169160353 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2931734061904081998, guid: b0f1311d3df8b87459aaae81a12efd55, type: 3}
+  m_PrefabInstance: {fileID: 4907251267355597551}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6781997754476160016
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3271319509196360019}
+    m_Modifications:
+    - target: {fileID: 4742522720311266554, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_Name
+      value: PF Village Props - Wheat 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.619484
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+--- !u!4 &2291958719645427948 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4742522720311266556, guid: 43512ae16d90d5a47929b9b6d4e9686e, type: 3}
+  m_PrefabInstance: {fileID: 6781997754476160016}
+  m_PrefabAsset: {fileID: 0}
