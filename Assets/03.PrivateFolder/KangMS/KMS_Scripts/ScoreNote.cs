@@ -24,6 +24,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
                 ReflectNote();
             }
 
+            gameObject.SetActive(false);
             ReturnToPool();
         }
     }
