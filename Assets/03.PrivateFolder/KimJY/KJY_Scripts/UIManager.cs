@@ -46,4 +46,14 @@ public class UIManager : MonoBehaviour, IManager
         string[] names = Enum.GetNames(type);
     }
 
+    [SerializeField] private GameObject _progressBar;
+
+    public void SetProgressValue(float value)
+    {
+        if (_progressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
+        {
+            ui.SetValue(value);
+        }
+    }
+
 }

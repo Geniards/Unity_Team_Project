@@ -50,6 +50,7 @@ public class DataManager : MonoBehaviour, IManager
     public int ObjpoolInitCreateCount => 5;
     public float BGMVolume => _settingData.BGMVolume;
     public float SFXVolume => _settingData.SFXVolume;
+    public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
 
     public float PlayerHp => _stageData.PlayerHp;
     public float StageProgress => _stageData.StageProgress; // 0 ~ 1
