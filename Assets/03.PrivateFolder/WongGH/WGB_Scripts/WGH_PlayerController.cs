@@ -57,7 +57,7 @@ public class WGH_PlayerController : MonoBehaviour
     /// </summary>
     private void ConfrontBoss()
     {
-        Vector3 bossMeetPos = new Vector3(GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.BOTTOM).x, transform.position.y - 1, 0);
+        Vector3 bossMeetPos = new Vector3(GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE).x, transform.position.y, 0);
         if (Input.GetKey(KeyCode.Alpha1))
         {
             SetAnim("ConfrontBoss");
