@@ -105,6 +105,11 @@ public class WGH_PlayerController : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         yield return new WaitForSeconds(_clikerTime);
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+        yield return new WaitForSeconds(_clikerTime);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
+        yield return new WaitForSeconds(_clikerTime);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+
         yield break;
     }
     // 무적

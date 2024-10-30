@@ -171,7 +171,7 @@ public class WGH_AreaJudge : MonoBehaviour
         if (_isInputedDoubleKey == true)
         {
             // 동시공격 애니메이션
-            _playerController.SetAnim("GroundAttack");
+            _playerController.SetAnim("MiddleAttack");
         }
         else
         {
@@ -202,7 +202,7 @@ public class WGH_AreaJudge : MonoBehaviour
             else if (key == KeyCode.J)
             {
                 if (!_playerController.IsAir)
-                    _playerController.SetAnim("MiddleAttack");
+                    _playerController.SetAnim("GroundAttack");
             }
         }
         _isInputProcessing = false;

@@ -670,6 +670,7 @@ MonoBehaviour:
   damage: 0
   endPoint: {x: 0, y: 0, z: 0}
   _isHit: 0
+  swordWaveNotePrefab: {fileID: 0}
 --- !u!1 &1793845259
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,6 +932,18 @@ PrefabInstance:
     - target: {fileID: 2454781589851274334, guid: b32df6c93fe56d04e958a35de3df4f4e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7541297860856236989, guid: b32df6c93fe56d04e958a35de3df4f4e, type: 3}
+      propertyPath: m_GravityScale
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189943636974587322, guid: b32df6c93fe56d04e958a35de3df4f4e, type: 3}
+      propertyPath: _inAirTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189943636974587322, guid: b32df6c93fe56d04e958a35de3df4f4e, type: 3}
+      propertyPath: _clikerTime
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b32df6c93fe56d04e958a35de3df4f4e, type: 3}
