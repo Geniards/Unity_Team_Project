@@ -12,7 +12,7 @@ public class NoteMediator : MonoBehaviour
     private void Start()
     {
         // EventManager를 통해 BossRush 이벤트 구독
-        //EventManager.Instance.AddAction(E_Event.BossRush, AllNoteReturn, this);
+        //EventManager.Instance.AddAction(E_Event.NOTE_CLEAR, AllNoteReturn, this);
     }
 
     /// <summary>
