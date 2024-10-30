@@ -20,8 +20,8 @@ public class DataManager : MonoBehaviour, IManager
         _csvData = new DataTable();
         _csvData.Initailize();
 
-        SetBGMVolume(1); // 유저 정보 저장시 변경
-        SetSFXVolume(1);
+        SetBGMVolume(0.2f); // 유저 정보 저장시 변경
+        SetSFXVolume(0.2f);
         SetStageNumber(1);
         SetBGMClipLength(0);
     }
@@ -55,13 +55,16 @@ public class DataManager : MonoBehaviour, IManager
     public float StageProgress => _stageData.StageProgress; // 0 ~ 1
     // 해당 값 변경시 프로그래스 바의 SetValue 값을 전달시킨다.
     public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
-    public float SkipSpawnTimeOffset => GameManager.NoteDirector.BeatInterval * 8f;
-    //120bpm 일경우 음원종료 4 초전에 스폰중단
+    public float SkipSpawnTimeOffset => GameManager.NoteDirector.BeatInterval * 12f;
+    //120bpm 일경우 음원종료 12 초전에 스폰중단
 
     public void SetPlayState(bool value) { _isPlaying = value; }
     public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
     
-    public void SetPlayerHP(float value) { _stageData.PlayerHp = value; }
+    public void SetPlayerHP(float value) { 
+        _stageData.PlayerHp = value; 
+        //ui.playerhpbar.setvalue(value);
+    }
     public void SetBossHP(float value) { _stageData.BossHp = value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
     public void SetComboCount(int value) { _stageData.ComboCount = value; }
@@ -72,6 +75,7 @@ public class DataManager : MonoBehaviour, IManager
         { throw new System.Exception("프로그래스 동기화 순서 문제발생"); }
 
         _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
+        //UIManager.Instance.SetProgressValue(_stageData.StageProgress);
 
         if (_stageData.StageProgress >= 1)
             GameManager.Instance.StopProgressTimer();
@@ -79,7 +83,6 @@ public class DataManager : MonoBehaviour, IManager
 
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
     public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
-    
 }
 
 public struct StageData
