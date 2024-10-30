@@ -17,6 +17,7 @@ public class WGH_PlayerController : MonoBehaviour
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
     [SerializeField] WGH_AreaJudge _judge;
+     
 
     public Vector3 PlayerFrontBoss { get; private set; }
     Vector3 _startPos;
@@ -40,7 +41,7 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        PlayerFrontBoss = transform.GetChild(0).transform.position;
+        PlayerFrontBoss = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _startPos = transform.position;
         _judge = FindAnyObjectByType<WGH_AreaJudge>();
     }

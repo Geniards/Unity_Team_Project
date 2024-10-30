@@ -9,7 +9,7 @@ public class WGH_AreaJudge : MonoBehaviour
     [SerializeField] float _perfectDistance;
     
     Vector3 _checkTopPos;
-    //Vector3 _checkMiddlePos;
+    Vector3 _checkMiddlePos;
     Vector3 _checkBottomPos;
     Vector3 _curPos;
 
@@ -29,7 +29,7 @@ public class WGH_AreaJudge : MonoBehaviour
     private void Start()
     {
         _checkTopPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.TOP);
-        //_checkMiddlePos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        _checkMiddlePos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _checkBottomPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
         _playerRigid = _playerController.GetComponent<Rigidbody2D>();
@@ -102,18 +102,10 @@ public class WGH_AreaJudge : MonoBehaviour
     /// <summary>
     /// 노트판정 메서드
     /// </summary>
-    public void CheckNote(Vector3 checkPos/*, int num*/)
+    public void CheckNote(Vector3 checkPos, E_Boutton button)
     {
         this._curPos = checkPos;
-        // 민성님 기능 완료되면 다시 활성화 될 부분
-        //if(num == 1)
-        //{
-        //    _curPos = _checkTopPos;
-        //}
-        //else if(num == 2)
-        //{
-        //    _curPos = _checkBottomPos;
-        //}
+        
         Vector2 aPoint = new Vector2(_curPos.x - _greatDistance / 2, _curPos.y - _greatDistance / 4);
         Vector2 bPoint = new Vector2(_curPos.x + _greatDistance / 2, _curPos.y + _greatDistance / 4);
         Collider2D[] hits = Physics2D.OverlapAreaAll(aPoint, bPoint);
@@ -133,11 +125,11 @@ public class WGH_AreaJudge : MonoBehaviour
                 Debug.DrawLine(aPoint + new Vector2(0, _greatDistance / 4), bPoint - new Vector2(0, _greatDistance / 4), Color.blue, 0.5f);
                 if (_distance <= _perfectDistance)
                 {
-                    Note.OnHit(E_NoteDecision.Perfect);
+                    Note.OnHit(E_NoteDecision.Perfect, button);
                 }
-                else if(_distance <= _greatDistance + 0.1f)
+                else if(_distance <= _greatDistance + 0.2f)
                 {
-                    Note.OnHit(E_NoteDecision.Great);
+                    Note.OnHit(E_NoteDecision.Great, button);
                 }
             }
         }
@@ -149,25 +141,25 @@ public class WGH_AreaJudge : MonoBehaviour
         _isInputProcessing = true;                          
         _isInputedDoubleKey = false;                        
 
-        KeyCode nextKey = KeyCode.None;                     // 2번째 키를 받아둘 KeyCode
-        Action nextAction = null;                           // 경우에 따라 기능을 달리하기 위한 델리게이트
+        KeyCode nextKey = KeyCode.None;                                          // 2번째 키를 받아둘 KeyCode
+        Action nextAction = null;                                                // 경우에 따라 기능을 달리하기 위한 델리게이트
 
         // F를 눌렀을 경우 동시입력을 위해 필요한 키를 J로 정하는 조건문
         if (key == KeyCode.F)
         {
             // 상단 제거
-            CheckNote(_checkTopPos);                        // F가 입력될경우 동시입력 여부에 관계없이 진행할 함수
+            CheckNote(_checkTopPos, E_Boutton.F_BOUTTON);                        // F가 입력될경우 동시입력 여부에 관계없이 진행할 함수
 
-            nextKey = KeyCode.J;                            // 다음으로 받으면 동시입력이 진행될 키 지정
-            nextAction = () => CheckNote(_checkBottomPos);  // F가 입력되고나서 J가 입력될 경우 사용할 함수 델리게이트에 할당
+            nextKey = KeyCode.J;                                                 // 다음으로 받으면 동시입력이 진행될 키 지정
+            nextAction = () => CheckNote(_checkBottomPos, E_Boutton.J_BOUTTON);  // F가 입력되고나서 J가 입력될 경우 사용할 함수 델리게이트에 할당
         }
         // J를 눌렀을 경우 동시입력을 위해 필요한 키를 F로 정하는 조건문
         else if (key == KeyCode.J)
         {
             // 하단 제거
-            CheckNote(_checkBottomPos);                     // J가 입력될 경우 동시입력 여부에 관계없이 진행할 함수
-            nextKey = KeyCode.F;                            // 다음으로 받으면 동시입력이 진행될 키 지정
-            nextAction = () => CheckNote(_checkTopPos);     // J가 입력되고 나서 F가 입력될 경우 사용할 함수 델리게이트에 할당
+            CheckNote(_checkBottomPos, E_Boutton.J_BOUTTON);                     // J가 입력될 경우 동시입력 여부에 관계없이 진행할 함수
+            nextKey = KeyCode.F;                                                 // 다음으로 받으면 동시입력이 진행될 키 지정
+            nextAction = () => CheckNote(_checkTopPos, E_Boutton.F_BOUTTON);     // J가 입력되고 나서 F가 입력될 경우 사용할 함수 델리게이트에 할당
         }
 
         // 이중 코루틴 시작
@@ -188,17 +180,17 @@ public class WGH_AreaJudge : MonoBehaviour
                 // 판정했을 때 노트가 없을 경우 && 땅에 있는 상태일 경우 "일반 점프" 애니메이션
                 if (Note == null && !_playerController.IsAir)
                 {
-                    _playerController.IsAirControl(true);           // 플레이어 체공상태 여부 true
+                    _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y - 1, 0);
-                    StartCoroutine(_playerController.InAirTime());  // 체공 코루틴
+                    StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
                     _playerController.SetAnim("Jump1");
                 }
                 // 판정했을 때 노트가 있을 경우 && 땅에 있는 상태일 경우 "점프 공격" 애니메이션
                 else if (Note != null && !_playerController.IsAir)
                 {
-                    _playerController.IsAirControl(true);           // 플레이어 체공상태 여부 true
+                    _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y - 1, 0);
-                    StartCoroutine(_playerController.InAirTime());  // 체공 코루틴
+                    StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
                     _playerController.SetAnim("JumpAttack1");
                 }
             }
