@@ -12,7 +12,7 @@ public class MonsterNote : Note, IPoolingObj
         return damage;
     }
 
-    public override void OnHit(E_NoteDecision decision)
+    public override void OnHit(E_NoteDecision decision, E_Boutton button)
     {
         if (!_isHit)
         {

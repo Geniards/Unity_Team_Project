@@ -105,7 +105,7 @@ public abstract class Note : MonoBehaviour
     /// <summary>
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
-    public abstract void OnHit(E_NoteDecision decision);
+    public abstract void OnHit(E_NoteDecision decision, E_Boutton button = E_Boutton.None);
     public abstract float OnDamage();
 
     /// <summary>

@@ -12,7 +12,7 @@ public class ObstacleNote : Note, IPoolingObj
         return damage;
     }
 
-    public override void OnHit(E_NoteDecision decision) { Debug.Log("부서지지 않습니다."); }
+    public override void OnHit(E_NoteDecision decision, E_Boutton button) { Debug.Log("부서지지 않습니다."); }
 
     public void Return()
     {

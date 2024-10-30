@@ -37,7 +37,7 @@ public class LongScoreNote : Note
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            OnHit(E_NoteDecision.Perfect);
+            OnHit(E_NoteDecision.Perfect, E_Boutton.None);
         }
 
         if(Input.GetKeyUp(KeyCode.A))
@@ -59,7 +59,7 @@ public class LongScoreNote : Note
         maskLayer.position = body.position;
     }
 
-    public override void OnHit(E_NoteDecision decision)
+    public override void OnHit(E_NoteDecision decision, E_Boutton boutton)
     {
         if (!_isTouching && !isMoving)
         {
