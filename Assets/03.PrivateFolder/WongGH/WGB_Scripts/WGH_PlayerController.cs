@@ -40,7 +40,7 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        PlayerFrontBoss = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        PlayerFrontBoss = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _startPos = transform.position;
     }
     
@@ -57,7 +57,7 @@ public class WGH_PlayerController : MonoBehaviour
     /// </summary>
     private void ConfrontBoss()
     {
-        Vector3 bossMeetPos = new Vector3(GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE).x, transform.position.y, 0);
+        Vector3 bossMeetPos = new Vector3(GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE).x, transform.position.y, 0);
         if (Input.GetKey(KeyCode.Alpha1))
         {
             SetAnim("ConfrontBoss");

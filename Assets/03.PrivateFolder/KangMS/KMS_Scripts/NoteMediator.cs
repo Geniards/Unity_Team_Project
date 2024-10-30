@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class NoteMediator : MonoBehaviour
 {
-    private static NoteMediator _instance;
-    public static NoteMediator Instance => _instance = new GameObject("NoteMediator").AddComponent<NoteMediator>();
-
     private List<Note> _notesList = new List<Note>();
 
     private void Start()
     {
-        // EventManager를 통해 BossRush 이벤트 구독
-        //EventManager.Instance.AddAction(E_Event.NOTE_CLEAR, AllNoteReturn, this);
+        GameManager.Mediator = this;
+        EventManager.Instance.AddAction(E_Event.NOTE_CLEAR, AllNoteReturn, this);
     }
 
     /// <summary>

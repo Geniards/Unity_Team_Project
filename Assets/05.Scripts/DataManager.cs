@@ -12,7 +12,7 @@ public class DataManager : MonoBehaviour, IManager
     private StageData _stageData;
     private GameSettingData _settingData;
 
-    public Vector3 ContactPos => GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+    public Vector3 ContactPos => GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
 
     public void Init()
     {
@@ -47,16 +47,15 @@ public class DataManager : MonoBehaviour, IManager
 
     public int StageNumber => _stageData.StageNumber;
 
-    public int ObjpoolInitCreateCount => 5;
+    public int ObjpoolInitCreateCount => 15;
     public float BGMVolume => _settingData.BGMVolume;
     public float SFXVolume => _settingData.SFXVolume;
-    public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
 
     public float PlayerHp => _stageData.PlayerHp;
     public float StageProgress => _stageData.StageProgress; // 0 ~ 1
     // 해당 값 변경시 프로그래스 바의 SetValue 값을 전달시킨다.
     public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
-    public float SkipSpawnTimeOffset => GameManager.NoteDirector.BeatInterval * 12f;
+    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 12f;
     //120bpm 일경우 음원종료 12 초전에 스폰중단
 
     public void SetPlayState(bool value) { _isPlaying = value; }

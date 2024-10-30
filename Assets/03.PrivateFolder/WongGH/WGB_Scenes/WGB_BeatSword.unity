@@ -671,6 +671,7 @@ MonoBehaviour:
   endPoint: {x: 0, y: 0, z: 0}
   _isHit: 0
   swordWaveNotePrefab: {fileID: 0}
+  bossTransform: {fileID: 0}
 --- !u!1 &1793845259
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,11 +892,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476704526975109616, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.48
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 7476704526975109616, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.17
+      value: -1.25
       objectReference: {fileID: 0}
     - target: {fileID: 7476704526975109616, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_LocalPosition.z

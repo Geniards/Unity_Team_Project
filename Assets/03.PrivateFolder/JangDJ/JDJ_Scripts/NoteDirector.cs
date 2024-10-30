@@ -13,6 +13,8 @@ public class NoteDirector : MonoBehaviour
     [SerializeField] private float _prevDelay;
     private float _beatInterval;
     public float BeatInterval => _beatInterval;
+    public float TotalHeight =>
+        _posController.GetSpawnerPos(E_SpawnerPosY.TOP).y - _posController.GetSpawnerPos(E_SpawnerPosY.BOTTOM).y;
     private Coroutine _spawnRoutine = null;
 
     private bool _isSkipSpawn = false;
@@ -42,10 +44,10 @@ public class NoteDirector : MonoBehaviour
 
     private void Awake()
     {
-        if (GameManager.NoteDirector != null)
-            Destroy(GameManager.NoteDirector);
+        if (GameManager.Director != null)
+            Destroy(GameManager.Director);
 
-        GameManager.NoteDirector = this;
+        GameManager.Director = this;
         _bpm = DataManager.Instance.BPM;
         _noteSpeed = DataManager.Instance.GameSpeed;
     }

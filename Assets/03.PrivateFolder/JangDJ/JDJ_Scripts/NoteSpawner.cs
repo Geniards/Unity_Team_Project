@@ -40,7 +40,7 @@ public class NoteSpawner : MonoBehaviour
         //}
 
         _innerNoteList.Add(new NoteData(1, E_NoteType.Score));
-        _innerNoteList.Add(new NoteData(2, E_NoteType.Score));
+        _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
         _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
         _innerNoteList.Add(new NoteData(1, E_NoteType.Score));
     }

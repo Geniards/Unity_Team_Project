@@ -12,8 +12,6 @@ public class ObjPoolManager : MonoBehaviour, IManager
 
     public static ObjPoolManager Instance => _instance;
 
-    private const int INIT_POOL_COUNT = 5;
-
     private Dictionary<E_Pool, ObjectPool> _pools = new Dictionary<E_Pool, ObjectPool>();
     [SerializeField] private List<PrefabItem> _prefabs = null;
 
@@ -44,7 +42,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
                 || item.TargetPrefab == null)
             { throw new System.Exception("프리팹 등록 오류 재확인 요망"); }
 
-            newPool = new ObjectPool(INIT_POOL_COUNT, item.TargetPrefab);
+            newPool = new ObjectPool(DataManager.Instance.ObjpoolInitCreateCount, item.TargetPrefab);
             _pools.Add(item.TargetPool, newPool);
         }
     }

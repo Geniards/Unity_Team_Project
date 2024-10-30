@@ -22,6 +22,7 @@ public abstract class Note : MonoBehaviour
 
     public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0, float length = 0)
     {
+        _isHit = false;
         gameObject.SetActive(true);
 
         this.endPoint = endPoint;
@@ -31,7 +32,7 @@ public abstract class Note : MonoBehaviour
         this.length = length;
 
         // Note 생성 시 중재자에 등록
-        NoteMediator.Instance.Register(this);
+        GameManager.Mediator.Register(this);
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
@@ -62,9 +63,8 @@ public abstract class Note : MonoBehaviour
 
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                Debug.Log($"노트가 목표 지점에 도착함, 도착 시간: {currentDspTime}");
-
-                gameObject.SetActive(false);
+                //this.gameObject.SetActive(false);
+                ReturnToPool();
                 yield break;
             }
 
@@ -111,5 +111,4 @@ public abstract class Note : MonoBehaviour
     {
         Debug.Log("이펙트 동작");
     }
-
 }

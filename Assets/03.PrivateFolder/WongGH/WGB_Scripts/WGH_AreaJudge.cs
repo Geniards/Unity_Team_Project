@@ -28,9 +28,9 @@ public class WGH_AreaJudge : MonoBehaviour
 
     private void Start()
     {
-        _checkTopPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.TOP);
-        _checkMiddlePos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.MIDDLE);
-        _checkBottomPos = GameManager.NoteDirector.GetCheckPoses(E_SpawnerPosY.BOTTOM);
+        _checkTopPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.TOP);
+        _checkMiddlePos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        _checkBottomPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
         _playerRigid = _playerController.GetComponent<Rigidbody2D>();
     }

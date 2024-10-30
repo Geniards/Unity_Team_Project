@@ -30,7 +30,7 @@ public class MonsterNote : Note, IPoolingObj
 
     public override void ReturnToPool()
     {
-        NoteMediator.Instance.Unregister(this);
+        GameManager.Mediator.Unregister(this);
         Return();
     }
 }

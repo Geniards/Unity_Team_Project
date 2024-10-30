@@ -149,7 +149,7 @@ public class SoundManager : MonoBehaviour, IManager
 
         FadeBGM(true, 3f);
 
-        GameManager.NoteDirector.SetSpawnSkip(false);
+        GameManager.Director.SetSpawnSkip(false);
         PlayBGM(_currentStageBgm + 1);
         _bgmSource.loop = true;
     }

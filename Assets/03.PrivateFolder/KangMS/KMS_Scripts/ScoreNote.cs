@@ -24,7 +24,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
                 ReflectNote();
             }
 
-            Return();
+            ReturnToPool();
         }
     }
 
@@ -48,7 +48,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
 
     public override void ReturnToPool()
     {
-        NoteMediator.Instance.Unregister(this); // 중재자에서 노트 제거
+        GameManager.Mediator.Unregister(this);
         Return();
     }
 }
