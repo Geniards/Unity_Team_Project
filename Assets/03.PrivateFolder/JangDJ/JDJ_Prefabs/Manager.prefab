@@ -353,6 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bpm: 120
   _gameSpeed: 3
+  SirenCount: 5
 --- !u!114 &1518096869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,3 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bgmSource: {fileID: 1083170230}
   _sfxSource: {fileID: 185137565}
+  _sfxList:
+    _sfxList:
+    - _sfxType: 0
+      _sfx: {fileID: 8300000, guid: 1d3d50b421223884690cb2677af9de3b, type: 3}

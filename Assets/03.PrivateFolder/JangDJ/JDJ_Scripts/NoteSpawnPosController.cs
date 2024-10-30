@@ -26,9 +26,6 @@ public class NoteSpawnPosController : MonoBehaviour
     private double under = double.MaxValue;
     private double over = double.MinValue;
 
-    [SerializeField] GameObject minobj;
-    [SerializeField] GameObject maxobj;
-
     private void Awake()
     {
         _posesXvalues = new List<double>();
@@ -128,9 +125,6 @@ public class NoteSpawnPosController : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //    _lock = true;
-
         for (int i = 0; i < _posesYvalues.Count; i++)
         {
             DrawRay(new Vector3(_startPos.position.x, (float)_posesYvalues[i]),
@@ -170,34 +164,34 @@ public class NoteSpawnPosController : MonoBehaviour
 
     public void NoteCheckRay()
     {
-        RaycastHit hit;
-        Physics.Raycast(_checkPos.position,Vector3.down, out hit , 50f);
-        Debug.DrawRay(_checkPos.position, Vector3.down * 60f, Color.blue,0.03f);
+        //RaycastHit hit;
+        //Physics.Raycast(_checkPos.position,Vector3.down, out hit , 50f);
+        //Debug.DrawRay(_checkPos.position, Vector3.down * 60f, Color.blue,0.03f);
 
-        if(hit.collider != null)
-        {
-            double dist = _checkPos.position.x - hit.transform.position.x;
+        //if(hit.collider != null)
+        //{
+        //    double dist = _checkPos.position.x - hit.transform.position.x;
 
-            if (dist < under)
-            {
-                under = dist;
-                minobj.transform.position = new Vector3((float)under + _checkPos.position.x, minobj.transform.position.y);
-            }
+        //    if (dist < under)
+        //    {
+        //        under = dist;
+        //        minobj.transform.position = new Vector3((float)under + _checkPos.position.x, minobj.transform.position.y);
+        //    }
                 
 
-            if (dist > over)
-            {
-                over = dist;
-                maxobj.transform.position = new Vector3((float)over + _checkPos.position.x, maxobj.transform.position.y);
-            }
+        //    if (dist > over)
+        //    {
+        //        over = dist;
+        //        maxobj.transform.position = new Vector3((float)over + _checkPos.position.x, maxobj.transform.position.y);
+        //    }
                 
 
-            Debug.Log($"최저 거리 : {under} , 최고 거리 {over}");
+        //    Debug.Log($"최저 거리 : {under} , 최고 거리 {over}");
             //Debug.Log(Time.time);
 
             //if (_lock)
             //    Time.timeScale = 0;
-        }
+        //}
         
     }
 }
