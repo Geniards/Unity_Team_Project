@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,7 +17,9 @@ public class WGH_PlayerController : MonoBehaviour
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
-    [SerializeField] WGH_RayJudge _judge;
+    [SerializeField] WGH_AreaJudge _judge;
+
+    public Vector3 PlayerFrontBoss { get; private set; }
     Vector3 _startPos;
     public Vector2 GroundPos { get; private set; }    // 땅의 위치값
     public Vector2 JumPos { get; private set; }       // 점프 위치값
@@ -26,10 +29,10 @@ public class WGH_PlayerController : MonoBehaviour
     float _fPressTime;                                 // f 입력 시간을 받을 값
     float _jPressTime;                                 // j 입력 시간을 받을 값
 
+    
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
-    private bool _isAir;                               // 체공 여부
-    bool _isCanJump = true;
+    public bool IsAir { get; private set; }                               // 체공 여부
     Coroutine _IsAirRountine;                          // 체공 코루틴
     
     private void Awake()
@@ -41,74 +44,23 @@ public class WGH_PlayerController : MonoBehaviour
 
         // 하강하는 느낌이 들게 살짝 위에서 떨어지도록 값 설정
         GroundPos = transform.position + new Vector3(0, 0.2f, 0);    
-        JumPos = transform.position + new Vector3(0, _jumpHeight, 0);
-        
     }
     private void Start()
     {
+        PlayerFrontBoss = transform.GetChild(0).transform.position;
         _startPos = transform.position;
-        _judge = FindAnyObjectByType<WGH_RayJudge>();
+        JumPos = transform.position + new Vector3(0, _jumpHeight, 0);
+        _judge = FindAnyObjectByType<WGH_AreaJudge>();
     }
     
     private void Update()
     {
-        if(_curHp <= 0 && !IsDied)
+        if (_curHp <= 0 && !IsDied)
         {
             StartCoroutine(Die());
         }
-        if (!IsDied)                                // 캐릭터가 사망상태가 아니면 입력가능
-        {
-            if (!IsDamaged)                         // 캐릭터가 피격상태가 아니면 입력가능
-            {
-                if (Input.GetKeyDown(KeyCode.J))
-                {
-                    _jPressTime = Time.time;
-                    _isJPress = true;
-                }
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    _fPressTime = Time.time;
-                    _isFPress = true;
-                }
-                if (Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJPress && _isFPress)
-                {
-                    SetAnim("MiddleAttack");
-                    _isJPress = false;
-                    _isFPress = false;
-                }
-                else
-                {
-                    if (_isJPress && !_isFPress && Input.GetKeyUp(KeyCode.J))
-                    {
-                        if (!_isAir)
-                        {
-                            SetAnim("GroundAttack");
-                        }
-                        else if (_isAir)
-                        {
-                            SetAnim("FallAttack");
-                            _rigid.position = _startPos;
-                        }
-                        _isJPress = false;
-                    }
-                    if (_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
-                    {
-                        if (!_isAir)
-                        {
-                            StartCoroutine(JumpAnimCheck());
-                        }
-                        _isFPress = false;
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log("사망");
-                return;
-            }
-        }
     }
-
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -118,8 +70,7 @@ public class WGH_PlayerController : MonoBehaviour
         
         if(collision.collider.TryGetComponent(out BoxCollider2D boxColllider))
         {
-            _isCanJump = true;
-            _isAir = false;
+            IsAir = false;
         }
         
         //}
@@ -137,6 +88,7 @@ public class WGH_PlayerController : MonoBehaviour
             IsDamaged = true;
 
             _curHp -= 1;
+            // TODO : 민성님께 받아올 데미지를 입는 부분
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
         }
@@ -145,7 +97,9 @@ public class WGH_PlayerController : MonoBehaviour
     IEnumerator InAirTime()
     {
         _rigid.isKinematic = true;
+        //_rigid.bodyType = RigidbodyType2D.Static;
         yield return new WaitForSeconds(_inAirTime);
+        //_rigid.bodyType = RigidbodyType2D.Dynamic;
         _rigid.isKinematic = false;
         yield break;
     }
@@ -173,6 +127,7 @@ public class WGH_PlayerController : MonoBehaviour
 
     IEnumerator Die()
     {
+        // 이벤트 (캐릭터 사망) 등록
         gameObject.GetComponent<Collider2D>().enabled = false;
         _rigid.position = _startPos + new Vector3(0, -0.3f, 0);
         SetAnim("Die");
@@ -183,28 +138,22 @@ public class WGH_PlayerController : MonoBehaviour
         yield break;
     }
 
-    IEnumerator JumpAnimCheck()
-    {
-        yield return new WaitForSeconds(0.1f);
-        if (_judge.Note != null)
-        {
-            _isAir = true;
-            _rigid.position = JumPos;
-            SetAnim("JumpAttack1");
-        }
-        else if (_judge.Note == null)
-        {
-            _isAir = true;
-            _rigid.position = JumPos;
-            SetAnim("Jump1");
-        }
-        yield break;
-    }
+    
     /// <summary>
     /// 애니메이션 시작 메서드
     /// </summary>
     public void SetAnim(string animName)
     {
         _anim.Play(animName);
+    }
+    /// <summary>
+    /// 체공여부 조절 메서드
+    /// </summary>
+    public void IsAirControl(bool state)
+    {
+        if (state)
+            IsAir = true;
+        if (!state)
+            IsAir = false;
     }
 }
