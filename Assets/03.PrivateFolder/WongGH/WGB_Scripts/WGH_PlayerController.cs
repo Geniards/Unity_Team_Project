@@ -94,7 +94,7 @@ public class WGH_PlayerController : MonoBehaviour
         }
     }
     // 체공 시간 조절 코루틴
-    IEnumerator InAirTime()
+    public IEnumerator InAirTime()
     {
         _rigid.isKinematic = true;
         //_rigid.bodyType = RigidbodyType2D.Static;
@@ -128,12 +128,13 @@ public class WGH_PlayerController : MonoBehaviour
     IEnumerator Die()
     {
         // 이벤트 (캐릭터 사망) 등록
-        gameObject.GetComponent<Collider2D>().enabled = false;
-        _rigid.position = _startPos + new Vector3(0, -0.3f, 0);
-        SetAnim("Die");
         IsDied = true;
-        yield return new WaitForSeconds(0.05f);
+        
+        _rigid.position = _startPos;
+        SetAnim("Die");
+        yield return new WaitForSeconds(0.02f);
         gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        gameObject.GetComponent<Collider2D>().enabled = false;
 
         yield break;
     }

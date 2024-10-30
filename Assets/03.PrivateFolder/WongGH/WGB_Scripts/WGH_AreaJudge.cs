@@ -78,15 +78,17 @@ public class WGH_AreaJudge : MonoBehaviour
                 // 판정했을 때 노트가 없을 경우 && 땅에 있는 상태일 경우 "일반 점프" 애니메이션
                 if (Note == null && !_playerController.IsAir)
                 {
-                    _playerController.IsAirControl(true);       // 플레이어 체공상태 여부 true
+                    _playerController.IsAirControl(true);           // 플레이어 체공상태 여부 true
                     _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y, 0);
+                    StartCoroutine(_playerController.InAirTime());  // 체공 코루틴
                     _playerController.SetAnim("Jump1");
                 }
                 // 판정했을 때 노트가 있을 경우 && 땅에 있는 상태일 경우 "점프 공격" 애니메이션
                 else if (Note != null && !_playerController.IsAir)
                 {
-                    _playerController.IsAirControl(true);       // 플레이어 체공상태 여부 true
+                    _playerController.IsAirControl(true);           // 플레이어 체공상태 여부 true
                     _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y, 0);
+                    StartCoroutine(_playerController.InAirTime());  // 체공 코루틴
                     _playerController.SetAnim("JumpAttack1");
                 }
             }
@@ -136,12 +138,6 @@ public class WGH_AreaJudge : MonoBehaviour
 
             StartCoroutine(StartInputCheck(_inputKey));
         }
-
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    _isFPress = true;
-        //    StartCoroutine(StartInputCheck());
-        //}
         #region
         //if (!_playerController.IsDied)
         //{
@@ -196,6 +192,7 @@ public class WGH_AreaJudge : MonoBehaviour
     public void CheckNote(Vector3 checkPos/*, int num*/)
     {
         this._curPos = checkPos;
+        // 민성님 기능 완료되면 다시 활성화 될 부분
         //if(num == 1)
         //{
         //    _curPos = _checkTopPos;
