@@ -36,7 +36,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
     public void ReflectNote()
     {
         Debug.Log("반사노트(검기노트)에 대한 오브젝트 풀로 전환 후 해당 노트는 삭제시킨다.");
-        if (swordWaveNotePrefab != null && bossTransform != null)
+        if (swordWaveNotePrefab != null)
         {
             GameObject swordWaveNote = Instantiate(swordWaveNotePrefab, transform.position, Quaternion.identity);
             SwordWaveNote swordWave = swordWaveNote.GetComponent<SwordWaveNote>();
