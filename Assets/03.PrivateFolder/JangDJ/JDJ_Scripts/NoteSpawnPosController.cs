@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class NoteSpawnPosController : MonoBehaviour
 {
-    [Header("³ëÆ®°¡ Áö³ª´Â À§Ä¡ Y ÁÂÇ¥ ±âÁØ")]
+    [Header("ë…¸íŠ¸ê°€ ì§€ë‚˜ëŠ” ìœ„ì¹˜ Y ì¢Œí‘œ ê¸°ì¤€")]
     [SerializeField] private Transform _startPos;
     [SerializeField] private Transform _checkPos;
     [SerializeField] private Transform _bossPos;
     [SerializeField] private Transform _endPos;
 
-    [Space(20f), Header("¹ÙÅÒ°ú Áß°£ ½ºÆùÀ§Ä¡ X ÁÂÇ¥ ±âÁØ")] 
+    [Space(20f), Header("ë°”í…€ê³¼ ì¤‘ê°„ ìŠ¤í°ìœ„ì¹˜ X ì¢Œí‘œ ê¸°ì¤€")] 
     [SerializeField] private Transform _bottomPointPos;
     [SerializeField] private Transform _bottomToIntervalSpawners;
 
     private List<double> _posesXvalues = null; // end , check , start
     private List<double> _posesYvalues = null; // bot , mid , top
 
-    // ½ºÆùÁöÁ¡À¸·ÎºÎÅÍ Ã¼Å©Æ÷ÀÎÆ®±îÁöÀÇ °Å¸®
+    // ìŠ¤í°ì§€ì ìœ¼ë¡œë¶€í„° ì²´í¬í¬ì¸íŠ¸ê¹Œì§€ì˜ ê±°ë¦¬
     public double DistSpawnToCheck =>
          _posesXvalues[(int)E_SpawnerPosX.START] - _posesXvalues[(int)E_SpawnerPosX.CHECK];
 
@@ -25,9 +25,6 @@ public class NoteSpawnPosController : MonoBehaviour
 
     private double under = double.MaxValue;
     private double over = double.MinValue;
-
-    [SerializeField] GameObject minobj;
-    [SerializeField] GameObject maxobj;
 
     private void Awake()
     {
@@ -77,24 +74,24 @@ public class NoteSpawnPosController : MonoBehaviour
         }
 
         if(IsInCheck(_endPos.position) == true)
-        { throw new System.Exception("End ÁÂÇ¥°¡ È­¸é ¿µ¿ª ³»¿¡ ¹èÄ¡µÊ"); }
+        { throw new System.Exception("End ì¢Œí‘œê°€ í™”ë©´ ì˜ì—­ ë‚´ì— ë°°ì¹˜ë¨"); }
         else if(IsInCheck(_checkPos.position) == false)
-        { throw new System.Exception("Check ÁÂÇ¥°¡ È­¸é ¿µ¿ª ¿Ü¿¡ ¹èÄ¡µÊ"); }
+        { throw new System.Exception("Check ì¢Œí‘œê°€ í™”ë©´ ì˜ì—­ ì™¸ì— ë°°ì¹˜ë¨"); }
         else if (IsInCheck(_bossPos.position) == false)
-        { throw new System.Exception("BossStay ÁÂÇ¥°¡ È­¸é ¿µ¿ª ¿Ü¿¡ ¹èÄ¡µÊ"); }
+        { throw new System.Exception("BossStay ì¢Œí‘œê°€ í™”ë©´ ì˜ì—­ ì™¸ì— ë°°ì¹˜ë¨"); }
         else if (IsInCheck(_startPos.position) == true)
-        { throw new System.Exception("Start ÁÂÇ¥°¡ È­¸é ¿µ¿ª ³»¿¡ ¹èÄ¡µÊ"); }
+        { throw new System.Exception("Start ì¢Œí‘œê°€ í™”ë©´ ì˜ì—­ ë‚´ì— ë°°ì¹˜ë¨"); }
         else if (IsInCheck(_bottomPointPos.position) == false)
-        { throw new System.Exception("BotPoint ÁÂÇ¥°¡ È­¸é ¿µ¿ª ¿Ü¿¡ ¹èÄ¡µÊ"); }
+        { throw new System.Exception("BotPoint ì¢Œí‘œê°€ í™”ë©´ ì˜ì—­ ì™¸ì— ë°°ì¹˜ë¨"); }
         else if (IsInCheck(_bottomToIntervalSpawners.position) == false)
-        { throw new System.Exception("BotToInterval ÁÂÇ¥°¡ È­¸é ¿µ¿ª ¿Ü¿¡ ¹èÄ¡µÊ"); }
+        { throw new System.Exception("BotToInterval ì¢Œí‘œê°€ í™”ë©´ ì˜ì—­ ì™¸ì— ë°°ì¹˜ë¨"); }
 
         for (int i = _posesXvalues.Count-2; i >= 0; i--)
         {
             if (_posesXvalues[i] < _posesXvalues[i+1])
             {   
                 throw new System.Exception($"" +
-                    $"{(E_SpawnerPosX)(i + 1)} À§Ä¡°¡ {(E_SpawnerPosX)(i)} º¸´Ù ¾Õ¿¡ ¹èÄ¡µÇ¾ú½À´Ï´Ù.");
+                    $"{(E_SpawnerPosX)(i + 1)} ìœ„ì¹˜ê°€ {(E_SpawnerPosX)(i)} ë³´ë‹¤ ì•ì— ë°°ì¹˜ë˜ì—ˆìŠµë‹ˆë‹¤.");
             }
         }
 
@@ -103,7 +100,7 @@ public class NoteSpawnPosController : MonoBehaviour
             if (_posesYvalues[i] > _posesYvalues[i+1])
             {
                 throw new System.Exception($"" +
-                    $"{(E_SpawnerPosY)(i)} À§Ä¡°¡ {(E_SpawnerPosY)(i+1)} º¸´Ù À§¿¡ ¹èÄ¡µÇ¾ú½À´Ï´Ù.");
+                    $"{(E_SpawnerPosY)(i)} ìœ„ì¹˜ê°€ {(E_SpawnerPosY)(i+1)} ë³´ë‹¤ ìœ„ì— ë°°ì¹˜ë˜ì—ˆìŠµë‹ˆë‹¤.");
             }
         }
     }
@@ -128,9 +125,6 @@ public class NoteSpawnPosController : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //    _lock = true;
-
         for (int i = 0; i < _posesYvalues.Count; i++)
         {
             DrawRay(new Vector3(_startPos.position.x, (float)_posesYvalues[i]),
@@ -145,7 +139,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// ³ëÆ® ½Ã½ºÅÛÀÇ ÇÙ½É ÁÂÇ¥°ªÀ» È®ÀÎÇÕ´Ï´Ù.
+    /// ë…¸íŠ¸ ì‹œìŠ¤í…œì˜ í•µì‹¬ ì¢Œí‘œê°’ì„ í™•ì¸í•©ë‹ˆë‹¤.
     /// </summary>
     public Vector3 GetSpawnerPos(E_SpawnerPosX posX, E_SpawnerPosY posY)
     {
@@ -153,7 +147,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ºÆù ÁÂÇ¥¸¦ È®ÀÎÇÏ´Â ±â´É
+    /// ìŠ¤í° ì¢Œí‘œë¥¼ í™•ì¸í•˜ëŠ” ê¸°ëŠ¥
     /// </summary>
     public Vector3 GetSpawnerPos(E_SpawnerPosY posY)
     {
@@ -161,7 +155,7 @@ public class NoteSpawnPosController : MonoBehaviour
     }
 
     /// <summary>
-    /// µğ¹ö±×¿ë
+    /// ë””ë²„ê·¸ìš©
     /// </summary>
     private void DrawRay(Vector3 startPos,Vector3 dir,Color color)
     {
@@ -170,34 +164,34 @@ public class NoteSpawnPosController : MonoBehaviour
 
     public void NoteCheckRay()
     {
-        RaycastHit hit;
-        Physics.Raycast(_checkPos.position,Vector3.down, out hit , 50f);
-        Debug.DrawRay(_checkPos.position, Vector3.down * 60f, Color.blue,0.03f);
+        //RaycastHit hit;
+        //Physics.Raycast(_checkPos.position,Vector3.down, out hit , 50f);
+        //Debug.DrawRay(_checkPos.position, Vector3.down * 60f, Color.blue,0.03f);
 
-        if(hit.collider != null)
-        {
-            double dist = _checkPos.position.x - hit.transform.position.x;
+        //if(hit.collider != null)
+        //{
+        //    double dist = _checkPos.position.x - hit.transform.position.x;
 
-            if (dist < under)
-            {
-                under = dist;
-                minobj.transform.position = new Vector3((float)under + _checkPos.position.x, minobj.transform.position.y);
-            }
+        //    if (dist < under)
+        //    {
+        //        under = dist;
+        //        minobj.transform.position = new Vector3((float)under + _checkPos.position.x, minobj.transform.position.y);
+        //    }
                 
 
-            if (dist > over)
-            {
-                over = dist;
-                maxobj.transform.position = new Vector3((float)over + _checkPos.position.x, maxobj.transform.position.y);
-            }
+        //    if (dist > over)
+        //    {
+        //        over = dist;
+        //        maxobj.transform.position = new Vector3((float)over + _checkPos.position.x, maxobj.transform.position.y);
+        //    }
                 
 
-            Debug.Log($"ÃÖÀú °Å¸® : {under} , ÃÖ°í °Å¸® {over}");
+        //    Debug.Log($"ìµœì € ê±°ë¦¬ : {under} , ìµœê³  ê±°ë¦¬ {over}");
             //Debug.Log(Time.time);
 
             //if (_lock)
             //    Time.timeScale = 0;
-        }
+        //}
         
     }
 }

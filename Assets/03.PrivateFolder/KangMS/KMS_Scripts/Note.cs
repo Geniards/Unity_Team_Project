@@ -5,28 +5,33 @@ using UnityEngine;
 
 public abstract class Note : MonoBehaviour
 {
-    [Header("³ëÆ® ¼¼ºÎ Á¶Á¤")]
+    [Header("ë…¸íŠ¸ ì„¸ë¶€ ì¡°ì •")]
     public float speed = 5f;
     public float scoreValue = 100;
+    public float damage = 0;
     public Vector3 endPoint;
 
-    [Header("Ãæµ¹ °¡´ÉÇÑ ³ëÆ® À¯/¹«")]
+    [Header("ì¶©ëŒ ê°€ëŠ¥í•œ ë…¸íŠ¸ ìœ /ë¬´")]
     public bool _isHit = false;
-    [Header("º¸½º Ãâ¿¬ À¯/¹«")]
-    public static bool isBoss = false;
+    [Header("ë³´ìŠ¤ ì¶œì—° ìœ /ë¬´")]
+    public static bool isBoss = false;   //falseê°€ ê¸°ë³¸ê°’
 
-    // ÀÌµ¿»óÅÂ Á¦¾î º¯¼ö.
+    // ì´ë™ìƒíƒœ ì œì–´ ë³€ìˆ˜.
     protected bool isMoving = true;
     protected float length;
 
-    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float length = 0)
+    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0, float length = 0)
     {
         gameObject.SetActive(true);
 
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
+        this.damage = damage;
         this.length = length;
+
+        // Note ìƒì„± ì‹œ ì¤‘ì¬ìì— ë“±ë¡
+        NoteMediator.Instance.Register(this);
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
@@ -36,7 +41,7 @@ public abstract class Note : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ÃÀÛ°ú µ¿½Ã¿¡ _endPoint¸¦ ÇâÇÏ¿© ³¯¾Æ°¡µµ·Ï ¼³Á¤.
+    /// ì‹œì‘ê³¼ ë™ì‹œì— _endPointë¥¼ í–¥í•˜ì—¬ ë‚ ì•„ê°€ë„ë¡ ì„¤ì •.
     /// </summary>
     protected virtual IEnumerator MoveToLeft(double startDspTime, double endDspTime)
     {
@@ -48,7 +53,7 @@ public abstract class Note : MonoBehaviour
         {
             double currentDspTime = AudioSettings.dspTime;
 
-            // ³²Àº ½Ã°£¿¡ ºñ·ÊÇÏ¿© ¸Å ÇÁ·¹ÀÓ ÀÏÁ¤ °Å¸®¸¸Å­ ÀÌµ¿
+            // ë‚¨ì€ ì‹œê°„ì— ë¹„ë¡€í•˜ì—¬ ë§¤ í”„ë ˆì„ ì¼ì • ê±°ë¦¬ë§Œí¼ ì´ë™
             double elapsedTime = currentDspTime - startDspTime;
             float coveredDistance = Mathf.Min((float)(elapsedTime * speed), totalDistance);
 
@@ -57,7 +62,7 @@ public abstract class Note : MonoBehaviour
 
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                Debug.Log($"³ëÆ®°¡ ¸ñÇ¥ ÁöÁ¡¿¡ µµÂøÇÔ, µµÂø ½Ã°£: {currentDspTime}");
+                Debug.Log($"ë…¸íŠ¸ê°€ ëª©í‘œ ì§€ì ì— ë„ì°©í•¨, ë„ì°© ì‹œê°„: {currentDspTime}");
 
                 gameObject.SetActive(false);
                 yield break;
@@ -68,7 +73,7 @@ public abstract class Note : MonoBehaviour
     }
 
     /// <summary>
-    /// °øÅëµÈ ÇÇ°İ ÆÇÁ¤¿¡ ´ëÇÑ Á¡¼ö Ã³¸®
+    /// ê³µí†µëœ í”¼ê²© íŒì •ì— ëŒ€í•œ ì ìˆ˜ ì²˜ë¦¬
     /// </summary>
     protected virtual void CalculateScore(E_NoteDecision decision)
     {
@@ -80,20 +85,31 @@ public abstract class Note : MonoBehaviour
         {
             scoreValue *= (float)decision;
         }
-        //Debug.Log($"HitµÈ °á°ú : {decision}, Á¡¼ö : {scoreValue}");
+        //Debug.Log($"Hitëœ ê²°ê³¼ : {decision}, ì ìˆ˜ : {scoreValue}");
     }
 
     /// <summary>
-    /// ¹öÆ° ÀÔ·Â¿¡ µû¸¥ ÆÇÁ¤ Ã³¸®
+    /// ë²„íŠ¼ ì…ë ¥ì— ë”°ë¥¸ íŒì • ì²˜ë¦¬
     /// </summary>
-    public abstract void OnHit(E_NoteDecision decision);
-    public abstract void OnDamage();
+    public abstract void OnHit(E_NoteDecision decision, E_Boutton button = E_Boutton.None);
+    
+    /// <summary>
+    /// Damage ì „ë‹¬ ë©”ì„œë“œ
+    /// </summary>
+    /// <returns></returns>
+    public abstract float GetDamage();
+    
+    /// <summary>
+    /// ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ë°˜í™˜í•˜ëŠ” ë©”ì„œë“œ
+    /// </summary>
+    public abstract void ReturnToPool();
 
     /// <summary>
-    // ÀÌÆåÆ® Ã³¸® (¾Ö´Ï¸ŞÀÌ¼Ç ¶Ç´Â ÆÄÆ¼Å¬)
+    // ì´í™íŠ¸ ì²˜ë¦¬ (ì• ë‹ˆë©”ì´ì…˜ ë˜ëŠ” íŒŒí‹°í´)
     /// </summary>
     protected void ShowEffect()
     {
-        Debug.Log("ÀÌÆåÆ® µ¿ÀÛ");
+        Debug.Log("ì´í™íŠ¸ ë™ì‘");
     }
+
 }

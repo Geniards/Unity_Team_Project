@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.09
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 1083170229}
   - component: {fileID: 1083170230}
   m_Layer: 0
-  m_Name: BGM
+  m_Name: BGM // cureent volume 0.3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,7 +172,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.09
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 6892206162165546785}
   - component: {fileID: 6892206162165546790}
   - component: {fileID: 6947623713489009007}
+  - component: {fileID: 1518096869}
   - component: {fileID: 6892206162165546791}
   - component: {fileID: 6892206162165546789}
   - component: {fileID: 6892206162165546810}
@@ -354,6 +355,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bpm: 120
   _gameSpeed: 3
+  SirenCount: 5
+--- !u!114 &1518096869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6892206162165546811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f4620eea8794443a953452c4627f38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6892206162165546791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,8 +381,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabs:
-  - TargetPool: 1
+  - TargetPool: 0
     TargetPrefab: {fileID: 5834100206960461235, guid: 7fd8510fa7c854d40a582d59e7a80726, type: 3}
+  - TargetPool: 5
+    TargetPrefab: {fileID: 7180226562935275493, guid: 6d31fe1e5322e404190d2b699fb80813, type: 3}
 --- !u!114 &6892206162165546789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,10 +409,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938245fa46e93664bbb7bdf84ae55e7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bgmSource: {fileID: 0}
-  _sfxSource: {fileID: 0}
---- !u!82 &1482720528
-AudioSource:
+  _bgmSource: {fileID: 1083170230}
+  _sfxSource: {fileID: 185137565}
+  _sfxList:
+    _sfxList:
+    - _sfxType: 0
+      _sfx: {fileID: 8300000, guid: 1d3d50b421223884690cb2677af9de3b, type: 3}
+--- !u!114 &1491832329499373703
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}

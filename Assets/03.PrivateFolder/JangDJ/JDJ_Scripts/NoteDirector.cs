@@ -11,17 +11,23 @@ public class NoteDirector : MonoBehaviour
     private float _noteSpeed;
     private double _noteArriveDuration;
     [SerializeField] private float _prevDelay;
-
+    private float _beatInterval;
+    public float BeatInterval => _beatInterval;
     private Coroutine _spawnRoutine = null;
 
     private bool _isSkipSpawn = false;
 
     /// <summary>
-    /// ´ÙÀ½ ¹ÚÀÚºÎÅÍ ½ºÆùÀ» Áß´ÜÇÕ´Ï´Ù.
+    /// ë‹¤ìŒ ë°•ìë¶€í„° ìŠ¤í°ì„ ì¤‘ë‹¨í•©ë‹ˆë‹¤.
     /// </summary>
     public void SetSpawnSkip(bool isSkip)
     {
         _isSkipSpawn = isSkip;
+    }
+
+    public Vector3 GetStartSpawnPoses(E_SpawnerPosY posY)
+    {
+        return _posController.GetSpawnerPos(E_SpawnerPosX.START, posY);
     }
 
     public Vector3 GetCheckPoses(E_SpawnerPosY posY)
@@ -50,14 +56,14 @@ public class NoteDirector : MonoBehaviour
     }
 
     /// <summary>
-    /// ³ëÆ® »ı¼ºÀ» ½ÃÀÛÇÕ´Ï´Ù.
+    /// ë…¸íŠ¸ ìƒì„±ì„ ì‹œì‘í•©ë‹ˆë‹¤.
     /// </summary>
-    public void StartSpawnNotes()
+    public void StartSpawnNotes(E_StageBGM bgm)
     {
         if (_spawnRoutine != null)
             StopCoroutine(_spawnRoutine);
 
-        _spawnRoutine = StartCoroutine(AutoSpawnRoutine());
+        _spawnRoutine = StartCoroutine(AutoSpawnRoutine(bgm));
     }
 
     private float GetBPMtoIntervalSec()
@@ -71,15 +77,16 @@ public class NoteDirector : MonoBehaviour
         return Mathf.Abs((float)checkPointDist / _noteSpeed);
     }
 
-    private IEnumerator AutoSpawnRoutine()
+    private IEnumerator AutoSpawnRoutine(E_StageBGM bgm)
     {
         double nextSpawnTime = 0d;
         double startDspTime = AudioSettings.dspTime;
-        double firstNoteTime = startDspTime + (GetBPMtoIntervalSec() * 4) - _noteArriveDuration; // 4¹ÚÀÚ µÚÀÇ Ã¹ ³ëÆ® »ı¼º ½Ã°£
-                                                                                                 // Ã¹ ¹øÂ° ³ëÆ® »ı¼º Å¸ÀÌ¹Ö ¼³Á¤
+        _beatInterval = GetBPMtoIntervalSec();
+        double firstNoteTime = startDspTime + (_beatInterval * 4) - _noteArriveDuration; // 4ë°•ì ë’¤ì˜ ì²« ë…¸íŠ¸ ìƒì„± ì‹œê°„
+                                                                                                 // ì²« ë²ˆì§¸ ë…¸íŠ¸ ìƒì„± íƒ€ì´ë° ì„¤ì •
         nextSpawnTime = firstNoteTime;
-        _spawner.RegistPattern(1); // ÀÓ½Ã Å×½ºÆ® ÄÚµå
-        SoundManager.Instance.PlayStageBGM();
+        _spawner.RegistPattern(1); // ì„ì‹œ í…ŒìŠ¤íŠ¸ ì½”ë“œ
+        SoundManager.Instance.PlayBGM(bgm);
 
         nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec();
 
@@ -94,14 +101,12 @@ public class NoteDirector : MonoBehaviour
             {
                 if (_spawner.IsLastNote == true)
                 {
-                    _spawner.RegistPattern(1); // ÀÓ½Ã Å×½ºÆ® ÄÚµå
+                    _spawner.RegistPattern(1); // ì„ì‹œ í…ŒìŠ¤íŠ¸ ì½”ë“œ
                 }
 
                 if(_isSkipSpawn == false)
                     _spawner.SpawnNote(_noteSpeed);
                 
-                //_posController.NoteCheckRay();
-
                 nextSpawnTime += GetBPMtoIntervalSec();
             }
             

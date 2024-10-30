@@ -5,16 +5,26 @@ using UnityEngine;
 
 public class ScoreNote : Note, IPoolingObj, IReflective
 {
+    [Header("ê²€ê¸° ë…¸íŠ¸ í”„ë¦¬íŒ¹")]
+    [SerializeField] private GameObject swordWaveNotePrefab;
+    [SerializeField] private Transform bossTransform;
+
     public E_Pool MyPoolType => E_Pool.SCORE_NOTE;
 
-    public override void OnHit(E_NoteDecision decision)
+    public override void OnHit(E_NoteDecision decision, E_Boutton button)
     {
         if (!_isHit)
         {
             _isHit = true;
             CalculateScore(decision);
             ShowEffect();
-            gameObject.SetActive(false);
+
+            if (isBoss)
+            {
+                ReflectNote();
+            }
+
+            Return();
         }
     }
 
@@ -25,8 +35,20 @@ public class ScoreNote : Note, IPoolingObj, IReflective
 
     public void ReflectNote()
     {
-        Debug.Log("¹İ»ç³ëÆ®(°Ë±â³ëÆ®)¿¡ ´ëÇÑ ¿ÀºêÁ§Æ® Ç®·Î ÀüÈ¯ ÈÄ ÇØ´ç ³ëÆ®´Â »èÁ¦½ÃÅ²´Ù.");
+        Debug.Log("ë°˜ì‚¬ë…¸íŠ¸(ê²€ê¸°ë…¸íŠ¸)ì— ëŒ€í•œ ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ì „í™˜ í›„ í•´ë‹¹ ë…¸íŠ¸ëŠ” ì‚­ì œì‹œí‚¨ë‹¤.");
+        if (swordWaveNotePrefab != null)
+        {
+            GameObject swordWaveNote = Instantiate(swordWaveNotePrefab, transform.position, Quaternion.identity);
+            SwordWaveNote swordWave = swordWaveNote.GetComponent<SwordWaveNote>();
+            swordWave.InitializeSwordWave(bossTransform, speed, scoreValue, damage); // ë³´ìŠ¤ ìœ„ì¹˜ë¥¼ ëª©í‘œë¡œ ì„¤ì •
+        }
     }
 
-    public override void OnDamage(){}
+    public override float GetDamage(){ return damage; }
+
+    public override void ReturnToPool()
+    {
+        NoteMediator.Instance.Unregister(this); // ì¤‘ì¬ìì—ì„œ ë…¸íŠ¸ ì œê±°
+        Return();
+    }
 }

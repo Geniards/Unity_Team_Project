@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +11,10 @@ public class GameManager : MonoBehaviour
 
     public static NoteDirector NoteDirector;
 
+    private Coroutine _stageTimeRoutine;
+    private WaitForSeconds _timerIntervalSec;
+    private float _checkInterval = 0.1f;
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
     {
@@ -18,6 +24,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(_instance.gameObject);
 
             _instance.InitGameManager();
+
+            
         }
     }
 
@@ -30,6 +38,7 @@ public class GameManager : MonoBehaviour
     private void InitGameManager()
     {
         InitializeManagers();
+        _timerIntervalSec = new WaitForSeconds(_checkInterval);
         Application.targetFrameRate = 120;
         DataManager.Instance.SetStageNumber(1);
     }
@@ -45,80 +54,60 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 스테이지를 진행시킵니다.
     /// </summary>
-    public void StartStage()
+    public void StartStage(E_StageBGM bgm)
     {
         DataManager.Instance.SetPlayState(true);
-
-        if (NoteDirector == null)
-        {
-            return;
-        }
-
         NoteDirector.Initailize();
-        NoteDirector.StartSpawnNotes();
+        NoteDirector.StartSpawnNotes(bgm);
+        _stageTimeRoutine = StartCoroutine(StartProgressTimer());
+
+        Debug.Log(DataManager.Instance.CurrentBGMClipLength);
+        Debug.Log(DataManager.Instance.SkipSpawnTimeOffset);
     }
 
-    public void ZoomIn(float duration, float size)
+    /// <summary>
+    /// 스테이지 진행시 현재 진행도를 확인하기 위한 코루틴
+    /// </summary>
+    private IEnumerator StartProgressTimer()
     {
-        StartCoroutine(CamZoomRoutine(duration, size));
-    }
-
-    private IEnumerator CamZoomRoutine(float duration, float size)
-    {
-        float time = 0;
-        float t = 0;
-        float initSize = Camera.main.orthographicSize;
+        float timer = 0;
+        float breakPoint = DataManager.Instance.CurrentBGMClipLength -
+            DataManager.Instance.SkipSpawnTimeOffset;
+        //float breakDuration = DataManager.Instance.SkipSpawnTimeOffset / 
+        //    DataManager.Instance.CurrentBGMClipLength;
+        bool isBreaked = false;
 
         while (true)
         {
-            if (t >= 1)
-                break;
+            DataManager.Instance.SetProgress(timer);
 
-            time += Time.deltaTime;
-            t = Mathf.Clamp01(time / duration);
+            yield return _timerIntervalSec;
+            timer += _checkInterval;
 
-            Camera.main.orthographicSize = Mathf.Lerp
-                (initSize, size, t);
-
-            yield return null;
+            if (timer >= breakPoint && isBreaked == false)
+            {
+                SoundManager.Instance.FadeBGM(false, 4f);
+                NoteDirector.SetSpawnSkip(true);
+                isBreaked = true;
+            }
         }
     }
-
-    public void CamMove(Vector3 pos, float duration)
-    {
-        StartCoroutine(CamMoveRoutine(pos, duration));
-    }
-
-    private IEnumerator CamMoveRoutine(Vector3 pos, float duration)
-    {
-        float time = 0;
-        float t = 0;
-        Vector3 initPos = Camera.main.transform.position;
-
-        while (true)
-        {
-            if (t >= 1)
-                break;
-
-            time += Time.deltaTime;
-            t = Mathf.Clamp01(time / duration);
-
-            Camera.main.transform.position
-                = Vector3.Lerp(initPos, pos, t);
-
-            yield return null;
-        }
-    }
-
+    
+    /// <summary>
+    /// 진행시간의 타이머를 종료시킵니다.
+    /// </summary>
     public void StopProgressTimer()
     {
+        if (_stageTimeRoutine != null)
+            StopCoroutine(_stageTimeRoutine);
 
+        SoundManager.Instance.PlayBossBGM();
     }
-
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // 임시 코드
-            StartStage();
+        if (Input.GetKeyDown(KeyCode.Space)) // 임시
+            StartStage(E_StageBGM.TEST_NORMAL_01);
     }
+
 }
