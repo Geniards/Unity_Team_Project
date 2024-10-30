@@ -125,14 +125,15 @@ public class SoundManager : MonoBehaviour, IManager
         {
             if (count >= DataManager.Instance.SirenCount)
                 break;
-            else
-                
-
+            
             if(timer <= 0)
             {
                 timer = length;
                 count++;
                 PlaySFX(E_SFX.SIREN);
+
+                if (count == DataManager.Instance.SirenCount - 1)
+                    GameManager.Instance.CreateBoss();
             }
 
             timer -= Time.deltaTime;
@@ -147,7 +148,7 @@ public class SoundManager : MonoBehaviour, IManager
 
         yield return SirenRoutine(oneLoopLength);
 
-        FadeBGM(true, 3f);
+        FadeBGM(true, 1.5f);
 
         GameManager.Director.SetSpawnSkip(false);
         PlayBGM(_currentStageBgm + 1);
