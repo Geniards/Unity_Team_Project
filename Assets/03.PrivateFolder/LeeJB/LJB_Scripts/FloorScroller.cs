@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackGroundScroller : MonoBehaviour
+public class FloorScroller : MonoBehaviour
 {
     [SerializeField] private GameObject[] _tiles; // 타일 프리팹 배열
-    [SerializeField] private float _scrollSpeed; // 백그라운드 스크롤 속도
+    [SerializeField] private float _scrollSpeed; // 바닥 스크롤 속도
     [SerializeField] private float _tileWidth; // 각 타일의 가로 길이
     [SerializeField] private float _scrollDelay; // 스크롤 시작 지연 시간
 
@@ -21,7 +21,7 @@ public class BackGroundScroller : MonoBehaviour
     {
         if (_isScrolling)
         {
-            MoveFloor(); // MoveFloor 메서드를 호출하여 바닥을 스크롤
+            MoveFloor();
         }
     }
 
@@ -50,7 +50,7 @@ public class BackGroundScroller : MonoBehaviour
     }
 
     /// <summary>
-    /// 바닥 타일 이동 메서드
+    /// 바닥 이동 메서드
     /// </summary>
     private void MoveFloor()
     {
@@ -59,7 +59,7 @@ public class BackGroundScroller : MonoBehaviour
             _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime; // 바닥 타일을 왼쪽으로 이동
 
             // 타일이 화면 왼쪽 경계를 벗어나면 오른쪽으로 재배치
-            if (_tiles[index].transform.position.x <= -_tileWidth * 2f) // 타일이 더 왼쪽으로 이동한 후 재배치
+            if (_tiles[index].transform.position.x <= -_tileWidth * 15f) // 타일이 더 왼쪽으로 이동한 후 재배치
             {
                 float rightMost = GetRightMostTile(); // 타일의 가장 오른쪽 좌표에 타일 재배치
                 _tiles[index].transform.position = new Vector3(rightMost + _tileWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);
@@ -70,7 +70,6 @@ public class BackGroundScroller : MonoBehaviour
     /// <summary>
     /// 가장 오른쪽 타일의 X좌표를 반환하는 메서드
     /// </summary>
-    /// <returns>가장 오른쪽 타일의 X좌표</returns>
     private float GetRightMostTile()
     {
         float maxX = _tiles[0].transform.position.x; // 타일 가장 오른쪽 부분의 X위치 변수
