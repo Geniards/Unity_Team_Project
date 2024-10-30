@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5133934953330419072}
   - component: {fileID: 5133934953330419073}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5133934953617771349}
   - component: {fileID: 5133934953617771350}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5133934953882861629}
   - component: {fileID: 5133934953882861630}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: testBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5133934954417080039}
   - component: {fileID: 5133934954417080038}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TestSwordWaveNote
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ MonoBehaviour:
   damage: 0
   endPoint: {x: 0, y: 0, z: 0}
   _isHit: 0
-  testTrransform: {fileID: 0}
+  bossTrransform: {fileID: 0}
 --- !u!1 &5133934954634480196
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5133934954634480197}
   - component: {fileID: 5133934954634480198}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

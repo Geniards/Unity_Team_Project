@@ -1,22 +1,22 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Util : MonoBehaviour
 {
-    public static T FindChild<T>(GameObject go, string name = null, bool recursive = false)
-    where T : UnityEngine.Object
-    {
-        if (go == null)
-            return null;
+    //public static T FindChild<T>(GameObject go, string name = null, bool recursive = false)
+    //where T : UnityEngine.Object
+    //{
+    //    if (go == null)
+    //        return null;
 
-        if (recursive == false)
-        { 
+    //    if (recursive == false)
+    //    { 
         
         
-        }
+    //    }
     
-    }
+    //}
 
 
 
