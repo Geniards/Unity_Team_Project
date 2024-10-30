@@ -6,7 +6,7 @@ public class MonsterNote : Note, IPoolingObj
 {
     public E_Pool MyPoolType => E_Pool.MONSTER_NOTE;
 
-    public override float OnDamage()
+    public override float GetDamage()
     {
         Debug.Log($"몬스터와 충돌! 데미지 : {damage} 전달");
         return damage;
@@ -19,7 +19,6 @@ public class MonsterNote : Note, IPoolingObj
             _isHit = true;
             CalculateScore(decision);
             ShowEffect();
-            gameObject.SetActive(false);
             Return();
         }
     }
@@ -27,5 +26,11 @@ public class MonsterNote : Note, IPoolingObj
     public void Return()
     {
         ObjPoolManager.Instance.ReturnObj(MyPoolType, this.gameObject);
+    }
+
+    public override void ReturnToPool()
+    {
+        NoteMediator.Instance.Unregister(this);
+        Return();
     }
 }

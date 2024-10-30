@@ -60,7 +60,7 @@ public class SwordWaveNote : Note
         gameObject.SetActive(false);
     }
 
-    public override float OnDamage()
+    public override float GetDamage()
     {
         Debug.Log($"데미지 전달! 데미지 : {damage}");
         return damage;
@@ -74,5 +74,5 @@ public class SwordWaveNote : Note
         gameObject.SetActive(false);
     }
 
-  
+    public override void ReturnToPool() { }
 }

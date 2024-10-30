@@ -40,7 +40,7 @@ public class DBScoreNote : Note, IPoolingObj
         }
     }
 
-    public override float OnDamage()
+    public override float GetDamage()
     {
         return damage;
     }
@@ -91,5 +91,14 @@ public class DBScoreNote : Note, IPoolingObj
     public void Return()
     {
         ObjPoolManager.Instance.ReturnObj(MyPoolType, this.gameObject);
+    }
+
+    /// <summary>
+    /// NoteMediator에서 등록된 노트를 제거하고 objPool로 반환.
+    /// </summary>
+    public override void ReturnToPool()
+    {
+        NoteMediator.Instance.Unregister(this);
+        Return();
     }
 }

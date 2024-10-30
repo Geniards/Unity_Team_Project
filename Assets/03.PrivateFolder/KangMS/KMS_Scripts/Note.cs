@@ -30,22 +30,8 @@ public abstract class Note : MonoBehaviour
         this.damage = damage;
         this.length = length;
 
-        double startDspTime = AudioSettings.dspTime;
-        double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
-        double endDspTime = startDspTime + travelDuration;
-
-        StartCoroutine(MoveToLeft(startDspTime, endDspTime));
-    }
-
-    public virtual void Initialize(Transform bossTransform, float speed, float scoreValue, float damage = 0, float length = 0)
-    {
-        gameObject.SetActive(true);
-
-        this.endPoint = bossTransform.position;
-        this.speed = speed;
-        this.scoreValue = scoreValue;
-        this.damage = damage;
-        this.length = length;
+        // Note 생성 시 중재자에 등록
+        NoteMediator.Instance.Register(this);
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
@@ -106,7 +92,17 @@ public abstract class Note : MonoBehaviour
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
     public abstract void OnHit(E_NoteDecision decision, E_Boutton button = E_Boutton.None);
-    public abstract float OnDamage();
+    
+    /// <summary>
+    /// Damage 전달 메서드
+    /// </summary>
+    /// <returns></returns>
+    public abstract float GetDamage();
+    
+    /// <summary>
+    /// 오브젝트 풀로 반환하는 메서드
+    /// </summary>
+    public abstract void ReturnToPool();
 
     /// <summary>
     // 이펙트 처리 (애니메이션 또는 파티클)
@@ -115,4 +111,5 @@ public abstract class Note : MonoBehaviour
     {
         Debug.Log("이펙트 동작");
     }
+
 }

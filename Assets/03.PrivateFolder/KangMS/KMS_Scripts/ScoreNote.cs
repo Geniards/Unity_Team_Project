@@ -23,7 +23,6 @@ public class ScoreNote : Note, IPoolingObj, IReflective
                 ReflectNote();
             }
 
-            gameObject.SetActive(false);
             Return();
         }
     }
@@ -44,5 +43,11 @@ public class ScoreNote : Note, IPoolingObj, IReflective
         }
     }
 
-    public override float OnDamage(){ return damage; }
+    public override float GetDamage(){ return damage; }
+
+    public override void ReturnToPool()
+    {
+        NoteMediator.Instance.Unregister(this); // 중재자에서 노트 제거
+        Return();
+    }
 }
