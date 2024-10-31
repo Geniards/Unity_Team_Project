@@ -8,14 +8,15 @@ public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
     [SerializeField, Range(0, 0.1f)] float _inAirTime;  // 체공시간                         
-    [SerializeField] int _maxHp;
-    [SerializeField] int _curHp;
+    [SerializeField] float _maxHp;
+    [SerializeField] float _curHp;
     [SerializeField] float _clikerTime;                 // 깜빡임 속도
     [SerializeField] float _invincivilityTime;          // 무적시간
 
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
     [SerializeField] Animator _anim;
+    [SerializeField] Note _note;
      
 
     public Vector3 PlayerFrontBoss { get; private set; }
@@ -42,6 +43,7 @@ public class WGH_PlayerController : MonoBehaviour
     {
         PlayerFrontBoss = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _startPos = transform.position;
+        _note = FindAnyObjectByType<WGH_AreaJudge>().Note;
     }
     
     private void Update()
@@ -89,13 +91,6 @@ public class WGH_PlayerController : MonoBehaviour
         {
             IsAir = false;
         }
-        
-        //}
-        
-        // if(collision.collider.tag == "Monster" || collision.collider.tag == "Obstacle")
-        //{
-        // TODO : 피격판정
-        //}
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -104,9 +99,9 @@ public class WGH_PlayerController : MonoBehaviour
             SetAnim("OnDamage");
             IsDamaged = true;
 
-            _curHp -= 1; // 임의의 데미지
-            // TODO : 민성님께 받아올 데미지를 입는 부분
-            // GetDamage();
+            float _dmg = note.GetDamage();
+            // TODO : 추후 수정예정
+            _curHp -= 1; 
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
         }

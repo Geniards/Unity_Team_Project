@@ -35,9 +35,6 @@ public class WGH_AreaJudge : MonoBehaviour
         _playerRigid = _playerController.GetComponent<Rigidbody2D>();
     }
     
-
-    
-
     private void Update()
     {
         if(_isInputProcessing == false && !_playerController.IsDamaged && !_playerController.IsDied)
@@ -183,7 +180,7 @@ public class WGH_AreaJudge : MonoBehaviour
                     _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y - 1, 0);
                     StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
-                    _playerController.SetAnim("Jump1");
+                    _playerController.SetAnim("Jump");
                 }
                 // 판정했을 때 노트가 있을 경우 && 땅에 있는 상태일 경우 "점프 공격" 애니메이션
                 else if (Note != null && !_playerController.IsAir)
@@ -191,7 +188,7 @@ public class WGH_AreaJudge : MonoBehaviour
                     _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y - 1, 0);
                     StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
-                    _playerController.SetAnim("JumpAttack1");
+                    _playerController.SetAnim("JumpAttack");
                 }
             }
             else if (_playerController.IsAir && key == KeyCode.J)
