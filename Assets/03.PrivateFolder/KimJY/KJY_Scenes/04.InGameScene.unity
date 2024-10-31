@@ -840,6 +840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _progressBar: {fileID: 7837495851606073359}
+  _hpBar: {fileID: 7837495851606073360}
 --- !u!4 &6892206160482602858
 Transform:
   m_ObjectHideFlags: 0
@@ -1053,5 +1054,10 @@ PrefabInstance:
 --- !u!1 &7837495851606073359 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1243147958307680461, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
+  m_PrefabInstance: {fileID: 7837495851606073358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7837495851606073360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1243147958511788944, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
   m_PrefabInstance: {fileID: 7837495851606073358}
   m_PrefabAsset: {fileID: 0}

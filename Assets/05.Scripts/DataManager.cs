@@ -61,8 +61,10 @@ public class DataManager : MonoBehaviour, IManager
     public void SetPlayState(bool value) { _isPlaying = value; }
     public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
     
-    public void SetPlayerHP(float value) { 
-        _stageData.PlayerHp = value; 
+    public void SetPlayerHP(float value) 
+    {
+        UIManager.Instance.SetHPValue(_stageData.PlayerHp);
+        //_stageData.PlayerHp = value; 
         //ui.playerhpbar.setvalue(value);
     }
     public void SetBossHP(float value) { _stageData.BossHp = value; }
@@ -75,7 +77,7 @@ public class DataManager : MonoBehaviour, IManager
         { throw new System.Exception("프로그래스 동기화 순서 문제발생"); }
 
         _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
-        //UIManager.Instance.SetProgressValue(_stageData.StageProgress);
+        UIManager.Instance.SetProgressValue(_stageData.StageProgress);
 
         if (_stageData.StageProgress >= 1)
             GameManager.Instance.StopProgressTimer();

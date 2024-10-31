@@ -7,49 +7,64 @@ using UnityEngine.UI;
 public class UI_Popup : UI_Base
 {
     public GameObject popup;
+    Animator popupAnimator;
 
     public static UI_Popup instance { get; private set; }
 
-    public Text txtTitle, txtContent;
-    Action onClickOK, onClickCancel;
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    public void OpenPopup(string title, string content, Action onClickOK, Action onClickCancel)
-    { 
-        txtTitle.text= title;
-        txtContent.text = content;
-        this.onClickOK = onClickOK;
-        this.onClickCancel = onClickCancel;
-    }
-
-    public void OnClickOK()
-    {
-        if (onClickOK != null)
-        {
-            onClickOK();
-        }
-        ClosePopup();
-    }
-
-    public void OnClickCancel()
-    {
-        if(onClickCancel != null)
-        {
-            onClickCancel();
-        }
-        ClosePopup();
-    }
-
-    void ClosePopup() { }
+    Action onClickClose, onClickTutorial, onClickExit;
 
     public override void Init()
     {
         //UIManager.SetCanvas(gameObject, true);
     }
+
+    private void Awake()
+    {
+        instance = this;
+        popupAnimator = GetComponent<Animator>();
+    }
+
+    public void OpenPopup(Action onClickClose, Action onClickTutorial, Action onClickExit)
+    { 
+        this.onClickClose = onClickClose;
+        this.onClickTutorial = onClickTutorial;
+        this.onClickExit = onClickExit;
+        popup.SetActive(true);
+    }
+
+    public void OnClickClose()
+    {
+        if (onClickClose != null)
+        {
+            onClickClose();
+        }
+        ClosePopup();
+    }
+
+    public void OnClickTutorial()
+    {
+        if (onClickTutorial != null)
+        {
+            onClickTutorial();
+        }
+        ClosePopup();
+    }
+
+    public void OnClickExit()
+    {
+        if(onClickExit != null)
+        {
+            onClickExit();
+        }
+        ClosePopup();
+    }
+
+    void ClosePopup() 
+    {
+        popupAnimator.SetTrigger("close");
+    }
+
+   
 
     /*
     public virtual void ClosePopup()
