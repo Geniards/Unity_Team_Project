@@ -119,8 +119,9 @@ public class DBScoreNote : Note, IPoolingObj
             _isHit = true;
             CalculateScore(decision);
             ShowEffect();
-            gameObject.SetActive(false);
             Debug.Log("DB노트 사라짐.");
+            gameObject.SetActive(false);
+            ReturnToPool();
         }
     }
 
