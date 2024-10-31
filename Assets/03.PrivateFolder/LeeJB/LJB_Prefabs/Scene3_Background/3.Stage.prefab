@@ -48,7 +48,7 @@ MonoBehaviour:
   - {fileID: 4096101704793990632}
   - {fileID: 4096101703506552425}
   - {fileID: 4096101703635693243}
-  _scrollSpeed: 2
+  _scrollSpeed: 1
   _tileWidth: 30
   _scrollDelay: 1
 --- !u!1 &4096101703506552425
