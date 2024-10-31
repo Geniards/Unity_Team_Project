@@ -29,7 +29,6 @@ public class DBScoreNote : Note, IPoolingObj
             upNote.transform.position = transform.position + new Vector3(0, halfHeight, 0);
             Vector3 upNoteEndPoint = new Vector3(endPoint.x, upNote.transform.position.y, endPoint.z);
             upNote.Initialize(upNoteEndPoint, speed, scoreValue, damage);
-
         }
 
         // downNote는 아래쪽에 배치
@@ -91,7 +90,7 @@ public class DBScoreNote : Note, IPoolingObj
 
             if (_upHit && _downHit)
             {
-                DBHit(_decision);
+                DBHit(_decision, button);
             }
 
             upNote.OnHit(decision, E_Boutton.None);
@@ -103,14 +102,14 @@ public class DBScoreNote : Note, IPoolingObj
             
             if (_upHit && _downHit)
             {
-                DBHit(_decision);
+                DBHit(_decision, button);
             }
             
             downNote.OnHit(decision, E_Boutton.None);
         }
     } 
 
-    private void DBHit(E_NoteDecision decision)
+    private void DBHit(E_NoteDecision decision, E_Boutton button)
     {
         Debug.Log("Hit On");
 
@@ -119,8 +118,15 @@ public class DBScoreNote : Note, IPoolingObj
             _isHit = true;
             CalculateScore(decision);
             ShowEffect();
-            Debug.Log("DB노트 사라짐.");
+            
             gameObject.SetActive(false);
+            Debug.Log("DB노트 사라짐.");
+
+            if (button == E_Boutton.F_BOUTTON)
+                upNote.OnHit(decision, E_Boutton.None);
+            else if (button == E_Boutton.J_BOUTTON)
+                downNote.OnHit(decision, E_Boutton.None);
+
             ReturnToPool();
         }
     }
