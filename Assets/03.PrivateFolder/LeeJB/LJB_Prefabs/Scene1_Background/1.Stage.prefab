@@ -4516,7 +4516,7 @@ MonoBehaviour:
     - {fileID: 7662221406873467526, guid: 94ded555c9047ca4cb0ea500983f413e, type: 3}
     _scrollSpeed: 5
     _minSpacing: 8
-    _maxSpacing: 15
+    _maxSpacing: 10
   _parentTransform: {fileID: 3743851884286308796}
   _scrollDelay: 1
   _destroyOffset: 20

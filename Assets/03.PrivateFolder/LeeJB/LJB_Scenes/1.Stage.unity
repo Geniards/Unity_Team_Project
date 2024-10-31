@@ -448,6 +448,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[1]._maxSpacing
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[1]._minSpacing
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[1]._scrollSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[1]._objects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[1]._objects.Array.data[0]
+      value: 
+      objectReference: {fileID: 1545797070315812400, guid: 2d02a4caac5eae044b5e7758a4ce4eb8, type: 3}
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[1]._objects.Array.data[1]
+      value: 
+      objectReference: {fileID: 3501909624386108072, guid: 83afc28f2f47e884eb685cd15a5047b4, type: 3}
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[1]._objects.Array.data[2]
+      value: 
+      objectReference: {fileID: 2451794048556102227, guid: 43f4921e9dfa82843beaf8f33dd517d0, type: 3}
+    - target: {fileID: 3743851883024454001, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[1]._objects.Array.data[3]
+      value: 
+      objectReference: {fileID: 4958954846955049887, guid: 680d2c3de1107da4db94857e98a67e60, type: 3}
+    - target: {fileID: 3743851884320000769, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
+      propertyPath: _objectGroups.Array.data[0]._maxSpacing
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3754440119551605425, guid: 0b701fb6e957689409b313b05e02c83d, type: 3}
       propertyPath: m_RootOrder
       value: 3
