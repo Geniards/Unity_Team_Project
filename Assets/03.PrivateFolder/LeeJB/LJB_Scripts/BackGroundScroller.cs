@@ -41,12 +41,12 @@ public class BackGroundScroller : MonoBehaviour
     }
 
     /// <summary>
-    /// 일정 시간 지연 후 스크롤을 시작하는 코루틴
+    /// 설정한 시간 이후 스크롤 시작하는 코루틴
     /// </summary>
     private IEnumerator StartScrollingAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _isScrolling = true; // 지연 시간이 지난 후 스크롤링 활성화
+        _isScrolling = true; // 시간이 지난 후 스크롤링 활성화
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class BackGroundScroller : MonoBehaviour
             _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime; // 바닥 타일을 왼쪽으로 이동
 
             // 타일이 화면 왼쪽 경계를 벗어나면 오른쪽으로 재배치
-            if (_tiles[index].transform.position.x <= -_tileWidth * 2f) // 타일이 더 왼쪽으로 이동한 후 재배치
+            if (_tiles[index].transform.position.x <= -_tileWidth * 1.5f) // 타일이 더 왼쪽으로 이동한 후 재배치
             {
                 float rightMost = GetRightMostTile(); // 타일의 가장 오른쪽 좌표에 타일 재배치
                 _tiles[index].transform.position = new Vector3(rightMost + _tileWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);
