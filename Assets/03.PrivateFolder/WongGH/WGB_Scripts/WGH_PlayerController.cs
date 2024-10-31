@@ -19,14 +19,16 @@ public class WGH_PlayerController : MonoBehaviour
      
     public float CurHP { get { return _curHp; } private set { _curHp = value; DataManager.Instance.UpdatePlayerHP(_curHp); } }
     public Vector3 PlayerFrontBoss { get; private set; }
+    Vector3 _bossApproachPos;
     Vector3 _startPos;
 
     bool _isFPress;                                    // f 입력 여부
     bool _isJPress;                                    // j 입력 여부
     float _fPressTime;                                 // f 입력 시간을 받을 값
     float _jPressTime;                                 // j 입력 시간을 받을 값
-
+    float _approachDur;
     float _contactDur;
+    int _meleeCount;
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
     public bool IsAir { get; private set; }            // 체공 여부
@@ -36,19 +38,34 @@ public class WGH_PlayerController : MonoBehaviour
         CurHP = DataManager.Instance.PlayerMaxHP;
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
-        _anim = GetComponent<Animator>();  
+        _anim = GetComponent<Animator>();
+        
+
     }
     private void Start()
     {
-        PlayerFrontBoss = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        EventManager.Instance.AddAction(E_Event.BOSSRUSH, ApproachBoss, this);
+        EventManager.Instance.AddAction(E_Event.ENTERCONTACT, ContactBoss, this);
+        EventManager.Instance.AddAction(E_Event.CONTACTEND, ContactEnd, this);
+        _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.5f, -1, 0);
         _startPos = transform.position;
         _note = FindAnyObjectByType<WGH_AreaJudge>().Note;
-        //_contactDur = DataManager.Instance._contactDuration;
+        _approachDur = DataManager.Instance.ApproachDuration; // 임시 0.2
+        _contactDur = DataManager.Instance.ContactDuration; // 임시 2
+        _meleeCount = DataManager.Instance.MeleeCount; // 임시 2
     }
     
     private void Update()
     {
-        ConfrontBoss();
+        
+        if(Input.GetKey(KeyCode.Alpha1))
+        {
+            EventManager.Instance.PlayEvent(E_Event.BOSSRUSH);
+        }
+        else if(Input.GetKey(KeyCode.Alpha2))
+        {
+            EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
+        }
         if (_curHp <= 0 && !IsDied)
         {
             StartCoroutine(Die());
@@ -57,18 +74,55 @@ public class WGH_PlayerController : MonoBehaviour
     /// <summary>
     /// 보스 직면 메서드
     /// </summary>
-    private void ConfrontBoss()
+    private void ApproachBoss()
     {
+        float _time = 0;
+        SetAnim("ConfrontBoss");
         
-        Vector3 bossMeetPos = new Vector3(GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE).x, transform.position.y, 0);
-        if (Input.GetKey(KeyCode.Alpha1))
+        _time += Time.deltaTime;
+        float t = _time / _approachDur;
+        transform.position = Vector3.Lerp(transform.position, _bossApproachPos, t);
+        _rigid.isKinematic = true;
+    }
+
+    /// <summary>
+    /// 보스 직면 끝
+    /// </summary>
+    private void ContactEnd()
+    {
+        if (_meleeCount <= 0)
         {
-            SetAnim("ConfrontBoss");
-            //transform.position = Vector3.MoveTowards(transform.position, DataManager.Instance.ContactPos, 10 * Time.deltaTime);
-            transform.Translate(bossMeetPos * Time.deltaTime);
+            DataManager.Instance.Boss.GetMeleeResult(true);
         }
-        // 기본 애니메이션을 변경할 수 있다면 confrontboss를 default로 설정
-        // 이후 f,j입력시 난투하도록
+        else
+        {
+            DataManager.Instance.Boss.GetMeleeResult(false);
+        }
+
+        float _time = 0;
+        SetAnim("Run");
+
+        _time += Time.deltaTime;
+        float t = _time / _approachDur;
+        transform.position = Vector3.Lerp(transform.position, _startPos, t);
+        _rigid.isKinematic = false;
+    }
+    /// <summary>
+    /// 보스 난투 메서드
+    /// </summary>
+    private void ContactBoss()
+    {
+        float _contactTime = 0;
+        if (_contactTime < _contactDur)
+        {
+            // 난투
+            if(Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.J))
+            {
+                _meleeCount--;
+                SetAnim("GroundAttack");
+            }
+        }
+        _contactTime += Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
