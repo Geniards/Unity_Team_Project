@@ -4,10 +4,6 @@ using UnityEngine;
 public class BossController : MonoBehaviour
 {
     [SerializeField] private BossStat _stat = new BossStat();
-    [SerializeField] private BossMovement _movement = null;
-
-    private E_SpawnerPosY _curPos = E_SpawnerPosY.NONE;
-    private E_SpawnerPosY _nextPos = E_SpawnerPosY.NONE;
 
     public IState CurrentState { get; private set; }
     public BossIntoField IntoField;
@@ -22,20 +18,18 @@ public class BossController : MonoBehaviour
 
     public BossStat Stat => _stat;
 
-    private void Start() // 임시
-    {
-        Initialize();
-    }
-
     public void Initialize()
     {
         InitStates();
         SetInitState(IntoField);
         RegistMyData();
+        this.transform.position 
+            = GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
     }
 
     private void RegistMyData()
     {
+        DataManager.Instance.SetBossData(this);
         DataManager.Instance.SetBossHP(_stat.Hp);
     }
 
@@ -70,13 +64,21 @@ public class BossController : MonoBehaviour
         Destroy(this.gameObject); // 임시
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public float OnDamage(float damage)
     {
-        if(collision.collider.TryGetComponent<Note>(out Note note))
-        {
-            float damageValue = note.GetDamage();
-            _stat.AddHp(damageValue);
-        }
+        float currentHp = _stat.AddHp(damage * -1);
+        if (currentHp <= 0)
+            { SetState(RushReadyState); }
+
+        return currentHp;
+    }
+
+    public void GetMeleeResult(bool result)
+    {
+        if (result == true)
+            SetState(DeadState);
+        else
+            SetState(RecoverState);
     }
 
     private void Update()

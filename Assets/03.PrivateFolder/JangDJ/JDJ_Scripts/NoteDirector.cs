@@ -19,14 +19,6 @@ public class NoteDirector : MonoBehaviour
 
     private bool _isSkipSpawn = false;
 
-    /// <summary>
-    /// 다음 박자부터 스폰을 중단합니다.
-    /// </summary>
-    public void SetSpawnSkip(bool isSkip)
-    {
-        _isSkipSpawn = isSkip;
-    }
-
     public Vector3 GetStartSpawnPoses(E_SpawnerPosY posY)
     {
         return _posController.GetSpawnerPos(E_SpawnerPosX.START, posY);
@@ -50,6 +42,8 @@ public class NoteDirector : MonoBehaviour
         GameManager.Director = this;
         _bpm = DataManager.Instance.BPM;
         _noteSpeed = DataManager.Instance.GameSpeed;
+        EventManager.Instance.AddAction(E_Event.SPAWN_STOP, () => { _isSkipSpawn = true; }, this);
+        EventManager.Instance.AddAction(E_Event.SPAWN_START, () => { _isSkipSpawn = false; }, this);
     }
 
     public void Initailize()

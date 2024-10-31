@@ -158,6 +158,9 @@ public class BossRushReady : BossState, IState
 
     public void Enter()
     {
+        EventManager.Instance.PlayEvent(E_Event.NOTE_CLEAR);
+        EventManager.Instance.PlayEvent(E_Event.SPAWN_STOP);
+        
         _time = 0;
         _t = 0;
         _duration = 3f;
@@ -166,6 +169,7 @@ public class BossRushReady : BossState, IState
 
     public void Exit()
     {
+
     }
 
     public void Update()
@@ -201,22 +205,25 @@ public class BossRush : BossState, IState
 
     public void Enter()
     {
+        EventManager.Instance.PlayEvent(E_Event.BOSSRUSH);
+        SoundManager.Instance.FadeBGM(false, 2f, 0.01f);
         _time = 0;
         _t = 0;
-        _duration = 0.2f;
+        _duration = DataManager.Instance.ContactDuration;
         _startPosition = _boss.transform.position;
-        _destination = new Vector3(-5, 0, 0);
+        _destination = DataManager.Instance.ContactPos;
     }
 
     public void Exit()
     {
+        
     }
 
     public void Update()
     {
         if (_time >= _duration)
         {
-            _boss.transform.position = _destination; 
+            _boss.transform.position = _destination;
             _boss.SetState(_boss.ClosedPlayerState);
             return;
         }
@@ -250,6 +257,7 @@ public class BossClosedPlayer : BossState, IState
 
     public void Enter()
     {
+        EventManager.Instance.PlayEvent(E_Event.ENTERCONTACT);
         _timer = 0;
         _initPos = _boss.transform.position;
         _cam.Move(_initPos + Vector3.forward * -10, 0.07f);
@@ -261,7 +269,9 @@ public class BossClosedPlayer : BossState, IState
     {
         _cam.Move(new Vector3(0, 1, -10f), 0.07f);
         _cam.ZoomIn(0.1f, 5f);
-        
+        SoundManager.Instance.FadeBGM(true, 2f);
+        EventManager.Instance.PlayEvent(E_Event.SPAWN_START);
+        EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
     }
 
     public void Update()

@@ -14,6 +14,9 @@ public class DataManager : MonoBehaviour, IManager
 
     public Vector3 ContactPos => GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
 
+    private BossController _boss;
+    public BossController Boss => _boss;
+
     public void Init()
     {
         _instance = this;
@@ -24,6 +27,8 @@ public class DataManager : MonoBehaviour, IManager
         SetSFXVolume(0.2f);
         SetStageNumber(1);
         SetBGMClipLength(0);
+        SetContactDuration(2f);
+        SetMeleeCount(2);
     }
 
     [SerializeField, Header("분당 Beat")]
@@ -37,6 +42,19 @@ public class DataManager : MonoBehaviour, IManager
     private bool _isPlaying = false;
     public bool IsPlaying => _isPlaying;
 
+    private int _meleeCount;
+    public int MeleeCount => _meleeCount;
+
+    public void SetBossData(BossController boss)
+    {
+        this._boss = boss;
+    }
+
+    private float _contactDuration;
+    public float ContactDuration => _contactDuration;
+
+    public float ApproachDuration => 0.2f;
+    
     // 볼륨을 서서히 조절하는 비율
     public float SoundFadeRate => 0.2f;
     // 한계값에 도달하는 시간
@@ -55,8 +73,21 @@ public class DataManager : MonoBehaviour, IManager
     public float StageProgress => _stageData.StageProgress; // 0 ~ 1
     // 해당 값 변경시 프로그래스 바의 SetValue 값을 전달시킨다.
     public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
-    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 12f;
+    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 6;
     //120bpm 일경우 음원종료 12 초전에 스폰중단
+
+    public void SetContactDuration(float duration)
+    {
+        this._contactDuration = duration;
+    }
+
+    /// <summary>
+    /// 기획팀 함수 절대 건들지 마시오.
+    /// </summary>
+    public void SetMeleeCount(int count)
+    {
+        this._meleeCount = count;
+    }
 
     public void SetPlayState(bool value) { _isPlaying = value; }
     public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
@@ -106,8 +137,3 @@ public struct GameSettingData
     public float SFXVolume;
     public float GameSpeed;
 }
-
-
-
-
-

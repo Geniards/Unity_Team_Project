@@ -60,15 +60,29 @@ public class SoundManager : MonoBehaviour, IManager
     /// 서서히 음원볼륨을 조절합니다.
     /// </summary>
     /// <param name="value">true = fadeIn 으로 최대 볼륨까지 서서히 올림</param>
-    public void FadeBGM(bool value,float duration = 1)
+    public void FadeBGM(bool value,float duration = 1, float targetVolume = float.MaxValue)
     {
         if (_fadeRoutine != null)
             StopCoroutine(_fadeRoutine);
 
+        float volume = value == true ? DataManager.Instance.BGMVolume : 0;
+
+        if(targetVolume != float.MaxValue)
+        {
+            volume = targetVolume;
+        }
+
+
         if (value == true)
-            _fadeRoutine = StartCoroutine(FadeInBGMVolume(duration));
+        {
+            _fadeRoutine = StartCoroutine(FadeInBGMVolume(duration, volume));
+        }
+            
         else
-            _fadeRoutine = StartCoroutine(FadeOutBGMVolume(duration));
+        {
+            _fadeRoutine = StartCoroutine(FadeOutBGMVolume(duration, volume));
+        }
+            
     }
      
      public void SetBGMVolume(float value)
@@ -77,15 +91,14 @@ public class SoundManager : MonoBehaviour, IManager
         DataManager.Instance.SetBGMVolume(value);
      }
 
-    private IEnumerator FadeInBGMVolume(float duration)
+    private IEnumerator FadeInBGMVolume(float duration,float targetVolume)
     {
-        float target = DataManager.Instance.BGMVolume;
         float timer = 0;
-        float amount = target / duration;
+        float amount = targetVolume / duration;
 
         while (true)
         {
-            if (_bgmSource.volume >= target)
+            if (_bgmSource.volume >= targetVolume)
                 break;
 
             _bgmSource.volume += amount * Time.deltaTime;
@@ -93,25 +106,23 @@ public class SoundManager : MonoBehaviour, IManager
             yield return null;
         }
 
-        _bgmSource.volume = target;
+        _bgmSource.volume = targetVolume;
     }
 
-    private IEnumerator FadeOutBGMVolume(float duration)
+    private IEnumerator FadeOutBGMVolume(float duration, float targetVolume)
     {
-        float target = 0;
-        float timer = 0;
         float amount = _bgmSource.volume / duration;
 
         while (true)
         {
-            if (_bgmSource.volume <= target)
+            if (_bgmSource.volume <= targetVolume)
                 break;
 
             _bgmSource.volume -= amount * Time.deltaTime;
             yield return null;
         }
 
-        _bgmSource.volume = target;
+        _bgmSource.volume = targetVolume;
     }
 
     private IEnumerator SirenRoutine(float length)
@@ -125,14 +136,15 @@ public class SoundManager : MonoBehaviour, IManager
         {
             if (count >= DataManager.Instance.SirenCount)
                 break;
-            else
-                
-
+            
             if(timer <= 0)
             {
                 timer = length;
                 count++;
                 PlaySFX(E_SFX.SIREN);
+
+                if (count == DataManager.Instance.SirenCount - 1)
+                    GameManager.Instance.CreateBoss();
             }
 
             timer -= Time.deltaTime;
@@ -147,9 +159,8 @@ public class SoundManager : MonoBehaviour, IManager
 
         yield return SirenRoutine(oneLoopLength);
 
-        FadeBGM(true, 3f);
+        FadeBGM(true, 1.5f);
 
-        GameManager.Director.SetSpawnSkip(false);
         PlayBGM(_currentStageBgm + 1);
         _bgmSource.loop = true;
     }

@@ -63,7 +63,7 @@ public abstract class Note : MonoBehaviour
 
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                //this.gameObject.SetActive(false);
+                GameManager.Mediator.Unregister(this);
                 ReturnToPool();
                 yield break;
             }
