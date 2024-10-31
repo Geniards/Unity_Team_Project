@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MySc : MonoBehaviour
+public class PopupTrigger : MonoBehaviour
 {
-    public void OnClickMyButton()
+    public void OnClickTrigger()
     {
-        UI_Popup.instance.OpenPopup
+        PopupManager.Instance.OpenPopup
         (
         () => {Debug.Log("Close!!");},
         () => {Debug.Log("Tutorial!!");},
