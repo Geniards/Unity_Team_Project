@@ -65,7 +65,7 @@ public class DataManager : MonoBehaviour, IManager
     public float SoundTotalFadeTime => 1f;
     // 현재 재생되고 있는 음원의 총 길이
     public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
-    public int SirenCount => 3;
+    public int SirenCount => 4;
 
     public int StageNumber => _stageData.StageNumber;
 

@@ -43,7 +43,7 @@ public class BossController : MonoBehaviour
         MoveState = new BossMove(this);
         RushState = new BossRush(this);
         RushReadyState = new BossRushReady(this);
-        ClosedPlayerState = new BossClosedPlayer(this,5);
+        ClosedPlayerState = new BossClosedPlayer(this, DataManager.Instance.ContactDuration);
         DeadState = new BossDead(this);
         RecoverState = new BossRecover(this);
 

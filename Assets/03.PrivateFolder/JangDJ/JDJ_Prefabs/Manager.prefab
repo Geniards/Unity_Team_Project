@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.09
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -172,7 +172,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.17
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -366,7 +366,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bpm: 60
   _gameSpeed: 8
-  SirenCount: 5
 --- !u!114 &6892206162165546791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,7 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabs:
-  - TargetPool: 1
+  - TargetPool: 0
     TargetPrefab: {fileID: 5834100206960461235, guid: 7fd8510fa7c854d40a582d59e7a80726, type: 3}
   - TargetPool: 6
     TargetPrefab: {fileID: 7180226562935275493, guid: 6d31fe1e5322e404190d2b699fb80813, type: 3}
@@ -420,6 +419,10 @@ MonoBehaviour:
     _sfxList:
     - _sfxType: 0
       _sfx: {fileID: 8300000, guid: 1d3d50b421223884690cb2677af9de3b, type: 3}
+    - _sfxType: 4
+      _sfx: {fileID: 8300000, guid: 713aeabf8030a01499e3aa712f0ffdd7, type: 3}
+    - _sfxType: 5
+      _sfx: {fileID: 8300000, guid: 286bbd9e2bd32b24b9d655062229d3f6, type: 3}
 --- !u!114 &-2992256843229491813
 MonoBehaviour:
   m_ObjectHideFlags: 0

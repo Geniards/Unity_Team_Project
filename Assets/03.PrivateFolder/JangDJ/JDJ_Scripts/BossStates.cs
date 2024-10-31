@@ -202,6 +202,7 @@ public class BossRush : BossState, IState
     private float _duration;
     private Vector3 _startPosition;
     private Vector3 _destination;
+    private Vector3 _offset = Vector3.right * 0.3f;
 
     public void Enter()
     {
@@ -211,7 +212,7 @@ public class BossRush : BossState, IState
         _t = 0;
         _duration = DataManager.Instance.ApproachDuration;
         _startPosition = _boss.transform.position;
-        _destination = DataManager.Instance.ContactPos;
+        _destination = DataManager.Instance.ContactPos + _offset;
     }
 
     public void Exit()
@@ -223,6 +224,7 @@ public class BossRush : BossState, IState
         if (_time >= _duration)
         {
             _boss.transform.position = _destination;
+            SoundManager.Instance.PlaySFX(E_SFX.ENTER_CONTACT);
             _boss.SetState(_boss.ClosedPlayerState);
             return;
         }
@@ -268,6 +270,7 @@ public class BossClosedPlayer : BossState, IState
     {
         _cam.Move(new Vector3(0, 1, -10f), 0.07f);
         _cam.ZoomIn(0.1f, 5f);
+        SoundManager.Instance.PlaySFX(E_SFX.EXIT_CONTACT);
         SoundManager.Instance.FadeBGM(true, 2f);
     }
 

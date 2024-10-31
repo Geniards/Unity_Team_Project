@@ -240,11 +240,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476704526975109616, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.35
+      value: -4.94
       objectReference: {fileID: 0}
     - target: {fileID: 7476704526975109616, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.47
+      value: -1.59
       objectReference: {fileID: 0}
     - target: {fileID: 7476704526975109616, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -350,11 +350,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 000473fd282bcab40b5de13efc607e8a, type: 3}
---- !u!82 &577759541 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1083170230, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
-  m_PrefabInstance: {fileID: 1170183367}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &681286628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6613640825446562104, guid: 73dfa0815f4ef5d42b223a6abad1b070, type: 3}
@@ -438,14 +433,6 @@ PrefabInstance:
       propertyPath: _progressBar
       value: 
       objectReference: {fileID: 681286628}
-    - target: {fileID: 185137565, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
-      propertyPath: m_Volume
-      value: 0.09
-      objectReference: {fileID: 0}
-    - target: {fileID: 1083170230, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
-      propertyPath: m_Volume
-      value: 0.09
-      objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -490,18 +477,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
-      propertyPath: _prefabs.Array.data[0].TargetPool
-      value: 0
+    - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _sfxList._sfxList.Array.data[1]._sfxType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
-      propertyPath: _bgmSource
-      value: 
-      objectReference: {fileID: 577759541}
-    - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
-      propertyPath: _sfxSource
-      value: 
-      objectReference: {fileID: 1881667612}
+      propertyPath: _sfxList._sfxList.Array.data[2]._sfxType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546811, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_Name
       value: Manager
@@ -646,11 +629,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1881667612 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 185137565, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
-  m_PrefabInstance: {fileID: 1170183367}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1991594505
 PrefabInstance:
   m_ObjectHideFlags: 0
