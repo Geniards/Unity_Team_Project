@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 7476704526975109616}
   - component: {fileID: 7476704526975109623}
   - component: {fileID: 7476704526975109622}
-  - component: {fileID: 4958838427282727952}
   - component: {fileID: 3277397374000381459}
   - component: {fileID: 3781673102463711252}
+  - component: {fileID: 209978658}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -108,7 +108,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -500
   m_Sprite: {fileID: 4312510042007804440, guid: ae72133dacba6ec4eb33ecde48f50e56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -141,22 +141,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!70 &4958838427282727952
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7476704526975109621}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.5625, y: 1.8125}
-  m_Direction: 0
 --- !u!50 &3277397374000381459
 Rigidbody2D:
   serializedVersion: 4
@@ -197,3 +181,19 @@ MonoBehaviour:
   _invincivilityTime: 1
   _rigid: {fileID: 0}
   _anim: {fileID: 0}
+--- !u!70 &209978658
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7476704526975109621}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.61938, y: 0.9865755}
+  m_Size: {x: 1.6460171, y: 1.8979671}
+  m_Direction: 0
