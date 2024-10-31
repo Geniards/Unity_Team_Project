@@ -19,13 +19,15 @@ public class WGH_PlayerController : MonoBehaviour
      
     public float CurHP { get { return _curHp; } private set { _curHp = value; DataManager.Instance.UpdatePlayerHP(_curHp); } }
     public Vector3 PlayerFrontBoss { get; private set; }
+    Vector3 _bossApproachPos;
     Vector3 _startPos;
 
     bool _isFPress;                                    // f 입력 여부
     bool _isJPress;                                    // j 입력 여부
     float _fPressTime;                                 // f 입력 시간을 받을 값
     float _jPressTime;                                 // j 입력 시간을 받을 값
-
+    float _time;
+    float _approachDur;
     float _contactDur;
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
@@ -36,19 +38,25 @@ public class WGH_PlayerController : MonoBehaviour
         CurHP = DataManager.Instance.PlayerMaxHP;
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
-        _anim = GetComponent<Animator>();  
+        _anim = GetComponent<Animator>();
+        
+
     }
     private void Start()
     {
-        PlayerFrontBoss = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        EventManager.Instance.AddAction(E_Event.BOSSRUSH, ApproachBoss, this);
+        _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.5f, -1, 0);
         _startPos = transform.position;
         _note = FindAnyObjectByType<WGH_AreaJudge>().Note;
-        //_contactDur = DataManager.Instance._contactDuration;
+        _approachDur = DataManager.Instance.ApproachDuration;
+        _contactDur = DataManager.Instance.ContactDuration;
     }
     
     private void Update()
     {
-        ConfrontBoss();
+        
+        if(Input.GetKey(KeyCode.Alpha1))
+        ApproachBoss();
         if (_curHp <= 0 && !IsDied)
         {
             StartCoroutine(Die());
@@ -57,18 +65,13 @@ public class WGH_PlayerController : MonoBehaviour
     /// <summary>
     /// 보스 직면 메서드
     /// </summary>
-    private void ConfrontBoss()
+    private void ApproachBoss()
     {
-        
-        Vector3 bossMeetPos = new Vector3(GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE).x, transform.position.y, 0);
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            SetAnim("ConfrontBoss");
-            //transform.position = Vector3.MoveTowards(transform.position, DataManager.Instance.ContactPos, 10 * Time.deltaTime);
-            transform.Translate(bossMeetPos * Time.deltaTime);
-        }
-        // 기본 애니메이션을 변경할 수 있다면 confrontboss를 default로 설정
-        // 이후 f,j입력시 난투하도록
+        SetAnim("ConfrontBoss");
+        _time += Time.deltaTime;
+        float t = _time / _approachDur;
+        transform.position = Vector3.Lerp(transform.position, _bossApproachPos, t);
+        _rigid.isKinematic = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
