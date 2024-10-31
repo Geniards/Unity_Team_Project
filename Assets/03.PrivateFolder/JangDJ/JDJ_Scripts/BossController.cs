@@ -29,6 +29,7 @@ public class BossController : MonoBehaviour
 
     private void RegistMyData()
     {
+        DataManager.Instance.SetBossData(this);
         DataManager.Instance.SetBossHP(_stat.Hp);
     }
 
@@ -63,13 +64,21 @@ public class BossController : MonoBehaviour
         Destroy(this.gameObject); // 임시
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public float OnDamage(float damage)
     {
-        if(collision.collider.TryGetComponent<Note>(out Note note))
-        {
-            float damageValue = note.GetDamage();
-            _stat.AddHp(damageValue);
-        }
+        float currentHp = _stat.AddHp(damage * -1);
+        if (currentHp <= 0)
+            { SetState(RushReadyState); }
+
+        return currentHp;
+    }
+
+    public void GetMeleeResult(bool result)
+    {
+        if (result == true)
+            SetState(DeadState);
+        else
+            SetState(RecoverState);
     }
 
     private void Update()
