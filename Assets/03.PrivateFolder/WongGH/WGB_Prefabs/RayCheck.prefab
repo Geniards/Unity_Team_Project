@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f966304f7385e4190debd477b5eb26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _greatDistance: 0.4
-  _perfectDistance: 0.2
+  _greatDistance: 0.45
+  _perfectDistance: 0.21
   _judgeTime: 0.1
