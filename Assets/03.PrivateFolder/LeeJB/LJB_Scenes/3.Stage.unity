@@ -1075,6 +1075,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4096101703669527277, guid: bc09fd338be31b641a574a0cb0ba9972, type: 3}
+      propertyPath: _objectGroups.Array.data[0]._maxSpacing
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4096101703669527277, guid: bc09fd338be31b641a574a0cb0ba9972, type: 3}
+      propertyPath: _objectGroups.Array.data[0]._minSpacing
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4140757158100650592, guid: bc09fd338be31b641a574a0cb0ba9972, type: 3}
       propertyPath: m_Name
       value: 3.Stage
