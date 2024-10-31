@@ -4,6 +4,8 @@ using UnityEngine;
 public class BossController : MonoBehaviour
 {
     [SerializeField] private BossStat _stat = new BossStat();
+    [SerializeField] private BossAnimator _anim;
+    public BossAnimator Anim => _anim;
 
     public IState CurrentState { get; private set; }
     public BossIntoField IntoField;

@@ -27,7 +27,7 @@ public class DataManager : MonoBehaviour, IManager
         SetSFXVolume(0.2f);
         SetStageNumber(1);
         SetBGMClipLength(0);
-        SetContactDuration(2f);
+        SetContactDuration(4f);
         SetMeleeCount(2);
 
         _settingData.PlayerMaxHP = 5f;
