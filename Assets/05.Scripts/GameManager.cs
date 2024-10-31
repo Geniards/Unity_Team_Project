@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(_instance.gameObject);
 
             _instance.InitGameManager();
-
-            
         }
     }
 

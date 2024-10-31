@@ -21,7 +21,7 @@ public class BackGroundScroller : MonoBehaviour
     {
         if (_isScrolling)
         {
-            MoveBackground();
+            MoveFloor(); // MoveFloor 메서드를 호출하여 바닥을 스크롤
         }
     }
 
@@ -30,38 +30,36 @@ public class BackGroundScroller : MonoBehaviour
     /// </summary>
     private void InitializeTiles()
     {
-        float cumulativeWidth = 0; // 위치 누적값
-
         for (int index = 0; index < _tiles.Length; index++)
         {
-            // 현재 타일 위치를 설정하면서 누적 너비 값을 사용
-            _tiles[index].transform.position = new Vector3(cumulativeWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);
-
-            // 누적 너비를 타일의 너비만큼 더해 다음 타일 위치를 설정
-            cumulativeWidth += _tileWidth;
+            _tiles[index].transform.position = new Vector3(
+                _tiles[index].transform.position.x,
+                _tiles[index].transform.position.y,
+                _tiles[index].transform.position.z
+            );
         }
     }
 
     /// <summary>
-    /// 일정 시간 지연 후 스크롤을 시작하는 코루틴
+    /// 설정한 시간 이후 스크롤 시작하는 코루틴
     /// </summary>
     private IEnumerator StartScrollingAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _isScrolling = true; // 지연 시간이 지난 후 스크롤링 활성화
+        _isScrolling = true; // 시간이 지난 후 스크롤링 활성화
     }
 
     /// <summary>
-    /// 백그라운드 이동 메서드
+    /// 바닥 타일 이동 메서드
     /// </summary>
-    private void MoveBackground()
+    private void MoveFloor()
     {
         for (int index = 0; index < _tiles.Length; index++)
         {
-            _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime; // 백그라운드 타일을 왼쪽으로 이동
+            _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime; // 바닥 타일을 왼쪽으로 이동
 
-            // 타일 넓이만큼 이동 후 재배치
-            if (_tiles[index].transform.position.x <= -_tileWidth) // 타일의 넓이만큼 이동하였을 경우
+            // 타일이 화면 왼쪽 경계를 벗어나면 오른쪽으로 재배치
+            if (_tiles[index].transform.position.x <= -_tileWidth * 1.5f) // 타일이 더 왼쪽으로 이동한 후 재배치
             {
                 float rightMost = GetRightMostTile(); // 타일의 가장 오른쪽 좌표에 타일 재배치
                 _tiles[index].transform.position = new Vector3(rightMost + _tileWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);
