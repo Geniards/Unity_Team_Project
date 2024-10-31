@@ -37,16 +37,6 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    private void Start()
-    {
-        SceneManager.sceneLoaded += scene =>
-        {
-            UIManager.Instance?.BindUIElements();
-            UIManager.Instance?.SetPlayerHPValue(DataManager.Instance.PlayerHp);
-            UIManager.Instance?.SetProgressValue(DataManager.Instance.StageProgress);
-        };
-    }
-
     private void InitGameManager()
     {
         InitializeManagers();
@@ -121,5 +111,17 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) // 임시
             StartStage(E_StageBGM.TEST_NORMAL_01);
     }
+
+    /*
+      private void Start()
+    {
+        SceneManager.sceneLoaded += scene =>
+        {
+            UIManager.Instance?.BindUIElements();
+            UIManager.Instance?.SetPlayerHPValue(DataManager.Instance.PlayerHp);
+            UIManager.Instance?.SetProgressValue(DataManager.Instance.StageProgress);
+        };
+    }
+    */
 
 }

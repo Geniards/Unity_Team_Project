@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class LoadSceneTester : MonoBehaviour
+public class Scene1to3 : MonoBehaviour
 {
     void Start()
     {

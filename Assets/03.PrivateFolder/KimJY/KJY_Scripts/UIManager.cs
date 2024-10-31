@@ -54,7 +54,6 @@ public class UIManager : MonoBehaviour, IManager
     }
 
 
-
     /*
         public void Init()
     {
@@ -92,25 +91,6 @@ public class UIManager : MonoBehaviour, IManager
         string[] names = Enum.GetNames(type);
     }
 
-    [SerializeField] private GameObject _progressBar;
-    [SerializeField] private GameObject _hpBar;
-
-
-    public void SetProgressValue(float value)
-    {
-        if (_progressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        {
-            ui.SetValue(value);
-        }
-    }
-
-    public void SetHPValue(float value)
-    {
-        if (_hpBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        {
-            ui.SetValue(value);
-        }
-    }
     */
 
 }
