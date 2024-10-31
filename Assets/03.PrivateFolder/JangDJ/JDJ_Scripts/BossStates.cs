@@ -269,14 +269,13 @@ public class BossClosedPlayer : BossState, IState
         _cam.Move(new Vector3(0, 1, -10f), 0.07f);
         _cam.ZoomIn(0.1f, 5f);
         SoundManager.Instance.FadeBGM(true, 2f);
-        EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
     }
 
     public void Update()
     {
         if(_timer >= _duration)
         {
-            _boss.SetState(_boss.MoveState);
+            EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
             return;
         }
 
