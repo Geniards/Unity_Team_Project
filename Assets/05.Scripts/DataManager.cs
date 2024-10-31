@@ -63,9 +63,8 @@ public class DataManager : MonoBehaviour, IManager
     
     public void SetPlayerHP(float value) 
     {
-        UIManager.Instance.SetHPValue(_stageData.PlayerHp);
-        //_stageData.PlayerHp = value; 
-        //ui.playerhpbar.setvalue(value);
+        _stageData.PlayerHp = value;
+        UIManager.Instance.SetPlayerHPValue(value);
     }
     public void SetBossHP(float value) { _stageData.BossHp = value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
@@ -74,10 +73,12 @@ public class DataManager : MonoBehaviour, IManager
     public void SetProgress(float current) 
     { 
         if(CurrentBGMClipLength == 0)
-        { throw new System.Exception("프로그래스 동기화 순서 문제발생"); }
+        { 
+            throw new System.Exception("프로그래스 동기화 순서 문제발생"); 
+        }
 
         _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
-        UIManager.Instance.SetProgressValue(_stageData.StageProgress);
+        UIManager.Instance?.SetProgressValue(_stageData.StageProgress);
 
         if (_stageData.StageProgress >= 1)
             GameManager.Instance.StopProgressTimer();

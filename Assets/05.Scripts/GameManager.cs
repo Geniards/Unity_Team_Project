@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -26,7 +28,6 @@ public class GameManager : MonoBehaviour
 
             _instance.InitGameManager();
 
-            
         }
     }
 
@@ -34,6 +35,16 @@ public class GameManager : MonoBehaviour
     {
         if (_instance != this)
             Destroy(this.gameObject);
+    }
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += scene =>
+        {
+            UIManager.Instance?.BindUIElements();
+            UIManager.Instance?.SetPlayerHPValue(DataManager.Instance.PlayerHp);
+            UIManager.Instance?.SetProgressValue(DataManager.Instance.StageProgress);
+        };
     }
 
     private void InitGameManager()

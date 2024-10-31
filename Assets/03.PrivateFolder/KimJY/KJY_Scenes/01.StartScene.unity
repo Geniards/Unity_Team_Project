@@ -494,11 +494,11 @@ PrefabInstance:
     - target: {fileID: -2992256843229491813, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _hpBar
       value: 
-      objectReference: {fileID: 3928517979287154535, guid: 9b1c1a2668ba2c04f97904e35d688046, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: -2992256843229491813, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _progressBar
       value: 
-      objectReference: {fileID: 1632905209828216732, guid: f61740c824e2f2240b8a0bb6046e793c, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_RootOrder
       value: 5
