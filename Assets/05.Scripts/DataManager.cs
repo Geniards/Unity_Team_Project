@@ -29,6 +29,8 @@ public class DataManager : MonoBehaviour, IManager
         SetBGMClipLength(0);
         SetContactDuration(2f);
         SetMeleeCount(2);
+
+        _settingData.PlayerMaxHP = 5f;
     }
 
     [SerializeField, Header("분당 Beat")]
@@ -44,6 +46,8 @@ public class DataManager : MonoBehaviour, IManager
 
     private int _meleeCount;
     public int MeleeCount => _meleeCount;
+
+    public float PlayerMaxHP => _settingData.PlayerMaxHP;
 
     public void SetBossData(BossController boss)
     {
@@ -69,7 +73,6 @@ public class DataManager : MonoBehaviour, IManager
     public float BGMVolume => _settingData.BGMVolume;
     public float SFXVolume => _settingData.SFXVolume;
 
-    public float PlayerHp => _stageData.PlayerHp;
     public float StageProgress => _stageData.StageProgress; // 0 ~ 1
     // 해당 값 변경시 프로그래스 바의 SetValue 값을 전달시킨다.
     public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
@@ -92,11 +95,10 @@ public class DataManager : MonoBehaviour, IManager
     public void SetPlayState(bool value) { _isPlaying = value; }
     public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
     
-    public void SetPlayerHP(float value) 
+    public void UpdatePlayerHP(float value) 
     {
-        UIManager.Instance.SetHPValue(_stageData.PlayerHp);
-        //_stageData.PlayerHp = value; 
-        //ui.playerhpbar.setvalue(value);
+        float ratio = value / _settingData.PlayerMaxHP;
+        UIManager.Instance.SetHPValue(ratio);
     }
     public void SetBossHP(float value) { _stageData.BossHp = value; }
     public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
@@ -120,7 +122,6 @@ public class DataManager : MonoBehaviour, IManager
 
 public struct StageData
 {
-    public float PlayerHp;
     public float BossHp;
     public E_NoteDecision Judge;
     public float StageProgress;
@@ -136,4 +137,5 @@ public struct GameSettingData
     public float BGMVolume;
     public float SFXVolume;
     public float GameSpeed;
+    public float PlayerMaxHP;
 }

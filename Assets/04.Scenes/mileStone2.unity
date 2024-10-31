@@ -418,11 +418,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6613640825803915907, guid: 73dfa0815f4ef5d42b223a6abad1b070, type: 3}
   m_PrefabInstance: {fileID: 5370774764139055773}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1123589407 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6613640825446562104, guid: 73dfa0815f4ef5d42b223a6abad1b070, type: 3}
-  m_PrefabInstance: {fileID: 5370774764139055773}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1170183367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -437,7 +432,7 @@ PrefabInstance:
     - target: {fileID: -2992256843229491813, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _progressBar
       value: 
-      objectReference: {fileID: 1123589407}
+      objectReference: {fileID: 681286628}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -209,7 +209,7 @@ public class BossRush : BossState, IState
         SoundManager.Instance.FadeBGM(false, 2f, 0.01f);
         _time = 0;
         _t = 0;
-        _duration = DataManager.Instance.ContactDuration;
+        _duration = DataManager.Instance.ApproachDuration;
         _startPosition = _boss.transform.position;
         _destination = DataManager.Instance.ContactPos;
     }

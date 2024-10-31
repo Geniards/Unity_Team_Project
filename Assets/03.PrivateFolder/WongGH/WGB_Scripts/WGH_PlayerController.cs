@@ -7,8 +7,7 @@ using UnityEngine;
 public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
-    [SerializeField, Range(0, 0.1f)] float _inAirTime;  // 체공시간                         
-    [SerializeField] float _maxHp;
+    [SerializeField, Range(0, 0.1f)] float _inAirTime;  // 체공시간        
     [SerializeField] float _curHp;
     [SerializeField] float _clikerTime;                 // 깜빡임 속도
     [SerializeField] float _invincivilityTime;          // 무적시간
@@ -18,7 +17,7 @@ public class WGH_PlayerController : MonoBehaviour
     [SerializeField] Animator _anim;
     [SerializeField] Note _note;
      
-
+    public float CurHP { get { return _curHp; } private set { _curHp = value; DataManager.Instance.UpdatePlayerHP(_curHp); } }
     public Vector3 PlayerFrontBoss { get; private set; }
     Vector3 _startPos;
 
@@ -34,7 +33,7 @@ public class WGH_PlayerController : MonoBehaviour
     
     private void Awake()
     {
-        _curHp = _maxHp;
+        CurHP = DataManager.Instance.PlayerMaxHP;
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();  
@@ -78,7 +77,7 @@ public class WGH_PlayerController : MonoBehaviour
         // if(collision.collider.tag == "Ground")
         //{
         
-        if(collision.collider.TryGetComponent(out BoxCollider2D boxColllider))
+        if(collision.collider.TryGetComponent(out BoxCollider2D boxColllider)) // 정빈님 바닥의 태그를 잡던지 해서
         {
             IsAir = false;
         }
@@ -92,7 +91,7 @@ public class WGH_PlayerController : MonoBehaviour
 
             float _dmg = note.GetDamage();
             // TODO : 추후 수정예정
-            _curHp -= 1; 
+            CurHP -= 1;
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
         }
