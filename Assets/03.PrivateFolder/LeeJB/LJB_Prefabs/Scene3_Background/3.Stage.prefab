@@ -368,8 +368,8 @@ MonoBehaviour:
     - {fileID: 5362489451434644636, guid: 1468198b28d6fd74bbdf83ff02488b89, type: 3}
     - {fileID: 3839750702973866516, guid: 457b4c998170ba44cb5823344ef3c748, type: 3}
     _scrollSpeed: 5
-    _minSpacing: 5
-    _maxSpacing: 10
+    _minSpacing: 8
+    _maxSpacing: 8
   _parentTransform: {fileID: 4096101705095896374}
   _scrollDelay: 1
   _destroyOffset: 20
