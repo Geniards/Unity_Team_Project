@@ -53,14 +53,8 @@ public class SwordWaveNote : Note
         // 보스 위치에 도달하면 타격 처리
         if (Vector3.Distance(transform.position, bossTransform.position) < 0.1f)
         {
-            HitBoss();
+            gameObject.SetActive(false);
         }
-    }
-
-    private void HitBoss()
-    {
-        Debug.Log("보스에게 데미지를 입혔습니다!");
-        gameObject.SetActive(false);
     }
 
     public override float GetDamage()
