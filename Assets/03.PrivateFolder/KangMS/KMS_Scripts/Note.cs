@@ -96,9 +96,11 @@ public abstract class Note : MonoBehaviour
     /// <summary>
     /// Damage 전달 메서드
     /// </summary>
-    /// <returns></returns>
     public abstract float GetDamage();
-    
+
+    public void SetDamage(float damage) { this.damage = damage; }
+
+
     /// <summary>
     /// 오브젝트 풀로 반환하는 메서드
     /// </summary>
