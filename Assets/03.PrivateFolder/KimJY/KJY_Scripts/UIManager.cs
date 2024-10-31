@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,10 +47,20 @@ public class UIManager : MonoBehaviour, IManager
     }
 
     [SerializeField] private GameObject _progressBar;
+    [SerializeField] private GameObject _hpBar;
+
 
     public void SetProgressValue(float value)
     {
         if (_progressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
+        {
+            ui.SetValue(value);
+        }
+    }
+
+    public void SetHPValue(float value)
+    {
+        if (_hpBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
         {
             ui.SetValue(value);
         }

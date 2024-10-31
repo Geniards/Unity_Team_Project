@@ -288,6 +288,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
+--- !u!1 &364981899 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6613640825647000165, guid: 73dfa0815f4ef5d42b223a6abad1b070, type: 3}
+  m_PrefabInstance: {fileID: 5370774764139055773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &436914706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -413,6 +418,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6613640825803915907, guid: 73dfa0815f4ef5d42b223a6abad1b070, type: 3}
   m_PrefabInstance: {fileID: 5370774764139055773}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1123589407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6613640825446562104, guid: 73dfa0815f4ef5d42b223a6abad1b070, type: 3}
+  m_PrefabInstance: {fileID: 5370774764139055773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1170183367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -421,9 +431,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2992256843229491813, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _hpBar
+      value: 
+      objectReference: {fileID: 364981899}
+    - target: {fileID: -2992256843229491813, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _progressBar
       value: 
-      objectReference: {fileID: 681286628}
+      objectReference: {fileID: 1123589407}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_RootOrder
       value: 2

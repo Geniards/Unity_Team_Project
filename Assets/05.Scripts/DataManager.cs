@@ -92,8 +92,10 @@ public class DataManager : MonoBehaviour, IManager
     public void SetPlayState(bool value) { _isPlaying = value; }
     public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
     
-    public void SetPlayerHP(float value) { 
-        _stageData.PlayerHp = value; 
+    public void SetPlayerHP(float value) 
+    {
+        UIManager.Instance.SetHPValue(_stageData.PlayerHp);
+        //_stageData.PlayerHp = value; 
         //ui.playerhpbar.setvalue(value);
     }
     public void SetBossHP(float value) { _stageData.BossHp = value; }
