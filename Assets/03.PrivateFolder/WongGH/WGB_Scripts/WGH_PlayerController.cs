@@ -27,7 +27,7 @@ public class WGH_PlayerController : MonoBehaviour
     float _fPressTime;                                 // f 입력 시간을 받을 값
     float _jPressTime;                                 // j 입력 시간을 받을 값
 
-    
+    float _contactDur;
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
     public bool IsAir { get; private set; }            // 체공 여부
@@ -44,6 +44,7 @@ public class WGH_PlayerController : MonoBehaviour
         PlayerFrontBoss = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _startPos = transform.position;
         _note = FindAnyObjectByType<WGH_AreaJudge>().Note;
+        //_contactDur = DataManager.Instance._contactDuration;
     }
     
     private void Update()
@@ -59,26 +60,16 @@ public class WGH_PlayerController : MonoBehaviour
     /// </summary>
     private void ConfrontBoss()
     {
+        
         Vector3 bossMeetPos = new Vector3(GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE).x, transform.position.y, 0);
         if (Input.GetKey(KeyCode.Alpha1))
         {
             SetAnim("ConfrontBoss");
-            transform.position = Vector3.MoveTowards(transform.position, bossMeetPos, 10 * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, DataManager.Instance.ContactPos, 10 * Time.deltaTime);
+            transform.Translate(bossMeetPos * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
-        {
-            SetAnim("ConfrontBoss");
-            if(Mathf.Abs(transform.position.x - bossMeetPos.x) > 1f)
-            transform.position = Vector3.Lerp(transform.position, bossMeetPos, 0.1f);
-        }
-        else if (Input.GetKey(KeyCode.Alpha3))
-        {
-            SetAnim("ConfrontBoss");
-            if (Mathf.Abs(transform.position.x - bossMeetPos.x) > 1f)
-            {
-                transform.position = Vector3.Lerp(transform.position, bossMeetPos, 0.1f);
-            }
-        }
+        // 기본 애니메이션을 변경할 수 있다면 confrontboss를 default로 설정
+        // 이후 f,j입력시 난투하도록
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
