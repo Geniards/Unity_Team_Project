@@ -163,13 +163,13 @@ public class BossRushReady : BossState, IState
         
         _time = 0;
         _t = 0;
-        _duration = 3f;
+        _duration = 2f;
         _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.MIDDLE);
     }
 
     public void Exit()
     {
-
+        _boss.SetRushReady(false);
     }
 
     public void Update()
@@ -216,7 +216,6 @@ public class BossRush : BossState, IState
 
     public void Exit()
     {
-        
     }
 
     public void Update()
@@ -270,7 +269,6 @@ public class BossClosedPlayer : BossState, IState
         _cam.Move(new Vector3(0, 1, -10f), 0.07f);
         _cam.ZoomIn(0.1f, 5f);
         SoundManager.Instance.FadeBGM(true, 2f);
-        EventManager.Instance.PlayEvent(E_Event.SPAWN_START);
         EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
     }
 
@@ -325,6 +323,7 @@ public class BossDead : BossState, IState
         {
             _boss.transform.position = _destination;
             _boss.Dead();
+            SoundManager.Instance.FadeBGM(false, 5f);
             return;
         }
 
@@ -348,6 +347,9 @@ public class BossRecover : BossState, IState
 
     public void Enter()
     {
+        EventManager.Instance.PlayEvent(E_Event.SPAWN_START);
+        _boss.Heal();
+
         _time = 0;
         _t = 0;
         _duration = 0.2f;

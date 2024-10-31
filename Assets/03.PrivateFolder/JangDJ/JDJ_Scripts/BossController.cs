@@ -18,6 +18,8 @@ public class BossController : MonoBehaviour
 
     public BossStat Stat => _stat;
 
+    private bool _isRushReady = false;
+
     public void Initialize()
     {
         InitStates();
@@ -44,6 +46,8 @@ public class BossController : MonoBehaviour
         ClosedPlayerState = new BossClosedPlayer(this,5);
         DeadState = new BossDead(this);
         RecoverState = new BossRecover(this);
+
+        _isRushReady = false;
     }
 
     private void SetInitState(IState state)
@@ -67,10 +71,23 @@ public class BossController : MonoBehaviour
     public float OnDamage(float damage)
     {
         float currentHp = _stat.AddHp(damage * -1);
-        if (currentHp <= 0)
-            { SetState(RushReadyState); }
+        if (currentHp <= 0 && _isRushReady == false)
+        {
+            _isRushReady = true;
+            SetState(RushReadyState); 
+        }
 
         return currentHp;
+    }
+
+    public void Heal()
+    {
+        _stat.AddHp(2); // 임시
+    }
+
+    public void SetRushReady(bool value)
+    {
+        this._isRushReady = value;
     }
 
     public void GetMeleeResult(bool result)
@@ -85,5 +102,10 @@ public class BossController : MonoBehaviour
     {
         if (CurrentState != null)
             CurrentState.Update();
+
+        //if (Input.GetKeyDown(KeyCode.D))
+        //    GetMeleeResult(true);
+        //if (Input.GetKeyDown(KeyCode.K))
+        //    GetMeleeResult(false);
     }
 }

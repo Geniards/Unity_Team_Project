@@ -477,6 +477,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[2].TargetPool
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[3].TargetPool
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[4].TargetPool
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[2].TargetPrefab
+      value: 
+      objectReference: {fileID: 5834100206960461235, guid: 00121a435e4b7464384ff710d26bdc0a, type: 3}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[3].TargetPrefab
+      value: 
+      objectReference: {fileID: 5834100206960461235, guid: 8780d07b4c5e9174b850e35ee07f3113, type: 3}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[4].TargetPrefab
+      value: 
+      objectReference: {fileID: 1248954901914886333, guid: 733a4db624b23b5468945bcd0fd01786, type: 3}
     - target: {fileID: 6892206162165546811, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_Name
       value: Manager
@@ -1461,6 +1489,10 @@ PrefabInstance:
     - target: {fileID: 6069669073586305098, guid: 185df640f2ec1cd4bb50f59c2804f3c6, type: 3}
       propertyPath: m_Name
       value: 1.Stage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069669073586305098, guid: 185df640f2ec1cd4bb50f59c2804f3c6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6378882324539620721, guid: 185df640f2ec1cd4bb50f59c2804f3c6, type: 3}
       propertyPath: m_RootOrder

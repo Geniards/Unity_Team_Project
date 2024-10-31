@@ -167,6 +167,7 @@ public class SoundManager : MonoBehaviour, IManager
 
     public void PlayBossBGM()
     {
+        EventManager.Instance.PlayEvent(E_Event.CHANGED_BGM);
         StartCoroutine(PlayBossBGMRoutine());
     }
 

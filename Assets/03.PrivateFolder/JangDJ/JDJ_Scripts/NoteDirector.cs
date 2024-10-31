@@ -10,7 +10,6 @@ public class NoteDirector : MonoBehaviour
     private int _bpm;
     private float _noteSpeed;
     private double _noteArriveDuration;
-    [SerializeField] private float _prevDelay;
     private float _beatInterval;
     public float BeatInterval => _beatInterval;
     public float TotalHeight =>
@@ -44,6 +43,13 @@ public class NoteDirector : MonoBehaviour
         _noteSpeed = DataManager.Instance.GameSpeed;
         EventManager.Instance.AddAction(E_Event.SPAWN_STOP, () => { _isSkipSpawn = true; }, this);
         EventManager.Instance.AddAction(E_Event.SPAWN_START, () => { _isSkipSpawn = false; }, this);
+        EventManager.Instance.AddAction
+            (E_Event.CHANGED_BGM, ChangeBGM, this);
+    }
+
+    private void ChangeBGM()
+    {
+        StartSpawnNotes(E_StageBGM.TEST_NORMAL_01 + 1);
     }
 
     public void Initailize()
@@ -54,12 +60,12 @@ public class NoteDirector : MonoBehaviour
     /// <summary>
     /// 노트 생성을 시작합니다.
     /// </summary>
-    public void StartSpawnNotes(E_StageBGM bgm)
+    public void StartSpawnNotes(E_StageBGM bgm, int restBeatCount = 0)
     {
         if (_spawnRoutine != null)
             StopCoroutine(_spawnRoutine);
 
-        _spawnRoutine = StartCoroutine(AutoSpawnRoutine(bgm));
+        _spawnRoutine = StartCoroutine(AutoSpawnRoutine(bgm, restBeatCount));
     }
 
     private float GetBPMtoIntervalSec()
@@ -73,18 +79,14 @@ public class NoteDirector : MonoBehaviour
         return Mathf.Abs((float)checkPointDist / _noteSpeed);
     }
 
-    private IEnumerator AutoSpawnRoutine(E_StageBGM bgm)
+    private IEnumerator AutoSpawnRoutine(E_StageBGM bgm, int restBeatCount)
     {
         double nextSpawnTime = 0d;
-        double startDspTime = AudioSettings.dspTime;
         _beatInterval = GetBPMtoIntervalSec();
-        double firstNoteTime = startDspTime + (_beatInterval * 4) - _noteArriveDuration; // 4박자 뒤의 첫 노트 생성 시간
-                                                                                                 // 첫 번째 노트 생성 타이밍 설정
-        nextSpawnTime = firstNoteTime;
+        double firstNoteTime = (_beatInterval * restBeatCount) - _noteArriveDuration; // 4박자 뒤의 첫 노트 생성 시간
+                                          
         _spawner.RegistPattern(1); // 임시 테스트 코드
-        SoundManager.Instance.PlayBGM(bgm);
-
-        nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec();
+        nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec() + firstNoteTime;
 
         while (true)
         {

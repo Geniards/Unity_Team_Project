@@ -58,12 +58,10 @@ public class GameManager : MonoBehaviour
     public void StartStage(E_StageBGM bgm)
     {
         DataManager.Instance.SetPlayState(true);
+        SoundManager.Instance.PlayBGM(bgm);
         Director.Initailize();
-        Director.StartSpawnNotes(bgm);
+        Director.StartSpawnNotes(bgm,4);
         _stageTimeRoutine = StartCoroutine(StartProgressTimer());
-
-        Debug.Log(DataManager.Instance.CurrentBGMClipLength);
-        Debug.Log(DataManager.Instance.SkipSpawnTimeOffset);
     }
 
     /// <summary>
@@ -104,7 +102,6 @@ public class GameManager : MonoBehaviour
             Instantiate(Resources.Load<GameObject>($"Boss/Boss_{DataManager.Instance.StageNumber}")).
             GetComponent<BossController>();
             
-
         boss.Initialize();
     }
 

@@ -10,7 +10,7 @@ public class NoteSpawner : MonoBehaviour
     private int _lastNoteIdx = 0;
 
     public bool IsLastNote
-        => _lastNoteIdx == _innerNoteList.Count - 1;
+        => _lastNoteIdx >= _innerNoteList.Count - 1;
 
     /// <summary>
     /// 스포너가 설정해야 할 값을 초기화 시킵니다.
@@ -24,6 +24,7 @@ public class NoteSpawner : MonoBehaviour
 
     private void Start()
     {
+        EventManager.Instance.AddAction(E_Event.CHANGED_BGM, Initalize, this);
         Initalize();
     }
 
@@ -39,10 +40,10 @@ public class NoteSpawner : MonoBehaviour
         //    _innerNoteList.Add(patterns[i]);
         //}
 
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Score));
+        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
         _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
         _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Score));
+        _innerNoteList.Add(new NoteData(1, E_NoteType.Obstacle));
     }
 
     /// <summary>
@@ -73,6 +74,9 @@ public class NoteSpawner : MonoBehaviour
                 return ObjPoolManager.Instance.GetObject<Note>(E_Pool.MONSTER_NOTE);
             case E_NoteType.Obstacle:
                 return ObjPoolManager.Instance.GetObject<Note>(E_Pool.OBSTACLE_NOTE);
+            case E_NoteType.ConcurrentScore:
+                    return ObjPoolManager.Instance.GetObject<Note>(E_Pool.DBSCORE_NOTE);
+
         }
 
         throw new System.Exception("잘못된 노트 요청");
@@ -87,7 +91,7 @@ public class NoteSpawner : MonoBehaviour
 
             case 2:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.MIDDLE);
-                
+
             case 3:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.BOTTOM);
         }
@@ -112,5 +116,5 @@ public class NoteSpawner : MonoBehaviour
     }
 
 
-    
+
 }

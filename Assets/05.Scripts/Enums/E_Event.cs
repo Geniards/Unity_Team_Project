@@ -7,6 +7,7 @@ public enum E_Event
     NOTE_CLEAR,
     BOSSRUSH,
     ENTERCONTACT,
+    CHANGED_BGM,
     CONTACTEND,
     PLAYERDEAD,
     ENTERBOSS,
