@@ -4,10 +4,6 @@ using UnityEngine;
 public class BossController : MonoBehaviour
 {
     [SerializeField] private BossStat _stat = new BossStat();
-    [SerializeField] private BossMovement _movement = null;
-
-    private E_SpawnerPosY _curPos = E_SpawnerPosY.NONE;
-    private E_SpawnerPosY _nextPos = E_SpawnerPosY.NONE;
 
     public IState CurrentState { get; private set; }
     public BossIntoField IntoField;
@@ -22,16 +18,13 @@ public class BossController : MonoBehaviour
 
     public BossStat Stat => _stat;
 
-    private void Start() // 임시
-    {
-        Initialize();
-    }
-
     public void Initialize()
     {
         InitStates();
         SetInitState(IntoField);
         RegistMyData();
+        this.transform.position 
+            = GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
     }
 
     private void RegistMyData()

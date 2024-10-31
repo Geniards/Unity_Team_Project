@@ -39,7 +39,7 @@ public class NoteMediator : MonoBehaviour
     /// </summary>
     public void AllNoteReturn()
     {
-        for (int i = _notesList.Count - 1; i >= 0; i--)
+        for (int i = _notesList.Count-1; i >= 0; i--)
         {
             _notesList[i].ReturnToPool();
         }
