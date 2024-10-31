@@ -438,6 +438,14 @@ PrefabInstance:
       propertyPath: _progressBar
       value: 
       objectReference: {fileID: 681286628}
+    - target: {fileID: 185137565, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_Volume
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083170230, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: m_Volume
+      value: 0.09
+      objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1035,7 +1043,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -25.36007, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1243147957993702141

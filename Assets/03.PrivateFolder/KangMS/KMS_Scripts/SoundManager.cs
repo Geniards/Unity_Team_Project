@@ -128,7 +128,7 @@ public class SoundManager : MonoBehaviour, IManager
     private IEnumerator SirenRoutine(float length)
     {
         float timer = length;
-        int count = 0;
+        int count = 1;
 
         PlaySFX(E_SFX.SIREN);
 
@@ -159,7 +159,7 @@ public class SoundManager : MonoBehaviour, IManager
 
         yield return SirenRoutine(oneLoopLength);
 
-        FadeBGM(true, 1.5f);
+        FadeBGM(true, 2.5f);
 
         PlayBGM(_currentStageBgm + 1);
         _bgmSource.loop = true;

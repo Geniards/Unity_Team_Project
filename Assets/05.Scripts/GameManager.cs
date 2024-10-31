@@ -70,11 +70,14 @@ public class GameManager : MonoBehaviour
         float timer = 0;
         float breakPoint = DataManager.Instance.CurrentBGMClipLength -
             DataManager.Instance.SkipSpawnTimeOffset;
+        
         bool isBreaked = false;
+        float progress;
 
         while (true)
         {
-            DataManager.Instance.SetProgress(timer);
+            progress = timer / breakPoint;
+            DataManager.Instance.SetProgress(progress);
 
             yield return _timerIntervalSec;
             timer += _checkInterval;

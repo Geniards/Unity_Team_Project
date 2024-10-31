@@ -57,7 +57,6 @@ public class WGH_PlayerController : MonoBehaviour
     
     private void Update()
     {
-        Debug.Log(_meleeCount);
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             EventManager.Instance.PlayEvent(E_Event.BOSSRUSH);
@@ -119,12 +118,11 @@ public class WGH_PlayerController : MonoBehaviour
         _judge.enabled = true;
         if (_meleeCount <= 0)
         {
-            //DataManager.Instance.Boss.GetMeleeResult(true);
-            Debug.Log("클리어");
+            DataManager.Instance.Boss.GetMeleeResult(true);
         }
         else
         {
-            //DataManager.Instance.Boss.GetMeleeResult(false);
+            DataManager.Instance.Boss.GetMeleeResult(false);
             //CurHP -= 50;
             Debug.Log("클리어실패");
         }

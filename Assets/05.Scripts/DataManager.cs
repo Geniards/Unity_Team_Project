@@ -65,7 +65,7 @@ public class DataManager : MonoBehaviour, IManager
     public float SoundTotalFadeTime => 1f;
     // 현재 재생되고 있는 음원의 총 길이
     public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
-    public int SirenCount = 5;
+    public int SirenCount => 3;
 
     public int StageNumber => _stageData.StageNumber;
 
@@ -109,7 +109,7 @@ public class DataManager : MonoBehaviour, IManager
         if(CurrentBGMClipLength == 0)
         { throw new System.Exception("프로그래스 동기화 순서 문제발생"); }
 
-        _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
+        _stageData.StageProgress = current;
         UIManager.Instance.SetProgressValue(_stageData.StageProgress);
 
         if (_stageData.StageProgress >= 1)
