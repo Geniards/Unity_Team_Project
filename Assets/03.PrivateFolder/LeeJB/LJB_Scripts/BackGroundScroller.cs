@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BackGroundScroller : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _tiles; // íƒ€ì¼ í”„ë¦¬íŒ¹ ë°°ì—´
-    [SerializeField] private float _scrollSpeed; // ë°±ê·¸ë¼ìš´ë“œ ìŠ¤í¬ë¡¤ ì†ë„
-    [SerializeField] private float _tileWidth; // ê° íƒ€ì¼ì˜ ê°€ë¡œ ê¸¸ì´
-    [SerializeField] private float _scrollDelay; // ìŠ¤í¬ë¡¤ ì‹œì‘ ì§€ì—° ì‹œê°„
+    [SerializeField] private GameObject[] _tiles; // Å¸ÀÏ ÇÁ¸®ÆÕ ¹è¿­
+    [SerializeField] private float _scrollSpeed; // ¹é±×¶ó¿îµå ½ºÅ©·Ñ ¼Óµµ
+    [SerializeField] private float _tileWidth; // °¢ Å¸ÀÏÀÇ °¡·Î ±æÀÌ
+    [SerializeField] private float _scrollDelay; // ½ºÅ©·Ñ ½ÃÀÛ Áö¿¬ ½Ã°£
 
     private bool _isScrolling = false;
 
@@ -21,68 +21,66 @@ public class BackGroundScroller : MonoBehaviour
     {
         if (_isScrolling)
         {
-            MoveBackground();
+            MoveFloor(); // MoveFloor ¸Ş¼­µå¸¦ È£ÃâÇÏ¿© ¹Ù´ÚÀ» ½ºÅ©·Ñ
         }
     }
 
     /// <summary>
-    /// íƒ€ì¼ ì´ˆê¸° ìœ„ì¹˜ ì„¤ì • ë©”ì„œë“œ
+    /// Å¸ÀÏ ÃÊ±â À§Ä¡ ¼³Á¤ ¸Ş¼­µå
     /// </summary>
     private void InitializeTiles()
     {
-        float cumulativeWidth = 0; // ìœ„ì¹˜ ëˆ„ì ê°’
-
         for (int index = 0; index < _tiles.Length; index++)
         {
-            // í˜„ì¬ íƒ€ì¼ ìœ„ì¹˜ë¥¼ ì„¤ì •í•˜ë©´ì„œ ëˆ„ì  ë„ˆë¹„ ê°’ì„ ì‚¬ìš©
-            _tiles[index].transform.position = new Vector3(cumulativeWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);
-
-            // ëˆ„ì  ë„ˆë¹„ë¥¼ íƒ€ì¼ì˜ ë„ˆë¹„ë§Œí¼ ë”í•´ ë‹¤ìŒ íƒ€ì¼ ìœ„ì¹˜ë¥¼ ì„¤ì •
-            cumulativeWidth += _tileWidth;
+            _tiles[index].transform.position = new Vector3(
+                _tiles[index].transform.position.x,
+                _tiles[index].transform.position.y,
+                _tiles[index].transform.position.z
+            );
         }
     }
 
     /// <summary>
-    /// ì¼ì • ì‹œê°„ ì§€ì—° í›„ ìŠ¤í¬ë¡¤ì„ ì‹œì‘í•˜ëŠ” ì½”ë£¨í‹´
+    /// ¼³Á¤ÇÑ ½Ã°£ ÀÌÈÄ ½ºÅ©·Ñ ½ÃÀÛÇÏ´Â ÄÚ·çÆ¾
     /// </summary>
     private IEnumerator StartScrollingAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _isScrolling = true; // ì§€ì—° ì‹œê°„ì´ ì§€ë‚œ í›„ ìŠ¤í¬ë¡¤ë§ í™œì„±í™”
+        _isScrolling = true; // ½Ã°£ÀÌ Áö³­ ÈÄ ½ºÅ©·Ñ¸µ È°¼ºÈ­
     }
 
     /// <summary>
-    /// ë°±ê·¸ë¼ìš´ë“œ ì´ë™ ë©”ì„œë“œ
+    /// ¹Ù´Ú Å¸ÀÏ ÀÌµ¿ ¸Ş¼­µå
     /// </summary>
-    private void MoveBackground()
+    private void MoveFloor()
     {
         for (int index = 0; index < _tiles.Length; index++)
         {
-            _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime; // ë°±ê·¸ë¼ìš´ë“œ íƒ€ì¼ì„ ì™¼ìª½ìœ¼ë¡œ ì´ë™
+            _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime; // ¹Ù´Ú Å¸ÀÏÀ» ¿ŞÂÊÀ¸·Î ÀÌµ¿
 
-            // íƒ€ì¼ ë„“ì´ë§Œí¼ ì´ë™ í›„ ì¬ë°°ì¹˜
-            if (_tiles[index].transform.position.x <= -_tileWidth) // íƒ€ì¼ì˜ ë„“ì´ë§Œí¼ ì´ë™í•˜ì˜€ì„ ê²½ìš°
+            // Å¸ÀÏÀÌ È­¸é ¿ŞÂÊ °æ°è¸¦ ¹ş¾î³ª¸é ¿À¸¥ÂÊÀ¸·Î Àç¹èÄ¡
+            if (_tiles[index].transform.position.x <= -_tileWidth * 1.5f) // Å¸ÀÏÀÌ ´õ ¿ŞÂÊÀ¸·Î ÀÌµ¿ÇÑ ÈÄ Àç¹èÄ¡
             {
-                float rightMost = GetRightMostTile(); // íƒ€ì¼ì˜ ê°€ì¥ ì˜¤ë¥¸ìª½ ì¢Œí‘œì— íƒ€ì¼ ì¬ë°°ì¹˜
+                float rightMost = GetRightMostTile(); // Å¸ÀÏÀÇ °¡Àå ¿À¸¥ÂÊ ÁÂÇ¥¿¡ Å¸ÀÏ Àç¹èÄ¡
                 _tiles[index].transform.position = new Vector3(rightMost + _tileWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);
             }
         }
     }
 
     /// <summary>
-    /// ê°€ì¥ ì˜¤ë¥¸ìª½ íƒ€ì¼ì˜ Xì¢Œí‘œë¥¼ ë°˜í™˜í•˜ëŠ” ë©”ì„œë“œ
+    /// °¡Àå ¿À¸¥ÂÊ Å¸ÀÏÀÇ XÁÂÇ¥¸¦ ¹İÈ¯ÇÏ´Â ¸Ş¼­µå
     /// </summary>
-    /// <returns>ê°€ì¥ ì˜¤ë¥¸ìª½ íƒ€ì¼ì˜ Xì¢Œí‘œ</returns>
+    /// <returns>°¡Àå ¿À¸¥ÂÊ Å¸ÀÏÀÇ XÁÂÇ¥</returns>
     private float GetRightMostTile()
     {
-        float maxX = _tiles[0].transform.position.x; // íƒ€ì¼ ê°€ì¥ ì˜¤ë¥¸ìª½ ë¶€ë¶„ì˜ Xìœ„ì¹˜ ë³€ìˆ˜
+        float maxX = _tiles[0].transform.position.x; // Å¸ÀÏ °¡Àå ¿À¸¥ÂÊ ºÎºĞÀÇ XÀ§Ä¡ º¯¼ö
 
-        for (int index = 1; index < _tiles.Length; index++) // íƒ€ì¼ Xìœ„ì¹˜ ê°’ ì—…ë°ì´íŠ¸
+        for (int index = 1; index < _tiles.Length; index++) // Å¸ÀÏ XÀ§Ä¡ °ª ¾÷µ¥ÀÌÆ®
         {
             if (_tiles[index].transform.position.x > maxX)
                 maxX = _tiles[index].transform.position.x;
         }
 
-        return maxX; // Xìœ„ì¹˜ ê°’ ë°˜í™˜
+        return maxX; // XÀ§Ä¡ °ª ¹İÈ¯
     }
 }
