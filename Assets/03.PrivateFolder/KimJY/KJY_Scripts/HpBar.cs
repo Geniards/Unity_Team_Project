@@ -5,6 +5,20 @@ using UnityEngine.UI;
 
 public class HpBar : MonoBehaviour, IValuableUI
 {
+ 
+    public Image hpBar;
+
+    private void Start()
+    {
+        SetValue(200);
+    }
+
+    public void SetValue(float value)
+    {
+        hpBar.fillAmount = value;
+    }
+
+    /*
     public float curHp;
     public float initHp;
     public float maxHp = 200;
@@ -29,4 +43,5 @@ public class HpBar : MonoBehaviour, IValuableUI
     {
         return curHp / maxHp; 
     }
+    */
 }

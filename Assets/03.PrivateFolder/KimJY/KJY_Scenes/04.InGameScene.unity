@@ -840,6 +840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _progressBar: {fileID: 7837495851606073359}
+  _hpBar: {fileID: 7837495851606073360}
 --- !u!4 &6892206160482602858
 Transform:
   m_ObjectHideFlags: 0
@@ -1048,10 +1049,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGameCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1243147958136115665, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6170139bb959e8e408695ca6d14b4a4f, type: 3}
+    - target: {fileID: 1243147958385957354, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243147958942070423, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243147958942070423, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
 --- !u!1 &7837495851606073359 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1243147958307680461, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
+  m_PrefabInstance: {fileID: 7837495851606073358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7837495851606073360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1243147958511788944, guid: 4f286116fbc2b19428466ab0abb5f4fa, type: 3}
   m_PrefabInstance: {fileID: 7837495851606073358}
   m_PrefabAsset: {fileID: 0}
