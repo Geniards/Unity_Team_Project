@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/03.PrivateFolder/KimJY/KJY_Scenes/03.LobbyScene.unity
     guid: 1d0f11bc5d39a4b4b9c436ef7917fd47
+  - enabled: 1
+    path: Assets/04.Scenes/mileStone2.unity
+    guid: 7a969cdf88428c04791e6dd59a1fbcef
   m_configObjects: {}
