@@ -66,69 +66,6 @@ Transform:
   m_Father: {fileID: 7364819468315727733}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7364819467636958148
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7364819467636958146}
-  - component: {fileID: 7364819467636958149}
-  m_Layer: 0
-  m_Name: 2 Object Scroller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7364819467636958146
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7364819467636958148}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.130129, y: 3.1450167, z: -0.063521385}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7364819468315727733}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7364819467636958149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7364819467636958148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bae07d75ce3c9154a8287e7f5c2752f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _objectGroups:
-  - _objects:
-    - {fileID: 3706297730492209341, guid: a13c3144a1cd2454b82ce53828b0511d, type: 3}
-    - {fileID: 3592874867427985931, guid: 6475c9000a4df434f85f6ecac9f0637a, type: 3}
-    - {fileID: 4307276017288369246, guid: 07d45399354bc1b4291bbceac92d5c00, type: 3}
-    - {fileID: 5734085940280569557, guid: 3f0ecdedbdd84f14e8ac4ec16dab90fd, type: 3}
-    - {fileID: 1328215649549777851, guid: 1039b5b9f0e408a4cb5615af76e3910e, type: 3}
-    - {fileID: 5103721050179833953, guid: 0847da538ce0a0b4d9394ffd6e76fb6c, type: 3}
-    - {fileID: 8722576549600235865, guid: ee2fd0b622707e846897e819da1fa27e, type: 3}
-    - {fileID: 609815705965534704, guid: 99a4bfb44e6622f4396482c8b98912b4, type: 3}
-    - {fileID: 3120609327275091717, guid: 3fc0336589d196640abfce5421baab02, type: 3}
-    - {fileID: 5617200893935152667, guid: 1ab3e540df4966b439d116aac758d747, type: 3}
-    _scrollSpeed: 5
-    _minSpacing: 2
-    _maxSpacing: 3
-  _parentTransform: {fileID: 7364819468919905366}
-  _scrollDelay: 1
-  _destroyOffset: 20
-  _spawnOffset: 20
 --- !u!1 &7364819467998670145
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +283,6 @@ Transform:
   - {fileID: 7364819468033024788}
   - {fileID: 7364819467998670159}
   - {fileID: 7364819468472186391}
-  - {fileID: 7364819467636958146}
   - {fileID: 7364819469260411741}
   - {fileID: 7364819468919905366}
   m_Father: {fileID: 0}
@@ -450,7 +386,7 @@ GameObject:
   - component: {fileID: 7364819468472186391}
   - component: {fileID: 7364819468472186390}
   m_Layer: 0
-  m_Name: 1 Object Scroller
+  m_Name: Object Scroller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -486,8 +422,6 @@ MonoBehaviour:
   _objectGroups:
   - _objects:
     - {fileID: 6360091568515100883, guid: 5d262f52d5dbdb94b8525990f7b37fa3, type: 3}
-    - {fileID: 6569863419742789082, guid: 76f61d6b9bf78524e9ce97cfedc84c84, type: 3}
-    - {fileID: 7920019687543704694, guid: c84e21e0425525b459c1a3c606b04343, type: 3}
     - {fileID: 5149096193746617042, guid: b4a9751e48a5672468d53c0dac5ce238, type: 3}
     - {fileID: 1964874629871672326, guid: 7d2c8b040a8498642aed2f323c8e5dcc, type: 3}
     - {fileID: 3131803361250953563, guid: ab9d4638ea69cb345938b8a357cc26f4, type: 3}
@@ -498,8 +432,8 @@ MonoBehaviour:
     - {fileID: 5362489451434644636, guid: 1468198b28d6fd74bbdf83ff02488b89, type: 3}
     - {fileID: 3839750702973866516, guid: 457b4c998170ba44cb5823344ef3c748, type: 3}
     _scrollSpeed: 5
-    _minSpacing: 8
-    _maxSpacing: 8
+    _minSpacing: 7
+    _maxSpacing: 7
   _parentTransform: {fileID: 7364819468919905366}
   _scrollDelay: 1
   _destroyOffset: 20
@@ -586,7 +520,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7364819468315727733}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!210 &7364819468919905353
 SortingGroup:
@@ -723,7 +657,7 @@ Transform:
   - {fileID: 3810611946390758637}
   - {fileID: 3810611946779739272}
   m_Father: {fileID: 7364819468315727733}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!210 &7364819469260411740
 SortingGroup:
