@@ -17,6 +17,7 @@ public class SwordWaveNote : Note
         this.scoreValue = scoreValue;
         this.damage = damage;
         this.bossTransform = bossTransform;
+        this.bossTransform = DataManager.Instance.Boss.transform;
 
         if (!bossTransform) Debug.Log("보스위치가 존재하지 않습니다.");
 
@@ -53,14 +54,8 @@ public class SwordWaveNote : Note
         // 보스 위치에 도달하면 타격 처리
         if (Vector3.Distance(transform.position, bossTransform.position) < 0.1f)
         {
-            HitBoss();
+            //DataManager.Instance.Boss.OnDamage(GetDamage());
         }
-    }
-
-    private void HitBoss()
-    {
-        Debug.Log("보스에게 데미지를 입혔습니다!");
-        gameObject.SetActive(false);
     }
 
     public override float GetDamage()

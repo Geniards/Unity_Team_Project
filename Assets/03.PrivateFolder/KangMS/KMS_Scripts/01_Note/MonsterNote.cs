@@ -19,7 +19,9 @@ public class MonsterNote : Note, IPoolingObj
             _isHit = true;
             CalculateScore(decision);
             ShowEffect();
-            Return();
+
+            gameObject.SetActive(false);
+            ReturnToPool();
         }
     }
 

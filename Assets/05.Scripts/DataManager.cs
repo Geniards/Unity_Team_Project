@@ -55,7 +55,7 @@ public class DataManager : MonoBehaviour, IManager
     public float StageProgress => _stageData.StageProgress; // 0 ~ 1
     // 해당 값 변경시 프로그래스 바의 SetValue 값을 전달시킨다.
     public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
-    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 12f;
+    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 6;
     //120bpm 일경우 음원종료 12 초전에 스폰중단
 
     public void SetPlayState(bool value) { _isPlaying = value; }
@@ -75,7 +75,7 @@ public class DataManager : MonoBehaviour, IManager
         { throw new System.Exception("프로그래스 동기화 순서 문제발생"); }
 
         _stageData.StageProgress = Mathf.Clamp01(current / CurrentBGMClipLength);
-        //UIManager.Instance.SetProgressValue(_stageData.StageProgress);
+        UIManager.Instance.SetProgressValue(_stageData.StageProgress);
 
         if (_stageData.StageProgress >= 1)
             GameManager.Instance.StopProgressTimer();

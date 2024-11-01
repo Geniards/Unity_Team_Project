@@ -32,7 +32,7 @@ public abstract class Note : MonoBehaviour
         this.length = length;
 
         // Note 생성 시 중재자에 등록
-        GameManager.Mediator.Register(this);
+        //GameManager.Mediator.Register(this);
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
@@ -63,7 +63,7 @@ public abstract class Note : MonoBehaviour
 
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                //this.gameObject.SetActive(false);
+                GameManager.Mediator.Unregister(this);
                 ReturnToPool();
                 yield break;
             }
@@ -96,9 +96,11 @@ public abstract class Note : MonoBehaviour
     /// <summary>
     /// Damage 전달 메서드
     /// </summary>
-    /// <returns></returns>
     public abstract float GetDamage();
-    
+
+    public void SetDamage(float damage) { this.damage = damage; }
+
+
     /// <summary>
     /// 오브젝트 풀로 반환하는 메서드
     /// </summary>
