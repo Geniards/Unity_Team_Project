@@ -21,18 +21,18 @@ public class LoadSceneController : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(LoadSceneProcess());
+        //StartCoroutine(LoadSceneProcess());
     }
 
     IEnumerator LoadSceneProcess()
     {
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
-        op.allowSceneActivation = false; // 90ÆÛ±îÁö¸¸ ·ÎµåÇÏ°í ±â´Ù¸²
+        op.allowSceneActivation = false; // 90í¼ê¹Œì§€ë§Œ ë¡œë“œí•˜ê³  ê¸°ë‹¤ë¦¼
 
         float timer = 0f;
         while (!op.isDone)
         {
-            yield return null; //¹İº¹¹®ÀÌ ³¡³ª±â Àü±îÁö´Â È­¸éÀÌ °»½ÅµÇÁö ¾ÊÀ½.
+            yield return null; //ë°˜ë³µë¬¸ì´ ëë‚˜ê¸° ì „ê¹Œì§€ëŠ” í™”ë©´ì´ ê°±ì‹ ë˜ì§€ ì•ŠìŒ.
 
             if (op.progress < 0.9f)
             {

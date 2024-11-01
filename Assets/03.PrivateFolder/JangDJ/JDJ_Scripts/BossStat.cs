@@ -4,10 +4,10 @@ using UnityEngine;
 public class BossStat
 {
     [SerializeField] private float _hp;
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] private string _name;
 
-    public float MoveSpeed => _moveSpeed;
     public float Hp => _hp;
+    public string Name => _name;
 
     /// <summary>
     /// 매개변수로 주어지는 값을 멤버 hp 에 더하고, 결과 수치를 반환합니다.
@@ -16,5 +16,14 @@ public class BossStat
     {
         _hp += addValue;
         return _hp;
+    }
+
+    /// <summary>
+    /// 현재 개체의 데이터를 target으로 복사합니다.
+    /// </summary>
+    public void CopyData(BossStat target)
+    {
+        target._hp = this._hp;
+        target._name = this._name;
     }
 }

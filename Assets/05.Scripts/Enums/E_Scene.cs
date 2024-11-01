@@ -1,10 +1,11 @@
 public enum E_SceneType
 {
     NONE = -1,
-    OPEN,
+    START,
     LOAD,
-    MAIN,
+    LOBBY,
     STAGE,
     RESULT,
     E_SCENETYPE_MAX,
+
 }

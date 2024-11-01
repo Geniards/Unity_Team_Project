@@ -6,140 +6,162 @@ public class DataManager : MonoBehaviour, IManager
     private static DataManager _instance = null;
     public static DataManager Instance => _instance;
 
-    private DataTable _csvData = null;
+    private DataTable _csvData = new DataTable();
     public DataTable CSVData => _csvData;
 
-    private StageData _stageData;
+    [HideInInspector] public StageData SelectedStageData;
+
+    private StageData _stageData = new StageData();
     private GameSettingData _settingData;
-
-    public Vector3 ContactPos => GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
-
-    private BossController _boss;
-    public BossController Boss => _boss;
 
     public void Init()
     {
         _instance = this;
-        _csvData = new DataTable();
-        _csvData.Initailize();
 
         SetBGMVolume(0.2f); // 유저 정보 저장시 변경
         SetSFXVolume(0.2f);
-        SetStageNumber(1);
-        SetBGMClipLength(0);
-        SetContactDuration(4f);
-        SetMeleeCount(2);
-
-        _settingData.PlayerMaxHP = 5f;
     }
 
-    [SerializeField, Header("분당 Beat")]
-    private int _bpm = 120;
-    public int BPM => _bpm;
-
-    [SerializeField,Range(1,20),Header("전체 게임 속도")] 
-    private int _gameSpeed = 1;
-    public int GameSpeed => _gameSpeed;
-
-    private bool _isPlaying = false;
-    public bool IsPlaying => _isPlaying;
-
-    private int _meleeCount;
-    public int MeleeCount => _meleeCount;
-
-    private bool _isStageClear;
-    public bool IsStageClear => _isStageClear;
-
-    public float SceneFadeDuration => 1f;
-
-    public float PlayerMaxHP => _settingData.PlayerMaxHP;
-
-    public void SetStageClear(bool value)
+    public void InitDatas()
     {
-        _isStageClear = value;
+        _isStageClear = true;
     }
 
-    public void SetBossData(BossController boss)
-    {
-        this._boss = boss;
-    }
-
-    private float _contactDuration;
-    public float ContactDuration => _contactDuration;
-
-    public float ApproachDuration => 0.2f;
-    
-    // 볼륨을 서서히 조절하는 비율
-    public float SoundFadeRate => 0.2f;
-    // 한계값에 도달하는 시간
-    public float SoundTotalFadeTime => 1f;
-    // 현재 재생되고 있는 음원의 총 길이
-    public float CurrentBGMClipLength => _stageData.CurrentBGMClipLength;
-    public int SirenCount => 4;
-
-    public int StageNumber => _stageData.StageNumber;
+    #region 프로그램 기본 설정
 
     public int ObjpoolInitCreateCount => 15;
     public float BGMVolume => _settingData.BGMVolume;
     public float SFXVolume => _settingData.SFXVolume;
 
-    public float StageProgress => _stageData.StageProgress; // 0 ~ 1
-    // 해당 값 변경시 프로그래스 바의 SetValue 값을 전달시킨다.
-    public float CurrentPlayingTime => _stageData.CurrentPlayingTime;
-    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 6;
-    //120bpm 일경우 음원종료 12 초전에 스폰중단
-
-    public void SetContactDuration(float duration)
-    {
-        this._contactDuration = duration;
-    }
-
-    /// <summary>
-    /// 기획팀 함수 절대 건들지 마시오.
-    /// </summary>
-    public void SetMeleeCount(int count)
-    {
-        this._meleeCount = count;
-    }
-
-    public void SetPlayState(bool value) { _isPlaying = value; }
-    public void SetBGMClipLength(float value) { _stageData.CurrentBGMClipLength = value; }
+    public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
+    public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
     
-    public void UpdatePlayerHP(float value) 
+    #endregion
+
+    #region 스테이지 기초 데이터
+
+    public float PlayerMaxHP => 5;
+    public int SirenCount => 4;
+    public float ContactDuration => 4;
+    public float ApproachDuration => 0.2f;
+
+    //120bpm이며 * 6 일경우 (0.5f * 6) 음원종료 3 초전에 스폰중단
+    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 6;
+    
+    public void UpdatePlayerHP(float value)
     {
-        float ratio = value / _settingData.PlayerMaxHP;
+        float ratio = value / PlayerMaxHP;
         UIManager.Instance.SetHPValue(ratio);
     }
-    public void SetBossHP(float value) { _stageData.BossHp = value; }
-    public void SetJudge(E_NoteDecision type) { _stageData.Judge = type; }
-    public void SetComboCount(int value) { _stageData.ComboCount = value; }
-    public void SetStageNumber(int value) { _stageData.StageNumber = value; }
-    public void SetProgress(float current) 
-    { 
-        if(CurrentBGMClipLength == 0)
+
+    #endregion
+
+    #region 스테이지 고유 데이터
+
+    public int BPM => _stageData.BPM;
+    public float GameSpeed => _stageData.NoteSpeed;
+    public float BossHp => _stageData.BossHP;
+    public int StageNumber => _stageData.StageNumber -1;
+    public int MeleeCount => _stageData.MeleeCount;
+
+    public int PopupStageNum => SelectedStageData.StageNumber;
+    public string StageName => SelectedStageData.StageName;
+    public string SongTitle => SelectedStageData.SongTitle;
+    public string StageDescription => SelectedStageData.Description;
+
+    private BossController _boss;
+    public BossController Boss => _boss;
+
+    public Vector3 ContactPos =>
+        GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+
+    public void SetBossData(BossController boss) { this._boss = boss; }
+
+    public void ApplySelectStageData()
+    {
+        SelectedStageData.CopyData(_stageData);
+        InitDatas();
+    }
+
+    #endregion
+
+    #region 게임진행 상황 데이터
+
+    private bool _isPlaying = false;
+    public bool IsPlaying => _isPlaying;
+
+    private bool _isStageClear = true;
+    public bool IsStageClear => _isStageClear;
+
+    private float _stageProgress;
+    public float StageProgress => _stageProgress; // 0 ~ 1
+
+    public void SetPlayState(bool value) { _isPlaying = value; } // isclear 와 역할 애매모호
+    public void SetStageClear(bool value) { _isStageClear = value; }
+    public void SetProgress(float current)
+    {
+        if (SoundManager.Instance.CurrentBgmLength == 0)
         { throw new System.Exception("프로그래스 동기화 순서 문제발생"); }
 
-        _stageData.StageProgress = current;
-        UIManager.Instance.SetProgressValue(_stageData.StageProgress);
+        _stageProgress = current;
+        UIManager.Instance.SetProgressValue(_stageProgress);
 
-        if (_stageData.StageProgress >= 1)
+        if (_stageProgress >= 1)
             GameManager.Instance.StopProgressTimer();
     }
 
-    public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
-    public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
+    #endregion
+
+    #region 씬 관련 수치
+
+    public float SceneFadeDuration => 1f;
+
+    #endregion
+
+    #region 음향 관련 설정 수치
+
+    // 볼륨을 서서히 조절하는 비율 ex 0.2f = 현재 음향에서 0.2f비율만큼씩 줄인다.
+    public float SoundFadeRate => 0.2f;
+
+    #endregion
 }
 
-public struct StageData
+[System.Serializable]
+public class StageData
 {
-    public float BossHp;
-    public E_NoteDecision Judge;
-    public float StageProgress;
-    public int Score;
-    public int ComboCount;
-    public int StageNumber;
-    public float CurrentBGMClipLength;
-    public float CurrentPlayingTime;
+    [Header("스테이지 번호")]public int StageNumber = 1;
+
+    [Space(10f),Header("게임 음원 설정")]
+    public E_StageBGM BGM;
+    public int BPM;
+    public string SongTitle;
+    public string StageName;
+    public string Description;
+    [Range(0.1f,20f)] public float NoteSpeed = 5f;
+
+    [Space(10f), Header("게임 내 데이터 설정")]
+    [SerializeField] private int _meleeCount = 10;
+    [SerializeField] private BossStat _bossStat = new BossStat();
+
+    public float BossHP => _bossStat.Hp;
+    public int MeleeCount => _meleeCount;
+
+    /// <summary>
+    /// 현재 개체의 데이터를 target으로 복사합니다.
+    /// </summary>
+    public void CopyData(StageData target)
+    {
+        target.StageNumber = this.StageNumber;
+        target.BGM = this.BGM;
+        target.BPM = this.BPM;
+        target.NoteSpeed = this.NoteSpeed;
+        target._meleeCount = this._meleeCount;
+        target.SongTitle = this.SongTitle;
+        target.StageName = this.StageName;
+        target.Description = this.Description;
+
+        this._bossStat.CopyData(target._bossStat);
+    }
 }
 
 public struct GameSettingData
@@ -147,5 +169,4 @@ public struct GameSettingData
     public float BGMVolume;
     public float SFXVolume;
     public float GameSpeed;
-    public float PlayerMaxHP;
 }

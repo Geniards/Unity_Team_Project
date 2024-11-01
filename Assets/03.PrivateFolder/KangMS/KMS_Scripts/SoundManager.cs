@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour, IManager
     [SerializeField] private AudioSource _sfxSource;
     [SerializeField] private SFXList _sfxList;
     private E_StageBGM _currentStageBgm = E_StageBGM.NONE;
+    public float CurrentBgmLength => _bgmSource.clip.length;
 
     private Coroutine _fadeRoutine;
 
@@ -40,7 +41,6 @@ public class SoundManager : MonoBehaviour, IManager
         _bgmSource.clip = Resources.Load<AudioClip>
             ($"{BGM_STAGE_PATH}{bgmType}");
         _bgmSource.Play();
-        DataManager.Instance.SetBGMClipLength(_bgmSource.clip.length);
         _currentStageBgm = bgmType;
     }
 

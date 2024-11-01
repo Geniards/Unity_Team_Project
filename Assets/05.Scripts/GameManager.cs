@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
         InitializeManagers();
         _timerIntervalSec = new WaitForSeconds(_checkInterval);
         Application.targetFrameRate = 120;
-        DataManager.Instance.SetStageNumber(1);
     }
 
     private void InitializeManagers()
@@ -68,7 +67,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartProgressTimer()
     {
         float timer = 0;
-        float breakPoint = DataManager.Instance.CurrentBGMClipLength -
+        float breakPoint = SoundManager.Instance.CurrentBgmLength -
             DataManager.Instance.SkipSpawnTimeOffset;
         
         bool isBreaked = false;

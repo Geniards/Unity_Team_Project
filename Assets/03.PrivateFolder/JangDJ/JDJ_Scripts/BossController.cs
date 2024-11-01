@@ -34,7 +34,6 @@ public class BossController : MonoBehaviour
     private void RegistMyData()
     {
         DataManager.Instance.SetBossData(this);
-        DataManager.Instance.SetBossHP(_stat.Hp);
     }
 
     private void InitStates()
