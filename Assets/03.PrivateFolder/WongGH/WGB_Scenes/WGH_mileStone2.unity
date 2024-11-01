@@ -226,14 +226,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3277397374000381459, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958838427282727952, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
-      propertyPath: m_Offset.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7476704526975109616, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -281,10 +273,6 @@ PrefabInstance:
     - target: {fileID: 7476704526975109621, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7476704526975109623, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
-      propertyPath: m_SortingOrder
-      value: -500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
@@ -481,6 +469,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[5].TargetPool
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892206162165546791, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _prefabs.Array.data[5].TargetPrefab
+      value: 
+      objectReference: {fileID: 1248954901914886333, guid: 733a4db624b23b5468945bcd0fd01786, type: 3}
     - target: {fileID: 6892206162165546810, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _sfxList._sfxList.Array.data[1]._sfx
       value: 

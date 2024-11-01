@@ -15,6 +15,7 @@ public class WGH_AreaJudge : MonoBehaviour
 
     public Note Note { get; private set; }
     WGH_PlayerController _playerController;
+    WGH_FloatJudgeResult _floatResult;
     float _fPressTime;
     float _jPressTime;
     bool _isFPress;
@@ -26,12 +27,17 @@ public class WGH_AreaJudge : MonoBehaviour
     private bool _isInputedDoubleKey;                                   // 동시 입력 처리를 할 2번째 키를 입력받았는가를 확인할 bool 변수
     [SerializeField, Range(0.01f, 0.5f)] private float _judgeTime;
 
+    [Header("테스트용 임시 프리팹")]
+    [SerializeField] GameObject _great;
+    [SerializeField] GameObject _perfect;
+
     private void Start()
     {
         _checkTopPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.TOP);
         _checkMiddlePos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _checkBottomPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
+        _floatResult = GetComponent<WGH_FloatJudgeResult>();
         _playerRigid = _playerController.GetComponent<Rigidbody2D>();
     }
     
@@ -123,10 +129,12 @@ public class WGH_AreaJudge : MonoBehaviour
                 if (_distance <= _perfectDistance)
                 {
                     Note.OnHit(E_NoteDecision.Perfect, button);
+                    _floatResult.SpawnResult(E_ResultType.Perfect, hit.transform.position + new Vector3(0, 2, 0));
                 }
                 else if(_distance <= _greatDistance + 0.2f)
                 {
                     Note.OnHit(E_NoteDecision.Great, button);
+                    _floatResult.SpawnResult(E_ResultType.Perfect, hit.transform.position + new Vector3(0, 2, 0));
                 }
             }
         }

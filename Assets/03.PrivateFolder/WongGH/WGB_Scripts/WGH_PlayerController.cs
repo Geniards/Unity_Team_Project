@@ -26,9 +26,10 @@ public class WGH_PlayerController : MonoBehaviour
     bool _isJPress;                                    // j 입력 여부
     float _fPressTime;                                 // f 입력 시간을 받을 값
     float _jPressTime;                                 // j 입력 시간을 받을 값
-    float _approachDur;
-    float _contactDur;
-    int _meleeCount;
+    float _approachDur;                                // 접근까지 걸리는 시간
+    float _contactDur;                                 // 난투 시간
+    int _meleeCount;                                   // 난투 필요 타격 횟수
+    float _playerOutTime;                              // 플레이어가 화면 밖으로 나가는 시간
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
     public bool IsAir { get; private set; }            // 체공 여부
@@ -39,39 +40,53 @@ public class WGH_PlayerController : MonoBehaviour
         // 참조
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        
-
     }
     private void Start()
     {
         EventManager.Instance.AddAction(E_Event.BOSSRUSH, ApproachBoss, this);
         EventManager.Instance.AddAction(E_Event.ENTERCONTACT, ContactBoss, this);
         EventManager.Instance.AddAction(E_Event.CONTACTEND, ContactEnd, this);
-        _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.5f, -1, 0);
+        _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.8f, -1, 0);
         _startPos = transform.position;
         _judge = FindAnyObjectByType<WGH_AreaJudge>();
         _approachDur = DataManager.Instance.ApproachDuration; // 임시 0.2
         _contactDur = DataManager.Instance.ContactDuration; // 임시 2
         _meleeCount = DataManager.Instance.MeleeCount; // 임시 2
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, PlayerOut, this);
     }
     
+
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            EventManager.Instance.PlayEvent(E_Event.BOSSRUSH);
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            EventManager.Instance.PlayEvent(E_Event.ENTERCONTACT);
-        }
         if (_curHp <= 0 && !IsDied)
         {
             StartCoroutine(Die());
+        }
+    }
+
+    private void PlayerOut()
+    {
+        StartCoroutine(PlayerOutMove());
+        Debug.Log("플레이어 이동(성공화면)");
+
+    }
+    IEnumerator PlayerOutMove()
+    {
+        float _time = 0;
+        while (true)
+        {
+            _time += Time.deltaTime;
+            float t = _time / _playerOutTime;
+            if (_time < _playerOutTime)
+            {
+                transform.position = Vector3.Lerp(transform.position, GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM), t);
+            }
+            else
+            {
+                EventManager.Instance.PlayEvent(E_Event.STAGE_END);
+                yield break;
+            }
+            yield return null;
         }
     }
     /// <summary>
@@ -81,7 +96,6 @@ public class WGH_PlayerController : MonoBehaviour
     {
         SetAnim("ConfrontBoss");
         StartCoroutine(ApproachMove());
-        
     }
     IEnumerator ApproachMove()
     {
@@ -103,8 +117,6 @@ public class WGH_PlayerController : MonoBehaviour
             }
             yield return null;
         }
-        
-        
     }
     /// <summary>
     /// 보스 직면 끝
@@ -119,12 +131,13 @@ public class WGH_PlayerController : MonoBehaviour
         if (_meleeCount <= 0)
         {
             DataManager.Instance.Boss.GetMeleeResult(true);
+            DataManager.Instance.SetStageClear(true); // TODO : 동진님이 DataManager의 IsClear를 true로 설정하면 삭제해도 됨
         }
         else
         {
             DataManager.Instance.Boss.GetMeleeResult(false);
-            //CurHP -= 50;
-            Debug.Log("클리어실패");
+            CurHP -= 50;
+            Debug.Log("보스 난투 격파 실패");
         }
 
         float _time = 0;
@@ -163,10 +176,15 @@ public class WGH_PlayerController : MonoBehaviour
             if (_contactTime < _contactDur)
             {
                 // 난투
-                if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.J))
+                if (Input.GetKeyDown(KeyCode.J))
                 {
                     _meleeCount--;
                     SetAnim("GroundAttack");
+                }
+                else if(Input.GetKeyDown(KeyCode.F))
+                {
+                    _meleeCount--;
+                    SetAnim("FallAttack");
                 }
                 else if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.J))
                 {
@@ -242,19 +260,20 @@ public class WGH_PlayerController : MonoBehaviour
 
     IEnumerator Die()
     {
-        // 이벤트 (캐릭터 사망) 등록
+        // 이벤트 (캐릭터 사망) 호출 => 정빈님한테 스크롤링 정지 부탁
         EventManager.Instance.PlayEvent(E_Event.PLAYERDEAD);
+        DataManager.Instance.SetStageClear(false);
+        
         IsDied = true;
         
         _rigid.position = _startPos;
         SetAnim("Die");
         yield return new WaitForSeconds(0.02f);
         Destroy(_rigid);
-
+        yield return new WaitForSeconds(1f);
+        EventManager.Instance.PlayEvent(E_Event.STAGE_END);
         yield break;
     }
-
-    
     /// <summary>
     /// 애니메이션 시작 메서드
     /// </summary>
