@@ -15,6 +15,7 @@ public class WGH_AreaJudge : MonoBehaviour
 
     public Note Note { get; private set; }
     WGH_PlayerController _playerController;
+    WGH_FloatJudgeResult _floatResult;
     float _fPressTime;
     float _jPressTime;
     bool _isFPress;
@@ -36,6 +37,7 @@ public class WGH_AreaJudge : MonoBehaviour
         _checkMiddlePos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
         _checkBottomPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
+        _floatResult = GetComponent<WGH_FloatJudgeResult>();
         _playerRigid = _playerController.GetComponent<Rigidbody2D>();
     }
     
@@ -127,12 +129,12 @@ public class WGH_AreaJudge : MonoBehaviour
                 if (_distance <= _perfectDistance)
                 {
                     Note.OnHit(E_NoteDecision.Perfect, button);
-                    Instantiate(_perfect, hit.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+                    _floatResult.SpawnResult(E_ResultType.Perfect, hit.transform.position + new Vector3(0, 2, 0));
                 }
                 else if(_distance <= _greatDistance + 0.2f)
                 {
                     Note.OnHit(E_NoteDecision.Great, button);
-                    Instantiate(_great, hit.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+                    _floatResult.SpawnResult(E_ResultType.Perfect, hit.transform.position + new Vector3(0, 2, 0));
                 }
             }
         }

@@ -14,6 +14,10 @@ public class WGH_Perfect : MonoBehaviour/*, IPoolingObj*/
     }
     private void Update()
     {
+        Float();
+    }
+    public void Float()
+    {
         _destination = new Vector3(transform.position.x, transform.position.y + _time, transform.position.z);
         _time += Time.deltaTime;
 

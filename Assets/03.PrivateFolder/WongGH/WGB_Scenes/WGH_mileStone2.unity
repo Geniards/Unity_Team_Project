@@ -648,14 +648,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RayCheck
       objectReference: {fileID: 0}
-    - target: {fileID: 7750979793801150538, guid: 731cc634c2618ce4380c32da033e3c0f, type: 3}
-      propertyPath: _great
-      value: 
-      objectReference: {fileID: 3071670367471914970, guid: 774327af8bd05b1448acf1338e8172be, type: 3}
-    - target: {fileID: 7750979793801150538, guid: 731cc634c2618ce4380c32da033e3c0f, type: 3}
-      propertyPath: _perfect
-      value: 
-      objectReference: {fileID: 1484715254705799817, guid: 8437bbdabb943564daaa298928f42917, type: 3}
     - target: {fileID: 7750979793801150539, guid: 731cc634c2618ce4380c32da033e3c0f, type: 3}
       propertyPath: m_RootOrder
       value: 5
