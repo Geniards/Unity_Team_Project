@@ -327,7 +327,6 @@ public class BossDead : BossState, IState
         {
             SoundManager.Instance.SetBGMVolume(DataManager.Instance.BGMVolume/2);
             _boss.transform.position = _destination;
-            _boss.Dead();
             SoundManager.Instance.FadeBGM(false, 10f, 0.02f);
             return;
         }

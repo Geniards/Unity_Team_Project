@@ -47,7 +47,17 @@ public class DataManager : MonoBehaviour, IManager
     private int _meleeCount;
     public int MeleeCount => _meleeCount;
 
+    private bool _isStageClear;
+    public bool IsStageClear => _isStageClear;
+
+    public float SceneFadeDuration => 1f;
+
     public float PlayerMaxHP => _settingData.PlayerMaxHP;
+
+    public void SetStageClear(bool value)
+    {
+        _isStageClear = value;
+    }
 
     public void SetBossData(BossController boss)
     {

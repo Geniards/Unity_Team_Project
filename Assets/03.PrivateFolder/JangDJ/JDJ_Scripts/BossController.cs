@@ -65,9 +65,9 @@ public class BossController : MonoBehaviour
         CurrentState.Enter();
     }
 
-    public void Dead()
+    public void DeadActionEnd()
     {
-        Destroy(this.gameObject); // 임시
+        EventManager.Instance.PlayEvent(E_Event.BOSSDEAD);
     }
 
     public float OnDamage(float damage)

@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 9049651221526991079}
   - component: {fileID: 8991830465206432017}
   - component: {fileID: 9184231887329880525}
+  - component: {fileID: 4901487628511819690}
   m_Layer: 0
   m_Name: black_knight
   m_TagString: Untagged
@@ -669,6 +670,19 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
+--- !u!114 &4901487628511819690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050944055318116883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcaa6b7882fcfe54ca08c02246b9fa47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boss: {fileID: 40376031414678128}
 --- !u!1 &9050944055344127583
 GameObject:
   m_ObjectHideFlags: 0
