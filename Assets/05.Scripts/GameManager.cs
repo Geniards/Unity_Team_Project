@@ -75,8 +75,6 @@ public class GameManager : MonoBehaviour
         float timer = 0;
         float breakPoint = DataManager.Instance.CurrentBGMClipLength -
             DataManager.Instance.SkipSpawnTimeOffset;
-        //float breakDuration = DataManager.Instance.SkipSpawnTimeOffset / 
-        //    DataManager.Instance.CurrentBGMClipLength;
         bool isBreaked = false;
 
         while (true)
@@ -88,13 +86,25 @@ public class GameManager : MonoBehaviour
 
             if (timer >= breakPoint && isBreaked == false)
             {
-                SoundManager.Instance.FadeBGM(false, 4f);
+                SoundManager.Instance.FadeBGM(false,3f);
+                SoundManager.Instance.PlayBossBGM();
+                Mediator.AllNoteReturn();
                 Director.SetSpawnSkip(true);
                 isBreaked = true;
             }
         }
     }
     
+    public void CreateBoss()
+    {
+        BossController boss =
+            Instantiate(Resources.Load<GameObject>($"Boss/Boss_{DataManager.Instance.StageNumber}")).
+            GetComponent<BossController>();
+            
+
+        boss.Initialize();
+    }
+
     /// <summary>
     /// 진행시간의 타이머를 종료시킵니다.
     /// </summary>
@@ -103,7 +113,7 @@ public class GameManager : MonoBehaviour
         if (_stageTimeRoutine != null)
             StopCoroutine(_stageTimeRoutine);
 
-        SoundManager.Instance.PlayBossBGM();
+        //SoundManager.Instance.PlayBossBGM();
     }
 
     private void Update()
