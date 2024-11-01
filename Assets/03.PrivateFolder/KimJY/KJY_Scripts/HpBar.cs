@@ -11,6 +11,7 @@ public class HpBar : MonoBehaviour, IValuableUI
     private void Start()
     {
         SetValue(200);
+        //UIManager.
     }
 
     public void SetValue(float value)
