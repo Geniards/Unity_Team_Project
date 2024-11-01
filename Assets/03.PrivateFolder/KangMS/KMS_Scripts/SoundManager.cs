@@ -73,6 +73,12 @@ public class SoundManager : MonoBehaviour, IManager
      
      public void SetBGMVolume(float value)
      {
+        if (_bgmSource == null)
+        {
+            Debug.LogWarning("BGM 소스가 존재하지 않습니다.");
+            return;
+        }
+
         _bgmSource.volume = value;
         DataManager.Instance.SetBGMVolume(value);
      }

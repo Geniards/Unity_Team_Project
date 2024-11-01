@@ -30,6 +30,7 @@ public class PopupManager : UI_Base
 
     private void Awake()
     {
+        popupAnimator = popup.GetComponent<Animator>();
         popup.SetActive(false);
         DontDestroyOnLoad(this);
         _instance = this;
