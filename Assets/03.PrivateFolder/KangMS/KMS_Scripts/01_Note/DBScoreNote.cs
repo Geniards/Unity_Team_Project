@@ -50,30 +50,30 @@ public class DBScoreNote : Note, IPoolingObj
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Initialize(endPoint, speed, scoreValue);
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        Initialize(endPoint, speed, scoreValue);
 
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-            OnHit(E_NoteDecision.Perfect, E_Boutton.F_BOUTTON);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.S))
+    //        OnHit(E_NoteDecision.Perfect, E_Boutton.F_BOUTTON);
 
-        if (Input.GetKeyDown(KeyCode.D))
-            OnHit(E_NoteDecision.Perfect, E_Boutton.J_BOUTTON);
+    //    if (Input.GetKeyDown(KeyCode.D))
+    //        OnHit(E_NoteDecision.Perfect, E_Boutton.J_BOUTTON);
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Note.isBoss = true;
-            Debug.Log("boss On");
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            Note.isBoss = false;
-            Debug.Log("boss Off");
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.Q))
+    //    {
+    //        Note.isBoss = true;
+    //        Debug.Log("boss On");
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.W))
+    //    {
+    //        Note.isBoss = false;
+    //        Debug.Log("boss Off");
+    //    }
+    //}
     
     public override float GetDamage()
     {

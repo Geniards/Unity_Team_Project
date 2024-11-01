@@ -32,7 +32,7 @@ public abstract class Note : MonoBehaviour
         this.length = length;
 
         // Note 생성 시 중재자에 등록
-        GameManager.Mediator.Register(this);
+        //GameManager.Mediator.Register(this);
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
