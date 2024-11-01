@@ -46,7 +46,7 @@ public class WGH_PlayerController : MonoBehaviour
         EventManager.Instance.AddAction(E_Event.BOSSRUSH, ApproachBoss, this);
         EventManager.Instance.AddAction(E_Event.ENTERCONTACT, ContactBoss, this);
         EventManager.Instance.AddAction(E_Event.CONTACTEND, ContactEnd, this);
-        _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.5f, -1, 0);
+        _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.8f, -1, 0);
         _startPos = transform.position;
         _judge = FindAnyObjectByType<WGH_AreaJudge>();
         _approachDur = DataManager.Instance.ApproachDuration; // 임시 0.2
