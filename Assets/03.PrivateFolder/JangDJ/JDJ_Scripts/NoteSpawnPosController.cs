@@ -42,7 +42,7 @@ public class NoteSpawnPosController : MonoBehaviour
     private void SetSpawnPos()
     {
         float minOffsetX = 20f;
-        int speed = DataManager.Instance.GameSpeed;
+        float speed = DataManager.Instance.GameSpeed;
 
         for (int i = 1; i < 30; i++)
         {
