@@ -9,7 +9,7 @@ public class TestAnimationManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.TestAnimationManager = this;
+        //GameManager.TestAnimationManager = this;
 
     }
 

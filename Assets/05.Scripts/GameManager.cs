@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
         InitializeManagers();
         _timerIntervalSec = new WaitForSeconds(_checkInterval);
         Application.targetFrameRate = 120;
-        DataManager.Instance.SetStageNumber(1);
     }
 
     private void InitializeManagers()
@@ -58,7 +57,7 @@ public class GameManager : MonoBehaviour
         DataManager.Instance.SetPlayState(true);
         SoundManager.Instance.PlayBGM(bgm);
         Director.Initailize();
-        Director.StartSpawnNotes(bgm,4);
+        Director.StartSpawnNotes(bgm, 4);
         _stageTimeRoutine = StartCoroutine(StartProgressTimer());
     }
 
@@ -68,13 +67,16 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartProgressTimer()
     {
         float timer = 0;
-        float breakPoint = DataManager.Instance.CurrentBGMClipLength -
+        float breakPoint = SoundManager.Instance.CurrentBgmLength -
             DataManager.Instance.SkipSpawnTimeOffset;
+
         bool isBreaked = false;
+        float progress;
 
         while (true)
         {
-            DataManager.Instance.SetProgress(timer);
+            progress = timer / breakPoint;
+            DataManager.Instance.SetProgress(progress);
 
             yield return _timerIntervalSec;
             timer += _checkInterval;
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviour
             {
                 EventManager.Instance.PlayEvent(E_Event.NOTE_CLEAR);
                 EventManager.Instance.PlayEvent(E_Event.SPAWN_STOP);
-                SoundManager.Instance.FadeBGM(false,3f);
+                SoundManager.Instance.FadeBGM(false, 3f);
                 SoundManager.Instance.PlayBossBGM();
                 Note.isBoss = true;
 
@@ -91,7 +93,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
+
     public void CreateBoss()
     {
         EventManager.Instance.PlayEvent(E_Event.SPAWN_START);
@@ -99,7 +101,7 @@ public class GameManager : MonoBehaviour
         BossController boss =
             Instantiate(Resources.Load<GameObject>($"Boss/Boss_{DataManager.Instance.StageNumber}")).
             GetComponent<BossController>();
-            
+
         boss.Initialize();
     }
 
