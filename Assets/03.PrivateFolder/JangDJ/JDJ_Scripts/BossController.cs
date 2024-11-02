@@ -93,6 +93,8 @@ public class BossController : MonoBehaviour
 
     public void GetMeleeResult(bool result)
     {
+        Debug.Log(result);
+
         if (result == true)
             SetState(DeadState);
         else

@@ -3,7 +3,9 @@ using UnityEngine;
 public class BossAnimator : MonoBehaviour
 {
     private const string AttackKey = "Attack";
-    private const string BossDefeatKey = "BossDefeat";
+    //private const string BossDefeatKey = "BossDefeat";
+    private const string BOSSWIN_KEY = "Fail";
+    private const string BOSSDEFEAT_KEY = "Success";
 
     [SerializeField] private Animator _anim;
 
@@ -14,12 +16,12 @@ public class BossAnimator : MonoBehaviour
 
     public void PlayBossWinAnim()
     {
-        _anim.SetBool(BossDefeatKey, false);
+        _anim.Play(BOSSWIN_KEY);
     }
 
-    public void PlayBossDefeatAnim()
+    public void PlayBossDeadAnim()
     {
-        _anim.SetBool(BossDefeatKey, true);
+        _anim.Play(BOSSDEFEAT_KEY);
     }
 
 }

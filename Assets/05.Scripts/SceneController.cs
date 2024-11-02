@@ -39,6 +39,78 @@ public class SceneController : MonoBehaviour, IManager
         //EventManager.Instance.AddAction(E_Event.CHANGED_SCENE, StartSceneFadeInFX, this); // 씬 매니저 담당
     }
 
+    /// <summary>
+    /// fadeType == true, 검은안개가 사라지는 루틴
+    /// </summary>
+    private IEnumerator FadeInRoutine(float duration)
+    {
+        float timer = 0;
+        Color tempColor = new Color(0, 0, 0, 1);
+        _fadePanelImage.color = tempColor;
+        float alpha = tempColor.a;
+
+        while (true)
+        {
+            timer += Time.deltaTime;
+            float t = timer / duration;
+
+            tempColor.a = Mathf.Lerp(1, 0, t);
+            _fadePanelImage.color = tempColor;
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeOutRoutine(float duration)
+    {
+        float timer = 0;
+        Color tempColor = new Color(0, 0, 0, 0);
+        _fadePanelImage.color = tempColor;
+        float alpha = tempColor.a;
+
+        while (true)
+        {
+            timer += Time.deltaTime;
+            float t = timer / duration;
+
+            tempColor.a = Mathf.Lerp(0, 1, t);
+            _fadePanelImage.color = tempColor;
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeFXSceneChange(E_SceneType sceneType)
+    {
+        float fadeInTime = _screenFadeTimes[(int)_curScene].FadeInTime;
+        float fadeOutTime = _screenFadeTimes[(int)sceneType].FadeOutTime;
+
+        yield return FadeOutRoutine(fadeOutTime);
+
+        yield return SceneManager.LoadSceneAsync((int)sceneType + 1);
+
+        yield return FadeInRoutine(fadeInTime);
+    }
+
+    public void ShowResultScene()
+    {
+        bool clear = DataManager.Instance.IsStageClear;
+
+        if (clear == true)
+        {
+            //SceneManager.LoadScene(성공씬)        
+        }
+        else
+        {
+            //SceneManager.LoadScene(실패씬)
+        }
+    }
+
+    public void LoadScene(E_SceneType sceneType)
+    {
+        SceneManager.LoadScene((int)sceneType);
+    }
+
     //private void RegistScenesToTable()
     //{
     //    for (int i = 0; i < (int)E_SceneType.E_SCENETYPE_MAX; i++)
@@ -72,63 +144,7 @@ public class SceneController : MonoBehaviour, IManager
     //    _fadeRoutine = StartCoroutine(FadeRoutine(duration));
     //}
 
-    /// <summary>
-    /// fadeType == true, 검은안개가 사라지는 루틴
-    /// </summary>
-    private IEnumerator FadeInRoutine(float duration)
-    {
-        float timer = 0;
-        Color color = new Color(1, 1, 1, 1);
-        float alpha = color.a;
 
-        while (true)
-        {
-            timer += Time.deltaTime;
-            float t = timer / duration;
-
-
-
-            yield return null;
-        }
-    }
-
-    private IEnumerator FadeOutRoutine(float duration)
-    {
-        // ui 요소로 연출
-
-        yield break;
-    }
-
-    private IEnumerator FadeFXSceneChange(E_SceneType sceneType)
-    {
-        float fadeInTime = _screenFadeTimes[(int)_curScene].FadeInTime;
-        float fadeOutTime = _screenFadeTimes[(int)sceneType].FadeOutTime;
-
-        yield return FadeOutRoutine(fadeOutTime);
-
-        yield return SceneManager.LoadSceneAsync((int)sceneType + 1);
-
-        yield return FadeInRoutine(fadeInTime);
-    }
-
-    public void ShowResultScene()
-    {
-        bool clear = DataManager.Instance.IsStageClear;
-
-        if(clear == true)
-        { 
-            //SceneManager.LoadScene(성공씬)        
-        }
-        else
-        {
-            //SceneManager.LoadScene(실패씬)
-        }
-    }
-
-    public void LoadScene(E_SceneType sceneType)
-    {
-        SceneManager.LoadScene((int)sceneType+1);
-    }
 
 
 }

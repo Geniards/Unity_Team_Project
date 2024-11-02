@@ -61,10 +61,9 @@ public class DataManager : MonoBehaviour, IManager
     public int BPM => _stageData.BPM;
     public float GameSpeed => _stageData.NoteSpeed;
     public float BossHp => _stageData.BossHP;
-    public int StageNumber => _stageData.StageNumber -1;
+    public int StageNumber => _stageData.StageNumber;
     public int MeleeCount => _stageData.MeleeCount;
 
-    public int PopupStageNum => SelectedStageData.StageNumber;
     public string StageName => SelectedStageData.StageName;
     public string SongTitle => SelectedStageData.SongTitle;
     public string StageDescription => SelectedStageData.Description;

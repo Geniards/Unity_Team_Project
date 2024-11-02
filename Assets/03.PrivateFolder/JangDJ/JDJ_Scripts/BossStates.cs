@@ -308,7 +308,7 @@ public class BossDead : BossState, IState
 
     public void Enter()
     {
-        _boss.Anim.PlayBossDefeatAnim();
+        _boss.Anim.PlayBossDeadAnim();
         _time = 0;
         _t = 0;
         _duration = 0.2f;

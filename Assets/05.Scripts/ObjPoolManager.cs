@@ -52,7 +52,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
     /// </summary>
     public GameObject GetObject(E_Pool poolType)
     {
-        return GetObject<GameObject>(poolType);
+        return _pools[poolType].GetObject();
     }
 
     public GameObject GetObject(E_Pool poolType, Transform parent)

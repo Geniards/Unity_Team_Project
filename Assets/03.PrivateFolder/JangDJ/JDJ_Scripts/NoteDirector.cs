@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
@@ -81,12 +82,27 @@ public class NoteDirector : MonoBehaviour
 
     private IEnumerator AutoSpawnRoutine(E_StageBGM bgm, int restBeatCount)
     {
-        double nextSpawnTime = 0d;
+        
         _beatInterval = GetBPMtoIntervalSec();
-        double firstNoteTime = (_beatInterval * restBeatCount) - _noteArriveDuration; // 4박자 뒤의 첫 노트 생성 시간
-                                          
+
+        double checkedfourBeatSec = _beatInterval * restBeatCount;
+        double fourBeatSec = checkedfourBeatSec;
+
+        while (true)
+        {
+            if (checkedfourBeatSec > _noteArriveDuration
+                || restBeatCount == 0)
+                break;
+
+            checkedfourBeatSec += fourBeatSec;
+        }
+
+        double firstNoteTime
+            = AudioSettings.dspTime + checkedfourBeatSec - _noteArriveDuration; // 4박자 뒤의 첫 노트 생성 시간
+        
+        double nextSpawnTime = firstNoteTime;
+
         _spawner.RegistPattern(1); // 임시 테스트 코드
-        nextSpawnTime = AudioSettings.dspTime + GetBPMtoIntervalSec() + firstNoteTime;
 
         while (true)
         {
@@ -97,19 +113,24 @@ public class NoteDirector : MonoBehaviour
 
             if(AudioSettings.dspTime >= nextSpawnTime)
             {
-                if (_spawner.IsLastNote == true)
-                {
-                    _spawner.RegistPattern(1); // 임시 테스트 코드
-                }
+                Spawn();
 
-                if(_isSkipSpawn == false)
-                    _spawner.SpawnNote(_noteSpeed);
-                
                 nextSpawnTime += GetBPMtoIntervalSec();
             }
             
             yield return null;
         }
+    }
+
+    private void Spawn()
+    {
+        if (_spawner.IsLastNote == true)
+        {
+            _spawner.RegistPattern(1); // 임시 테스트 코드
+        }
+
+        if (_isSkipSpawn == false)
+            _spawner.SpawnNote(_noteSpeed);
     }
 
     private void OnDisable()
