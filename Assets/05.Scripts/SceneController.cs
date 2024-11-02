@@ -23,11 +23,7 @@ public class SceneController : MonoBehaviour, IManager
     {
         _instance = this;
         _fadeSec = new WaitForSeconds(DataManager.Instance.SceneFadeDuration);
-        //RegistScenesToTable();
-        //CurScene = _sceneTable[E_SceneType.START];
-
-        //EventManager.Instance.AddAction(E_Event.STAGE_END, StartSceneFadeOutFX, this);
-        //EventManager.Instance.AddAction(E_Event.CHANGED_SCENE, StartSceneFadeInFX, this); // 씬 매니저 담당
+        EventManager.Instance.AddAction(E_Event.STAGE_END, ShowResultScene, this);
     }
 
     /// <summary>
@@ -109,11 +105,11 @@ public class SceneController : MonoBehaviour, IManager
 
         if (clear == true)
         {
-            //SceneManager.LoadScene(성공씬)        
+            LoadScene(E_SceneType.CLEAR);
         }
         else
         {
-            //SceneManager.LoadScene(실패씬)
+            LoadScene(E_SceneType.FAIL);
         }
     }
 

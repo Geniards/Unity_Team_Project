@@ -262,6 +262,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _screenFadeTimes.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _screenFadeTimes.Array.data[5].SceneType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _screenFadeTimes.Array.data[6].SceneType
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _screenFadeTimes.Array.data[0].FadeInTime
       value: 10
       objectReference: {fileID: 0}
@@ -274,12 +286,28 @@ PrefabInstance:
       value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _screenFadeTimes.Array.data[5].FadeInTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _screenFadeTimes.Array.data[6].FadeInTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _screenFadeTimes.Array.data[3].FadeOutTime
       value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: _screenFadeTimes.Array.data[4].FadeOutTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _screenFadeTimes.Array.data[5].FadeOutTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076672358624917954, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
+      propertyPath: _screenFadeTimes.Array.data[6].FadeOutTime
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6892206162165546785, guid: d4fbd73968ac4a3478604f878f704b7c, type: 3}
       propertyPath: m_RootOrder

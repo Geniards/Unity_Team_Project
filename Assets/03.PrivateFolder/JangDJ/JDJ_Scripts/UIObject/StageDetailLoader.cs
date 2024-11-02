@@ -25,5 +25,11 @@ public class StageDetailLoader : MonoBehaviour
         _stageNumber.text = $"Stage{data.StageNumber}";
         _songTitle.text = data.SongTitle;
         _description.text = data.Description;
+        _mainImg.sprite = LoadTitleImage(data.StageNumber);
+    }
+
+    private Sprite LoadTitleImage(int stageNumber)
+    {
+        return Resources.Load<Sprite>($"Images/Stage/Title/Stage{stageNumber}");
     }
 }

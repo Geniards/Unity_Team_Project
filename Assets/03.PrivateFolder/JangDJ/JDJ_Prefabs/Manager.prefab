@@ -457,7 +457,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676517722}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -556,6 +556,7 @@ MonoBehaviour:
     _bossStat:
       _hp: 0
       _name: 
+      _score: 0
 --- !u!114 &6892206162165546791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,20 +598,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screenFadeTimes:
   - SceneType: 0
-    FadeOutTime: 0.25
     FadeInTime: 0.5
+    FadeOutTime: 0.25
   - SceneType: 1
-    FadeOutTime: 0.25
     FadeInTime: 0.25
+    FadeOutTime: 0.25
   - SceneType: 2
-    FadeOutTime: 0.25
     FadeInTime: 0.25
-  - SceneType: 3
-    FadeOutTime: 1
-    FadeInTime: 0.5
-  - SceneType: 4
     FadeOutTime: 0.25
+  - SceneType: 3
+    FadeInTime: 0.5
+    FadeOutTime: 1
+  - SceneType: 4
     FadeInTime: 1
+    FadeOutTime: 0.25
   _fadePanelImage: {fileID: 896831289}
 --- !u!114 &6892206162165546789
 MonoBehaviour:

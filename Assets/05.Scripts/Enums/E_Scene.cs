@@ -6,7 +6,8 @@ public enum E_SceneType
     LOAD,
     LOBBY,
     STAGE,
-    RESULT,
+    CLEAR,
+    FAIL,
     E_SCENETYPE_MAX,
 
 }
