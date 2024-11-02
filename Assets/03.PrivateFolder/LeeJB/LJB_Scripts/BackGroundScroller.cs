@@ -15,6 +15,10 @@ public class BackGroundScroller : MonoBehaviour
     {
         InitializeTiles();
         StartCoroutine(StartScrollingAfterDelay(_scrollDelay));
+
+        // 보스사망 및 플레이어 사망 이벤트가 발생하면 StopScrolling 메서드 실행
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, StopScrolling, this);
+        EventManager.Instance.AddAction(E_Event.PLAYERDEAD, StopScrolling, this);
     }
 
     private void Update()
@@ -56,12 +60,12 @@ public class BackGroundScroller : MonoBehaviour
     {
         for (int index = 0; index < _tiles.Length; index++)
         {
-            _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime; // 바닥 타일을 왼쪽으로 이동
+            _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime;
 
             // 타일이 화면 왼쪽 경계를 벗어나면 오른쪽으로 재배치
-            if (_tiles[index].transform.position.x <= -_tileWidth * 1.5f) // 타일이 더 왼쪽으로 이동한 후 재배치
+            if (_tiles[index].transform.position.x <= -_tileWidth * 1.5f)
             {
-                float rightMost = GetRightMostTile(); // 타일의 가장 오른쪽 좌표에 타일 재배치
+                float rightMost = GetRightMostTile();
                 _tiles[index].transform.position = new Vector3(rightMost + _tileWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);
             }
         }
@@ -73,14 +77,22 @@ public class BackGroundScroller : MonoBehaviour
     /// <returns>가장 오른쪽 타일의 X좌표</returns>
     private float GetRightMostTile()
     {
-        float maxX = _tiles[0].transform.position.x; // 타일 가장 오른쪽 부분의 X위치 변수
+        float maxX = _tiles[0].transform.position.x;
 
-        for (int index = 1; index < _tiles.Length; index++) // 타일 X위치 값 업데이트
+        for (int index = 1; index < _tiles.Length; index++)
         {
             if (_tiles[index].transform.position.x > maxX)
                 maxX = _tiles[index].transform.position.x;
         }
 
-        return maxX; // X위치 값 반환
+        return maxX;
+    }
+
+    /// <summary>
+    /// 스크롤 정지 메서드
+    /// </summary>
+    private void StopScrolling()
+    {
+        _isScrolling = false;
     }
 }

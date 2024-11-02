@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class FloorScroller : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _tiles; // 타일 프리팹 배열
-    [SerializeField] private float _scrollSpeed; // 바닥 스크롤 속도
-    [SerializeField] private float _tileWidth; // 각 타일의 가로 길이
-    [SerializeField] private float _scrollDelay; // 스크롤 시작 지연 시간
+    [SerializeField] private GameObject[] _tiles;
+    [SerializeField] private float _scrollSpeed;
+    [SerializeField] private float _tileWidth;
+    [SerializeField] private float _scrollDelay;
 
     private bool _isScrolling = false;
 
@@ -15,6 +15,8 @@ public class FloorScroller : MonoBehaviour
     {
         InitializeTiles();
         StartCoroutine(StartScrollingAfterDelay(_scrollDelay));
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, StopScrolling, this);
+        EventManager.Instance.AddAction(E_Event.PLAYERDEAD, StopScrolling, this);
     }
 
     private void Update()
@@ -25,9 +27,6 @@ public class FloorScroller : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 타일 초기 위치 설정 메서드
-    /// </summary>
     private void InitializeTiles()
     {
         for (int index = 0; index < _tiles.Length; index++)
@@ -40,46 +39,41 @@ public class FloorScroller : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 일정 시간 지연 후 스크롤을 시작하는 코루틴
-    /// </summary>
     private IEnumerator StartScrollingAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _isScrolling = true; // 지연 시간이 지난 후 스크롤링 활성화
+        _isScrolling = true;
     }
 
-    /// <summary>
-    /// 바닥 이동 메서드
-    /// </summary>
     private void MoveFloor()
     {
         for (int index = 0; index < _tiles.Length; index++)
         {
-            _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime; // 바닥 타일을 왼쪽으로 이동
+            _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime;
 
-            // 타일이 화면 왼쪽 경계를 벗어나면 오른쪽으로 재배치
-            if (_tiles[index].transform.position.x <= -_tileWidth * 15f) // 타일이 더 왼쪽으로 이동한 후 재배치
+            if (_tiles[index].transform.position.x <= -_tileWidth * 15f)
             {
-                float rightMost = GetRightMostTile(); // 타일의 가장 오른쪽 좌표에 타일 재배치
+                float rightMost = GetRightMostTile();
                 _tiles[index].transform.position = new Vector3(rightMost + _tileWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);
             }
         }
     }
 
-    /// <summary>
-    /// 가장 오른쪽 타일의 X좌표를 반환하는 메서드
-    /// </summary>
     private float GetRightMostTile()
     {
-        float maxX = _tiles[0].transform.position.x; // 타일 가장 오른쪽 부분의 X위치 변수
+        float maxX = _tiles[0].transform.position.x;
 
-        for (int index = 1; index < _tiles.Length; index++) // 타일 X위치 값 업데이트
+        for (int index = 1; index < _tiles.Length; index++)
         {
             if (_tiles[index].transform.position.x > maxX)
                 maxX = _tiles[index].transform.position.x;
         }
 
-        return maxX; // X위치 값 반환
+        return maxX;
+    }
+
+    private void StopScrolling()
+    {
+        _isScrolling = false;
     }
 }
