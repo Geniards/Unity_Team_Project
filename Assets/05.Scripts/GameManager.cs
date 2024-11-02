@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public static NoteDirector Director;
     public static NoteMediator Mediator;
+    public static AnimationManager AnimationChanger;
 
     private Coroutine _stageTimeRoutine;
     private WaitForSeconds _timerIntervalSec;
