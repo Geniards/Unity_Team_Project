@@ -34,6 +34,7 @@ public class WGH_PlayerController : MonoBehaviour
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
     public bool IsAir { get; private set; }            // 체공 여부
+    public bool IsContact { get; private set; }        // 난투 중인지 여부
     
     private void Awake()
     {
@@ -74,8 +75,6 @@ public class WGH_PlayerController : MonoBehaviour
     private void PlayerOut()
     {
         StartCoroutine(PlayerOutMove());
-        
-
     }
     IEnumerator PlayerOutMove()
     {
@@ -106,7 +105,7 @@ public class WGH_PlayerController : MonoBehaviour
     }
     IEnumerator ApproachMove()
     {
-        _judge.enabled = false;
+        //_judge.enabled = false;
         float _time = 0;
 
         while (true)
@@ -143,7 +142,7 @@ public class WGH_PlayerController : MonoBehaviour
         else
         {
             DataManager.Instance.Boss.GetMeleeResult(false);
-            // 점수 반토막 TODO : 동진님께 cur점수 반토막 기능 요청( 근데 실패를 했다면 최종적으로 점수를 반토막 낸다 )
+            _judge.SetComboReset();
             CurHP -= 1;
             Debug.Log("보스 난투 격파 실패");
         }
@@ -188,11 +187,15 @@ public class WGH_PlayerController : MonoBehaviour
                 {
                     _meleeCount--;
                     SetAnim("GroundAttack");
+                    _judge.AddCombo();
+                    _judge.AddPerfectCount();
                 }
                 else if(Input.GetKeyDown(KeyCode.F))
                 {
                     _meleeCount--;
-                    SetAnim("FallAttack");
+                    SetAnim("MiddleAttack");
+                    _judge.AddCombo();
+                    _judge.AddPerfectCount();
                 }
                 else if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.J))
                 {
@@ -219,14 +222,27 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Note note) && !IsDamaged && !IsDied)
+        if (collision.gameObject.TryGetComponent(out Note note) && !IsDamaged && !IsDied && !Note.isBoss)
         {
+            _judge.SetComboReset();
             SetAnim("OnDamage");
             IsDamaged = true;
 
             float _dmg = note.GetDamage();
             // TODO : 추후 수정예정
             CurHP -= 1;
+            StartCoroutine(Invincibility());
+            StartCoroutine(Clicker());
+        }
+        else if(collision.gameObject.TryGetComponent(out Note note2) && !IsDamaged && !IsDied && Note.isBoss)
+        {
+            _judge.SetComboReset();
+            SetAnim("OnDamage");
+            IsDamaged = true;
+
+            float _dmg = note.GetDamage();
+            // TODO : 추후 수정예정
+            CurHP -= 2;
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
         }
