@@ -65,10 +65,9 @@ public class LongScoreNote : Note
 
     public override void OnHit(E_NoteDecision decision, E_Boutton boutton)
     {
-        if (!_isTouching && !isMoving)
+        if (!_isTouching)
         {
             _isTouching = true;
-            isMoving = false;
             StartCoroutine(LongNoteCoroutine(decision));  // 롱 노트 진행
         }
     }
