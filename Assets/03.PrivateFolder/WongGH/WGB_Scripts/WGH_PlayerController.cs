@@ -11,6 +11,7 @@ public class WGH_PlayerController : MonoBehaviour
     [SerializeField] float _curHp;
     [SerializeField] float _clikerTime;                 // 깜빡임 속도
     [SerializeField] float _invincivilityTime;          // 무적시간
+    [SerializeField] float _playerOutTime;              // 플레이어가 화면 밖으로 나가는 시간
 
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
@@ -29,10 +30,11 @@ public class WGH_PlayerController : MonoBehaviour
     float _approachDur;                                // 접근까지 걸리는 시간
     float _contactDur;                                 // 난투 시간
     int _meleeCount;                                   // 난투 필요 타격 횟수
-    float _playerOutTime;                              // 플레이어가 화면 밖으로 나가는 시간
+
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
     public bool IsAir { get; private set; }            // 체공 여부
+    public bool IsContact { get; private set; }        // 난투 중인지 여부
     
     private void Awake()
     {
@@ -54,7 +56,13 @@ public class WGH_PlayerController : MonoBehaviour
         _meleeCount = DataManager.Instance.MeleeCount; // 임시 2
         EventManager.Instance.AddAction(E_Event.BOSSDEAD, PlayerOut, this);
     }
-    
+    /// <summary>
+    /// 클리어 시 체력비례 점수 메서드
+    /// </summary>
+    public int GetHpScore()
+    {
+        return (int)(CurHP * 100);
+    }
 
     private void Update()
     {
@@ -67,8 +75,6 @@ public class WGH_PlayerController : MonoBehaviour
     private void PlayerOut()
     {
         StartCoroutine(PlayerOutMove());
-        Debug.Log("플레이어 이동(성공화면)");
-
     }
     IEnumerator PlayerOutMove()
     {
@@ -76,7 +82,7 @@ public class WGH_PlayerController : MonoBehaviour
         while (true)
         {
             _time += Time.deltaTime;
-            float t = _time / _playerOutTime;
+            float t = (_time / _playerOutTime) / 10;
             if (_time < _playerOutTime)
             {
                 transform.position = Vector3.Lerp(transform.position, GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM), t);
@@ -99,7 +105,7 @@ public class WGH_PlayerController : MonoBehaviour
     }
     IEnumerator ApproachMove()
     {
-        _judge.enabled = false;
+        //_judge.enabled = false;
         float _time = 0;
 
         while (true)
@@ -131,11 +137,12 @@ public class WGH_PlayerController : MonoBehaviour
         if (_meleeCount <= 0)
         {
             DataManager.Instance.Boss.GetMeleeResult(true);
-            DataManager.Instance.SetStageClear(true); // TODO : 동진님이 DataManager의 IsClear를 true로 설정하면 삭제해도 됨
+            // DataManager.Instance.AddScore(100000);
         }
         else
         {
             DataManager.Instance.Boss.GetMeleeResult(false);
+            _judge.SetComboReset();
             CurHP -= 1;
             Debug.Log("보스 난투 격파 실패");
         }
@@ -180,11 +187,15 @@ public class WGH_PlayerController : MonoBehaviour
                 {
                     _meleeCount--;
                     SetAnim("GroundAttack");
+                    _judge.AddCombo();
+                    _judge.AddPerfectCount();
                 }
                 else if(Input.GetKeyDown(KeyCode.F))
                 {
                     _meleeCount--;
-                    SetAnim("FallAttack");
+                    SetAnim("MiddleAttack");
+                    _judge.AddCombo();
+                    _judge.AddPerfectCount();
                 }
                 else if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.J))
                 {
@@ -211,8 +222,9 @@ public class WGH_PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Note note) && !IsDamaged && !IsDied)
+        if (collision.gameObject.TryGetComponent(out Note note) && !IsDamaged && !IsDied && !Note.isBoss)
         {
+            _judge.SetComboReset();
             SetAnim("OnDamage");
             IsDamaged = true;
 
@@ -222,12 +234,25 @@ public class WGH_PlayerController : MonoBehaviour
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
         }
+        else if(collision.gameObject.TryGetComponent(out Note note2) && !IsDamaged && !IsDied && Note.isBoss)
+        {
+            _judge.SetComboReset();
+            SetAnim("OnDamage");
+            IsDamaged = true;
+
+            float _dmg = note.GetDamage();
+            // TODO : 추후 수정예정
+            CurHP -= 2;
+            StartCoroutine(Invincibility());
+            StartCoroutine(Clicker());
+        }
     }
     // 체공 시간 조절 코루틴
     public IEnumerator InAirTime()
     {
         _rigid.isKinematic = true;
         yield return new WaitForSeconds(_inAirTime);
+        if(_rigid != null )
         _rigid.isKinematic = false;
         yield break;
     }
