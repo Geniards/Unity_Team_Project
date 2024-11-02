@@ -16,18 +16,34 @@ public class DataManager : MonoBehaviour, IManager
         SetSFXVolume(0.2f);
         _stageData.BGM = E_StageBGM.TEST_NORMAL_01;
         _stageData.BPM = 60;
+        _settingData.MasterVolume = -20f;
+
+        LoadPrevData();
     }
     public void InitDatas()
     {
         _isStageClear = true;
     }
+
+    public void LoadPrevData()
+    {
+        if (PlayerPrefs.HasKey(SoundManager.MASTER_VOLUME))
+        {
+            _settingData.MasterVolume = PlayerPrefs.GetFloat(SoundManager.MASTER_VOLUME);
+            SoundManager.Instance.UpdateMasterMixer();
+        }
+    }
+
     #region 프로그램 기본 설정
     public int ObjpoolInitCreateCount => 15;
+    public float MasterVolume => _settingData.MasterVolume;
     public float BGMVolume => _settingData.BGMVolume;
     public float SFXVolume => _settingData.SFXVolume;
+
     public void SetBGMVolume(float value) { _settingData.BGMVolume = value; }
     public void SetSFXVolume(float value) { _settingData.SFXVolume = value; }
     #endregion
+
     #region 스테이지 기초 데이터
     public float PlayerMaxHP => 5;
     public int SirenCount => 4;
@@ -41,6 +57,7 @@ public class DataManager : MonoBehaviour, IManager
         UIManager.Instance.SetHPValue(ratio);
     }
     #endregion
+
     #region 스테이지 고유 데이터
     public int BPM => _stageData.BPM;
     public float GameSpeed => _stageData.NoteSpeed;
@@ -134,4 +151,5 @@ public struct GameSettingData
     public float BGMVolume;
     public float SFXVolume;
     public float GameSpeed;
+    public float MasterVolume;
 }

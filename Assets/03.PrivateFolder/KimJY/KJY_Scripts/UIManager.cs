@@ -2,11 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour, IManager
 {
+    #region BINDING KEY
+
+    
+
+    #endregion
+
     public static UIManager Instance { get; private set; }
 
     public void Init()
@@ -14,11 +21,10 @@ public class UIManager : MonoBehaviour, IManager
         Instance = this;
     }
 
-    #region 스테이지 씬
     public GameObject ProgressBar;
     public GameObject HpBar;
-    #endregion
-
+    
+    
     public void SetProgressValue(float value)
     {
         //if (ProgressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
@@ -34,5 +40,4 @@ public class UIManager : MonoBehaviour, IManager
         //    ui.SetValue(value);
         //}
     }
-
 }

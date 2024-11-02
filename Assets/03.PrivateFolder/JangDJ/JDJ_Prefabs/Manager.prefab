@@ -41,7 +41,7 @@ AudioSource:
   m_GameObject: {fileID: 185137563}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4166345557378142764, guid: 353a08013c38daa4b8cade099085ddc6, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.09
@@ -245,7 +245,7 @@ AudioSource:
   m_GameObject: {fileID: 1083170228}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7236057634645367548, guid: 353a08013c38daa4b8cade099085ddc6, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.17
@@ -478,11 +478,11 @@ GameObject:
   - component: {fileID: 6892206162165546785}
   - component: {fileID: 6892206162165546790}
   - component: {fileID: 564428007411113913}
+  - component: {fileID: 6892206162165546810}
   - component: {fileID: 6947623713489009007}
   - component: {fileID: 6892206162165546791}
   - component: {fileID: 4076672358624917954}
   - component: {fileID: 6892206162165546789}
-  - component: {fileID: 6892206162165546810}
   - component: {fileID: -2992256843229491813}
   m_Layer: 0
   m_Name: Manager
@@ -532,6 +532,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f4620eea8794443a953452c4627f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6892206162165546810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6892206162165546811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938245fa46e93664bbb7bdf84ae55e7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bgmSource: {fileID: 1083170230}
+  _sfxSource: {fileID: 185137565}
+  _sfxList:
+    _sfxList:
+    - _sfxType: 0
+      _sfx: {fileID: 8300000, guid: 1d3d50b421223884690cb2677af9de3b, type: 3}
+    - _sfxType: 1
+      _sfx: {fileID: 8300000, guid: 286bbd9e2bd32b24b9d655062229d3f6, type: 3}
+    - _sfxType: 2
+      _sfx: {fileID: 8300000, guid: 286bbd9e2bd32b24b9d655062229d3f6, type: 3}
+  _mixer: {fileID: 24100000, guid: 353a08013c38daa4b8cade099085ddc6, type: 2}
 --- !u!114 &6947623713489009007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,28 +648,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9701e247b9b1920478a8519ac49ebd7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6892206162165546810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6892206162165546811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 938245fa46e93664bbb7bdf84ae55e7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bgmSource: {fileID: 1083170230}
-  _sfxSource: {fileID: 185137565}
-  _sfxList:
-    _sfxList:
-    - _sfxType: 0
-      _sfx: {fileID: 8300000, guid: 1d3d50b421223884690cb2677af9de3b, type: 3}
-    - _sfxType: 1
-      _sfx: {fileID: 8300000, guid: 286bbd9e2bd32b24b9d655062229d3f6, type: 3}
-    - _sfxType: 2
-      _sfx: {fileID: 8300000, guid: 286bbd9e2bd32b24b9d655062229d3f6, type: 3}
 --- !u!114 &-2992256843229491813
 MonoBehaviour:
   m_ObjectHideFlags: 0
