@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
+    [Header("기본 애니메이터 컨트롤러")]
     [SerializeField] private RuntimeAnimatorController baseAnimatorController;
+    [Header("노트 애니메이션 데이터")]
     [SerializeField] private List<AnimationOverrideData> animationOverrideDataList;
+    [Header("보스 애니메이션 데이터")]
+    [SerializeField] private List<BossAnimOverrideData> bossAnimationOverrideDataList;
 
     private void Start()
     {
@@ -47,11 +51,55 @@ public class AnimationManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 보스 애니메이션에 대한 개별 AnimatorOverrideController 생성 및 반환
+    /// </summary>
+    public AnimatorOverrideController GetAnimationController(int stageNumber, string bossState, int clipIndex)
+    {
+        if (!baseAnimatorController)
+        {
+            Debug.LogError("baseAnimatorController가 할당되지 않았습니다.");
+            return null;
+        }
+
+        AnimatorOverrideController overrideController = new AnimatorOverrideController(baseAnimatorController);
+
+        foreach (var data in bossAnimationOverrideDataList)
+        {
+            if (data.stageNumber == stageNumber /*&& data.bossState == bossState*/)
+            {
+                AnimationClip selectedClip = GetAnimationClip(data, clipIndex);
+                if (selectedClip != null)
+                {
+                    // 보스의 기본 애니메이션 클립 이름이 "Run"이라고 가정
+                    overrideController["/*변경할 기본 클립 이름*/"] = selectedClip;
+                    return overrideController;
+                }
+                else
+                {
+                    Debug.LogWarning("보스 애니메이션 클립이 null입니다.");
+                }
+            }
+        }
+
+        Debug.LogWarning("해당 조건에 맞는 보스 애니메이션 데이터를 찾을 수 없습니다.");
+        return overrideController;
+    }
+
+    /// <summary>
     /// 애니메이션 클립 랜덤 선택
     /// </summary>
     private AnimationClip GetRandomClip(AnimationOverrideData data)
     {
         int randomIndex = Random.Range(0, data.playAnimClip.Count);
         return data.playAnimClip[randomIndex];
+    }
+
+    /// <summary>
+    /// 보스 애니메이션 클립 선택
+    /// </summary>
+    private AnimationClip GetAnimationClip(BossAnimOverrideData data, int clipIndex)
+    {
+        // 보스는 상태에 따른 하나의 애니메이션 클립을 갖는다고 가정
+        return data.playAnimClip[clipIndex];
     }
 }

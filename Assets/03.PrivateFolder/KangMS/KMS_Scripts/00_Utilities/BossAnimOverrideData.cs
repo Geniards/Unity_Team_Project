@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossAnimOverrideData : ScriptableObject
 {
     public int stageNumber;
-    public E_NoteType noteType;
-    public E_SpawnerPosY notePosition;
+    // 사용할 보스 Enum문이거나 상태
+    //
     public List<AnimationClip> playAnimClip;
 }
