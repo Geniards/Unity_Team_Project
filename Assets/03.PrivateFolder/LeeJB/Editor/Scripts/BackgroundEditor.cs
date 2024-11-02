@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class BackgroundEditor : EditorWindow
+public class BackgroundEditor : EditorWindow 
 {
     private GameObject tilePrefab;  // 타일 프리팹
     private int tileCount = 5;      // 생성할 타일 개수
     private float tileSpacing = 1.0f; // 타일 간격
 
-    [MenuItem("도구/배경 편집기")]
+    [MenuItem("도구/배경 에디터")]
     public static void ShowWindow()
     {
         GetWindow<BackgroundEditor>("배경 편집기");
