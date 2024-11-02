@@ -145,7 +145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &896831288
 RectTransform:
   m_ObjectHideFlags: 0
@@ -181,13 +181,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896831287}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -425,7 +425,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 32767
   m_TargetDisplay: 0
 --- !u!114 &1676517725
 MonoBehaviour:
@@ -439,10 +439,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -579,6 +579,10 @@ MonoBehaviour:
     TargetPrefab: {fileID: 5834100206960461235, guid: 8780d07b4c5e9174b850e35ee07f3113, type: 3}
   - TargetPool: 1
     TargetPrefab: {fileID: 1248954901914886333, guid: 733a4db624b23b5468945bcd0fd01786, type: 3}
+  - TargetPool: 7
+    TargetPrefab: {fileID: 3071670367471914970, guid: 774327af8bd05b1448acf1338e8172be, type: 3}
+  - TargetPool: 8
+    TargetPrefab: {fileID: 1484715254705799817, guid: 8437bbdabb943564daaa298928f42917, type: 3}
 --- !u!114 &4076672358624917954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,7 +595,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c12b95b0c5f6c47acc7eedb1fae378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadePanelImage: {fileID: 0}
+  _screenFadeTimes:
+  - SceneType: 0
+    FadeOutTime: 0.25
+    FadeInTime: 0.5
+  - SceneType: 1
+    FadeOutTime: 0.25
+    FadeInTime: 0.25
+  - SceneType: 2
+    FadeOutTime: 0.25
+    FadeInTime: 0.25
+  - SceneType: 3
+    FadeOutTime: 1
+    FadeInTime: 0.5
+  - SceneType: 4
+    FadeOutTime: 0.25
+    FadeInTime: 1
+  _fadePanelImage: {fileID: 896831289}
 --- !u!114 &6892206162165546789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,9 +642,9 @@ MonoBehaviour:
     _sfxList:
     - _sfxType: 0
       _sfx: {fileID: 8300000, guid: 1d3d50b421223884690cb2677af9de3b, type: 3}
-    - _sfxType: 4
-      _sfx: {fileID: 8300000, guid: 713aeabf8030a01499e3aa712f0ffdd7, type: 3}
-    - _sfxType: 5
+    - _sfxType: 1
+      _sfx: {fileID: 8300000, guid: 286bbd9e2bd32b24b9d655062229d3f6, type: 3}
+    - _sfxType: 2
       _sfx: {fileID: 8300000, guid: 286bbd9e2bd32b24b9d655062229d3f6, type: 3}
 --- !u!114 &-2992256843229491813
 MonoBehaviour:

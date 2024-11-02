@@ -74,8 +74,8 @@ public class NoteSpawner : MonoBehaviour
                 return ObjPoolManager.Instance.GetObject<Note>(E_Pool.MONSTER_NOTE);
             case E_NoteType.Obstacle:
                 return ObjPoolManager.Instance.GetObject<Note>(E_Pool.OBSTACLE_NOTE);
-            //case E_NoteType.ConcurrentScore:
-            //        return ObjPoolManager.Instance.GetObject<Note>(E_Pool.DBSCORE_NOTE);
+            case E_NoteType.DBScore:
+                    return ObjPoolManager.Instance.GetObject<Note>(E_Pool.DBSCORE_NOTE);
 
         }
 
