@@ -30,6 +30,7 @@ public class WGH_PlayerController : MonoBehaviour
     float _approachDur;                                // 접근까지 걸리는 시간
     float _contactDur;                                 // 난투 시간
     int _meleeCount;                                   // 난투 필요 타격 횟수
+
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
     public bool IsAir { get; private set; }            // 체공 여부
@@ -54,7 +55,13 @@ public class WGH_PlayerController : MonoBehaviour
         _meleeCount = DataManager.Instance.MeleeCount; // 임시 2
         EventManager.Instance.AddAction(E_Event.BOSSDEAD, PlayerOut, this);
     }
-    
+    /// <summary>
+    /// 클리어 시 체력비례 점수 메서드
+    /// </summary>
+    public int GetHpScore()
+    {
+        return (int)(CurHP * 100);
+    }
 
     private void Update()
     {
