@@ -129,12 +129,12 @@ public class WGH_AreaJudge : MonoBehaviour
                 if (_distance <= _perfectDistance)
                 {
                     Note.OnHit(E_NoteDecision.Perfect, button);
-                    _floatResult.SpawnResult(E_ResultType.Perfect, hit.transform.position + new Vector3(0, 2, 0));
+                    _floatResult.SpawnResult(E_NoteDecision.Perfect, hit.transform.position + new Vector3(0, 2, 0));
                 }
                 else if(_distance <= _greatDistance + 0.2f)
                 {
                     Note.OnHit(E_NoteDecision.Great, button);
-                    _floatResult.SpawnResult(E_ResultType.Great, hit.transform.position + new Vector3(0, 2, 0));
+                    _floatResult.SpawnResult(E_NoteDecision.Great, hit.transform.position + new Vector3(0, 2, 0));
                 }
             }
         }

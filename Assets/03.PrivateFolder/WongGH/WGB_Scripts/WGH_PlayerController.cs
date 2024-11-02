@@ -228,6 +228,7 @@ public class WGH_PlayerController : MonoBehaviour
     {
         _rigid.isKinematic = true;
         yield return new WaitForSeconds(_inAirTime);
+        if(_rigid != null )
         _rigid.isKinematic = false;
         yield break;
     }
