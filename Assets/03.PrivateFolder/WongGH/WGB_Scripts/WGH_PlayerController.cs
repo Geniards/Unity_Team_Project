@@ -11,6 +11,7 @@ public class WGH_PlayerController : MonoBehaviour
     [SerializeField] float _curHp;
     [SerializeField] float _clikerTime;                 // 깜빡임 속도
     [SerializeField] float _invincivilityTime;          // 무적시간
+    [SerializeField] float _playerOutTime;              // 플레이어가 화면 밖으로 나가는 시간
 
     [Header("참조")]
     [SerializeField] Rigidbody2D _rigid;
@@ -29,7 +30,6 @@ public class WGH_PlayerController : MonoBehaviour
     float _approachDur;                                // 접근까지 걸리는 시간
     float _contactDur;                                 // 난투 시간
     int _meleeCount;                                   // 난투 필요 타격 횟수
-    float _playerOutTime;                              // 플레이어가 화면 밖으로 나가는 시간
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
     public bool IsAir { get; private set; }            // 체공 여부
@@ -67,7 +67,7 @@ public class WGH_PlayerController : MonoBehaviour
     private void PlayerOut()
     {
         StartCoroutine(PlayerOutMove());
-        Debug.Log("플레이어 이동(성공화면)");
+        
 
     }
     IEnumerator PlayerOutMove()
@@ -76,7 +76,7 @@ public class WGH_PlayerController : MonoBehaviour
         while (true)
         {
             _time += Time.deltaTime;
-            float t = _time / _playerOutTime;
+            float t = (_time / _playerOutTime) / 10;
             if (_time < _playerOutTime)
             {
                 transform.position = Vector3.Lerp(transform.position, GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM), t);
@@ -131,11 +131,12 @@ public class WGH_PlayerController : MonoBehaviour
         if (_meleeCount <= 0)
         {
             DataManager.Instance.Boss.GetMeleeResult(true);
-            DataManager.Instance.SetStageClear(true); // TODO : 동진님이 DataManager의 IsClear를 true로 설정하면 삭제해도 됨
+            // DataManager.Instance.AddScore(100000);
         }
         else
         {
             DataManager.Instance.Boss.GetMeleeResult(false);
+            // 점수 반토막 TODO : 동진님께 cur점수 반토막 기능 요청( 근데 실패를 했다면 최종적으로 점수를 반토막 낸다 )
             CurHP -= 1;
             Debug.Log("보스 난투 격파 실패");
         }

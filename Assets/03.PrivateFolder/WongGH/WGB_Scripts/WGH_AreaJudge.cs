@@ -130,14 +130,21 @@ public class WGH_AreaJudge : MonoBehaviour
                 {
                     Note.OnHit(E_NoteDecision.Perfect, button);
                     _floatResult.SpawnResult(E_NoteDecision.Perfect, hit.transform.position + new Vector3(0, 2, 0));
+                    CountScore(20); // TODO : 추후 동진님과 기능 병합 후 이 주석 삭제 및 점수 배분
                 }
                 else if(_distance <= _greatDistance + 0.2f)
                 {
                     Note.OnHit(E_NoteDecision.Great, button);
                     _floatResult.SpawnResult(E_NoteDecision.Great, hit.transform.position + new Vector3(0, 2, 0));
+                    CountScore(10); // TODO : 추후 동진님과 기능 병합 후 이 주석 삭제 및 점수 배분
                 }
             }
         }
+    }
+
+    private void CountScore(int score)
+    {
+        //DataManager.Instance.AddScore(score);
     }
 
     // 첫 입력 코루틴
