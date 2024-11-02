@@ -9,6 +9,6 @@ public enum E_Pool
     HIT_VFX,
     EVENT,
     GREAT,
-    PREFECT,
+    PERFECT,
     E_POOL_Max
 }

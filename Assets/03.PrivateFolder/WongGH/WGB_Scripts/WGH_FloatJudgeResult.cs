@@ -8,21 +8,21 @@ public class WGH_FloatJudgeResult : MonoBehaviour
     {
         switch(_result)
         {
-            //case E_ResultType.Great:
-            //    return ObjPoolManager.Instance.GetObject<GameObject>(E_Pool.);
-            //case E_ResultType.Perfect:
-            //    return ObjPoolManager.Instance.GetObject<GameObject>(E_Pool.);
+            case E_ResultType.Great:
+                return ObjPoolManager.Instance.GetObject(E_Pool.GREAT);
+            case E_ResultType.Perfect:
+                return ObjPoolManager.Instance.GetObject(E_Pool.PERFECT);
             default:
                 Debug.Log("없음");
                 return null;
-    
         }
     }
 
     public void SpawnResult(E_ResultType _result, Vector3 _spawnPos)
     {
         GameObject _gameObj = GetResultObject(_result);
-        Instantiate(_gameObj, _spawnPos, Quaternion.identity);
+        _gameObj.transform.position = _spawnPos;
+        //Instantiate(_gameObj, _spawnPos, Quaternion.identity);
     }
     
 }
