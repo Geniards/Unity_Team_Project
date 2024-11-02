@@ -4,7 +4,7 @@ using UnityEngine;
 public class SwordWaveNote : Note
 {
     [Header("보스의 위치")]
-    public Transform bossTransform;
+    public Transform curbossTransform;
     private double lastDspTime;
     /// <summary>
     /// 보스의 위치를 목표로 초기화
@@ -14,8 +14,7 @@ public class SwordWaveNote : Note
         this.speed = speed;
         this.scoreValue = scoreValue;
         this.damage = damage;
-        this.bossTransform = bossTransform;
-        this.bossTransform = DataManager.Instance.Boss.transform;
+        this.curbossTransform = DataManager.Instance.Boss.transform;
         if (!bossTransform) Debug.Log("보스위치가 존재하지 않습니다.");
         gameObject.SetActive(true);
         lastDspTime = AudioSettings.dspTime;
@@ -26,21 +25,21 @@ public class SwordWaveNote : Note
     }
     private void moveAttackBoss()
     {
-        if (bossTransform == null || _isHit)
+        if (curbossTransform == null || _isHit)
             return;
         // DSP 시간 기반 이동
         double currentDspTime = AudioSettings.dspTime;
         double deltaTime = currentDspTime - lastDspTime;
         lastDspTime = currentDspTime;
         float step = speed * (float)deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, bossTransform.position, step);
+        transform.position = Vector3.MoveTowards(transform.position, curbossTransform.position, step);
         // 보스 방향으로 회전
-        Vector3 directionToBoss = (bossTransform.position - transform.position).normalized;
+        Vector3 directionToBoss = (curbossTransform.position - transform.position).normalized;
         //두 지점 간의 방향을 각도로 변환(Atan사용이유)
         float angle = Mathf.Atan2(directionToBoss.y, directionToBoss.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
         // 보스 위치에 도달하면 타격 처리
-        if (Vector3.Distance(transform.position, bossTransform.position) < 0.1f)
+        if (Vector3.Distance(transform.position, curbossTransform.position) < 0.1f)
         {
             //DataManager.Instance.Boss.OnDamage(GetDamage());
         }

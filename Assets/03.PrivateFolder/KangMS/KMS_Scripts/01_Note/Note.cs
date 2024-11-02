@@ -16,6 +16,12 @@ public abstract class Note : MonoBehaviour
     [Header("보스 출연 유/무")]
     public static bool isBoss = false;   //false가 기본값
 
+    [Header("애니메이션 세팅")]
+    public Animator animator;                               // Animator 컴포넌트
+    public RuntimeAnimatorController baseController;        // 기본 Animator Controller
+    public AnimatorOverrideController overrideController;   // Override Controller
+    public AnimationOverrideData overrideData;              // 스크립트오브젝트 데이터
+
     // 이동상태 제어 변수.
     protected bool isMoving = true;
     protected float length;
@@ -28,11 +34,25 @@ public abstract class Note : MonoBehaviour
         this.endPoint = endPoint;
         this.speed = speed;
         this.scoreValue = scoreValue;
-        this.damage = damage;
-        this.length = length;
 
         // Note 생성 시 중재자에 등록
-        //GameManager.Mediator.Register(this);
+        GameManager.Mediator.Register(this);
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator가 할당되지 않았습니다.");
+            return;
+        }
+
+        if (baseController == null)
+        {
+            Debug.LogError("기본 Animator Controller가 할당되지 않았습니다.");
+            return;
+        }
+
+        // AnimatorOverrideController 생성 및 설정
+        overrideController = new AnimatorOverrideController(baseController);
+        animator.runtimeAnimatorController = overrideController;
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;

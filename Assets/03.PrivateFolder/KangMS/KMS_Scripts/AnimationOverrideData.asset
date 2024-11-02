@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AnimationOverrideData
   m_EditorClassIdentifier: 
   stageNumber: 0
-  noteType: 0
-  notePosition: 0
-  clip01: {fileID: 0}
-  clip02: {fileID: 0}
-  clip03: {fileID: 0}
+  noteType: 2
+  notePosition: 2
+  clip01: {fileID: 7400000, guid: d728cbe5ac9b54548aa4535715f6fdce, type: 2}
+  clip02: {fileID: 7400000, guid: 60c8a58b7b08b51499e4c09c4fea3eef, type: 2}
+  clip03: {fileID: 7400000, guid: c2bbde9f993701542837cb236bf592da, type: 2}

@@ -34,7 +34,7 @@ public class Test : MonoBehaviour
 
             // 'Run' 상태의 애니메이션 클립을 새로운 클립으로 교체
             overrideController["bat-fly-Animation"] = overrideData.clip03;
-            animator.Play("Run", -1, 0f);
+            //animator.Play("Run", -1, 0f);
             Debug.Log("애니메이션 클립 이름: " + overrideData.clip03);
         }
 
@@ -44,7 +44,7 @@ public class Test : MonoBehaviour
             // 'Run' 상태의 애니메이션 클립을 새로운 클립으로 교체
             // []안에는 Motion의 이름이 그대로 들어가야 한다.
             overrideController["bat-fly-Animation"] = overrideData.clip02;
-            animator.Play("Run", -1, 0f);
+            //animator.Play("Run", -1, 0f);
             Debug.Log("애니메이션 클립 이름: " + overrideData.clip02);
         }
 
