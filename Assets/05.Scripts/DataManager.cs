@@ -47,26 +47,23 @@ public class DataManager : MonoBehaviour, IManager
     #endregion
 
     #region 스테이지 기초 데이터
+
     public float PlayerMaxHP => 5;
     public int SirenCount => 4;
     public float ContactDuration => 4;
     public float ApproachDuration => 0.2f;
     //120bpm이며 * 6 일경우 (0.5f * 6) 음원종료 3 초전에 스폰중단
     public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 6;
-    public void UpdatePlayerHP(float value)
-    {
-        float ratio = value / PlayerMaxHP;
-        UIManager.Instance.SetHPValue(ratio);
-    }
+    
     #endregion
 
     #region 스테이지 고유 데이터
+
     public int BPM => _stageData.BPM;
     public float GameSpeed => _stageData.NoteSpeed;
     public float BossHp => _stageData.BossHP;
     public int StageNumber => _stageData.StageNumber;
     public int MeleeCount => _stageData.MeleeCount;
-
     public string StageName => SelectedStageData.StageName;
     public string SongTitle => SelectedStageData.SongTitle;
     public string StageDescription => SelectedStageData.Description;
@@ -83,6 +80,7 @@ public class DataManager : MonoBehaviour, IManager
     #endregion
 
     #region 게임진행 상황 데이터
+
     private bool _isPlaying = false;
     public bool IsPlaying => _isPlaying;
     private bool _isStageClear = true;
@@ -101,6 +99,13 @@ public class DataManager : MonoBehaviour, IManager
     public void SetPlayState(bool value) { _isPlaying = value; } // isclear 와 역할 애매모호
     public void SetStageClear(bool value) { _isStageClear = value; }
     public void AddScore(int value) { _curScore += value; }
+
+    public void UpdatePlayerHP(float value)
+    {
+        float ratio = value / PlayerMaxHP;
+        UIManager.Instance.SetHPValue(ratio);
+    }
+
     public void SetProgress(float current)
     {
         if (SoundManager.Instance.CurrentBgmLength == 0)

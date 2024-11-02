@@ -18,7 +18,18 @@ public class WGH_PlayerController : MonoBehaviour
     [SerializeField] Animator _anim;
     [SerializeField] WGH_AreaJudge _judge;
      
-    public float CurHP { get { return _curHp; } private set { _curHp = value; DataManager.Instance.UpdatePlayerHP(_curHp); } }
+    public float CurHP 
+    { 
+        get { return _curHp; } 
+        
+        private set 
+        {
+            _curHp = value;
+
+            if(_curHp != DataManager.Instance.PlayerMaxHP)
+                 DataManager.Instance.UpdatePlayerHP(_curHp); 
+        } 
+    }
     public Vector3 PlayerFrontBoss { get; private set; }
     Vector3 _bossApproachPos;
     Vector3 _startPos;

@@ -28,25 +28,11 @@ public class UIManager : MonoBehaviour, IManager
     public GreatText GreatText;
     public ScoreText ScoreText;
 
-    public GameObject ProgressBar;
-    public GameObject HpBar;
+    public Progressbar Progressbar;
+    public HPbar HpBar;
     
-    
-    public void SetProgressValue(float value)
-    {
-        //if (ProgressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        //{
-        //    ui.SetValue(value);
-        //}
-    }
-
-    public void SetHPValue(float value)
-    {
-        //if (HpBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        //{
-        //    ui.SetValue(value);
-        //}
-    }
+    public void SetProgressValue(float value) { Progressbar.SetValue(value); }
+    public void SetHPValue(float value) { HpBar.SetValue(value); }
 
     public void UpdateTexts()
     {
