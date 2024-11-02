@@ -38,21 +38,21 @@ public abstract class Note : MonoBehaviour
         // Note 생성 시 중재자에 등록
         GameManager.Mediator.Register(this);
 
-        if (animator == null)
-        {
-            Debug.LogError("Animator가 할당되지 않았습니다.");
-            return;
-        }
+        //if (animator == null)
+        //{
+        //    Debug.LogError("Animator가 할당되지 않았습니다.");
+        //    return;
+        //}
 
-        if (baseController == null)
-        {
-            Debug.LogError("기본 Animator Controller가 할당되지 않았습니다.");
-            return;
-        }
+        //if (baseController == null)
+        //{
+        //    Debug.LogError("기본 Animator Controller가 할당되지 않았습니다.");
+        //    return;
+        //}
 
-        // AnimatorOverrideController 생성 및 설정
-        overrideController = new AnimatorOverrideController(baseController);
-        animator.runtimeAnimatorController = overrideController;
+        //// AnimatorOverrideController 생성 및 설정
+        //overrideController = new AnimatorOverrideController(baseController);
+        //animator.runtimeAnimatorController = overrideController;
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;

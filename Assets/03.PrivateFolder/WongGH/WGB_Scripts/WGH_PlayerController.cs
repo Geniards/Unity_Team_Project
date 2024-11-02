@@ -50,7 +50,7 @@ public class WGH_PlayerController : MonoBehaviour
         _startPos = transform.position;
         _judge = FindAnyObjectByType<WGH_AreaJudge>();
         _approachDur = DataManager.Instance.ApproachDuration; // 임시 0.2
-        _contactDur = DataManager.Instance.ContactDuration; // 임시 2
+        _contactDur = DataManager.Instance.ContactDuration; // 임시 4
         _meleeCount = DataManager.Instance.MeleeCount; // 임시 2
         EventManager.Instance.AddAction(E_Event.BOSSDEAD, PlayerOut, this);
     }
@@ -136,7 +136,7 @@ public class WGH_PlayerController : MonoBehaviour
         else
         {
             DataManager.Instance.Boss.GetMeleeResult(false);
-            CurHP -= 50;
+            CurHP -= 1;
             Debug.Log("보스 난투 격파 실패");
         }
 

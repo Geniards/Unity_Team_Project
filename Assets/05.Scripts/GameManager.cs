@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
         EventManager.Instance.PlayEvent(E_Event.SPAWN_START);
 
         BossController boss =
-            Instantiate(Resources.Load<GameObject>($"Boss/Boss_{DataManager.Instance.StageNumber + 1}")).
+            Instantiate(Resources.Load<GameObject>($"Boss/Boss_{DataManager.Instance.StageNumber}")).
             GetComponent<BossController>();
 
         boss.Initialize();

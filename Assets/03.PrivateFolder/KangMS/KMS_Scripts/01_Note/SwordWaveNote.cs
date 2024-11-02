@@ -15,7 +15,7 @@ public class SwordWaveNote : Note
         this.scoreValue = scoreValue;
         this.damage = damage;
         this.curbossTransform = DataManager.Instance.Boss.transform;
-        if (!bossTransform) Debug.Log("보스위치가 존재하지 않습니다.");
+        if (!curbossTransform) Debug.Log("보스위치가 존재하지 않습니다.");
         gameObject.SetActive(true);
         lastDspTime = AudioSettings.dspTime;
     }
@@ -41,7 +41,8 @@ public class SwordWaveNote : Note
         // 보스 위치에 도달하면 타격 처리
         if (Vector3.Distance(transform.position, curbossTransform.position) < 0.1f)
         {
-            //DataManager.Instance.Boss.OnDamage(GetDamage());
+            DataManager.Instance.Boss.OnDamage(GetDamage());
+            Destroy(this.gameObject);
         }
     }
     public override float GetDamage()
