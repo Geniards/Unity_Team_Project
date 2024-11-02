@@ -15,7 +15,6 @@ public class DataManager : MonoBehaviour, IManager
         SetBGMVolume(0.2f); // 유저 정보 저장시 변경
         SetSFXVolume(0.2f);
         _stageData.BGM = E_StageBGM.TEST_NORMAL_01;
-        _stageData.BPM = 60;
         _settingData.MasterVolume = -20f;
 
         LoadPrevData();
@@ -29,9 +28,9 @@ public class DataManager : MonoBehaviour, IManager
 
     public void LoadPrevData() // 기존 값들 데이터 바인딩
     {
-        if (PlayerPrefs.HasKey(SoundManager.MASTER_VOLUME))
+        if (PlayerPrefs.HasKey(SoundManager.MASTER_VOLUME_PLAYERPREFAB))
         {
-            _settingData.MasterVolume = PlayerPrefs.GetFloat(SoundManager.MASTER_VOLUME);
+            _settingData.MasterVolume = PlayerPrefs.GetFloat(SoundManager.MASTER_VOLUME_PLAYERPREFAB);
             SoundManager.Instance.UpdateMasterMixer();
         }
     }
@@ -48,7 +47,8 @@ public class DataManager : MonoBehaviour, IManager
 
     #region 스테이지 기초 데이터
 
-    public float PlayerMaxHP => 5;
+    private float _playerMaxHp = 5;
+    public float PlayerMaxHP => _playerMaxHp;
     public int SirenCount => 4;
     public float ContactDuration => 4;
     public float ApproachDuration => 0.2f;
@@ -72,6 +72,7 @@ public class DataManager : MonoBehaviour, IManager
     public Vector3 ContactPos =>
         GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
     public void SetBossData(BossController boss) { this._boss = boss; }
+    public void SetPlayerMaxHP(float value) { this._playerMaxHp = value; } // 상점 기능 대응
     public void ApplySelectStageData()
     {
         SelectedStageData.CopyData(_stageData);
