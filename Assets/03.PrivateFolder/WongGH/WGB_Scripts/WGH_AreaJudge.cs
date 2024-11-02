@@ -54,7 +54,7 @@ public class WGH_AreaJudge : MonoBehaviour
 
             StartCoroutine(StartInputCheck(_inputKey));
         }
-        #region
+        #region 이전코드
         //if (!_playerController.IsDied)
         //{
         //    if (!_playerController.IsDamaged)
@@ -134,7 +134,7 @@ public class WGH_AreaJudge : MonoBehaviour
                 else if(_distance <= _greatDistance + 0.2f)
                 {
                     Note.OnHit(E_NoteDecision.Great, button);
-                    _floatResult.SpawnResult(E_ResultType.Perfect, hit.transform.position + new Vector3(0, 2, 0));
+                    _floatResult.SpawnResult(E_ResultType.Great, hit.transform.position + new Vector3(0, 2, 0));
                 }
             }
         }

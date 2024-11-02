@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class WGH_Perfect : MonoBehaviour/*, IPoolingObj*/
 {
-    //private E_Pool my_PoolType => E_Pool.Perfect;
+    public E_Pool MyPoolType => E_Pool.PERFECT;
     float _time;
     Vector3 _destination;
 
-    private void OnEnable()
-    {
-        
-    }
     private void Update()
     {
         Float();
@@ -25,12 +21,10 @@ public class WGH_Perfect : MonoBehaviour/*, IPoolingObj*/
         if (_time >= 1.5f)
         {
             Return();
-            // 임시 destroy
-            Destroy(gameObject);
         }
     }
     public void Return()
     {
-        //ObjPoolManager.Instance.ReturnObj(E_Pool.Perfect, this.gameObject);
+        ObjPoolManager.Instance.ReturnObj(E_Pool.PERFECT, this.gameObject);
     }
 }

@@ -2,16 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WGH_Great : MonoBehaviour/*, IPoolingObj*/
+public class WGH_Great : MonoBehaviour, IPoolingObj
 {
-    //private E_Pool my_PoolType => E_Pool.GREAT;
+    public E_Pool MyPoolType => E_Pool.GREAT;
     float _time;
     Vector3 _destination;
 
-    private void OnEnable()
-    {
-        
-    }
     private void Update()
     {
         _destination = new Vector3(transform.position.x, transform.position.y + _time, transform.position.z);
@@ -21,13 +17,11 @@ public class WGH_Great : MonoBehaviour/*, IPoolingObj*/
         if (_time >= 1.5f)
         {
             Return();
-            // 임시 destroy
-            Destroy(gameObject);
         }
     }
 
     public void Return()
     {
-        //ObjPoolManager.Instance.ReturnObj(E_Pool.GREAT, this.gameObject);
+        ObjPoolManager.Instance.ReturnObj(E_Pool.GREAT, this.gameObject);
     }
 }
