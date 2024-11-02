@@ -22,7 +22,6 @@ public class WGH_FloatJudgeResult : MonoBehaviour
     {
         GameObject _gameObj = GetResultObject(_result);
         _gameObj.transform.position = _spawnPos;
-        //Instantiate(_gameObj, _spawnPos, Quaternion.identity);
     }
     
 }
