@@ -69,8 +69,16 @@ public class DataManager : MonoBehaviour, IManager
     public bool IsStageClear => _isStageClear;
     private float _stageProgress;
     public float StageProgress => _stageProgress; // 0 ~ 1
+
+    private int _curScore;
+    public int CurScore => _curScore;
+
     public void SetPlayState(bool value) { _isPlaying = value; } // isclear 와 역할 애매모호
     public void SetStageClear(bool value) { _isStageClear = value; }
+    public void AddScore(int value)
+    {
+        _curScore += value;
+    }
     public void SetProgress(float current)
     {
         if (SoundManager.Instance.CurrentBgmLength == 0)
