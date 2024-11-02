@@ -16,6 +16,7 @@ public class WGH_Great : MonoBehaviour, IPoolingObj
         transform.position = Vector3.MoveTowards(transform.position, _destination, 1 * Time.deltaTime);
         if (_time >= 1.5f)
         {
+            _time = 0;
             Return();
         }
     }
