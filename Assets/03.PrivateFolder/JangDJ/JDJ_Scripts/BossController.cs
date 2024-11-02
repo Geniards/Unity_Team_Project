@@ -19,6 +19,7 @@ public class BossController : MonoBehaviour
     public BossRecover RecoverState;
 
     public BossStat Stat => _stat;
+    public int Score => _stat.Score;
 
     private bool _isRushReady = false;
 
@@ -62,6 +63,11 @@ public class BossController : MonoBehaviour
         CurrentState.Exit();
         CurrentState = nextState;
         CurrentState.Enter();
+    }
+
+    public void ReduceScore()
+    {
+        _stat.ReduceScore();
     }
 
     public void DeadActionEnd()

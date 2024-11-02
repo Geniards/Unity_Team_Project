@@ -209,7 +209,7 @@ public class WGH_AreaJudge : MonoBehaviour
             score = Mathf.RoundToInt((100 + 10) * 1 * ((_combo * 0.01f) + 1));
             Debug.Log($"점수 그레잇{score}");
         }
-        //DataManager.Instance.AddScore(score);
+        DataManager.Instance.AddScore(score);
     }
     /// <summary>
     /// 몬스터노트 점수 처리 메서드
@@ -237,7 +237,7 @@ public class WGH_AreaJudge : MonoBehaviour
             score = Mathf.RoundToInt((100 + 20) * 1 * ((_combo * 0.01f) + 1));
             Debug.Log($"몬스터그레잇{score}");
         }
-        //DataManager.Instance.AddScore(score);
+        DataManager.Instance.AddScore(score);
     }
     /// <summary>
     /// 보스 처치시 획득 점수
@@ -245,9 +245,13 @@ public class WGH_AreaJudge : MonoBehaviour
     private void GetBossScore()
     {
         int score = 0;
-        //score = DataManager.Instance.Boss.Count;
+        score = DataManager.Instance.Boss.Score;
+        Debug.Log($"보스점수 {score}");
         score += _playerController.GetHpScore();
-        //DataManager.Instance.AddScore(score);
+        Debug.Log($"체력반영 {score}");
+        DataManager.Instance.AddScore(score);
+
+        Debug.Log(DataManager.Instance.CurScore);
     }
     // 첫 입력 코루틴
     IEnumerator StartInputCheck(KeyCode key)

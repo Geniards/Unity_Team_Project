@@ -29,6 +29,9 @@ public class BossStat
         target._name = this._name;
     }
 
+    public void InitScore(int value)
+    { this._score = value; }
+
     public void ReduceScore()
     { _score /= 2; }
 }

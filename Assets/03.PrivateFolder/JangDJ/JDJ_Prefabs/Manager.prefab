@@ -621,7 +621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screenFadeTimes:
   - SceneType: 0
-    FadeInTime: 0.5
+    FadeInTime: 10
     FadeOutTime: 0.25
   - SceneType: 1
     FadeInTime: 0.25
@@ -630,9 +630,15 @@ MonoBehaviour:
     FadeInTime: 0.25
     FadeOutTime: 0.25
   - SceneType: 3
-    FadeInTime: 0.5
-    FadeOutTime: 1
+    FadeInTime: 0.25
+    FadeOutTime: 0.25
   - SceneType: 4
+    FadeInTime: 0.25
+    FadeOutTime: 1
+  - SceneType: 5
+    FadeInTime: 1
+    FadeOutTime: 0.25
+  - SceneType: 6
     FadeInTime: 1
     FadeOutTime: 0.25
   _fadePanelImage: {fileID: 896831289}
@@ -660,5 +666,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0404482cfc493240abdfaa91e6d923c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeText: {fileID: 0}
+  PerfectText: {fileID: 0}
+  GreatText: {fileID: 0}
+  ScoreText: {fileID: 0}
   ProgressBar: {fileID: 0}
   HpBar: {fileID: 0}

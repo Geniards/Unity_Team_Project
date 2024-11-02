@@ -8,6 +8,7 @@ public enum E_Event
     BOSSRUSH,
     STAGE_END,
     BOSSDEAD,
+    OPENED_CLEARSCENE,
     CHANGED_SCENE,
     ENTERCONTACT,
     CHANGED_BGM,

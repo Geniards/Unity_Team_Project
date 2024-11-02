@@ -20,12 +20,14 @@ public class DataManager : MonoBehaviour, IManager
 
         LoadPrevData();
     }
-    public void InitDatas()
+    public void InitDatas() // 스테이지로 전환시 매번 호출되어야함
     {
         _isStageClear = true;
+        _perfectCount = 0;
+        _greatCount = 0;
     }
 
-    public void LoadPrevData()
+    public void LoadPrevData() // 기존 값들 데이터 바인딩
     {
         if (PlayerPrefs.HasKey(SoundManager.MASTER_VOLUME))
         {
@@ -79,6 +81,7 @@ public class DataManager : MonoBehaviour, IManager
         InitDatas();
     }
     #endregion
+
     #region 게임진행 상황 데이터
     private bool _isPlaying = false;
     public bool IsPlaying => _isPlaying;
@@ -86,16 +89,18 @@ public class DataManager : MonoBehaviour, IManager
     public bool IsStageClear => _isStageClear;
     private float _stageProgress;
     public float StageProgress => _stageProgress; // 0 ~ 1
-
+    private int _greatCount;
+    public int GreatCount => _greatCount;
+    private int _perfectCount;
+    public int PerfectCount => _perfectCount;
     private int _curScore;
     public int CurScore => _curScore;
 
+    public void SetGreatCount(int count) { _greatCount = count; }
+    public void SetPerfectCount(int count) { _perfectCount = count; }
     public void SetPlayState(bool value) { _isPlaying = value; } // isclear 와 역할 애매모호
     public void SetStageClear(bool value) { _isStageClear = value; }
-    public void AddScore(int value)
-    {
-        _curScore += value;
-    }
+    public void AddScore(int value) { _curScore += value; }
     public void SetProgress(float current)
     {
         if (SoundManager.Instance.CurrentBgmLength == 0)
@@ -106,9 +111,11 @@ public class DataManager : MonoBehaviour, IManager
             GameManager.Instance.StopProgressTimer();
     }
     #endregion
+
     #region 씬 관련 수치
     public float SceneFadeDuration => 1f;
     #endregion
+    
     #region 음향 관련 설정 수치
     // 볼륨을 서서히 조절하는 비율 ex 0.2f = 현재 음향에서 0.2f비율만큼씩 줄인다.
     public float SoundFadeRate => 0.2f;
@@ -125,10 +132,13 @@ public class StageData
     public string StageName;
     public string Description;
     [Range(0.1f, 20f)] public float NoteSpeed = 5f;
+
     [Space(10f), Header("게임 내 데이터 설정")]
     [SerializeField] private int _meleeCount = 10;
     [SerializeField] private BossStat _bossStat = new BossStat();
+
     public float BossHP => _bossStat.Hp;
+    public int BossScore => _bossStat.Score;
     public int MeleeCount => _meleeCount;
     /// <summary>
     /// 현재 개체의 데이터를 target으로 복사합니다.
