@@ -20,8 +20,9 @@ public class DBScoreNote : Note, IPoolingObj
     {
         base.Initialize(endPoint, speed, scoreValue, stageNumber, noteType, notePosition, damage);
 
-        // TotalHeight를 기준으로 upNote와 downNote의 위치 설정
-        float halfHeight = GameManager.Director.TotalHeight / 2f;
+
+    //    // TotalHeight를 기준으로 upNote와 downNote의 위치 설정
+    //    float halfHeight = GameManager.Director.TotalHeight / 2f;
 
         // upNote는 위쪽에 배치
         if (upNote != null)
@@ -39,16 +40,17 @@ public class DBScoreNote : Note, IPoolingObj
             downNote.Initialize(downNoteEndPoint, speed, scoreValue);
         }
 
-        // bodyColl의 위치는 중간에 배치 (DBScoreNote의 기본 위치와 동일)
-        if (bodyColl != null)
-        {
-            bodyColl.transform.position = transform.position;
 
-            // bodyColl의 y축 크기를 두 노트 사이의 거리로 설정
-            Vector3 bodyScale = bodyColl.transform.localScale;
-            bodyColl.transform.localScale = new Vector3(bodyScale.x, halfHeight*2, bodyScale.z);
-        }
-    }
+    //    // bodyColl의 위치는 중간에 배치 (DBScoreNote의 기본 위치와 동일)
+    //    if (bodyColl != null)
+    //    {
+    //        bodyColl.transform.position = transform.position;
+
+    //        // bodyColl의 y축 크기를 두 노트 사이의 거리로 설정
+    //        Vector3 bodyScale = bodyColl.transform.localScale;
+    //        bodyColl.transform.localScale = new Vector3(bodyScale.x, halfHeight*2, bodyScale.z);
+    //    }
+    //}
 
     //private void Update()
     //{

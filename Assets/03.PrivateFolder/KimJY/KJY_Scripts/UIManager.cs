@@ -1,38 +1,50 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour, IManager
 {
+    #region BINDING KEY
+
+    
+
+    #endregion
+
     public static UIManager Instance { get; private set; }
 
     public void Init()
     {
         Instance = this;
+        EventManager.Instance.AddAction(E_Event.OPENED_CLEARSCENE, UpdateTexts, this);
     }
 
-    #region 스테이지 씬
-    public GameObject ProgressBar;
-    public GameObject HpBar;
-    #endregion
+    public TimeText TimeText;
+    public PerfectText PerfectText;
+    public GreatText GreatText;
+    public ScoreText ScoreText;
+    public WGH_ScoreBoard CurScoreText;
 
-    public void SetProgressValue(float value)
+    public Progressbar Progressbar;
+    public HPbar HpBar;
+    
+    public void SetCurrentScoreText(string value)
     {
-        //if (ProgressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        //{
-        //    ui.SetValue(value);
-        //}
+        CurScoreText.SetText($"Score {value}");
     }
+    public void SetProgressValue(float value) { Progressbar.SetValue(value); }
+    public void SetHPValue(float value) { HpBar.SetValue(value); }
+    public void SetTimeValue(float totalTime) { TimeText.SetText(totalTime.ToString()); }
 
-    public void SetHPValue(float value)
+    public void UpdateTexts()
     {
-        //if (HpBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        //{
-        //    ui.SetValue(value);
-        //}
+        TimeText.SetText(DataManager.Instance.StagePlayTime.ToString());
+        PerfectText.SetText(DataManager.Instance.PerfectCount.ToString());
+        GreatText.SetText(DataManager.Instance.GreatCount.ToString());
+        ScoreText.SetText(DataManager.Instance.CurScore.ToString());
     }
-
 }

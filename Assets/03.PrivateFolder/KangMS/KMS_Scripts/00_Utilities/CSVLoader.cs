@@ -25,12 +25,11 @@ public class CSVLoader : MonoBehaviour
     [SerializeField] private int _noteTypeEndIndex = 9;
     private int stageNumber;
     private Dictionary<int, List<NotePattern>> _patternDictionary = new Dictionary<int, List<NotePattern>>();
-    private static bool _isLoaded = false;  // TODO:한번로드 되었다면 게임이 진행중에는 읽어오지 않게 구현 진행.
+    private static bool _isLoaded = false;
 
-    /// <summary>
     /// CSV 파일을 읽어들여 패턴을 파싱하고, Dictionary에 저장하는 역할
     /// </summary>
-    private IEnumerator LoadAllPatterns()
+    public IEnumerator LoadAllPatterns()
     {
         if (_isLoaded)
         {

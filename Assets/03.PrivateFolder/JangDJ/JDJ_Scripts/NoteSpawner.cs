@@ -6,11 +6,18 @@ using UnityEngine;
 public class NoteSpawner : MonoBehaviour
 {
     [SerializeField] private NoteSpawnPosController _posController = null;
-    private List<NoteData> _innerNoteList = null;
+    private List<NoteData> _innerNoteList = new List<NoteData>();
     private int _lastNoteIdx = 0;
 
     public bool IsLastNote
         => _lastNoteIdx >= _innerNoteList.Count - 1;
+
+    private int _patternIdx = 0;
+
+    public void ChangeNotePatter()
+    {
+        _patternIdx += DataManager.Instance.NormalPatternLastIdx + 1;
+    }
 
     /// <summary>
     /// 스포너가 설정해야 할 값을 초기화 시킵니다.
@@ -18,6 +25,7 @@ public class NoteSpawner : MonoBehaviour
     public void Initalize()
     {
         _lastNoteIdx = 0;
+        _patternIdx = 0;
 
         _innerNoteList = new List<NoteData>();
     }
@@ -25,25 +33,26 @@ public class NoteSpawner : MonoBehaviour
     private void Start()
     {
         EventManager.Instance.AddAction(E_Event.CHANGED_BGM, Initalize, this);
-        Initalize();
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, Initalize, this);
+
+        EventManager.Instance.AddAction(E_Event.CHANGED_BGM, RegistPatternData, this);
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, RegistPatternData, this);
     }
 
     /// <summary>
-    /// 요청받은 패턴 넘버를 기준으로 스폰되어야 할 노트 정보들을 스포너에 등록해둡니다.
+    /// CSV에 저장된 랜덤 패턴을 불러옵니다.
     /// </summary>
-    public void RegistPattern(int patternNumber) // 몇번 패턴인지
+    public void RegistPatternData() // 몇번 패턴인지
     {
-        //List<NotePattern> patterns = CSVLoader.GetPattern(patternNumber);
+        int idx = Random.Range(_patternIdx, _patternIdx + 10);
+        
+        List<NoteData> newNotes =
+            DataManager.Instance.CSVData[idx];
 
-        //for (int i = 0; i < patterns.Count; i++)
-        //{
-        //    _innerNoteList.Add(patterns[i]);
-        //}
-
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
-        _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
-        _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Obstacle));
+        for (int i = 0; i < newNotes.Count; i++)
+        {
+            _innerNoteList.Add(newNotes[i]);
+        }
     }
 
     /// <summary>
@@ -86,13 +95,13 @@ public class NoteSpawner : MonoBehaviour
     {
         switch (posNumber)
         {
-            case 1:
+            case 2:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.TOP);
 
-            case 2:
+            case 3:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.MIDDLE);
 
-            case 3:
+            case 1:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.BOTTOM);
         }
         throw new System.Exception("잘못된 노트 위치 요청");
@@ -102,13 +111,13 @@ public class NoteSpawner : MonoBehaviour
     {
         switch (posNumber)
         {
-            case 1:
+            case 2: //top
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.TOP);
 
-            case 2:
+            case 3:
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.MIDDLE);
 
-            case 3:
+            case 1:
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.BOTTOM);
         }
 

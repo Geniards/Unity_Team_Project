@@ -8,10 +8,16 @@ public class DataTable
         new Dictionary<int, List<NotePattern>>();
 
     /// <summary>
-    /// 데이터 테이블의 초기화를 진행합니다.
+    /// 현재 스테이지에 맞는 노트 묶음 반환
     /// </summary>
-    public void Initailize()
+    public List<NoteData> this[int idx]
     {
+        get 
+        {
+            int _curStage = DataManager.Instance.StageNumber;
+
+            return _patternTable[_curStage][idx].Notes;
+        }
     }
 
     /// <summary>

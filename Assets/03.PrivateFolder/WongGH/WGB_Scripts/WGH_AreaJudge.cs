@@ -5,22 +5,22 @@ using System;
 
 public class WGH_AreaJudge : MonoBehaviour
 {
-    [SerializeField] float _greatDistance;
-    [SerializeField] float _perfectDistance;
-    
-    Vector3 _checkTopPos;
-    Vector3 _checkMiddlePos;
-    Vector3 _checkBottomPos;
-    Vector3 _curPos;
+    [SerializeField] private float _greatDistance;
+    [SerializeField] private float _perfectDistance;
+    public int Combo {  get; private set; }
+    private int _perfectCount;
+    private int _greatCount;
+
+    private Vector3 _checkTopPos;
+    private Vector3 _checkMiddlePos;
+    private Vector3 _checkBottomPos;
+    private Vector3 _curPos;
 
     public Note Note { get; private set; }
-    WGH_PlayerController _playerController;
-    WGH_FloatJudgeResult _floatResult;
-    float _fPressTime;
-    float _jPressTime;
-    bool _isFPress;
-    bool _isJPress;
-    Rigidbody2D _playerRigid;
+    private WGH_PlayerController _playerController = null;
+    private WGH_FloatJudgeResult _floatResult = null;
+    private Rigidbody2D _playerRigid = null;
+    private WGH_FloatCombo _FloatCombo = null;
 
     private KeyCode _inputKey;
     private bool _isInputProcessing;                                    // 키를 입력 받았는가를 확인할 bool 변수
@@ -28,8 +28,8 @@ public class WGH_AreaJudge : MonoBehaviour
     [SerializeField, Range(0.01f, 0.5f)] private float _judgeTime;
 
     [Header("테스트용 임시 프리팹")]
-    [SerializeField] GameObject _great;
-    [SerializeField] GameObject _perfect;
+    [SerializeField] private GameObject _great;
+    [SerializeField] private GameObject _perfect;
 
     private void Start()
     {
@@ -39,11 +39,15 @@ public class WGH_AreaJudge : MonoBehaviour
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
         _floatResult = GetComponent<WGH_FloatJudgeResult>();
         _playerRigid = _playerController.GetComponent<Rigidbody2D>();
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, GetBossScore, this);
+        EventManager.Instance.AddAction(E_Event.STAGE_END, SentCount, this);
+        _FloatCombo = FindAnyObjectByType<WGH_FloatCombo>();
+        _FloatCombo.SpawnCombo(Combo);
     }
     
     private void Update()
     {
-        if(_isInputProcessing == false && !_playerController.IsDamaged && !_playerController.IsDied)
+        if(_isInputProcessing == false && !_playerController.IsDamaged && !_playerController.IsDied && !_playerController.IsContact)
         {
             if (Input.GetKeyDown(KeyCode.F))
                 _inputKey = KeyCode.F;
@@ -102,44 +106,155 @@ public class WGH_AreaJudge : MonoBehaviour
         //}
         #endregion
     }
+    public int CheckCurCombo()
+    {
+        return Combo;
+    }
+    
+    public void SentCount()
+    {
+        DataManager.Instance.SetPerfectCount(_perfectCount);
+        DataManager.Instance.SetGreatCount(_greatCount);
+    }
+    public void AddCombo()
+    {
+        Combo++;
+        // 여기서 콤보 증가가 발생할때마다 오브젝트풀을 통해 생성 or 스프라이트 변경
+    }
+    public void AddPerfectCount()
+    {
+        _perfectCount++;
+    }
+    /// <summary>
+    /// 콤보 리셋
+    /// </summary>
+    public void SetComboReset()
+    { Combo = 0; }
     /// <summary>
     /// 노트판정 메서드
     /// </summary>
     public void CheckNote(Vector3 checkPos, E_Boutton button)
     {
         this._curPos = checkPos;
-        
         Vector2 aPoint = new Vector2(_curPos.x - _greatDistance / 2, _curPos.y - _greatDistance / 4);
         Vector2 bPoint = new Vector2(_curPos.x + _greatDistance / 2, _curPos.y + _greatDistance / 4);
         Collider2D[] hits = Physics2D.OverlapAreaAll(aPoint, bPoint);
         Debug.DrawLine(aPoint,bPoint, Color.blue, 0.5f);
-
+        
         if(hits.Length == 0 )
-        {
             Note = null;
-        }
-
         foreach (Collider2D hit in hits)
         {
-            if(hit.TryGetComponent(out Note note))
+            if(hit.TryGetComponent(out Note note) && !hit.TryGetComponent(out ObstacleNote obstacle))
             {
                 Note = note;
                 float _distance = Vector2.Distance(_curPos, hit.transform.position);
                 Debug.DrawLine(aPoint + new Vector2(0, _greatDistance / 4), bPoint - new Vector2(0, _greatDistance / 4), Color.blue, 0.5f);
                 if (_distance <= _perfectDistance)
                 {
+                    AddCombo();
+                    _perfectCount++;
+                    _FloatCombo.SpawnCombo(Combo);
                     Note.OnHit(E_NoteDecision.Perfect, button);
-                    _floatResult.SpawnResult(E_ResultType.Perfect, hit.transform.position + new Vector3(0, 2, 0));
+                    _floatResult.SpawnResult(E_NoteDecision.Perfect, hit.transform.position + new Vector3(0, 2, 0)); // PERFECT 프리팹 띄우기
+                    if(hit.TryGetComponent(out ScoreNote score))                                                     // 스코어 노트 퍼펙트 점수 처리
+                    {
+                        CalculateScoreNote(E_NoteDecision.Perfect);
+                    }
+                    else if(hit.TryGetComponent(out MonsterNote monster))                                            // 스코어 노트 그레이트 점수 처리
+                    {
+                        CalculateScoreMonster(E_NoteDecision.Perfect);
+                    }
                 }
                 else if(_distance <= _greatDistance + 0.2f)
                 {
+                    AddCombo();
+                    _greatCount++;
+                    _FloatCombo.SpawnCombo(Combo);
                     Note.OnHit(E_NoteDecision.Great, button);
-                    _floatResult.SpawnResult(E_ResultType.Great, hit.transform.position + new Vector3(0, 2, 0));
+                    _floatResult.SpawnResult(E_NoteDecision.Great, hit.transform.position + new Vector3(0, 2, 0));  // GREAT 프리팹 띄우기
+                    if(hit.TryGetComponent(out ScoreNote score))                                                    // 몬스터 노트 퍼펙트 점수 처리
+                    {
+                        CalculateScoreNote(E_NoteDecision.Great);
+                    }
+                    else if(hit.TryGetComponent(out MonsterNote Monster))                                           // 몬스터 노트 그레이트 점수 처리
+                    {
+                        CalculateScoreMonster(E_NoteDecision.Great);
+                    }
                 }
             }
         }
     }
+    /// <summary>
+    /// 점수노트 점수 처리 메서드
+    /// </summary>
+    private void CalculateScoreNote(E_NoteDecision result)
+    {
+        int score = 0;
+        if (result == E_NoteDecision.Perfect && Note.isBoss)
+        {
+            score = Mathf.RoundToInt((10 + 10) * 2 * 2 * ((Combo * 0.01f)+1));
+            Debug.Log($"보스 점수 퍼펙{score}");
+        }
+        else if (result == E_NoteDecision.Great && Note.isBoss)
+        {
+            score = Mathf.RoundToInt((10 + 10) * 1 * 2 * ((Combo * 0.01f)+1));
+            Debug.Log($"보스 점수 그레잇{score}");
+        }
+        else if (result == E_NoteDecision.Perfect)
+        {
+            score = Mathf.RoundToInt((10 + 10) * 2 * ((Combo * 0.01f) + 1));
+            Debug.Log($"점수 퍼펙{score}");
+        }
+        else if (result == E_NoteDecision.Great)
+        {
+            score = Mathf.RoundToInt((10 + 10) * 1 * ((Combo * 0.01f) + 1));
+            Debug.Log($"점수 그레잇{score}");
+        }
+        DataManager.Instance.AddScore(score);
+    }
+    /// <summary>
+    /// 몬스터노트 점수 처리 메서드
+    /// </summary>
+    private void CalculateScoreMonster(E_NoteDecision result)
+    {
+        int score = 0;
+        if(result == E_NoteDecision.Perfect && Note.isBoss)
+        {
+            score = Mathf.RoundToInt((10 + 20) * 2 * 2 * ((Combo * 0.01f) + 1));
+            Debug.Log($"보스 몬스터 퍼펙{score}");
+        }
+        else if(result == E_NoteDecision.Great && Note.isBoss)
+        {
+            score = Mathf.RoundToInt((10 + 20) * 1 * 2 * ((Combo * 0.01f) + 1));
+            Debug.Log($"보스 몬스터 그레잇{score}");
+        }
+        else if(result == E_NoteDecision.Perfect)
+        {
+            score = Mathf.RoundToInt((10 + 20) * 2 * ((Combo * 0.01f) + 1));
+            Debug.Log($"몬스터 퍼펙{score}");
+        }
+        else if(result == E_NoteDecision.Great)
+        {
+            score = Mathf.RoundToInt((10 + 20) * 1 * ((Combo * 0.01f) + 1));
+            Debug.Log($"몬스터그레잇{score}");
+        }
+        DataManager.Instance.AddScore(score);
+    }
+    /// <summary>
+    /// 보스 처치시 획득 점수
+    /// </summary>
+    private void GetBossScore()
+    {
+        int score = 0;
+        score = DataManager.Instance.Boss.Score;
+        Debug.Log($"보스점수 {score}");
+        score += _playerController.GetHpScore();
+        Debug.Log($"체력반영 {score}");
+        DataManager.Instance.AddScore(score);
 
+        Debug.Log(DataManager.Instance.CurScore);
+    }
     // 첫 입력 코루틴
     IEnumerator StartInputCheck(KeyCode key)
     {
