@@ -12,12 +12,20 @@ public class NoteSpawner : MonoBehaviour
     public bool IsLastNote
         => _lastNoteIdx >= _innerNoteList.Count - 1;
 
+    private int _patternIdx = 0;
+
+    public void ChangeNotePatter()
+    {
+        _patternIdx += DataManager.Instance.NormalPatternLastIdx + 1;
+    }
+
     /// <summary>
     /// 스포너가 설정해야 할 값을 초기화 시킵니다.
     /// </summary>
     public void Initalize()
     {
         _lastNoteIdx = 0;
+        _patternIdx = 0;
 
         _innerNoteList = new List<NoteData>();
     }
@@ -31,19 +39,18 @@ public class NoteSpawner : MonoBehaviour
     /// <summary>
     /// 요청받은 패턴 넘버를 기준으로 스폰되어야 할 노트 정보들을 스포너에 등록해둡니다.
     /// </summary>
-    public void RegistPattern(int patternNumber) // 몇번 패턴인지
+    public void RegistPatternData(int patternNumber) // 몇번 패턴인지
     {
-        //List<NotePattern> patterns = CSVLoader.GetPattern(patternNumber);
+        int idx = Random.Range(_patternIdx, _patternIdx + 10);
+        Debug.Log(idx);
 
-        //for (int i = 0; i < patterns.Count; i++)
-        //{
-        //    _innerNoteList.Add(patterns[i]);
-        //}
+        List<NoteData> newNotes =
+            DataManager.Instance.CSVData[idx];
 
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Monster));
-        _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
-        _innerNoteList.Add(new NoteData(3, E_NoteType.Score));
-        _innerNoteList.Add(new NoteData(1, E_NoteType.Obstacle));
+        for (int i = 0; i < newNotes.Count; i++)
+        {
+            _innerNoteList.Add(newNotes[i]);
+        }
     }
 
     /// <summary>
@@ -51,15 +58,15 @@ public class NoteSpawner : MonoBehaviour
     /// </summary>
     public void SpawnNote(float noteSpeed)
     {
-        //if (_lastNoteIdx >= _innerNoteList.Count)
-        //{ throw new System.Exception("등록된 노트가 없습니다."); }
+        if (_lastNoteIdx >= _innerNoteList.Count)
+        { throw new System.Exception("등록된 노트가 없습니다."); }
 
-        //NoteData data = _innerNoteList[_lastNoteIdx];
-        //Note note = GetNoteObject(data.noteType);
-        //note.transform.position = GetNoteStartPosition(data.position);
+        NoteData data = _innerNoteList[_lastNoteIdx];
+        Note note = GetNoteObject(data.noteType);
+        note.transform.position = GetNoteStartPosition(data.position);
 
-        //note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f);
-        //_lastNoteIdx++;
+        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f);
+        _lastNoteIdx++;
     }
 
     private Note GetNoteObject(E_NoteType type)
@@ -86,13 +93,13 @@ public class NoteSpawner : MonoBehaviour
     {
         switch (posNumber)
         {
-            case 1:
+            case 2:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.TOP);
 
-            case 2:
+            case 3:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.MIDDLE);
 
-            case 3:
+            case 1:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.BOTTOM);
         }
         throw new System.Exception("잘못된 노트 위치 요청");
@@ -102,13 +109,13 @@ public class NoteSpawner : MonoBehaviour
     {
         switch (posNumber)
         {
-            case 1:
+            case 2: //top
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.TOP);
 
-            case 2:
+            case 3:
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.MIDDLE);
 
-            case 3:
+            case 1:
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.BOTTOM);
         }
 

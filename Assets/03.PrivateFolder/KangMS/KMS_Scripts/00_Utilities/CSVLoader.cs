@@ -26,14 +26,10 @@ public class CSVLoader : MonoBehaviour
     private int stageNumber;
     private Dictionary<int, List<NotePattern>> _patternDictionary = new Dictionary<int, List<NotePattern>>();
     private static bool _isLoaded = false;
-    private void Awake()
-    {
-        StartCoroutine(LoadAllPatterns());
-    }
-    /// <summary>
+    
     /// CSV 파일을 읽어들여 패턴을 파싱하고, Dictionary에 저장하는 역할
     /// </summary>
-    private IEnumerator LoadAllPatterns()
+    public IEnumerator LoadAllPatterns()
     {
         List<UnityWebRequest> requests = new List<UnityWebRequest>();
         // 각 stagePaths에 대한 요청을 준비하고 시작.

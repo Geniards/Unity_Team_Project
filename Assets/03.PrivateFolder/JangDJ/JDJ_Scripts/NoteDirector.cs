@@ -87,7 +87,7 @@ public class NoteDirector : MonoBehaviour
         
         double nextSpawnTime = firstNoteTime;
 
-        _spawner.RegistPattern(1); // 임시 테스트 코드
+        _spawner.RegistPatternData(1); // 임시 테스트 코드
 
         while (true)
         {
@@ -108,7 +108,7 @@ public class NoteDirector : MonoBehaviour
     {
         if (_spawner.IsLastNote == true)
         {
-            _spawner.RegistPattern(1); // 임시 테스트 코드
+            _spawner.RegistPatternData(1); // 임시 테스트 코드
         }
 
         if (_isSkipSpawn == false)
