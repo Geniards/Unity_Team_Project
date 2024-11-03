@@ -11,9 +11,12 @@ public abstract class Note : MonoBehaviour
     public Vector3 endPoint;
     public bool _isHit = false;
     public static bool isBoss = false;   //false가 기본값
-    //[Header("애니메이션 세팅")]
-    //public Animator animator;
-    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0)
+
+    [Header("애니메이션 세팅")]
+    public Animator animator;
+
+    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
+
     {
         _isHit = false;
         gameObject.SetActive(true);
