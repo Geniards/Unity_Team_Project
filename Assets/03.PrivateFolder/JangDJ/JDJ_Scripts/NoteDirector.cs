@@ -41,7 +41,7 @@ public class NoteDirector : MonoBehaviour
     }
     private void ChangeBGM()
     {
-        StartSpawnNotes(E_StageBGM.TEST_NORMAL_01 + 1);
+        StartSpawnNotes(DataManager.Instance.SelectedStageData.BGM+1);
     }
     public void Initailize()
     {
@@ -87,7 +87,7 @@ public class NoteDirector : MonoBehaviour
         
         double nextSpawnTime = firstNoteTime;
 
-        _spawner.RegistPattern(1); // 임시 테스트 코드
+        _spawner.RegistPatternData();
 
         while (true)
         {
@@ -108,7 +108,7 @@ public class NoteDirector : MonoBehaviour
     {
         if (_spawner.IsLastNote == true)
         {
-            _spawner.RegistPattern(1); // 임시 테스트 코드
+            _spawner.RegistPatternData();
         }
 
         if (_isSkipSpawn == false)
