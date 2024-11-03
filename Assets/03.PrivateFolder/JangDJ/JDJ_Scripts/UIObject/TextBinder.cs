@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class TextBinder : MonoBehaviour
 {
-    private TextMeshProUGUI _text;
+    protected TextMeshProUGUI _text;
 
     protected virtual void Awake()
     {

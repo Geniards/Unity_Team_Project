@@ -10,23 +10,13 @@ public abstract class Note : MonoBehaviour
     public float scoreValue = 100;
     public float damage = 0;
     public Vector3 endPoint;
-
-    [Header("충돌 가능한 노트 유/무")]
     public bool _isHit = false;
-    [Header("보스 출연 유/무")]
     public static bool isBoss = false;   //false가 기본값
 
     [Header("애니메이션 세팅")]
-    public Animator animator;                               // Animator 컴포넌트
-    public RuntimeAnimatorController baseController;        // 기본 Animator Controller
-    public AnimatorOverrideController overrideController;   // Override Controller
-    public AnimationOverrideData overrideData;              // 스크립트오브젝트 데이터
+    public Animator animator;
 
-    // 이동상태 제어 변수.
-    protected bool isMoving = true;
-    protected float length;
-
-    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0, float length = 0)
+    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
     {
         _isHit = false;
         gameObject.SetActive(true);
@@ -38,21 +28,18 @@ public abstract class Note : MonoBehaviour
         // Note 생성 시 중재자에 등록
         GameManager.Mediator.Register(this);
 
-        //if (animator == null)
-        //{
-        //    Debug.LogError("Animator가 할당되지 않았습니다.");
-        //    return;
-        //}
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
+        }
 
-        //if (baseController == null)
-        //{
-        //    Debug.LogError("기본 Animator Controller가 할당되지 않았습니다.");
-        //    return;
-        //}
+        // AnimationManager를 통해 개별적인 AnimatorOverrideController 생성 및 설정
+        AnimatorOverrideController overrideController = GameManager.AnimationChanger.GetRandomAnimationController(noteType, notePosition, stageNumber);
 
-        //// AnimatorOverrideController 생성 및 설정
-        //overrideController = new AnimatorOverrideController(baseController);
-        //animator.runtimeAnimatorController = overrideController;
+        if (overrideController != null)
+        {
+            animator.runtimeAnimatorController = overrideController;
+        }
 
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
@@ -70,7 +57,7 @@ public abstract class Note : MonoBehaviour
         Vector3 direction = (endPoint - startPosition).normalized;
         float totalDistance = Vector3.Distance(startPosition, endPoint);
 
-        while (!_isHit && isMoving && Vector3.Distance(transform.position, endPoint) > 0.001f)
+        while (!_isHit && Vector3.Distance(transform.position, endPoint) > 0.001f)
         {
             double currentDspTime = AudioSettings.dspTime;
 

@@ -7,29 +7,39 @@ using UnityEngine;
 public class WGH_PlayerController : MonoBehaviour
 {
     [Header("수치조절")]
-    [SerializeField, Range(0, 0.1f)] float _inAirTime;  // 체공시간        
-    [SerializeField] float _curHp;
-    [SerializeField] float _clikerTime;                 // 깜빡임 속도
-    [SerializeField] float _invincivilityTime;          // 무적시간
-    [SerializeField] float _playerOutTime;              // 플레이어가 화면 밖으로 나가는 시간
+    [SerializeField, Range(0, 0.1f)] private float _inAirTime;  // 체공시간        
+    [SerializeField] private float _curHp;
+    [SerializeField] private float _clikerTime;                 // 깜빡임 속도
+    [SerializeField] private float _invincivilityTime;          // 무적시간
+    [SerializeField] private float _playerOutTime;              // 플레이어가 화면 밖으로 나가는 시간
 
     [Header("참조")]
-    [SerializeField] Rigidbody2D _rigid;
-    [SerializeField] Animator _anim;
-    [SerializeField] WGH_AreaJudge _judge;
-     
-    public float CurHP { get { return _curHp; } private set { _curHp = value; DataManager.Instance.UpdatePlayerHP(_curHp); } }
-    public Vector3 PlayerFrontBoss { get; private set; }
-    Vector3 _bossApproachPos;
-    Vector3 _startPos;
+    [SerializeField] private Rigidbody2D _rigid = null;
+    [SerializeField] private Animator _anim = null;
+    [SerializeField] private WGH_AreaJudge _judge = null;
 
-    bool _isFPress;                                    // f 입력 여부
-    bool _isJPress;                                    // j 입력 여부
-    float _fPressTime;                                 // f 입력 시간을 받을 값
-    float _jPressTime;                                 // j 입력 시간을 받을 값
-    float _approachDur;                                // 접근까지 걸리는 시간
-    float _contactDur;                                 // 난투 시간
-    int _meleeCount;                                   // 난투 필요 타격 횟수
+    public float CurHP
+    {
+        get { return _curHp; }
+        private set
+        {
+            _curHp = value;
+            if (_curHp != DataManager.Instance.PlayerMaxHP)
+                DataManager.Instance.UpdatePlayerHP(_curHp);
+        }
+    }
+    
+    public Vector3 PlayerFrontBoss { get; private set; }
+    private Vector3 _bossApproachPos;
+    private Vector3 _startPos;
+
+    private bool _isFPress;                                    // f 입력 여부
+    private bool _isJPress;                                    // j 입력 여부
+    private float _fPressTime;                                 // f 입력 시간을 받을 값
+    private float _jPressTime;                                 // j 입력 시간을 받을 값
+    private float _approachDur;                                // 접근까지 걸리는 시간
+    private float _contactDur;                                 // 난투 시간
+    private int _meleeCount;                                   // 난투 필요 타격 횟수
 
     public bool IsDied { get; private set; }           // 사망여부
     public bool IsDamaged { get; private set; }        // 피격 여부
@@ -105,7 +115,6 @@ public class WGH_PlayerController : MonoBehaviour
     }
     IEnumerator ApproachMove()
     {
-        //_judge.enabled = false;
         float _time = 0;
 
         while (true)
@@ -189,6 +198,7 @@ public class WGH_PlayerController : MonoBehaviour
                     SetAnim("GroundAttack");
                     _judge.AddCombo();
                     _judge.AddPerfectCount();
+                    DataManager.Instance.AddScore( Mathf.RoundToInt(10 * 2 * ((_judge.CheckCurCombo() * 0.1f) + 1)));
                 }
                 else if(Input.GetKeyDown(KeyCode.F))
                 {

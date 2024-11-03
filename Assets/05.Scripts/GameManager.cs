@@ -53,8 +53,20 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 스테이지를 진행시킵니다.
     /// </summary>
-    public void StartStage(E_StageBGM bgm)
+    public void StartStage()
     {
+        StartCoroutine(DelayStartStage());
+    }
+
+    /// <summary>
+    /// 씬 전환 후 약간의 딜레이를 준 뒤 진행합니다.
+    /// </summary>
+    private IEnumerator DelayStartStage()
+    {
+        yield return new WaitForSeconds(1f);
+
+        E_StageBGM bgm = DataManager.Instance.SelectedStageData.BGM;
+
         DataManager.Instance.SetPlayState(true);
         SoundManager.Instance.PlayBGM(bgm);
         Director.Initailize();
@@ -114,11 +126,4 @@ public class GameManager : MonoBehaviour
         if (_stageTimeRoutine != null)
             StopCoroutine(_stageTimeRoutine);
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) // 임시
-            StartStage(E_StageBGM.TEST_NORMAL_01);
-    }
-
 }

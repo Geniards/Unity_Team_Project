@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7750979793801150539}
   - component: {fileID: 7750979793801150538}
   - component: {fileID: 1074287753}
+  - component: {fileID: 1991594507}
   m_Layer: 0
   m_Name: RayCheck
   m_TagString: Untagged
@@ -62,3 +63,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7399b02914e15d6468b048c09016a43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1991594507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750979793801150536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8fb6b2666cc1e439458134654616f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _judge: {fileID: 0}

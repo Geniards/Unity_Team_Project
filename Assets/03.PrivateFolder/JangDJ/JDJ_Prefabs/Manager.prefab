@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -4166345557378142764, guid: 353a08013c38daa4b8cade099085ddc6, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.09
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896831287}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -580,6 +580,19 @@ MonoBehaviour:
       _hp: 0
       _name: 
       _score: 0
+  NextStageData:
+    StageNumber: 1
+    BGM: 0
+    BPM: 0
+    SongTitle: 
+    StageName: 
+    Description: 
+    NoteSpeed: 5
+    _meleeCount: 10
+    _bossStat:
+      _hp: 0
+      _name: 
+      _score: 0
 --- !u!114 &6892206162165546791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,6 +620,8 @@ MonoBehaviour:
     TargetPrefab: {fileID: 3071670367471914970, guid: 774327af8bd05b1448acf1338e8172be, type: 3}
   - TargetPool: 8
     TargetPrefab: {fileID: 1484715254705799817, guid: 8437bbdabb943564daaa298928f42917, type: 3}
+  - TargetPool: 9
+    TargetPrefab: {fileID: 1275173161624624645, guid: b14cb18fa60a1f64ab215f3c54012351, type: 3}
 --- !u!114 &4076672358624917954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,5 +685,6 @@ MonoBehaviour:
   PerfectText: {fileID: 0}
   GreatText: {fileID: 0}
   ScoreText: {fileID: 0}
-  ProgressBar: {fileID: 0}
+  CurScoreText: {fileID: 0}
+  Progressbar: {fileID: 0}
   HpBar: {fileID: 0}

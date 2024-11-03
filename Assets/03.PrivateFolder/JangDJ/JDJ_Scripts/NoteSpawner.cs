@@ -51,15 +51,15 @@ public class NoteSpawner : MonoBehaviour
     /// </summary>
     public void SpawnNote(float noteSpeed)
     {
-        if (_lastNoteIdx >= _innerNoteList.Count)
-        { throw new System.Exception("등록된 노트가 없습니다."); }
+        //if (_lastNoteIdx >= _innerNoteList.Count)
+        //{ throw new System.Exception("등록된 노트가 없습니다."); }
 
-        NoteData data = _innerNoteList[_lastNoteIdx];
-        Note note = GetNoteObject(data.noteType);
-        note.transform.position = GetNoteStartPosition(data.position);
+        //NoteData data = _innerNoteList[_lastNoteIdx];
+        //Note note = GetNoteObject(data.noteType);
+        //note.transform.position = GetNoteStartPosition(data.position);
 
-        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f);
-        _lastNoteIdx++;
+        //note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f);
+        //_lastNoteIdx++;
     }
 
     private Note GetNoteObject(E_NoteType type)

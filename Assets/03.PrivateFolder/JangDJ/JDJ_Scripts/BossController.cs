@@ -112,9 +112,7 @@ public class BossController : MonoBehaviour
         if (CurrentState != null)
             CurrentState.Update();
 
-        //if (Input.GetKeyDown(KeyCode.D))
-        //    GetMeleeResult(true);
-        //if (Input.GetKeyDown(KeyCode.K))
-        //    GetMeleeResult(false);
+        if (Input.GetKeyDown(KeyCode.D))
+            DeadActionEnd();
     }
 }
