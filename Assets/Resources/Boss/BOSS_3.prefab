@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stat:
     _hp: 3
-    _moveSpeed: 0
+    _name: 
+    _score: 0
   _anim: {fileID: 8184315762194161995}
 --- !u!114 &8184315762194161995
 MonoBehaviour:
@@ -626,7 +627,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9050944055318116883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.91, z: 0}
+  m_LocalPosition: {x: 0, y: -0.073, z: 0}
   m_LocalScale: {x: -0.025, y: 0.024999999, z: 0.024999999}
   m_ConstrainProportionsScale: 0
   m_Children:
