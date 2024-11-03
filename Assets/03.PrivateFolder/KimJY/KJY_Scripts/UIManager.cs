@@ -33,10 +33,11 @@ public class UIManager : MonoBehaviour, IManager
     
     public void SetProgressValue(float value) { Progressbar.SetValue(value); }
     public void SetHPValue(float value) { HpBar.SetValue(value); }
+    public void SetTimeValue(float totalTime) { TimeText.SetText(totalTime.ToString()); }
 
     public void UpdateTexts()
     {
-        // 타임 추가
+        TimeText.
         PerfectText.SetText(DataManager.Instance.PerfectCount.ToString());
         GreatText.SetText(DataManager.Instance.GreatCount.ToString());
         ScoreText.SetText(DataManager.Instance.CurScore.ToString());

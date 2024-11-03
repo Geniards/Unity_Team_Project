@@ -36,6 +36,7 @@ public class DataManager : MonoBehaviour, IManager
         _isStageClear = true;
         _stageProgress = 0;
         _curScore = 0;
+        _gameStartTime = Time.time;
     }
 
     public void LoadPrevData() // 기존 값들 데이터 바인딩
@@ -110,7 +111,11 @@ public class DataManager : MonoBehaviour, IManager
     public int PerfectCount => _perfectCount;
     private int _curScore;
     public int CurScore => _curScore;
+    private float _gameStartTime;
+    private float _gameEndTime;
+    public float StagePlayTime => _gameEndTime - _gameStartTime;
 
+    public void CheckStageEndTime() { _gameEndTime = Time.time; }
     public void SetGreatCount(int count) { _greatCount = count; }
     public void SetPerfectCount(int count) { _perfectCount = count; }
     public void SetPlayState(bool value) { _isPlaying = value; } // isclear 와 역할 애매모호
