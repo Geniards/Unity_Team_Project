@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: st03_Score_BottomData
   m_EditorClassIdentifier: 
   stageNumber: 0
-  noteType: 0
+  noteType: 1
   notePosition: 0
-  playAnimClip: []
+  playAnimClip:
+  - {fileID: 7400000, guid: 1e760da60fc700c40819c2e47d5948c0, type: 2}

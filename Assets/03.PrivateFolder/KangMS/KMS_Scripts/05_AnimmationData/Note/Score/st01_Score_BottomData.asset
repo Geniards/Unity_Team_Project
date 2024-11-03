@@ -15,4 +15,5 @@ MonoBehaviour:
   stageNumber: 1
   noteType: 1
   notePosition: 0
-  playAnimClip: []
+  playAnimClip:
+  - {fileID: 7400000, guid: 1e760da60fc700c40819c2e47d5948c0, type: 2}
