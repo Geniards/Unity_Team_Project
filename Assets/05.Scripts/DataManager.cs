@@ -26,6 +26,7 @@ public class DataManager : MonoBehaviour, IManager
     {
         EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, InitDatas, this);
         EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, ApplySelectStageData, this);
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, CheckStageEndTime, this);
     }
 
     public void InitDatas() // 스테이지로 전환시 매번 호출되어야함

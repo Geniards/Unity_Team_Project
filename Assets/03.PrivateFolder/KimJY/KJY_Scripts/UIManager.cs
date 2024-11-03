@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour, IManager
 
     public void UpdateTexts()
     {
-        TimeText.
+        TimeText.SetText(DataManager.Instance.StagePlayTime.ToString());
         PerfectText.SetText(DataManager.Instance.PerfectCount.ToString());
         GreatText.SetText(DataManager.Instance.GreatCount.ToString());
         ScoreText.SetText(DataManager.Instance.CurScore.ToString());
