@@ -6,7 +6,7 @@ using UnityEngine;
 public class NoteSpawner : MonoBehaviour
 {
     [SerializeField] private NoteSpawnPosController _posController = null;
-    private List<NoteData> _innerNoteList = null;
+    private List<NoteData> _innerNoteList = new List<NoteData>();
     private int _lastNoteIdx = 0;
 
     public bool IsLastNote
@@ -34,12 +34,15 @@ public class NoteSpawner : MonoBehaviour
     {
         EventManager.Instance.AddAction(E_Event.CHANGED_BGM, Initalize, this);
         EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, Initalize, this);
+
+        EventManager.Instance.AddAction(E_Event.CHANGED_BGM, RegistPatternData, this);
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, RegistPatternData, this);
     }
 
     /// <summary>
-    /// 요청받은 패턴 넘버를 기준으로 스폰되어야 할 노트 정보들을 스포너에 등록해둡니다.
+    /// CSV에 저장된 랜덤 패턴을 불러옵니다.
     /// </summary>
-    public void RegistPatternData(int patternNumber) // 몇번 패턴인지
+    public void RegistPatternData() // 몇번 패턴인지
     {
         int idx = Random.Range(_patternIdx, _patternIdx + 10);
         
