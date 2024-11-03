@@ -7,37 +7,22 @@ public class ObjectScroller : MonoBehaviour
     [System.Serializable]
     public class ObjectGroup
     {
-        [SerializeField] private GameObject[] _objects;      // 그룹 내 오브젝트 배열
-        [SerializeField] private float _scrollSpeed;         // 그룹별 스크롤 속도
-        [SerializeField] private float _minSpacing;          // 최소 간격
-        [SerializeField] private float _maxSpacing;          // 최대 간격
+        [SerializeField] private GameObject[] _objects;
+        [SerializeField] private float _scrollSpeed;
+        [SerializeField] private float _minSpacing;
+        [SerializeField] private float _maxSpacing;
 
-        public GameObject[] GetObjects()
-        {
-            return _objects;
-        }
-
-        public float GetScrollSpeed()
-        {
-            return _scrollSpeed;
-        }
-
-        public float GetMinSpacing()
-        {
-            return _minSpacing;
-        }
-
-        public float GetMaxSpacing()
-        {
-            return _maxSpacing;
-        }
+        public GameObject[] GetObjects() { return _objects; }
+        public float GetScrollSpeed() { return _scrollSpeed; }
+        public float GetMinSpacing() { return _minSpacing; }
+        public float GetMaxSpacing() { return _maxSpacing; }
     }
 
-    [SerializeField] private ObjectGroup[] _objectGroups;    // 그룹 오브젝트를 관리하는 배열
-    [SerializeField] private Transform _parentTransform;     // 자식으로 생성할 부모 오브젝트의 위치 참조
-    [SerializeField] private float _scrollDelay;             // 실행 후 스크롤까지의 지연 시간
-    [SerializeField] private float _destroyOffset;     // 부모 오브젝트 위치 기준으로 제거할 위치 오프셋
-    [SerializeField] private float _spawnOffset;       // 부모 오브젝트 위치 기준으로 생성할 위치 오프셋
+    [SerializeField] private ObjectGroup[] _objectGroups;
+    [SerializeField] private Transform _parentTransform;
+    [SerializeField] private float _scrollDelay;
+    [SerializeField] private float _destroyOffset;
+    [SerializeField] private float _spawnOffset;
 
     private bool _isScroller = false;
     private List<GameObject> _spawnedObjects = new List<GameObject>();
@@ -45,21 +30,23 @@ public class ObjectScroller : MonoBehaviour
     private void Start()
     {
         StartCoroutine(StartScrollingAfterDelay(_scrollDelay));
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, StopScrolling, this);
+        EventManager.Instance.AddAction(E_Event.PLAYERDEAD, StopScrolling, this);
     }
 
     private IEnumerator StartScrollingAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _isScroller = true; // 지연 시간 후 스크롤 활성화
+        _isScroller = true;
     }
 
     private void Update()
     {
-        if (!_isScroller) return; // 스크롤러가 활성화될 때까지
+        if (!_isScroller) return;
 
         foreach (ObjectGroup group in _objectGroups)
         {
-            ScrollObjects(group);  // 각 그룹에 스크롤 적용
+            ScrollObjects(group);
         }
     }
 
@@ -70,7 +57,6 @@ public class ObjectScroller : MonoBehaviour
             GameObject obj = _spawnedObjects[i];
             obj.transform.position += Vector3.left * group.GetScrollSpeed() * Time.deltaTime;
 
-            // 부모 오브젝트 위치 기준으로 설정 범위만큼 왼쪽을 벗어난 오브젝트는 제거
             if (obj.transform.position.x <= _parentTransform.position.x - _destroyOffset)
             {
                 Destroy(obj);
@@ -78,7 +64,6 @@ public class ObjectScroller : MonoBehaviour
             }
         }
 
-        // 부모 오브젝트 위치 기준으로 설정 범위를 벗어났을 때 새 오브젝트 생성
         if (_spawnedObjects.Count == 0 || _spawnedObjects[_spawnedObjects.Count - 1].transform.position.x < _parentTransform.position.x + _spawnOffset)
         {
             SpawnRandomObject(group);
@@ -106,5 +91,10 @@ public class ObjectScroller : MonoBehaviour
                 maxX = obj.transform.position.x;
         }
         return maxX;
+    }
+
+    private void StopScrolling()
+    {
+        _isScroller = false;
     }
 }
