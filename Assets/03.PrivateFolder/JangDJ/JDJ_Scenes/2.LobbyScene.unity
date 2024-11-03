@@ -364,6 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetPopup: {fileID: 2652974406653602932}
   _button: {fileID: 78987406}
+  _nextSetter: {fileID: 168193066}
   _stage:
     StageNumber: 1
     BGM: 0
@@ -649,6 +650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetPopup: {fileID: 2652974406653602932}
   _button: {fileID: 99593392}
+  _nextSetter: {fileID: 237924244}
   _stage:
     StageNumber: 4
     BGM: 0
@@ -932,8 +934,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetPopup: {fileID: 2652974406653602932}
   _button: {fileID: 168193063}
+  _nextSetter: {fileID: 732802694}
   _stage:
-    StageNumber: 2
+    StageNumber: 3
     BGM: 0
     BPM: 120
     SongTitle: 
@@ -1371,6 +1374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetPopup: {fileID: 2652974406653602932}
   _button: {fileID: 237924241}
+  _nextSetter: {fileID: 0}
   _stage:
     StageNumber: 5
     BGM: 0
@@ -1780,6 +1784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetPopup: {fileID: 2652974406653602932}
   _button: {fileID: 732802691}
+  _nextSetter: {fileID: 99593395}
   _stage:
     StageNumber: 3
     BGM: 0
@@ -2170,8 +2175,8 @@ RectTransform:
   m_Father: {fileID: 1168875622}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.75, y: 0}
-  m_AnchorMax: {x: 0.75, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 11.249, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3248,7 +3253,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.75, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

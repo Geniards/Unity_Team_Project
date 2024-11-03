@@ -28,6 +28,7 @@ public class WGH_PlayerController : MonoBehaviour
                 DataManager.Instance.UpdatePlayerHP(_curHp);
         }
     }
+    
     public Vector3 PlayerFrontBoss { get; private set; }
     private Vector3 _bossApproachPos;
     private Vector3 _startPos;

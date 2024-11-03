@@ -7,7 +7,7 @@ public class SoundManager : MonoBehaviour, IManager
 {
     #region BIND KEY
 
-    public const string MASTER_VOLUME = "MasterVolume";
+    public const string MASTER_VOLUME_PLAYERPREFAB= "MasterVolume";
     public const string MASTER_VOLUME_MIXER_KEY = "MainSound";
 
     #endregion
@@ -47,7 +47,7 @@ public class SoundManager : MonoBehaviour, IManager
     private void SoundControl(float volume)
     {
         _mixer.SetFloat(MASTER_VOLUME_MIXER_KEY, volume);
-        PlayerPrefs.SetFloat(MASTER_VOLUME, volume);
+        PlayerPrefs.SetFloat(MASTER_VOLUME_PLAYERPREFAB, volume);
     }
 
     public void Init() 

@@ -1,11 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
+    [Header("기본 애니메이터 컨트롤러")]
     [SerializeField] private RuntimeAnimatorController baseAnimatorController;
+    [Header("노트 애니메이션 데이터")]
     [SerializeField] private List<AnimationOverrideData> animationOverrideDataList;
+    [Header("보스 애니메이션 데이터")]
+    [SerializeField] private List<BossAnimOverrideData> bossAnimationOverrideDataList;
 
     private void Start()
     {
@@ -13,9 +16,9 @@ public class AnimationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ScriptsObjects AnimationOverrideData의 클립 중 랜덤으로 반환하는 메서드.
+    /// Note 타입, 위치, 스테이지 번호에 따라 개별적인 AnimatorOverrideController를 생성하여 반환
     /// </summary>
-    public AnimatorOverrideController GetRandomAnimationClip(E_NoteType noteType, E_SpawnerPosY notePosition, int stageNumber)
+    public AnimatorOverrideController GetRandomAnimationController(E_NoteType noteType, E_SpawnerPosY notePosition, int stageNumber)
     {
         if (!baseAnimatorController)
         {
@@ -23,17 +26,16 @@ public class AnimationManager : MonoBehaviour
             return null;
         }
 
+        // 개별 Note에 적용될 AnimatorOverrideController를 새로 생성
         AnimatorOverrideController overrideController = new AnimatorOverrideController(baseAnimatorController);
 
         foreach (var data in animationOverrideDataList)
         {
-            Debug.Log($"애님 스크립트 오브젝트 데이터 체크 - Stage: {data.stageNumber}, Type: {data.noteType}, Position: {data.notePosition}");
             if (data.stageNumber == stageNumber && data.noteType == noteType && data.notePosition == notePosition)
             {
                 AnimationClip randomClip = GetRandomClip(data);
                 if (randomClip != null)
                 {
-                    Debug.Log($"애니메이터의 Motion이름이 Run에서 실행될 랜덤 클립의 이름은 {randomClip.name}");
                     overrideController["Run"] = randomClip;
                     return overrideController;
                 }
@@ -44,25 +46,43 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        Debug.LogWarning("해당 조건에 맞는 애니메이터를 찾을 수 없습니다.");
-        return null;
+        Debug.LogWarning("해당 조건에 맞는 애니메이션 데이터를 찾을 수 없습니다.");
+        return overrideController;
     }
 
     /// <summary>
-    /// 노트의 타입과 위치에 맞는 데이터를 반환.
+    /// 보스 애니메이션에 대한 개별 AnimatorOverrideController 생성 및 반환
     /// </summary>
-    public AnimationOverrideData GetAnimationData(E_NoteType noteType, E_SpawnerPosY notePosition, int stageNumber)
+    public AnimatorOverrideController GetAnimationController(int stageNumber, string bossState, int clipIndex)
     {
-        foreach (var data in animationOverrideDataList)
+        if (!baseAnimatorController)
         {
-            if (data.stageNumber == stageNumber && data.noteType == noteType && data.notePosition == notePosition)
+            Debug.LogError("baseAnimatorController가 할당되지 않았습니다.");
+            return null;
+        }
+
+        AnimatorOverrideController overrideController = new AnimatorOverrideController(baseAnimatorController);
+
+        foreach (var data in bossAnimationOverrideDataList)
+        {
+            if (data.stageNumber == stageNumber /*&& data.bossState == bossState*/)
             {
-                return data;
+                AnimationClip selectedClip = GetAnimationClip(data, clipIndex);
+                if (selectedClip != null)
+                {
+                    // 보스의 기본 애니메이션 클립 이름이 "Run"이라고 가정
+                    overrideController["/*변경할 기본 클립 이름*/"] = selectedClip;
+                    return overrideController;
+                }
+                else
+                {
+                    Debug.LogWarning("보스 애니메이션 클립이 null입니다.");
+                }
             }
         }
 
-        Debug.LogWarning("해당 조건에 맞는 애니메이션 데이터를 찾을 수 없습니다.");
-        return null;
+        Debug.LogWarning("해당 조건에 맞는 보스 애니메이션 데이터를 찾을 수 없습니다.");
+        return overrideController;
     }
 
     /// <summary>
@@ -70,14 +90,16 @@ public class AnimationManager : MonoBehaviour
     /// </summary>
     private AnimationClip GetRandomClip(AnimationOverrideData data)
     {
-        int randomIndex = Random.Range(0, 3);
-        Debug.Log($"랜덤으로 선택된 클립의 인덱스: {randomIndex + 1}");
-        switch (randomIndex)
-        {
-            case 0: return data.clip01;
-            case 1: return data.clip02;
-            case 2: return data.clip03;
-            default: return null;
-        }
+        int randomIndex = Random.Range(0, data.playAnimClip.Count);
+        return data.playAnimClip[randomIndex];
+    }
+
+    /// <summary>
+    /// 보스 애니메이션 클립 선택
+    /// </summary>
+    private AnimationClip GetAnimationClip(BossAnimOverrideData data, int clipIndex)
+    {
+        // 보스는 상태에 따른 하나의 애니메이션 클립을 갖는다고 가정
+        return data.playAnimClip[clipIndex];
     }
 }

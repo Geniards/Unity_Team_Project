@@ -16,9 +16,9 @@ public class DBScoreNote : Note, IPoolingObj
 
     public E_Pool MyPoolType => E_Pool.DBSCORE_NOTE;
 
-    public override void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0, float length = 0)
+    public override void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
     {
-        base.Initialize(endPoint, speed, scoreValue, damage);
+        base.Initialize(endPoint, speed, scoreValue, damage, stageNumber, noteType, notePosition);
 
         // TotalHeight를 기준으로 upNote와 downNote의 위치 설정
         float halfHeight = GameManager.Director.TotalHeight / 2f;

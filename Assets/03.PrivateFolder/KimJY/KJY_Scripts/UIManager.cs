@@ -29,33 +29,20 @@ public class UIManager : MonoBehaviour, IManager
     public ScoreText ScoreText;
     public WGH_ScoreBoard CurScoreText;
 
-    public GameObject ProgressBar;
-    public GameObject HpBar;
+    public Progressbar Progressbar;
+    public HPbar HpBar;
     
     public void SetCurrentScoreText(string value)
     {
         CurScoreText.SetText($"Score {value}");
     }
-    
-    public void SetProgressValue(float value)
-    {
-        //if (ProgressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        //{
-        //    ui.SetValue(value);
-        //}
-    }
-
-    public void SetHPValue(float value)
-    {
-        //if (HpBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        //{
-        //    ui.SetValue(value);
-        //}
-    }
+    public void SetProgressValue(float value) { Progressbar.SetValue(value); }
+    public void SetHPValue(float value) { HpBar.SetValue(value); }
+    public void SetTimeValue(float totalTime) { TimeText.SetText(totalTime.ToString()); }
 
     public void UpdateTexts()
     {
-        // 타임 추가
+        TimeText.SetText(DataManager.Instance.StagePlayTime.ToString());
         PerfectText.SetText(DataManager.Instance.PerfectCount.ToString());
         GreatText.SetText(DataManager.Instance.GreatCount.ToString());
         ScoreText.SetText(DataManager.Instance.CurScore.ToString());

@@ -5,4 +5,5 @@ public class TimeText : TextBinder
         base.Awake();
         UIManager.Instance.TimeText = this;
     }
+
 }
