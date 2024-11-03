@@ -27,10 +27,15 @@ public class UIManager : MonoBehaviour, IManager
     public PerfectText PerfectText;
     public GreatText GreatText;
     public ScoreText ScoreText;
+    public WGH_ScoreBoard CurScoreText;
 
     public Progressbar Progressbar;
     public HPbar HpBar;
     
+    public void SetCurrentScoreText(string value)
+    {
+        CurScoreText.SetText($"Score {value}");
+    }
     public void SetProgressValue(float value) { Progressbar.SetValue(value); }
     public void SetHPValue(float value) { HpBar.SetValue(value); }
     public void SetTimeValue(float totalTime) { TimeText.SetText(totalTime.ToString()); }

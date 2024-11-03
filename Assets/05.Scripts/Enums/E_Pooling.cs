@@ -10,5 +10,6 @@ public enum E_Pool
     EVENT,
     GREAT,
     PERFECT,
+    COMBO,
     E_POOL_Max
 }

@@ -121,7 +121,12 @@ public class DataManager : MonoBehaviour, IManager
     public void SetPerfectCount(int count) { _perfectCount = count; }
     public void SetPlayState(bool value) { _isPlaying = value; } // isclear 와 역할 애매모호
     public void SetStageClear(bool value) { _isStageClear = value; }
-    public void AddScore(int value) { _curScore += value; }
+
+    public void AddScore(int value) 
+    { 
+        _curScore += value;
+        UIManager.Instance.SetCurrentScoreText(_curScore.ToString());
+    }
 
     public void UpdatePlayerHP(float value)
     {
