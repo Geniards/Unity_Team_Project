@@ -66,7 +66,7 @@ public class SoundManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// 스테이지 번호에 맞는 음원을 재생합니다.
+    /// 선택한 타입의 음원이 재생됩니다.
     /// </summary>
     public void PlayBGM(E_StageBGM bgmType)
     {

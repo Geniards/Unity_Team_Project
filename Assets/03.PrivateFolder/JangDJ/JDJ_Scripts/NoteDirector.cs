@@ -41,7 +41,7 @@ public class NoteDirector : MonoBehaviour
     }
     private void ChangeBGM()
     {
-        StartSpawnNotes(E_StageBGM.TEST_NORMAL_01 + 1);
+        StartSpawnNotes(DataManager.Instance.SelectedStageData.BGM+1);
     }
     public void Initailize()
     {
