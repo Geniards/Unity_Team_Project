@@ -5,38 +5,20 @@ using UnityEngine;
 public class WGH_Combo : MonoBehaviour, IPoolingObj
 {
     [SerializeField] SpriteRenderer _sprite;
-    [SerializeField] WGH_AreaJudge _judge;
     public Sprite[] sprites;
     public E_Pool MyPoolType => E_Pool.COMBO;
-    private float _time;
-    private void Start()
+
+    private void OnEnable()
     {
         _sprite = GetComponent<SpriteRenderer>();
-        _judge = FindAnyObjectByType<WGH_AreaJudge>();
+        transform.position = Vector3.zero;
     }
-
-    private void Update()
+    public void Initialize(Vector3 pos, int num)
     {
-        ChangeNumber();
+        transform.position = pos;
+        if(num >= 0 && num < sprites.Length)
+        _sprite.sprite = sprites[num];
     }
-
-    public void ChangeNumber()
-    {
-        if(_judge == null)
-        { return; }
-        
-        if (_judge.Combo == 0)
-        {
-            _sprite.transform.position = new Vector3(0, 0, 0);
-            _sprite.sprite = sprites[0];
-        }
-        else if (_judge.Combo / 10 < 1)
-        {
-            _sprite.transform.position = new Vector3(0, 0, 0);
-            _sprite.sprite = sprites[_judge.Combo];
-        }
-    }
-
 
     public void Return()
     {

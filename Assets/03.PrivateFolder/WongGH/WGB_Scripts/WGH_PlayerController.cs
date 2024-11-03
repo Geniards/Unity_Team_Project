@@ -11,6 +11,7 @@ public class WGH_PlayerController : MonoBehaviour
     [SerializeField] private float _curHp;
     [SerializeField] private float _clikerTime;                 // 깜빡임 속도
     [SerializeField] private float _invincivilityTime;          // 무적시간
+    [SerializeField] private float _unableActTime;              // 행동불능 시간
     [SerializeField] private float _playerOutTime;              // 플레이어가 화면 밖으로 나가는 시간
 
     [Header("참조")]
@@ -45,6 +46,7 @@ public class WGH_PlayerController : MonoBehaviour
     public bool IsDamaged { get; private set; }        // 피격 여부
     public bool IsAir { get; private set; }            // 체공 여부
     public bool IsContact { get; private set; }        // 난투 중인지 여부
+    public bool IsAbleAct { get;  private set; }        // 행동 가능 여부
     
     private void Awake()
     {
@@ -60,6 +62,7 @@ public class WGH_PlayerController : MonoBehaviour
         EventManager.Instance.AddAction(E_Event.CONTACTEND, ContactEnd, this);
         _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.8f, -1, 0);
         _startPos = transform.position;
+        IsAbleAct = true;
         _judge = FindAnyObjectByType<WGH_AreaJudge>();
         _approachDur = DataManager.Instance.ApproachDuration; // 임시 0.2
         _contactDur = DataManager.Instance.ContactDuration; // 임시 4
@@ -243,6 +246,7 @@ public class WGH_PlayerController : MonoBehaviour
             CurHP -= 1;
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
+            StartCoroutine(UnableAct());
         }
         else if(collision.gameObject.TryGetComponent(out Note note2) && !IsDamaged && !IsDied && Note.isBoss)
         {
@@ -255,6 +259,7 @@ public class WGH_PlayerController : MonoBehaviour
             CurHP -= 2;
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
+            StartCoroutine(UnableAct());
         }
     }
     // 체공 시간 조절 코루틴
@@ -307,6 +312,14 @@ public class WGH_PlayerController : MonoBehaviour
         Destroy(_rigid);
         yield return new WaitForSeconds(1f);
         EventManager.Instance.PlayEvent(E_Event.STAGE_END);
+        yield break;
+    }
+    // 행동불능
+    IEnumerator UnableAct()
+    {
+        IsAbleAct = false;
+        yield return new WaitForSeconds(_unableActTime);
+        IsAbleAct = true;
         yield break;
     }
     /// <summary>

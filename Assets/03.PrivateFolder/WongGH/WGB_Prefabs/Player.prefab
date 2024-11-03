@@ -146,6 +146,7 @@ MonoBehaviour:
   _curHp: 0
   _clikerTime: 0.2
   _invincivilityTime: 1
+  _unableActTime: 0.2
   _playerOutTime: 5
   _rigid: {fileID: 0}
   _anim: {fileID: 0}

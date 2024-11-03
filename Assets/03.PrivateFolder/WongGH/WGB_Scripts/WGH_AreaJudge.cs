@@ -42,12 +42,19 @@ public class WGH_AreaJudge : MonoBehaviour
         EventManager.Instance.AddAction(E_Event.BOSSDEAD, GetBossScore, this);
         EventManager.Instance.AddAction(E_Event.STAGE_END, SentCount, this);
         _FloatCombo = FindAnyObjectByType<WGH_FloatCombo>();
-        _FloatCombo.SpawnCombo(Combo);
     }
     
     private void Update()
     {
-        if(_isInputProcessing == false && !_playerController.IsDamaged && !_playerController.IsDied && !_playerController.IsContact)
+        if (Input.GetMouseButtonDown(1))
+        {
+            AddCombo();
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            _FloatCombo.SpawnCombo(Combo);
+        }
+        if(_isInputProcessing == false && _playerController.IsAbleAct && !_playerController.IsDied && !_playerController.IsContact)
         {
             if (Input.GetKeyDown(KeyCode.F))
                 _inputKey = KeyCode.F;
