@@ -24,6 +24,14 @@ public class SceneController : MonoBehaviour, IManager
         _instance = this;
         _fadeSec = new WaitForSeconds(DataManager.Instance.SceneFadeDuration);
         EventManager.Instance.AddAction(E_Event.STAGE_END, ShowResultScene, this);
+
+        SceneManager.sceneLoaded += SceneLoaded;
+    }
+
+    private void SceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        if (arg0.buildIndex == (int)E_SceneType.STAGE)
+            EventManager.Instance.PlayEvent(E_Event.OPENED_STAGESCENE);
     }
 
     /// <summary>

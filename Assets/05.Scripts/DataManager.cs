@@ -7,23 +7,35 @@ public class DataManager : MonoBehaviour, IManager
     private DataTable _csvData = new DataTable();
     public DataTable CSVData => _csvData;
     [HideInInspector] public StageData SelectedStageData;
+    [HideInInspector] public StageData NextStageData;
     private StageData _stageData = new StageData();
     private GameSettingData _settingData;
+    
     public void Init()
     {
         _instance = this;
+        
+        _settingData.MasterVolume = -20f;
         SetBGMVolume(0.2f); // 유저 정보 저장시 변경
         SetSFXVolume(0.2f);
-        _stageData.BGM = E_StageBGM.TEST_NORMAL_01;
-        _settingData.MasterVolume = -20f;
 
         LoadPrevData();
     }
+
+    private void Awake()
+    {
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, InitDatas, this);
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, ApplySelectStageData, this);
+    }
+
     public void InitDatas() // 스테이지로 전환시 매번 호출되어야함
     {
-        _isStageClear = true;
         _perfectCount = 0;
         _greatCount = 0;
+        _isPlaying = false;
+        _isStageClear = true;
+        _stageProgress = 0;
+        _curScore = 0;
     }
 
     public void LoadPrevData() // 기존 값들 데이터 바인딩
@@ -33,6 +45,14 @@ public class DataManager : MonoBehaviour, IManager
             _settingData.MasterVolume = PlayerPrefs.GetFloat(SoundManager.MASTER_VOLUME_PLAYERPREFAB);
             SoundManager.Instance.UpdateMasterMixer();
         }
+    }
+
+    /// <summary>
+    /// 마지막으로 선택된 스테이지 데이터로 적용합니다.
+    /// </summary>
+    public void ApplySelectStageData()
+    {
+        SelectedStageData.CopyData(_stageData);
     }
 
     #region 프로그램 기본 설정
@@ -73,11 +93,7 @@ public class DataManager : MonoBehaviour, IManager
         GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
     public void SetBossData(BossController boss) { this._boss = boss; }
     public void SetPlayerMaxHP(float value) { this._playerMaxHp = value; } // 상점 기능 대응
-    public void ApplySelectStageData()
-    {
-        SelectedStageData.CopyData(_stageData);
-        InitDatas();
-    }
+    
     #endregion
 
     #region 게임진행 상황 데이터
@@ -142,6 +158,14 @@ public class StageData
     [Space(10f), Header("게임 내 데이터 설정")]
     [SerializeField] private int _meleeCount = 10;
     [SerializeField] private BossStat _bossStat = new BossStat();
+
+    private StageData _nextStage;
+    public StageData NextStage => _nextStage;
+
+    public void SetNextStage(StageDataSetter setter)
+    {
+        _nextStage = setter.StageData;
+    }
 
     public float BossHP => _bossStat.Hp;
     public int BossScore => _bossStat.Score;

@@ -580,6 +580,7 @@ MonoBehaviour:
       _hp: 0
       _name: 
       _score: 0
+  NextStageDataSetter: {fileID: 0}
 --- !u!114 &6892206162165546791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,5 +671,5 @@ MonoBehaviour:
   PerfectText: {fileID: 0}
   GreatText: {fileID: 0}
   ScoreText: {fileID: 0}
-  ProgressBar: {fileID: 0}
+  Progressbar: {fileID: 0}
   HpBar: {fileID: 0}
