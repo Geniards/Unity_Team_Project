@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class DataTable
 {
-    private Dictionary<int, List<NotePattern>> _patternTable = null;
+    private Dictionary<int, List<NotePattern>> _patternTable =
+        new Dictionary<int, List<NotePattern>>();
 
     /// <summary>
     /// 데이터 테이블의 초기화를 진행합니다.
     /// </summary>
     public void Initailize()
     {
-        _patternTable = new Dictionary<int, List<NotePattern>>();
     }
 
     /// <summary>

@@ -38,7 +38,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
         {
             item = _prefabs[i];
 
-            if (E_Pool.NONE >= item.TargetPool || item.TargetPool >= E_Pool.E_POOL_Max 
+            if (E_Pool.NONE >= item.TargetPool || item.TargetPool >= E_Pool.E_POOL_Max
                 || item.TargetPrefab == null)
             { throw new System.Exception("프리팹 등록 오류 재확인 요망"); }
 
@@ -52,7 +52,7 @@ public class ObjPoolManager : MonoBehaviour, IManager
     /// </summary>
     public GameObject GetObject(E_Pool poolType)
     {
-        return GetObject<GameObject>(poolType);
+        return _pools[poolType].GetObject();
     }
 
     public GameObject GetObject(E_Pool poolType, Transform parent)
@@ -79,10 +79,10 @@ public class ObjPoolManager : MonoBehaviour, IManager
     /// <summary>
     /// 정해진 풀타입을 기반으로 자신에게 맞는 풀을 찾아 반환시킵니다.
     /// </summary>
-    public void ReturnObj(E_Pool poolType,GameObject obj)
+    public void ReturnObj(E_Pool poolType, GameObject obj)
     {
         _pools[poolType].ReturnObj(obj);
     }
 
-    
+
 }

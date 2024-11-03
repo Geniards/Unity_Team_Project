@@ -1,59 +1,58 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour, IManager
 {
+    #region BINDING KEY
+
+    
+
+    #endregion
 
     public static UIManager Instance { get; private set; }
 
     public void Init()
     {
-        Instance = this;    
+        Instance = this;
+        EventManager.Instance.AddAction(E_Event.OPENED_CLEARSCENE, UpdateTexts, this);
     }
 
-    enum Buttons
-    { 
-        StartButton,
-        StopButton
-    }
+    public TimeText TimeText;
+    public PerfectText PerfectText;
+    public GreatText GreatText;
+    public ScoreText ScoreText;
 
-    enum Texts
-    { 
-        ScoreText,
-        HpText
-    }
-
-    enum Images
-    {
-        PerfectImage,
-        GreatImage,
-        MissImage
-    }
-
-    private void Start()
-    {
-        Bind<Button>(typeof(Buttons));
-        Bind<Text>(typeof(Texts));
-        Bind<Image>(typeof(Images));
-    }
-
-    void Bind<T>(Type type)
-    {
-        string[] names = Enum.GetNames(type);
-    }
-
-    [SerializeField] private GameObject _progressBar;
-
+    public GameObject ProgressBar;
+    public GameObject HpBar;
+    
+    
     public void SetProgressValue(float value)
     {
-        if (_progressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
-        {
-            ui.SetValue(value);
-        }
+        //if (ProgressBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
+        //{
+        //    ui.SetValue(value);
+        //}
     }
 
+    public void SetHPValue(float value)
+    {
+        //if (HpBar.TryGetComponent<IValuableUI>(out IValuableUI ui))
+        //{
+        //    ui.SetValue(value);
+        //}
+    }
+
+    public void UpdateTexts()
+    {
+        // 타임 추가
+        PerfectText.SetText(DataManager.Instance.PerfectCount.ToString());
+        GreatText.SetText(DataManager.Instance.GreatCount.ToString());
+        ScoreText.SetText(DataManager.Instance.CurScore.ToString());
+    }
 }

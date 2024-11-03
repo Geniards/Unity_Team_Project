@@ -12,10 +12,11 @@ public enum E_SFX
 {
     NONE=-1,
     SIREN,
+    ENTER_CONTACT,
+    EXIT_CONTACT,
     SCORE,
     MONSTER,
     LONGNOTE,
-    BOSS_CONTACT,
     BUTTON,
     CHARACTERDEAD,
     CHARACTERONHIT,

@@ -40,6 +40,9 @@ public class EventManager : MonoBehaviour, IManager
     /// </summary>
     public void PlayEvent(E_Event eventType)
     {
+        if (_events.ContainsKey(eventType) == false)
+            return;
+
         foreach (var eventObject in _events[eventType])
         {
             eventObject.Run();

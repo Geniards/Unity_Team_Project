@@ -4,10 +4,8 @@ using UnityEngine;
 public class BossController : MonoBehaviour
 {
     [SerializeField] private BossStat _stat = new BossStat();
-    [SerializeField] private BossMovement _movement = null;
-
-    private E_SpawnerPosY _curPos = E_SpawnerPosY.NONE;
-    private E_SpawnerPosY _nextPos = E_SpawnerPosY.NONE;
+    [SerializeField] private BossAnimator _anim;
+    public BossAnimator Anim => _anim;
 
     public IState CurrentState { get; private set; }
     public BossIntoField IntoField;
@@ -21,22 +19,22 @@ public class BossController : MonoBehaviour
     public BossRecover RecoverState;
 
     public BossStat Stat => _stat;
+    public int Score => _stat.Score;
 
-    private void Start() // 임시
-    {
-        Initialize();
-    }
+    private bool _isRushReady = false;
 
     public void Initialize()
     {
         InitStates();
         SetInitState(IntoField);
         RegistMyData();
+        this.transform.position 
+            = GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
     }
 
     private void RegistMyData()
     {
-        DataManager.Instance.SetBossHP(_stat.Hp);
+        DataManager.Instance.SetBossData(this);
     }
 
     private void InitStates()
@@ -47,9 +45,11 @@ public class BossController : MonoBehaviour
         MoveState = new BossMove(this);
         RushState = new BossRush(this);
         RushReadyState = new BossRushReady(this);
-        ClosedPlayerState = new BossClosedPlayer(this,5);
+        ClosedPlayerState = new BossClosedPlayer(this, DataManager.Instance.ContactDuration);
         DeadState = new BossDead(this);
         RecoverState = new BossRecover(this);
+
+        _isRushReady = false;
     }
 
     private void SetInitState(IState state)
@@ -65,23 +65,56 @@ public class BossController : MonoBehaviour
         CurrentState.Enter();
     }
 
-    public void Dead()
+    public void ReduceScore()
     {
-        Destroy(this.gameObject); // 임시
+        _stat.ReduceScore();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void DeadActionEnd()
     {
-        if(collision.collider.TryGetComponent<Note>(out Note note))
+        EventManager.Instance.PlayEvent(E_Event.BOSSDEAD);
+    }
+
+    public float OnDamage(float damage)
+    {
+        float currentHp = _stat.AddHp(damage * -1);
+        if (currentHp <= 0 && _isRushReady == false)
         {
-            float damageValue = note.GetDamage();
-            _stat.AddHp(damageValue);
+            _isRushReady = true;
+            SetState(RushReadyState); 
         }
+
+        return currentHp;
+    }
+
+    public void Heal()
+    {
+        _stat.AddHp(2); // 임시
+    }
+
+    public void SetRushReady(bool value)
+    {
+        this._isRushReady = value;
+    }
+
+    public void GetMeleeResult(bool result)
+    {
+        Debug.Log(result);
+
+        if (result == true)
+            SetState(DeadState);
+        else
+            SetState(RecoverState);
     }
 
     private void Update()
     {
         if (CurrentState != null)
             CurrentState.Update();
+
+        //if (Input.GetKeyDown(KeyCode.D))
+        //    GetMeleeResult(true);
+        //if (Input.GetKeyDown(KeyCode.K))
+        //    GetMeleeResult(false);
     }
 }

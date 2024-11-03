@@ -21,10 +21,12 @@ public class BossIntoField : BossState, IState
 
     public void Enter()
     {
+        _boss.Stat.InitScore(DataManager.Instance.SelectedStageData.BossScore);
+
         _duration = 10f;
         _time = 0;
         _t = 0;
-        _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.MIDDLE);
+        _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.BOTTOM);
     }
 
     public void Exit()
@@ -97,8 +99,8 @@ public class BossMove : BossState, IState
         _time = 0;
         _t = 0;
         _duration = 4f;
-        int rand = Random.Range(0, (int)E_SpawnerPosY.E_SpawnerPosY_MAX);
-        _destination = GameManager.Director.GetBossPoses((E_SpawnerPosY)rand);
+        //int rand = Random.Range(0, (int)E_SpawnerPosY.E_SpawnerPosY_MAX);
+        _destination = GameManager.Director.GetBossPoses((E_SpawnerPosY.BOTTOM));
     }
 
     public void Exit()
@@ -158,14 +160,19 @@ public class BossRushReady : BossState, IState
 
     public void Enter()
     {
+        _boss.Anim.PlayRushReadyAnim();
+        EventManager.Instance.PlayEvent(E_Event.NOTE_CLEAR);
+        EventManager.Instance.PlayEvent(E_Event.SPAWN_STOP);
+        
         _time = 0;
         _t = 0;
-        _duration = 3f;
+        _duration = 2f;
         _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.MIDDLE);
     }
 
     public void Exit()
     {
+        _boss.SetRushReady(false);
     }
 
     public void Update()
@@ -198,14 +205,17 @@ public class BossRush : BossState, IState
     private float _duration;
     private Vector3 _startPosition;
     private Vector3 _destination;
+    private Vector3 _offset = Vector3.right * 0.3f;
 
     public void Enter()
     {
+        EventManager.Instance.PlayEvent(E_Event.BOSSRUSH);
+        SoundManager.Instance.FadeBGM(false, 2f, 0.01f);
         _time = 0;
         _t = 0;
-        _duration = 0.2f;
+        _duration = DataManager.Instance.ApproachDuration;
         _startPosition = _boss.transform.position;
-        _destination = new Vector3(-5, 0, 0);
+        _destination = DataManager.Instance.ContactPos + _offset;
     }
 
     public void Exit()
@@ -216,7 +226,8 @@ public class BossRush : BossState, IState
     {
         if (_time >= _duration)
         {
-            _boss.transform.position = _destination; 
+            _boss.transform.position = _destination;
+            SoundManager.Instance.PlaySFX(E_SFX.ENTER_CONTACT);
             _boss.SetState(_boss.ClosedPlayerState);
             return;
         }
@@ -250,6 +261,7 @@ public class BossClosedPlayer : BossState, IState
 
     public void Enter()
     {
+        EventManager.Instance.PlayEvent(E_Event.ENTERCONTACT);
         _timer = 0;
         _initPos = _boss.transform.position;
         _cam.Move(_initPos + Vector3.forward * -10, 0.07f);
@@ -261,14 +273,15 @@ public class BossClosedPlayer : BossState, IState
     {
         _cam.Move(new Vector3(0, 1, -10f), 0.07f);
         _cam.ZoomIn(0.1f, 5f);
-        
+        SoundManager.Instance.PlaySFX(E_SFX.EXIT_CONTACT);
+        SoundManager.Instance.FadeBGM(true, 2f);
     }
 
     public void Update()
     {
         if(_timer >= _duration)
         {
-            _boss.SetState(_boss.MoveState);
+            EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
             return;
         }
 
@@ -297,6 +310,7 @@ public class BossDead : BossState, IState
 
     public void Enter()
     {
+        _boss.Anim.PlayBossDeadAnim();
         _time = 0;
         _t = 0;
         _duration = 0.2f;
@@ -313,8 +327,9 @@ public class BossDead : BossState, IState
     {
         if (_time >= _duration)
         {
+            SoundManager.Instance.SetBGMVolume(DataManager.Instance.BGMVolume/2);
             _boss.transform.position = _destination;
-            _boss.Dead();
+            SoundManager.Instance.FadeBGM(false, 10f, 0.02f);
             return;
         }
 
@@ -338,6 +353,11 @@ public class BossRecover : BossState, IState
 
     public void Enter()
     {
+        _boss.ReduceScore();
+        _boss.Anim.PlayBossWinAnim();
+        EventManager.Instance.PlayEvent(E_Event.SPAWN_START);
+        _boss.Heal();
+
         _time = 0;
         _t = 0;
         _duration = 0.2f;

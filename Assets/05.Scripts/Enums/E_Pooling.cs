@@ -8,5 +8,7 @@ public enum E_Pool
     BACKGROUND_OBJECT,
     HIT_VFX,
     EVENT,
+    GREAT,
+    PERFECT,
     E_POOL_Max
 }
