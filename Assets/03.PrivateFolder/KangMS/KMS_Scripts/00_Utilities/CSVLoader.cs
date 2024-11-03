@@ -62,7 +62,7 @@ public class CSVLoader : MonoBehaviour
             }
         }
         Debug.Log("모든 CSV 데이터 로드 완료 시작...");
-        // 요청이 완료된 모든 데이터를 처리
+        // 요청이 완료된 모든 데이터를 처리.
         for (int i = 0; i < requests.Count; i++)
         {
             string csvData = requests[i].downloadHandler.text;
