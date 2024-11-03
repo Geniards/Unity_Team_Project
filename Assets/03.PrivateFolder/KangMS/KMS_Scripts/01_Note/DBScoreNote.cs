@@ -16,9 +16,9 @@ public class DBScoreNote : Note, IPoolingObj
 
     public E_Pool MyPoolType => E_Pool.DBSCORE_NOTE;
 
-    public override void Initialize(Vector3 endPoint, float speed, float scoreValue, float damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
+    public override void Initialize(Vector3 endPoint, float speed, float scoreValue, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
     {
-        base.Initialize(endPoint, speed, scoreValue, damage, stageNumber, noteType, notePosition);
+        base.Initialize(endPoint, speed, scoreValue, stageNumber, noteType, notePosition, damage);
 
         // TotalHeight를 기준으로 upNote와 downNote의 위치 설정
         float halfHeight = GameManager.Director.TotalHeight / 2f;
@@ -28,7 +28,7 @@ public class DBScoreNote : Note, IPoolingObj
         {
             upNote.transform.position = transform.position + new Vector3(0, halfHeight, 0);
             Vector3 upNoteEndPoint = new Vector3(endPoint.x, upNote.transform.position.y, endPoint.z);
-            upNote.Initialize(upNoteEndPoint, speed, scoreValue, damage);
+            upNote.Initialize(upNoteEndPoint, speed, scoreValue);
         }
 
         // downNote는 아래쪽에 배치
@@ -36,7 +36,7 @@ public class DBScoreNote : Note, IPoolingObj
         {
             downNote.transform.position = transform.position - new Vector3(0, halfHeight, 0);
             Vector3 downNoteEndPoint = new Vector3(endPoint.x, downNote.transform.position.y, endPoint.z);
-            downNote.Initialize(downNoteEndPoint, speed, scoreValue, damage);
+            downNote.Initialize(downNoteEndPoint, speed, scoreValue);
         }
 
         // bodyColl의 위치는 중간에 배치 (DBScoreNote의 기본 위치와 동일)
