@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8923dc64066d94d46b35f0dfb4bb1613, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,6 +159,8 @@ MonoBehaviour:
   upNote: {fileID: 3637693050875323119}
   downNote: {fileID: 915142959076947594}
   bodyColl: {fileID: 1248954903137402251}
+  swordWaveNotePrefab: {fileID: 5133934954417080037, guid: 5385904c62d1178458cab23cc1b806f0, type: 3}
+  bossTransform: {fileID: 0}
 --- !u!212 &3845622704583057393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -331,7 +333,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 91d2f70e4b6cb014083be234f1d1430c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -416,7 +418,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8923dc64066d94d46b35f0dfb4bb1613, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

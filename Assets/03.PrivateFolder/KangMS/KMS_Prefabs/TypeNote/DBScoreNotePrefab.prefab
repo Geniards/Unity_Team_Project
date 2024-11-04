@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5187012650161912937}
   - component: {fileID: 8039102165181269197}
   - component: {fileID: 3429276522835420598}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1248954901914886322}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8039102165181269197
 SpriteRenderer:
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8923dc64066d94d46b35f0dfb4bb1613, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 3845622704583057393}
   - component: {fileID: 2043748488918892272}
   - component: {fileID: 8565585813045839}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DBScoreNotePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,8 +134,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4511627892732079081}
-  - {fileID: 5939063903102765541}
   - {fileID: 5187012650161912937}
+  - {fileID: 5939063903102765541}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -159,6 +159,8 @@ MonoBehaviour:
   upNote: {fileID: 3637693050875323119}
   downNote: {fileID: 915142959076947594}
   bodyColl: {fileID: 1248954903137402251}
+  swordWaveNotePrefab: {fileID: 5133934954417080037, guid: 5385904c62d1178458cab23cc1b806f0, type: 3}
+  bossTransform: {fileID: 0}
 --- !u!212 &3845622704583057393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -268,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1248954903137402248}
   - component: {fileID: 1248954903137402249}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +333,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 91d2f70e4b6cb014083be234f1d1430c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -353,7 +355,7 @@ GameObject:
   - component: {fileID: 4511627892732079081}
   - component: {fileID: 6803527919160225376}
   - component: {fileID: 1692668989705664987}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +418,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8923dc64066d94d46b35f0dfb4bb1613, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -452,7 +454,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5939063903102765541}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,5 +475,5 @@ Transform:
   m_Children:
   - {fileID: 1248954903137402248}
   m_Father: {fileID: 1248954901914886322}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
