@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static TreeEditor.TreeEditorHelper;
 public class SwordWaveNote : Note
 {
     [Header("보스의 위치")]
@@ -9,13 +10,18 @@ public class SwordWaveNote : Note
     /// <summary>
     /// 보스의 위치를 목표로 초기화
     /// </summary>
-    public void InitializeSwordWave(Transform bossTransform, float speed, float scoreValue, float damage)
+    public void InitializeSwordWave(Transform bossTransform, float speed, float damage)
     {
         this.speed = speed;
-        this.scoreValue = scoreValue;
         this.damage = damage;
         this.curbossTransform = DataManager.Instance.Boss.transform;
         if (!curbossTransform) Debug.Log("보스위치가 존재하지 않습니다.");
+
+        AnimatorOverrideController overrideController = GameManager.AnimationChanger.GetAnimationController(0, E_NoteType.SwordWave, E_SpawnerPosY.NONE, 0);
+        if (overrideController != null)
+        {
+            animator.runtimeAnimatorController = overrideController;
+        }
         gameObject.SetActive(true);
         lastDspTime = AudioSettings.dspTime;
     }
@@ -53,7 +59,6 @@ public class SwordWaveNote : Note
     public override void OnHit(E_NoteDecision decision, E_Boutton button)
     {
         _isHit = true;
-        CalculateScore(decision);
         ShowEffect();
         gameObject.SetActive(false);
     }

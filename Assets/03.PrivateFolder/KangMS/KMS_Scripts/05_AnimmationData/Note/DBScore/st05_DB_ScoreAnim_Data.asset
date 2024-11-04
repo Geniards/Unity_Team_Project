@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30f286dc51532e7439d1411d60b58979, type: 3}
-  m_Name: st01_M_UpData
+  m_Name: st05_DB_ScoreAnim_Data
   m_EditorClassIdentifier: 
-  stageNumber: 1
-  noteType: 2
-  notePosition: 2
+  stageNumber: 5
+  noteType: 4
+  notePosition: 1
   playAnimClip:
-  - {fileID: 7400000, guid: af96f47e3c65028418179610cd398998, type: 2}
-  - {fileID: 7400000, guid: 4e1a5d90724a20842bc2d9740505f97e, type: 2}
+  - {fileID: 7400000, guid: abd2efcee1e3bd24c878e3960c583d10, type: 2}

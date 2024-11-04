@@ -186,12 +186,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  scoreValue: 100
   damage: 1
   endPoint: {x: 0, y: 0, z: 0}
   _isHit: 0
   animator: {fileID: 7596485401704752033}
-  swordWaveNotePrefab: {fileID: 5133934954417080037, guid: 27ff8d254d5ce5e42a3fe138d731613f, type: 3}
+  swordWaveNotePrefab: {fileID: 5133934954417080037, guid: 2ae3db7dc7ea34d4b8677d3a4b3b0deb, type: 3}
   bossTransform: {fileID: 0}
 --- !u!50 &5235041493194072002
 Rigidbody2D:
