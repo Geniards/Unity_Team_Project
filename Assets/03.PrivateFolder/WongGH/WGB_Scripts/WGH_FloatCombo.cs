@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WGH_FloatCombo : MonoBehaviour
@@ -20,14 +21,14 @@ public class WGH_FloatCombo : MonoBehaviour
     /// </summary>
     public void ResetCombo()
     {
-        _count = 0;
+        _judge.SetComboReset();
         _isFirst = true;
 
         while (true)
         {
             if (_lastObjs.Count <= 0)
                 break;
-
+        
             _lastObjs.Pop().Return();
         }
     }
@@ -35,7 +36,6 @@ public class WGH_FloatCombo : MonoBehaviour
     public void SpawnCombo(int comboNum)
     {
         _count = comboNum;
-
         if (_isFirst == true)
         {
             _isFirst = false;
@@ -54,7 +54,7 @@ public class WGH_FloatCombo : MonoBehaviour
         }
 
         WGH_Combo combo;
-        Vector3 standardPos = Vector3.zero;
+        Vector3 standardPos = new Vector3(0, 2.5f, 0);
 
         int[] arr = new int[4]; // 100의 자리 숫자라고 가정
         float[] poses = new float[4];
@@ -81,6 +81,7 @@ public class WGH_FloatCombo : MonoBehaviour
         {
             combo = ObjPoolManager.Instance.GetObject<WGH_Combo>(E_Pool.COMBO);
             combo.Initialize(standardPos, comboNum);
+            combo.ChangeColor(comboNum);
             _lastObjs.Push(combo);
 
             return;
@@ -157,16 +158,10 @@ public class WGH_FloatCombo : MonoBehaviour
                 break;
 
             combo = ObjPoolManager.Instance.GetObject<WGH_Combo>(E_Pool.COMBO);
+            combo.ChangeColor(comboNum);
             combo.Initialize(standardPos + Vector3.right * poses[i], arr[firstIdx + i]);
-            //StartCoroutine(FloatDestroy(combo));
+            
             _lastObjs.Push(combo);
         }
-    }
-
-    IEnumerator FloatDestroy(WGH_Combo combo)
-    {
-        yield return new WaitForSeconds(1);
-        combo.Return();
-        yield break;
     }
 }

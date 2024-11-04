@@ -7,7 +7,7 @@ public class WGH_AreaJudge : MonoBehaviour
 {
     [SerializeField] private float _greatDistance;
     [SerializeField] private float _perfectDistance;
-    public int Combo {  get; private set; }
+    public int Combo { get; private set; }
     private int _perfectCount;
     private int _greatCount;
 
@@ -19,7 +19,7 @@ public class WGH_AreaJudge : MonoBehaviour
     public Note Note { get; private set; }
     private WGH_PlayerController _playerController = null;
     private WGH_FloatJudgeResult _floatResult = null;
-    private Rigidbody2D _playerRigid = null;
+    //private Rigidbody2D //_playerRigid = null;
     private WGH_FloatCombo _FloatCombo = null;
 
     private KeyCode _inputKey;
@@ -38,23 +38,16 @@ public class WGH_AreaJudge : MonoBehaviour
         _checkBottomPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
         _floatResult = GetComponent<WGH_FloatJudgeResult>();
-        _playerRigid = _playerController.GetComponent<Rigidbody2D>();
+        //_playerRigid = _playerController.GetComponent<Rigidbody2D>();
         EventManager.Instance.AddAction(E_Event.BOSSDEAD, GetBossScore, this);
         EventManager.Instance.AddAction(E_Event.STAGE_END, SentCount, this);
         _FloatCombo = FindAnyObjectByType<WGH_FloatCombo>();
+        _FloatCombo.SpawnCombo(Combo);
     }
-    
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            AddCombo();
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            _FloatCombo.SpawnCombo(Combo);
-        }
-        if(_isInputProcessing == false && _playerController.IsAbleAct && !_playerController.IsDied && !_playerController.IsContact)
+        if (_isInputProcessing == false && !_playerController.IsDamaged && !_playerController.IsDied && !_playerController.IsContact)
         {
             if (Input.GetKeyDown(KeyCode.F))
                 _inputKey = KeyCode.F;
@@ -117,7 +110,7 @@ public class WGH_AreaJudge : MonoBehaviour
     {
         return Combo;
     }
-    
+
     public void SentCount()
     {
         DataManager.Instance.SetPerfectCount(_perfectCount);
@@ -146,13 +139,13 @@ public class WGH_AreaJudge : MonoBehaviour
         Vector2 aPoint = new Vector2(_curPos.x - _greatDistance / 2, _curPos.y - _greatDistance / 4);
         Vector2 bPoint = new Vector2(_curPos.x + _greatDistance / 2, _curPos.y + _greatDistance / 4);
         Collider2D[] hits = Physics2D.OverlapAreaAll(aPoint, bPoint);
-        Debug.DrawLine(aPoint,bPoint, Color.blue, 0.5f);
-        
-        if(hits.Length == 0 )
+        Debug.DrawLine(aPoint, bPoint, Color.blue, 0.5f);
+
+        if (hits.Length == 0)
             Note = null;
         foreach (Collider2D hit in hits)
         {
-            if(hit.TryGetComponent(out Note note) && !hit.TryGetComponent(out ObstacleNote obstacle))
+            if (hit.TryGetComponent(out Note note) && !hit.TryGetComponent(out ObstacleNote obstacle))
             {
                 Note = note;
                 float _distance = Vector2.Distance(_curPos, hit.transform.position);
@@ -164,27 +157,27 @@ public class WGH_AreaJudge : MonoBehaviour
                     _FloatCombo.SpawnCombo(Combo);
                     Note.OnHit(E_NoteDecision.Perfect, button);
                     _floatResult.SpawnResult(E_NoteDecision.Perfect, hit.transform.position + new Vector3(0, 2, 0)); // PERFECT 프리팹 띄우기
-                    if(hit.TryGetComponent(out ScoreNote score))                                                     // 스코어 노트 퍼펙트 점수 처리
+                    if (hit.TryGetComponent(out ScoreNote score))                                                     // 스코어 노트 퍼펙트 점수 처리
                     {
                         CalculateScoreNote(E_NoteDecision.Perfect);
                     }
-                    else if(hit.TryGetComponent(out MonsterNote monster))                                            // 스코어 노트 그레이트 점수 처리
+                    else if (hit.TryGetComponent(out MonsterNote monster))                                            // 스코어 노트 그레이트 점수 처리
                     {
                         CalculateScoreMonster(E_NoteDecision.Perfect);
                     }
                 }
-                else if(_distance <= _greatDistance + 0.2f)
+                else if (_distance <= _greatDistance + 0.2f)
                 {
                     AddCombo();
                     _greatCount++;
                     _FloatCombo.SpawnCombo(Combo);
                     Note.OnHit(E_NoteDecision.Great, button);
                     _floatResult.SpawnResult(E_NoteDecision.Great, hit.transform.position + new Vector3(0, 2, 0));  // GREAT 프리팹 띄우기
-                    if(hit.TryGetComponent(out ScoreNote score))                                                    // 몬스터 노트 퍼펙트 점수 처리
+                    if (hit.TryGetComponent(out ScoreNote score))                                                    // 몬스터 노트 퍼펙트 점수 처리
                     {
                         CalculateScoreNote(E_NoteDecision.Great);
                     }
-                    else if(hit.TryGetComponent(out MonsterNote Monster))                                           // 몬스터 노트 그레이트 점수 처리
+                    else if (hit.TryGetComponent(out MonsterNote Monster))                                           // 몬스터 노트 그레이트 점수 처리
                     {
                         CalculateScoreMonster(E_NoteDecision.Great);
                     }
@@ -200,12 +193,12 @@ public class WGH_AreaJudge : MonoBehaviour
         int score = 0;
         if (result == E_NoteDecision.Perfect && Note.isBoss)
         {
-            score = Mathf.RoundToInt((10 + 10) * 2 * 2 * ((Combo * 0.01f)+1));
+            score = Mathf.RoundToInt((10 + 10) * 2 * 2 * ((Combo * 0.01f) + 1));
             Debug.Log($"보스 점수 퍼펙{score}");
         }
         else if (result == E_NoteDecision.Great && Note.isBoss)
         {
-            score = Mathf.RoundToInt((10 + 10) * 1 * 2 * ((Combo * 0.01f)+1));
+            score = Mathf.RoundToInt((10 + 10) * 1 * 2 * ((Combo * 0.01f) + 1));
             Debug.Log($"보스 점수 그레잇{score}");
         }
         else if (result == E_NoteDecision.Perfect)
@@ -226,22 +219,22 @@ public class WGH_AreaJudge : MonoBehaviour
     private void CalculateScoreMonster(E_NoteDecision result)
     {
         int score = 0;
-        if(result == E_NoteDecision.Perfect && Note.isBoss)
+        if (result == E_NoteDecision.Perfect && Note.isBoss)
         {
             score = Mathf.RoundToInt((10 + 20) * 2 * 2 * ((Combo * 0.01f) + 1));
             Debug.Log($"보스 몬스터 퍼펙{score}");
         }
-        else if(result == E_NoteDecision.Great && Note.isBoss)
+        else if (result == E_NoteDecision.Great && Note.isBoss)
         {
             score = Mathf.RoundToInt((10 + 20) * 1 * 2 * ((Combo * 0.01f) + 1));
             Debug.Log($"보스 몬스터 그레잇{score}");
         }
-        else if(result == E_NoteDecision.Perfect)
+        else if (result == E_NoteDecision.Perfect)
         {
             score = Mathf.RoundToInt((10 + 20) * 2 * ((Combo * 0.01f) + 1));
             Debug.Log($"몬스터 퍼펙{score}");
         }
-        else if(result == E_NoteDecision.Great)
+        else if (result == E_NoteDecision.Great)
         {
             score = Mathf.RoundToInt((10 + 20) * 1 * ((Combo * 0.01f) + 1));
             Debug.Log($"몬스터그레잇{score}");
@@ -265,8 +258,8 @@ public class WGH_AreaJudge : MonoBehaviour
     // 첫 입력 코루틴
     IEnumerator StartInputCheck(KeyCode key)
     {
-        _isInputProcessing = true;                          
-        _isInputedDoubleKey = false;                        
+        _isInputProcessing = true;
+        _isInputedDoubleKey = false;
 
         KeyCode nextKey = KeyCode.None;                                          // 2번째 키를 받아둘 KeyCode
         Action nextAction = null;                                                // 경우에 따라 기능을 달리하기 위한 델리게이트
@@ -274,6 +267,7 @@ public class WGH_AreaJudge : MonoBehaviour
         // F를 눌렀을 경우 동시입력을 위해 필요한 키를 J로 정하는 조건문
         if (key == KeyCode.F)
         {
+            Debug.Log($"입력시간 {Time.time}");
             // 상단 제거
             CheckNote(_checkTopPos, E_Boutton.F_BOUTTON);                        // F가 입력될경우 동시입력 여부에 관계없이 진행할 함수
 
@@ -308,23 +302,26 @@ public class WGH_AreaJudge : MonoBehaviour
                 if (Note == null && !_playerController.IsAir)
                 {
                     _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
-                    _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y - 1, 0);
-                    StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
+                    _playerController.JumpMove();
+                    //_playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y, 0);
+                    //StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
                     _playerController.SetAnim("Jump");
                 }
                 // 판정했을 때 노트가 있을 경우 && 땅에 있는 상태일 경우 "점프 공격" 애니메이션
                 else if (Note != null && !_playerController.IsAir)
                 {
-                    _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
-                    _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y - 1, 0);
-                    StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
+                    _playerController.IsAirControl(true);
+                    _playerController.JumpMove();
+                    // 플레이어 체공상태 여부 true
+                    //_playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y, 0);
+                    //StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
                     _playerController.SetAnim("JumpAttack");
                 }
             }
             else if (_playerController.IsAir && key == KeyCode.J)
             {
                 _playerController.SetAnim("FallAttack");
-                _playerRigid.position = new Vector3(_playerController.transform.position.x, _checkBottomPos.y - 1, 0);
+                //_playerRigid.position = new Vector3(_playerController.transform.position.x, _checkBottomPos.y - 1, 0);
             }
             else if (key == KeyCode.J)
             {
