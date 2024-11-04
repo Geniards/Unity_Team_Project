@@ -19,6 +19,7 @@ public class BossController : MonoBehaviour
     public BossRecover RecoverState;
 
     public BossStat Stat => _stat;
+    public int Score => _stat.Score;
 
     private bool _isRushReady = false;
 
@@ -64,6 +65,11 @@ public class BossController : MonoBehaviour
         CurrentState.Enter();
     }
 
+    public void ReduceScore()
+    {
+        _stat.ReduceScore();
+    }
+
     public void DeadActionEnd()
     {
         EventManager.Instance.PlayEvent(E_Event.BOSSDEAD);
@@ -93,6 +99,8 @@ public class BossController : MonoBehaviour
 
     public void GetMeleeResult(bool result)
     {
+        Debug.Log(result);
+
         if (result == true)
             SetState(DeadState);
         else
@@ -104,9 +112,7 @@ public class BossController : MonoBehaviour
         if (CurrentState != null)
             CurrentState.Update();
 
-        //if (Input.GetKeyDown(KeyCode.D))
-        //    GetMeleeResult(true);
-        //if (Input.GetKeyDown(KeyCode.K))
-        //    GetMeleeResult(false);
+        if (Input.GetKeyDown(KeyCode.D))
+            DeadActionEnd();
     }
 }

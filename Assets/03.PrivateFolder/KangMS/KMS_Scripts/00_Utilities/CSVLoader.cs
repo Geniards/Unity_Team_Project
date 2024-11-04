@@ -26,15 +26,17 @@ public class CSVLoader : MonoBehaviour
     private int stageNumber;
     private Dictionary<int, List<NotePattern>> _patternDictionary = new Dictionary<int, List<NotePattern>>();
     private static bool _isLoaded = false;
-    private void Awake()
-    {
-        StartCoroutine(LoadAllPatterns());
-    }
-    /// <summary>
+
     /// CSV 파일을 읽어들여 패턴을 파싱하고, Dictionary에 저장하는 역할
     /// </summary>
-    private IEnumerator LoadAllPatterns()
+    public IEnumerator LoadAllPatterns()
     {
+        if (_isLoaded)
+        {
+            Debug.Log("CSV 데이터는 이미 로드되었습니다.");
+            yield break;
+        }
+
         List<UnityWebRequest> requests = new List<UnityWebRequest>();
         // 각 stagePaths에 대한 요청을 준비하고 시작.
         for (int i = 0; i < stagePaths.Length; i++)
@@ -59,7 +61,7 @@ public class CSVLoader : MonoBehaviour
             }
         }
         Debug.Log("모든 CSV 데이터 로드 완료 시작...");
-        // 요청이 완료된 모든 데이터를 처리
+        // 요청이 완료된 모든 데이터를 처리.
         for (int i = 0; i < requests.Count; i++)
         {
             string csvData = requests[i].downloadHandler.text;
@@ -67,6 +69,8 @@ public class CSVLoader : MonoBehaviour
             ParseCSVData(csvData, stageNumber);
             Debug.Log($"CSV 데이터 로드 완료 (스테이지 {stageNumber}).");
         }
+        // 데이터 로드 완료 상태로 설정.
+        _isLoaded = true;
         Debug.Log("모든 스테이지의 CSV 데이터 로드 및 저장 완료.");
     }
     /// <summary>
@@ -91,6 +95,7 @@ public class CSVLoader : MonoBehaviour
             if (pattern != null)
             {
                 DataManager.Instance.CSVData.RegistPattern(stageNumber, pattern);
+                Debug.Log($"{stageNumber} , {pattern}");
             }
         }
     }

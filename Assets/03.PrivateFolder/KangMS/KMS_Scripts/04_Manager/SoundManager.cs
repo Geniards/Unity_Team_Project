@@ -1,8 +1,18 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour, IManager
 {
+    #region BIND KEY
+
+    public const string MASTER_VOLUME_PLAYERPREFAB= "MasterVolume";
+    public const string MASTER_VOLUME_MIXER_KEY = "MainSound";
+
+    #endregion
+
     private const string BGM_STAGE_PATH = "BGMs/Stage/";
     private const string BGM_MAIN_PATH = "BGMs/Main/";
 
@@ -16,6 +26,31 @@ public class SoundManager : MonoBehaviour, IManager
 
     private Coroutine _fadeRoutine;
 
+    [SerializeField] private AudioMixer _mixer;
+
+    private Slider _soundSlider;
+    public Slider SoundSlider
+    {
+        get => _soundSlider;
+        set
+        {
+            _soundSlider = value;
+
+            _soundSlider.onValueChanged.AddListener(SoundControl);
+        }
+    }
+
+    public void UpdateMasterMixer()
+    {
+        _mixer.SetFloat(MASTER_VOLUME_MIXER_KEY, DataManager.Instance.MasterVolume);
+    }
+
+    private void SoundControl(float volume)
+    {
+        _mixer.SetFloat(MASTER_VOLUME_MIXER_KEY, volume);
+        PlayerPrefs.SetFloat(MASTER_VOLUME_PLAYERPREFAB, volume);
+    }
+
     public void Init() 
     { 
         Instance = this;
@@ -23,16 +58,7 @@ public class SoundManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// 스테이지씬을 제외한 나머지 화면에서 제공하는 음원을 재생합니다.
-    /// </summary>
-    public void PlayLobbyBGM(E_SceneType sceneType)
-    {
-        _bgmSource.clip = Resources.Load<AudioClip>($"{BGM_STAGE_PATH}{sceneType.ToString()}");
-        _bgmSource.Play();
-    }
-
-    /// <summary>
-    /// 스테이지 번호에 맞는 음원을 재생합니다.
+    /// 선택한 타입의 음원이 재생됩니다.
     /// </summary>
     public void PlayBGM(E_StageBGM bgmType)
     {
@@ -47,7 +73,7 @@ public class SoundManager : MonoBehaviour, IManager
     public void PlayBGM(E_MainBGM bgmType)
     {
         _bgmSource.clip = Resources.Load<AudioClip>
-            ($"{BGM_STAGE_PATH}{bgmType}");
+            ($"{BGM_MAIN_PATH}{bgmType}");
         _bgmSource.Play();
     }
 

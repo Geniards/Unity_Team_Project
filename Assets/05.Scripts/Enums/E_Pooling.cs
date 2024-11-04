@@ -9,6 +9,10 @@ public enum E_Pool
     HIT_VFX,
     EVENT,
     GREAT,
-    PREFECT,
+    PERFECT,
+    COMBO,
+    NOTE_FX,
+    MOUSE_INPUT_FX,
+    SWORD_FX,
     E_POOL_Max
 }

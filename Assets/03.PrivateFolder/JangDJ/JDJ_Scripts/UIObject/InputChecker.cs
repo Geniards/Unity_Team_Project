@@ -9,6 +9,11 @@ public class InputChecker : MonoBehaviour
     [SerializeField] private float _delayTime;
     private float _timer;
 
+    private void Start()
+    {
+        SoundManager.Instance.PlayBGM(E_MainBGM.OPEN);
+    }
+
     private void Update()
     {
         _timer += Time.deltaTime;

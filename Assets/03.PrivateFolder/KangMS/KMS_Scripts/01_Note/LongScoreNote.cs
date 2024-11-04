@@ -21,7 +21,7 @@ public class LongScoreNote : Note
 
     private void Awake()
     {
-        Initialize(endPoint, speed, scoreValue, 10);
+        Initialize(endPoint, speed, 10);
     }
 
     //public override void Initialize(Vector3 endPoint, float speed, float scoreValue, float length = 0)
@@ -65,10 +65,9 @@ public class LongScoreNote : Note
 
     public override void OnHit(E_NoteDecision decision, E_Boutton boutton)
     {
-        if (!_isTouching && !isMoving)
+        if (!_isTouching)
         {
             _isTouching = true;
-            isMoving = false;
             StartCoroutine(LongNoteCoroutine(decision));  // 롱 노트 진행
         }
     }
@@ -96,7 +95,6 @@ public class LongScoreNote : Note
 
         if (_isTouching && Vector3.Distance(head.position, tail.position) <= 0.1f)
         {
-            CalculateScore(decision);
             gameObject.SetActive(false);
         }
         else

@@ -1,10 +1,12 @@
 public enum E_VFX
 {
     NONE=-1,
-    SCORE,
-    MONSTER,
-    LONGNOTE,
-    BOSS_CONTACT,
+    NOTE,
+    SWORD,
+    MOUSE_INPUT,
+    
+    //LONGNOTE,
+    
     E_VFX_MAX
 }
 
