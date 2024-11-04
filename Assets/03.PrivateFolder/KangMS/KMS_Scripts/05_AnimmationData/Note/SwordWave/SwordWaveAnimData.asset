@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SwordWaveAnimData
   m_EditorClassIdentifier: 
   stageNumber: 0
-  noteType: 0
-  notePosition: 0
-  playAnimClip: []
+  noteType: 5
+  notePosition: -1
+  playAnimClip:
+  - {fileID: 7400000, guid: 08a914af2dce9874da1af8d8e550a6ab, type: 2}
