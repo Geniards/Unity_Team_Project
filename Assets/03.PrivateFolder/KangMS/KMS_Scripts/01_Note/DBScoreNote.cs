@@ -6,8 +6,9 @@ using static Note;
 
 public class DBScoreNote : Note, IPoolingObj
 {
-    [SerializeField] private Note upNote;
-    [SerializeField] private Note downNote;
+    [Header("노트 세팅")]
+    [SerializeField] private GameObject upNote;
+    [SerializeField] private GameObject downNote;
     [SerializeField] private GameObject bodyColl;
 
     private bool _upHit = false;
@@ -20,6 +21,8 @@ public class DBScoreNote : Note, IPoolingObj
     {
         base.Initialize(endPoint, speed, stageNumber, noteType, notePosition, damage);
 
+        upNote.SetActive(true);
+        downNote.SetActive(true);
 
         //    // TotalHeight를 기준으로 upNote와 downNote의 위치 설정
         float halfHeight = GameManager.Director.TotalHeight / 2f;
@@ -29,7 +32,6 @@ public class DBScoreNote : Note, IPoolingObj
         {
             upNote.transform.position = transform.position + new Vector3(0, halfHeight, 0);
             Vector3 upNoteEndPoint = new Vector3(endPoint.x, upNote.transform.position.y, endPoint.z);
-            upNote.Initialize(upNoteEndPoint, speed);
         }
 
         // downNote는 아래쪽에 배치
@@ -37,47 +39,19 @@ public class DBScoreNote : Note, IPoolingObj
         {
             downNote.transform.position = transform.position - new Vector3(0, halfHeight, 0);
             Vector3 downNoteEndPoint = new Vector3(endPoint.x, downNote.transform.position.y, endPoint.z);
-            downNote.Initialize(downNoteEndPoint, speed);
+        }
+
+        // bodyColl의 위치는 중간에 배치 (DBScoreNote의 기본 위치와 동일)
+        if (bodyColl != null)
+        {
+            bodyColl.transform.position = transform.position;
+
+            // bodyColl의 y축 크기를 두 노트 사이의 거리로 설정
+            Vector3 bodyScale = bodyColl.transform.localScale;
+            bodyColl.transform.localScale = new Vector3(bodyScale.x, halfHeight * 2, bodyScale.z);
         }
     }
 
-
-    //    // bodyColl의 위치는 중간에 배치 (DBScoreNote의 기본 위치와 동일)
-    //    if (bodyColl != null)
-    //    {
-    //        bodyColl.transform.position = transform.position;
-
-    //        // bodyColl의 y축 크기를 두 노트 사이의 거리로 설정
-    //        Vector3 bodyScale = bodyColl.transform.localScale;
-    //        bodyColl.transform.localScale = new Vector3(bodyScale.x, halfHeight*2, bodyScale.z);
-    //    }
-    //}
-
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        Initialize(endPoint, speed, scoreValue);
-
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.S))
-    //        OnHit(E_NoteDecision.Perfect, E_Boutton.F_BOUTTON);
-
-    //    if (Input.GetKeyDown(KeyCode.D))
-    //        OnHit(E_NoteDecision.Perfect, E_Boutton.J_BOUTTON);
-
-    //    if (Input.GetKeyDown(KeyCode.Q))
-    //    {
-    //        Note.isBoss = true;
-    //        Debug.Log("boss On");
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.W))
-    //    {
-    //        Note.isBoss = false;
-    //        Debug.Log("boss Off");
-    //    }
-    //}
-    
     public override float GetDamage()
     {
         return damage;
@@ -89,30 +63,31 @@ public class DBScoreNote : Note, IPoolingObj
         if (button == E_Boutton.F_BOUTTON)
         {
             _upHit = true;
-            Debug.Log("F On");
 
             if (_upHit && _downHit)
             {
-                DBHit(_decision, button);
+                DBHit(button);
             }
 
-            upNote.OnHit(decision, E_Boutton.None);
+            upNote.SetActive(false);
         }
         if (button == E_Boutton.J_BOUTTON)
         {
             _downHit = true;
-            Debug.Log("J On");
             
             if (_upHit && _downHit)
             {
-                DBHit(_decision, button);
+                DBHit(button);
             }
-            
-            downNote.OnHit(decision, E_Boutton.None);
-        }
-    } 
 
-    private void DBHit(E_NoteDecision decision, E_Boutton button)
+            downNote.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 위, 아래 노트가 사라질시 동시노트도 사라지게 동작하는 메서드.
+    /// </summary>
+    private void DBHit(E_Boutton button)
     {
         Debug.Log("Hit On");
 
@@ -120,14 +95,9 @@ public class DBScoreNote : Note, IPoolingObj
         {
             _isHit = true;
             ShowEffect();
-            
+
             gameObject.SetActive(false);
             Debug.Log("DB노트 사라짐.");
-
-            if (button == E_Boutton.F_BOUTTON)
-                upNote.OnHit(decision, E_Boutton.None);
-            else if (button == E_Boutton.J_BOUTTON)
-                downNote.OnHit(decision, E_Boutton.None);
 
             ReturnToPool();
         }
