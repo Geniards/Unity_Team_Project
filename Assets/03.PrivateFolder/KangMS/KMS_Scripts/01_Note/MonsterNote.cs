@@ -17,7 +17,6 @@ public class MonsterNote : Note, IPoolingObj
         if (!_isHit)
         {
             _isHit = true;
-            CalculateScore(decision);
             ShowEffect();
 
             gameObject.SetActive(false);

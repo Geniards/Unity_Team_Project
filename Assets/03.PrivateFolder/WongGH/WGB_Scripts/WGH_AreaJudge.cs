@@ -20,7 +20,7 @@ public class WGH_AreaJudge : MonoBehaviour
     private WGH_PlayerController _playerController = null;
     private WGH_FloatJudgeResult _floatResult = null;
     //private Rigidbody2D //_playerRigid = null;
-    private WGH_FloatCombo _FloatCombo = null;
+    public WGH_FloatCombo _FloatCombo { get; private set; }
 
     private KeyCode _inputKey;
     private bool _isInputProcessing;                                    // 키를 입력 받았는가를 확인할 bool 변수
@@ -38,7 +38,6 @@ public class WGH_AreaJudge : MonoBehaviour
         _checkBottomPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
         _floatResult = GetComponent<WGH_FloatJudgeResult>();
-        //_playerRigid = _playerController.GetComponent<Rigidbody2D>();
         EventManager.Instance.AddAction(E_Event.BOSSDEAD, GetBossScore, this);
         EventManager.Instance.AddAction(E_Event.STAGE_END, SentCount, this);
         _FloatCombo = FindAnyObjectByType<WGH_FloatCombo>();
@@ -47,7 +46,15 @@ public class WGH_AreaJudge : MonoBehaviour
 
     private void Update()
     {
-        if (_isInputProcessing == false && !_playerController.IsDamaged && !_playerController.IsDied && !_playerController.IsContact)
+        if(Input.GetMouseButtonDown(0))
+        {
+            _FloatCombo.SpawnCombo(Combo);
+        }
+        else if(Input.GetMouseButtonDown(1))
+        {
+            AddCombo();
+        }
+        if (_isInputProcessing == false && _playerController.IsCanMove&& !_playerController.IsDied && !_playerController.IsContact)
         {
             if (Input.GetKeyDown(KeyCode.F))
                 _inputKey = KeyCode.F;
@@ -58,53 +65,6 @@ public class WGH_AreaJudge : MonoBehaviour
 
             StartCoroutine(StartInputCheck(_inputKey));
         }
-        #region 이전코드
-        //if (!_playerController.IsDied)
-        //{
-        //    if (!_playerController.IsDamaged)
-        //    {
-        //        
-        //        else if(Input.GetKeyDown(KeyCode.J) && !_isFPress)
-        //        {
-        //            _isJPress = true;
-        //            StartCoroutine(InputAfterKeyJ());
-        //        }
-        //        if (Input.GetKeyDown(KeyCode.J))
-        //        {
-        //            _jPressTime = Time.time;
-        //            _isJPress = true;
-        //        }
-        //        
-        //        if (Input.GetKeyDown(KeyCode.F))
-        //        {
-        //            _fPressTime = Time.time;
-        //            _isFPress = true;
-        //        }
-        //        
-        //        if (Mathf.Abs(_jPressTime - _fPressTime) <= 0.2f && _isJPress && _isFPress)
-        //        {
-        //            CheckNote(_checkMiddlePos);
-        //            _jPressTime = -1;
-        //            _fPressTime = -1;
-        //            _isJPress = false;
-        //            _isFPress = false;
-        //        }
-        //        else
-        //        {
-        //            if (_isJPress && !_isFPress && Input.GetKeyUp(KeyCode.J))
-        //            {
-        //                CheckNote(_checkBottomPos);
-        //                _isJPress = false;
-        //            }
-        //            if (_isFPress && !_isJPress && Input.GetKeyUp(KeyCode.F))
-        //            {
-        //                CheckNote(_checkTopPos);
-        //                _isFPress = false;
-        //            }
-        //        }
-        //    }
-        //}
-        #endregion
     }
     public int CheckCurCombo()
     {
@@ -194,22 +154,18 @@ public class WGH_AreaJudge : MonoBehaviour
         if (result == E_NoteDecision.Perfect && Note.isBoss)
         {
             score = Mathf.RoundToInt((10 + 10) * 2 * 2 * ((Combo * 0.01f) + 1));
-            Debug.Log($"보스 점수 퍼펙{score}");
         }
         else if (result == E_NoteDecision.Great && Note.isBoss)
         {
             score = Mathf.RoundToInt((10 + 10) * 1 * 2 * ((Combo * 0.01f) + 1));
-            Debug.Log($"보스 점수 그레잇{score}");
         }
         else if (result == E_NoteDecision.Perfect)
         {
             score = Mathf.RoundToInt((10 + 10) * 2 * ((Combo * 0.01f) + 1));
-            Debug.Log($"점수 퍼펙{score}");
         }
         else if (result == E_NoteDecision.Great)
         {
             score = Mathf.RoundToInt((10 + 10) * 1 * ((Combo * 0.01f) + 1));
-            Debug.Log($"점수 그레잇{score}");
         }
         DataManager.Instance.AddScore(score);
     }
@@ -222,22 +178,18 @@ public class WGH_AreaJudge : MonoBehaviour
         if (result == E_NoteDecision.Perfect && Note.isBoss)
         {
             score = Mathf.RoundToInt((10 + 20) * 2 * 2 * ((Combo * 0.01f) + 1));
-            Debug.Log($"보스 몬스터 퍼펙{score}");
         }
         else if (result == E_NoteDecision.Great && Note.isBoss)
         {
             score = Mathf.RoundToInt((10 + 20) * 1 * 2 * ((Combo * 0.01f) + 1));
-            Debug.Log($"보스 몬스터 그레잇{score}");
         }
         else if (result == E_NoteDecision.Perfect)
         {
             score = Mathf.RoundToInt((10 + 20) * 2 * ((Combo * 0.01f) + 1));
-            Debug.Log($"몬스터 퍼펙{score}");
         }
         else if (result == E_NoteDecision.Great)
         {
             score = Mathf.RoundToInt((10 + 20) * 1 * ((Combo * 0.01f) + 1));
-            Debug.Log($"몬스터그레잇{score}");
         }
         DataManager.Instance.AddScore(score);
     }
@@ -248,9 +200,7 @@ public class WGH_AreaJudge : MonoBehaviour
     {
         int score = 0;
         score = DataManager.Instance.Boss.Score;
-        Debug.Log($"보스점수 {score}");
         score += _playerController.GetHpScore();
-        Debug.Log($"체력반영 {score}");
         DataManager.Instance.AddScore(score);
 
         Debug.Log(DataManager.Instance.CurScore);
@@ -267,7 +217,6 @@ public class WGH_AreaJudge : MonoBehaviour
         // F를 눌렀을 경우 동시입력을 위해 필요한 키를 J로 정하는 조건문
         if (key == KeyCode.F)
         {
-            Debug.Log($"입력시간 {Time.time}");
             // 상단 제거
             CheckNote(_checkTopPos, E_Boutton.F_BOUTTON);                        // F가 입력될경우 동시입력 여부에 관계없이 진행할 함수
 
@@ -299,29 +248,24 @@ public class WGH_AreaJudge : MonoBehaviour
             if (key == KeyCode.F)
             {
                 // 판정했을 때 노트가 없을 경우 && 땅에 있는 상태일 경우 "일반 점프" 애니메이션
-                if (Note == null && !_playerController.IsAir)
+                if (Note == null /*&& !_playerController.IsAir*/)
                 {
                     _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerController.JumpMove();
-                    //_playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y, 0);
-                    //StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
                     _playerController.SetAnim("Jump");
                 }
                 // 판정했을 때 노트가 있을 경우 && 땅에 있는 상태일 경우 "점프 공격" 애니메이션
-                else if (Note != null && !_playerController.IsAir)
+                else if (Note != null/* && !_playerController.IsAir*/)
                 {
-                    _playerController.IsAirControl(true);
+                    _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerController.JumpMove();
-                    // 플레이어 체공상태 여부 true
-                    //_playerRigid.position = new Vector3(_playerController.transform.position.x, _checkTopPos.y, 0);
-                    //StartCoroutine(_playerController.InAirTime());               // 체공 코루틴
                     _playerController.SetAnim("JumpAttack");
                 }
             }
             else if (_playerController.IsAir && key == KeyCode.J)
             {
                 _playerController.SetAnim("FallAttack");
-                //_playerRigid.position = new Vector3(_playerController.transform.position.x, _checkBottomPos.y - 1, 0);
+                _playerController.transform.position = _playerController.StartPos;
             }
             else if (key == KeyCode.J)
             {

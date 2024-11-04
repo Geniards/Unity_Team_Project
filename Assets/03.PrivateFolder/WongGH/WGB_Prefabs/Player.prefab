@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prevAirTime: 0
   _inAirTime: 0.74
+  _cantMoveTime: 0.1
   _curHp: 0
   _clikerTime: 0.2
   _invincivilityTime: 1
@@ -131,7 +132,7 @@ MonoBehaviour:
   _judge: {fileID: 0}
   _collLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65600
   _topRayOffset: {x: -0.35, y: 2.17}
   _botRayOffset: {x: -0.35, y: 0}
   _rightRayOffset: {x: 0.157, y: 1.203}

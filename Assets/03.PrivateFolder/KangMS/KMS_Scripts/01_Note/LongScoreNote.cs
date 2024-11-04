@@ -21,7 +21,7 @@ public class LongScoreNote : Note
 
     private void Awake()
     {
-        Initialize(endPoint, speed, scoreValue, 10);
+        Initialize(endPoint, speed, 10);
     }
 
     //public override void Initialize(Vector3 endPoint, float speed, float scoreValue, float length = 0)
@@ -95,7 +95,6 @@ public class LongScoreNote : Note
 
         if (_isTouching && Vector3.Distance(head.position, tail.position) <= 0.1f)
         {
-            CalculateScore(decision);
             gameObject.SetActive(false);
         }
         else

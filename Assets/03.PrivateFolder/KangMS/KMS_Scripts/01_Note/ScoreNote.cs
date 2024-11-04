@@ -16,7 +16,6 @@ public class ScoreNote : Note, IPoolingObj, IReflective
         if (!_isHit)
         {
             _isHit = true;
-            CalculateScore(decision);
             ShowEffect();
 
             if (isBoss)
@@ -41,7 +40,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
         {
             GameObject swordWaveNote = Instantiate(swordWaveNotePrefab, transform.position, Quaternion.identity);
             SwordWaveNote swordWave = swordWaveNote.GetComponent<SwordWaveNote>();
-            swordWave.InitializeSwordWave(bossTransform, speed, scoreValue, damage); // 보스 위치를 목표로 설정
+            swordWave.InitializeSwordWave(bossTransform, speed, damage); // 보스 위치를 목표로 설정
         }
     }
 
