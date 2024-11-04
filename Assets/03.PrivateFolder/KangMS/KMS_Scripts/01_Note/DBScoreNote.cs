@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static Note;
+using static TreeEditor.TreeEditorHelper;
 
 public class DBScoreNote : Note, IPoolingObj
 {
@@ -10,6 +11,10 @@ public class DBScoreNote : Note, IPoolingObj
     [SerializeField] private GameObject upNote;
     [SerializeField] private GameObject downNote;
     [SerializeField] private GameObject bodyColl;
+
+    [Header("검기 노트 프리팹")]
+    [SerializeField] private GameObject swordWaveNotePrefab;
+    [SerializeField] private Transform bossTransform;
 
     private bool _upHit = false;
     private bool _downHit = false;
@@ -99,7 +104,26 @@ public class DBScoreNote : Note, IPoolingObj
             gameObject.SetActive(false);
             Debug.Log("DB노트 사라짐.");
 
+
+            //if (isBoss)
+            //{
+            //    ReflectNote();
+            //}
+
             ReturnToPool();
+        }
+
+
+    }
+
+    public void ReflectNote()
+    {
+        Debug.Log("반사노트(검기노트)에 대한 오브젝트 풀로 전환 후 해당 노트는 삭제시킨다.");
+        if (swordWaveNotePrefab != null)
+        {
+            GameObject swordWaveNote = Instantiate(swordWaveNotePrefab, transform.position, Quaternion.identity);
+            SwordWaveNote swordWave = swordWaveNote.GetComponent<SwordWaveNote>();
+            swordWave.InitializeSwordWave(bossTransform, speed, damage);
         }
     }
 
