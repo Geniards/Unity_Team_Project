@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 7476704526975109616}
   - component: {fileID: 7476704526975109623}
   - component: {fileID: 7476704526975109622}
-  - component: {fileID: 3277397374000381459}
   - component: {fileID: 3781673102463711252}
   - component: {fileID: 209978658}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,27 +108,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!50 &3277397374000381459
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7476704526975109621}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 8
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &3781673102463711252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,14 +120,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95003c4878778ff45a1783ac5f4d2cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inAirTime: 0.1
+  _prevAirTime: 0
+  _inAirTime: 0.74
   _curHp: 0
   _clikerTime: 0.2
   _invincivilityTime: 1
   _playerOutTime: 5
-  _rigid: {fileID: 0}
+  _jumpPosOffsetDist: 1.5
   _anim: {fileID: 0}
   _judge: {fileID: 0}
+  _collLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _topRayOffset: {x: -0.35, y: 2.17}
+  _botRayOffset: {x: -0.35, y: 0}
+  _rightRayOffset: {x: 0.157, y: 1.203}
+  _topBoxSize: {x: 0.928, y: 0.046}
+  _botBoxSize: {x: 0.928, y: 0.1}
+  _rightBoxSize: {x: 0.046, y: 0.928}
 --- !u!70 &209978658
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

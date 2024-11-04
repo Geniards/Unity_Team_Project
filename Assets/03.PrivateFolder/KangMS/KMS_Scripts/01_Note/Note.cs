@@ -25,16 +25,16 @@ public abstract class Note : MonoBehaviour
         this.scoreValue = scoreValue;
         // Note 생성 시 중재자에 등록
         GameManager.Mediator.Register(this);
-        //if (!animator)
-        //{
-        //    animator = GetComponent<Animator>();
-        //}
-        //// AnimationManager를 통해 개별적인 AnimatorOverrideController 생성 및 설정
-        //AnimatorOverrideController overrideController = GameManager.AnimationChanger.GetRandomAnimationController(noteType, notePosition, stageNumber);
-        //if (overrideController != null)
-        //{
-        //    animator.runtimeAnimatorController = overrideController;
-        //}
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
+        }
+        // AnimationManager를 통해 개별적인 AnimatorOverrideController 생성 및 설정
+        AnimatorOverrideController overrideController = GameManager.AnimationChanger.GetRandomAnimationController(noteType, notePosition, stageNumber);
+        if (overrideController != null)
+        {
+            animator.runtimeAnimatorController = overrideController;
+        }
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
         double endDspTime = startDspTime + travelDuration;
