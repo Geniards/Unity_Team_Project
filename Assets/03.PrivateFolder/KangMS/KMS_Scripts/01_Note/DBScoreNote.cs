@@ -16,9 +16,9 @@ public class DBScoreNote : Note, IPoolingObj
 
     public E_Pool MyPoolType => E_Pool.DBSCORE_NOTE;
 
-    public override void Initialize(Vector3 endPoint, float speed, float scoreValue, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
+    public override void Initialize(Vector3 endPoint, float speed, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
     {
-        base.Initialize(endPoint, speed, scoreValue, stageNumber, noteType, notePosition, damage);
+        base.Initialize(endPoint, speed, stageNumber, noteType, notePosition, damage);
 
 
         //    // TotalHeight를 기준으로 upNote와 downNote의 위치 설정
@@ -29,7 +29,7 @@ public class DBScoreNote : Note, IPoolingObj
         {
             upNote.transform.position = transform.position + new Vector3(0, halfHeight, 0);
             Vector3 upNoteEndPoint = new Vector3(endPoint.x, upNote.transform.position.y, endPoint.z);
-            upNote.Initialize(upNoteEndPoint, speed, scoreValue);
+            upNote.Initialize(upNoteEndPoint, speed);
         }
 
         // downNote는 아래쪽에 배치
@@ -37,7 +37,7 @@ public class DBScoreNote : Note, IPoolingObj
         {
             downNote.transform.position = transform.position - new Vector3(0, halfHeight, 0);
             Vector3 downNoteEndPoint = new Vector3(endPoint.x, downNote.transform.position.y, endPoint.z);
-            downNote.Initialize(downNoteEndPoint, speed, scoreValue);
+            downNote.Initialize(downNoteEndPoint, speed);
         }
     }
 
@@ -119,7 +119,6 @@ public class DBScoreNote : Note, IPoolingObj
         if (!_isHit)
         {
             _isHit = true;
-            CalculateScore(decision);
             ShowEffect();
             
             gameObject.SetActive(false);

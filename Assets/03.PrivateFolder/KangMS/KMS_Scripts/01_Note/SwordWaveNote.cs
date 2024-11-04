@@ -9,10 +9,9 @@ public class SwordWaveNote : Note
     /// <summary>
     /// 보스의 위치를 목표로 초기화
     /// </summary>
-    public void InitializeSwordWave(Transform bossTransform, float speed, float scoreValue, float damage)
+    public void InitializeSwordWave(Transform bossTransform, float speed, float damage)
     {
         this.speed = speed;
-        this.scoreValue = scoreValue;
         this.damage = damage;
         this.curbossTransform = DataManager.Instance.Boss.transform;
         if (!curbossTransform) Debug.Log("보스위치가 존재하지 않습니다.");
@@ -53,7 +52,6 @@ public class SwordWaveNote : Note
     public override void OnHit(E_NoteDecision decision, E_Boutton button)
     {
         _isHit = true;
-        CalculateScore(decision);
         ShowEffect();
         gameObject.SetActive(false);
     }
