@@ -14,6 +14,7 @@ public class WGH_FloatCombo : MonoBehaviour
     private void Start()
     {
         _judge = GetComponent<WGH_AreaJudge>();
+        EventManager.Instance.AddAction(E_Event.STAGE_END, ResetCombo, this);
     }
 
     /// <summary>
@@ -88,7 +89,7 @@ public class WGH_FloatCombo : MonoBehaviour
         }
 
         
-        float IntervalDist = 2f;
+        float IntervalDist = 0.8f;
         // ex 0100 1 1 2 3
         // 총 4   -3-1 1 3
         //    2       -1 1
