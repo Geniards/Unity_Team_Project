@@ -6,7 +6,6 @@ public abstract class Note : MonoBehaviour
 {
     [Header("노트 세부 조정")]
     public float speed = 5f;
-    public float scoreValue = 100;
     public float damage = 0;
     public Vector3 endPoint;
     public bool _isHit = false;
@@ -15,26 +14,25 @@ public abstract class Note : MonoBehaviour
     [Header("애니메이션 세팅")]
     public Animator animator;
 
-    public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
+    public virtual void Initialize(Vector3 endPoint, float speed, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
 
     {
         _isHit = false;
         gameObject.SetActive(true);
         this.endPoint = endPoint;
         this.speed = speed;
-        this.scoreValue = scoreValue;
         // Note 생성 시 중재자에 등록
         GameManager.Mediator.Register(this);
-        //if (!animator)
-        //{
-        //    animator = GetComponent<Animator>();
-        //}
-        //// AnimationManager를 통해 개별적인 AnimatorOverrideController 생성 및 설정
-        //AnimatorOverrideController overrideController = GameManager.AnimationChanger.GetRandomAnimationController(noteType, notePosition, stageNumber);
-        //if (overrideController != null)
-        //{
-        //    animator.runtimeAnimatorController = overrideController;
-        //}
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
+        }
+        // AnimationManager를 통해 개별적인 AnimatorOverrideController 생성 및 설정
+        AnimatorOverrideController overrideController = GameManager.AnimationChanger.GetRandomAnimationController(noteType, notePosition, stageNumber);
+        if (overrideController != null)
+        {
+            animator.runtimeAnimatorController = overrideController;
+        }
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
         double endDspTime = startDspTime + travelDuration;
@@ -64,39 +62,42 @@ public abstract class Note : MonoBehaviour
             yield return null;
         }
     }
-    /// <summary>
-    /// 공통된 피격 판정에 대한 점수 처리
-    /// </summary>
-    protected virtual void CalculateScore(E_NoteDecision decision)
-    {
-        if (isBoss)
-        {
-            scoreValue *= (float)decision * 2;
-        }
-        else
-        {
-            scoreValue *= (float)decision;
-        }
-        //Debug.Log($"Hit된 결과 : {decision}, 점수 : {scoreValue}");
-    }
+
     /// <summary>
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
     public abstract void OnHit(E_NoteDecision decision, E_Boutton button = E_Boutton.None);
+
     /// <summary>
     /// Damage 전달 메서드
     /// </summary>
     public abstract float GetDamage();
+
     public void SetDamage(float damage) { this.damage = damage; }
+
     /// <summary>
     /// 오브젝트 풀로 반환하는 메서드
     /// </summary>
     public abstract void ReturnToPool();
+
     /// <summary>
     // 이펙트 처리 (애니메이션 또는 파티클)
     /// </summary>
     protected void ShowEffect()
     {
         Debug.Log("이펙트 동작");
+    }
+
+    private void OnEnable()
+    {
+        ResetAnimation();
+    }
+
+    private void ResetAnimation()
+    {
+        if (animator != null)
+        {
+            animator.Play("Run", -1, 0f);
+        }
     }
 }
