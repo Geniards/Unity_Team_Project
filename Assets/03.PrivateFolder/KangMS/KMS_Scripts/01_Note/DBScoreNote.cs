@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static Note;
-using static TreeEditor.TreeEditorHelper;
 
 public class DBScoreNote : Note, IPoolingObj
 {
@@ -22,7 +20,7 @@ public class DBScoreNote : Note, IPoolingObj
 
     public E_Pool MyPoolType => E_Pool.DBSCORE_NOTE;
 
-    public override void Initialize(Vector3 endPoint, float speed, int damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
+    public override void Initialize(Vector3 endPoint, float speed, float damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
     {
         base.Initialize(endPoint, speed, damage, stageNumber, noteType, notePosition);
 

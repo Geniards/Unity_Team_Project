@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f286dc51532e7439d1411d60b58979, type: 3}
   m_Name: st04_Score_UpData
   m_EditorClassIdentifier: 
-  stageNumber: 0
+  stageNumber: 4
   noteType: 1
   notePosition: 2
   playAnimClip:
