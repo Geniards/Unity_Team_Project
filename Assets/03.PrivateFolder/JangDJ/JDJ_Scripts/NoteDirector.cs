@@ -56,7 +56,11 @@ public class NoteDirector : MonoBehaviour
             StopCoroutine(_spawnRoutine);
         _spawnRoutine = StartCoroutine(AutoSpawnRoutine(bgm, restBeatCount));
     }
-    private float GetBPMtoIntervalSec()
+
+    /// <summary>
+    /// 비트 간격의 시간 측정값을 반환합니다.
+    /// </summary>
+    public float GetBPMtoIntervalSec()
     {
         return 60f / _bpm;
     }

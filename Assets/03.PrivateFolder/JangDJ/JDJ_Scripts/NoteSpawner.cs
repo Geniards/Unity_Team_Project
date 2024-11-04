@@ -44,8 +44,10 @@ public class NoteSpawner : MonoBehaviour
     /// </summary>
     public void RegistPatternData() // 몇번 패턴인지
     {
-        int idx = Random.Range(_patternIdx, _patternIdx + 10);
-        
+        int idx = Random.Range(_patternIdx, _patternIdx + 2);
+
+        Debug.Log($"패턴 번호 {idx}");
+
         List<NoteData> newNotes =
             DataManager.Instance.CSVData[idx];
 
@@ -64,10 +66,19 @@ public class NoteSpawner : MonoBehaviour
         { throw new System.Exception("등록된 노트가 없습니다."); }
 
         NoteData data = _innerNoteList[_lastNoteIdx];
+
+        //Debug.Log($"{data.position}{(int)(data.noteType)}");
+
+        if (data.noteType == 0)
+        {
+            _lastNoteIdx++;
+            return;
+        }
+
         Note note = GetNoteObject(data.noteType);
         note.transform.position = GetNoteStartPosition(data.position);
 
-        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f);
+        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f,DataManager.Instance.SelectedStageData.StageNumber,data.noteType, (E_SpawnerPosY)data.position);
         _lastNoteIdx++;
     }
 

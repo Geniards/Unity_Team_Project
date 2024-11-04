@@ -89,7 +89,7 @@ public class DataManager : MonoBehaviour, IManager
     public string StageName => SelectedStageData.StageName;
     public string SongTitle => SelectedStageData.SongTitle;
     public string StageDescription => SelectedStageData.Description;
-    public int NormalPatternLastIdx => 9;
+    public int NormalPatternLastIdx => 2;
     public int BossPatternLastIdx => 19;
     private BossController _boss;
     public BossController Boss => _boss;
