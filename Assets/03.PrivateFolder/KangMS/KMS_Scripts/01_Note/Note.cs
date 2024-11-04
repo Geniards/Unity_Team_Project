@@ -32,7 +32,7 @@ public abstract class Note : MonoBehaviour
         if (overrideController != null)
         {
             animator.runtimeAnimatorController = overrideController;
-        }
+
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
         double endDspTime = startDspTime + travelDuration;

@@ -425,6 +425,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1787252043342808981, guid: b8d3d5c9dd9f6244c86cf48bd53a40c4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787252043506155633, guid: b8d3d5c9dd9f6244c86cf48bd53a40c4, type: 3}
+      propertyPath: _destroyOffset
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 1787252044021037909, guid: b8d3d5c9dd9f6244c86cf48bd53a40c4, type: 3}
       propertyPath: m_Name
       value: 2.Stage

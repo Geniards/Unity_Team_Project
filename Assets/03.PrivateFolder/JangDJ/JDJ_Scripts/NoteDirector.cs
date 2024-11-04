@@ -35,6 +35,7 @@ public class NoteDirector : MonoBehaviour
         _bpm = DataManager.Instance.BPM;
         _noteSpeed = DataManager.Instance.GameSpeed;
         EventManager.Instance.AddAction(E_Event.SPAWN_STOP, () => { _isSkipSpawn = true; }, this);
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, () => { Note.isBoss = false; }, this);
         EventManager.Instance.AddAction(E_Event.SPAWN_START, () => { _isSkipSpawn = false; }, this);
         EventManager.Instance.AddAction
             (E_Event.CHANGED_BGM, ChangeBGM, this);
@@ -56,7 +57,11 @@ public class NoteDirector : MonoBehaviour
             StopCoroutine(_spawnRoutine);
         _spawnRoutine = StartCoroutine(AutoSpawnRoutine(bgm, restBeatCount));
     }
-    private float GetBPMtoIntervalSec()
+
+    /// <summary>
+    /// 비트 간격의 시간 측정값을 반환합니다.
+    /// </summary>
+    public float GetBPMtoIntervalSec()
     {
         return 60f / _bpm;
     }

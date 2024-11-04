@@ -45,7 +45,9 @@ public class NoteSpawner : MonoBehaviour
     public void RegistPatternData() // 몇번 패턴인지
     {
         int idx = Random.Range(_patternIdx, _patternIdx + 10);
-        
+
+        Debug.Log($"패턴 번호 {idx}");
+
         List<NoteData> newNotes =
             DataManager.Instance.CSVData[idx];
 
@@ -64,10 +66,25 @@ public class NoteSpawner : MonoBehaviour
         { throw new System.Exception("등록된 노트가 없습니다."); }
 
         NoteData data = _innerNoteList[_lastNoteIdx];
+
+        //Debug.Log($"{data.position}{(int)(data.noteType)}");
+
+        if (data.noteType == 0)
+        {
+            _lastNoteIdx++;
+            return;
+        }
+
         Note note = GetNoteObject(data.noteType);
         note.transform.position = GetNoteStartPosition(data.position);
 
-        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f);
+        if(data.position-1 == (int)(E_SpawnerPosY.MIDDLE))
+        {
+            _lastNoteIdx++;
+            return;
+        }
+
+        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f,DataManager.Instance.SelectedStageData.StageNumber,data.noteType, (E_SpawnerPosY)data.position-1);
         _lastNoteIdx++;
     }
 
@@ -95,10 +112,10 @@ public class NoteSpawner : MonoBehaviour
     {
         switch (posNumber)
         {
-            case 2:
+            case 3:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.TOP);
 
-            case 3:
+            case 2:
                 return _posController.GetSpawnerPos(E_SpawnerPosY.MIDDLE);
 
             case 1:
@@ -111,10 +128,10 @@ public class NoteSpawner : MonoBehaviour
     {
         switch (posNumber)
         {
-            case 2: //top
+            case 3: //top
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.TOP);
 
-            case 3:
+            case 2:
                 return _posController.GetSpawnerPos(E_SpawnerPosX.END, E_SpawnerPosY.MIDDLE);
 
             case 1:

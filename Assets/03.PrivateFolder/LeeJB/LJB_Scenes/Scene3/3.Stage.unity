@@ -1056,6 +1056,10 @@ PrefabInstance:
       propertyPath: _objectGroups.Array.data[0]._minSpacing
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4096101705095896374, guid: bc09fd338be31b641a574a0cb0ba9972, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.12
+      objectReference: {fileID: 0}
     - target: {fileID: 4140757158100650592, guid: bc09fd338be31b641a574a0cb0ba9972, type: 3}
       propertyPath: m_Name
       value: 3.Stage
