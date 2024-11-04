@@ -971,6 +971,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8801134773328423891}
     m_Modifications:
+    - target: {fileID: 1518750911181478944, guid: ab9278aa8a6f856468c48e893720a765, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5789200093759024960, guid: ab9278aa8a6f856468c48e893720a765, type: 3}
       propertyPath: m_Color.b
       value: 0.39215687
@@ -1252,6 +1256,10 @@ PrefabInstance:
     - target: {fileID: 3520361919269119974, guid: 83d9652edf8102948abc7e6551b4db36, type: 3}
       propertyPath: m_Name
       value: PF Village Props - Wine Bottle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611869864331203391, guid: 83d9652edf8102948abc7e6551b4db36, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83d9652edf8102948abc7e6551b4db36, type: 3}

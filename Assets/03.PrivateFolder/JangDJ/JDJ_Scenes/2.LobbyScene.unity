@@ -936,7 +936,7 @@ MonoBehaviour:
   _button: {fileID: 168193063}
   _nextSetter: {fileID: 732802694}
   _stage:
-    StageNumber: 3
+    StageNumber: 2
     BGM: 2
     BPM: 120
     SongTitle: 
