@@ -31,7 +31,9 @@ public class DataLoader : MonoBehaviour
 
     private IEnumerator CSVLoading()
     {
-        yield return new WaitForSeconds(3f); // 임시 , CSV 로딩
+        yield return GetComponent<CSVLoader>().LoadAllPatterns();
+
+        yield return new WaitForSeconds(1f);
 
         SceneController.Instance.LoadScene(E_SceneType.LOBBY);
     }

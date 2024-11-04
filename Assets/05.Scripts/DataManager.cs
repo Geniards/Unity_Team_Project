@@ -69,7 +69,7 @@ public class DataManager : MonoBehaviour, IManager
 
     #region 스테이지 기초 데이터
 
-    private float _playerMaxHp = 5;
+    private float _playerMaxHp = 200;
     public float PlayerMaxHP => _playerMaxHp;
     public int SirenCount => 4;
     public float ContactDuration => 4;
@@ -89,6 +89,8 @@ public class DataManager : MonoBehaviour, IManager
     public string StageName => SelectedStageData.StageName;
     public string SongTitle => SelectedStageData.SongTitle;
     public string StageDescription => SelectedStageData.Description;
+    public int NormalPatternLastIdx => 2;
+    public int BossPatternLastIdx => 19;
     private BossController _boss;
     public BossController Boss => _boss;
     public Vector3 ContactPos =>

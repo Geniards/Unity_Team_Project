@@ -170,7 +170,7 @@ MonoBehaviour:
     _hp: 0
     _name: 
     _score: 0
-  _anim: {fileID: 0}
+  _anim: {fileID: 2890540979331139259}
 --- !u!114 &2890540979331139259
 MonoBehaviour:
   m_ObjectHideFlags: 0
