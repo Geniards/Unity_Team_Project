@@ -52,7 +52,7 @@ public class AnimationManager : MonoBehaviour
     /// <summary>
     /// 보스 애니메이션에 대한 개별 AnimatorOverrideController 생성 및 반환
     /// </summary>
-    public AnimatorOverrideController GetAnimationController(int stageNumber, string bossState, int clipIndex)
+    public AnimatorOverrideController GetAnimationController(int stageNumber, E_NoteType noteType, E_SpawnerPosY notePosition, int clipIndex)
     {
         if (!baseAnimatorController)
         {
@@ -64,13 +64,14 @@ public class AnimationManager : MonoBehaviour
 
         foreach (var data in animationOverrideDataList)
         {
-            if (data.stageNumber == stageNumber /*&& data.bossState == bossState*/)
+            if (data.stageNumber == stageNumber && data.noteType == noteType && data.notePosition == notePosition)
             {
                 AnimationClip selectedClip = GetAnimationClip(data, clipIndex);
-                if (selectedClip != null)
+
+                // 사용할 기본 애니메이션 클립 이름이 "Run"이라고 가정
+                if(selectedClip)
                 {
-                    // 사용할 기본 애니메이션 클립 이름이 "Run"이라고 가정
-                    overrideController["/*변경할 기본 클립 이름*/"] = selectedClip;
+                    overrideController["Run"] = selectedClip;
                     return overrideController;
                 }
                 else
@@ -94,11 +95,11 @@ public class AnimationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 보스 애니메이션 클립 선택
+    /// 애니메이션 클립 선택
     /// </summary>
     private AnimationClip GetAnimationClip(AnimationOverrideData data, int clipIndex)
     {
-        // 보스는 상태에 따른 하나의 애니메이션 클립을 갖는다고 가정
+        // 원하는 애니메이션을 선택.
         return data.playAnimClip[clipIndex];
     }
 }
