@@ -6,7 +6,7 @@ public abstract class Note : MonoBehaviour
 {
     [Header("노트 세부 조정")]
     public float speed = 5f;
-    public float damage = 0;
+    public float damage = 10;
     public Vector3 endPoint;
     public bool _isHit = false;
     public static bool isBoss = false;   //false가 기본값
@@ -14,7 +14,7 @@ public abstract class Note : MonoBehaviour
     [Header("애니메이션 세팅")]
     public Animator animator;
 
-    public virtual void Initialize(Vector3 endPoint, float speed, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
+    public virtual void Initialize(Vector3 endPoint, float speed, float damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
 
     {
         _isHit = false;

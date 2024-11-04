@@ -22,9 +22,9 @@ public class DBScoreNote : Note, IPoolingObj
 
     public E_Pool MyPoolType => E_Pool.DBSCORE_NOTE;
 
-    public override void Initialize(Vector3 endPoint, float speed, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
+    public override void Initialize(Vector3 endPoint, float speed, int damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
     {
-        base.Initialize(endPoint, speed, stageNumber, noteType, notePosition, damage);
+        base.Initialize(endPoint, speed, damage, stageNumber, noteType, notePosition);
 
         upNote.SetActive(true);
         downNote.SetActive(true);
