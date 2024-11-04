@@ -87,17 +87,4 @@ public abstract class Note : MonoBehaviour
     {
         Debug.Log("이펙트 동작");
     }
-
-    private void OnEnable()
-    {
-        ResetAnimation();
-    }
-
-    private void ResetAnimation()
-    {
-        if (animator != null)
-        {
-            animator.Play("Run", -1, 0f);
-        }
-    }
 }
