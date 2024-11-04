@@ -12,17 +12,16 @@ public enum E_StageBGM
     BOSS_4,
     NORMAL_5,
     BOSS_5,
-
-
-
-
+    
     E_STAGEBGM_MAX,
 }
 
 public enum E_MainBGM
 {
     NONE = -1,
-    MAINMENU,
-
+    OPEN,
+    ROBBY,
+    STAGE_CLEAR,
+    STAGE_FAIL,
     E_MAINBGM_MAX,
 }

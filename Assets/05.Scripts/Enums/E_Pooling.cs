@@ -11,5 +11,8 @@ public enum E_Pool
     GREAT,
     PERFECT,
     COMBO,
+    NOTE_FX,
+    MOUSE_INPUT_FX,
+    SWORD_FX,
     E_POOL_Max
 }

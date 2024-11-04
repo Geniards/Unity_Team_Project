@@ -622,6 +622,12 @@ MonoBehaviour:
     TargetPrefab: {fileID: 1484715254705799817, guid: 8437bbdabb943564daaa298928f42917, type: 3}
   - TargetPool: 9
     TargetPrefab: {fileID: 1275173161624624645, guid: b14cb18fa60a1f64ab215f3c54012351, type: 3}
+  - TargetPool: 10
+    TargetPrefab: {fileID: 7478646689139926271, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
+  - TargetPool: 11
+    TargetPrefab: {fileID: 7478646689139926271, guid: aae3fbda396af3c4fa5f93fd066ef833, type: 3}
+  - TargetPool: 12
+    TargetPrefab: {fileID: 7478646689139926271, guid: c88ee6b29fdf6ab44ba8775bcb195a13, type: 3}
 --- !u!114 &4076672358624917954
 MonoBehaviour:
   m_ObjectHideFlags: 0

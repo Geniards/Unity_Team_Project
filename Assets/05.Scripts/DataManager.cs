@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 public class DataManager : MonoBehaviour, IManager
@@ -55,6 +56,7 @@ public class DataManager : MonoBehaviour, IManager
     public void ApplySelectStageData()
     {
         SelectedStageData.CopyData(_stageData);
+        Debug.Log(_stageData.MeleeCount);
     }
 
     #region 프로그램 기본 설정
@@ -117,7 +119,9 @@ public class DataManager : MonoBehaviour, IManager
     private float _gameStartTime;
     private float _gameEndTime;
     public float StagePlayTime => _gameEndTime - _gameStartTime;
+    public RectTransform LastTr { get; private set; }
 
+    public void SetLastTr(RectTransform lastTr) { LastTr = lastTr; }
     public void CheckStageEndTime() { _gameEndTime = Time.time; }
     public void SetGreatCount(int count) { _greatCount = count; }
     public void SetPerfectCount(int count) { _perfectCount = count; }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class NoteSpawner : MonoBehaviour
@@ -84,7 +83,7 @@ public class NoteSpawner : MonoBehaviour
             return;
         }
 
-        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 10f,DataManager.Instance.SelectedStageData.StageNumber,data.noteType, (E_SpawnerPosY)data.position-1);
+        note.Initialize(GetNoteEndPosition(data.position), noteSpeed, 2f ,DataManager.Instance.SelectedStageData.StageNumber,data.noteType, (E_SpawnerPosY)data.position-1); // 임시
         _lastNoteIdx++;
     }
 

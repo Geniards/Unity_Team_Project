@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -57,15 +58,6 @@ public class SoundManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// 스테이지씬을 제외한 나머지 화면에서 제공하는 음원을 재생합니다.
-    /// </summary>
-    public void PlayLobbyBGM(E_SceneType sceneType)
-    {
-        _bgmSource.clip = Resources.Load<AudioClip>($"{BGM_STAGE_PATH}{sceneType.ToString()}");
-        _bgmSource.Play();
-    }
-
-    /// <summary>
     /// 선택한 타입의 음원이 재생됩니다.
     /// </summary>
     public void PlayBGM(E_StageBGM bgmType)
@@ -81,7 +73,7 @@ public class SoundManager : MonoBehaviour, IManager
     public void PlayBGM(E_MainBGM bgmType)
     {
         _bgmSource.clip = Resources.Load<AudioClip>
-            ($"{BGM_STAGE_PATH}{bgmType}");
+            ($"{BGM_MAIN_PATH}{bgmType}");
         _bgmSource.Play();
     }
 

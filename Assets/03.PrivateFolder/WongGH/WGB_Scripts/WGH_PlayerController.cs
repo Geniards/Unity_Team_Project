@@ -205,18 +205,22 @@ public class WGH_PlayerController : MonoBehaviour
 
     private void CheckGroundContact()
     {
-        if (_coll.gameObject.layer == 16 && IsAir == true)
+        if (_coll != null && _coll.gameObject.layer == 16 && IsAir == true)
         {
             _anim.SetBool("IsAir", false);
             //SetAnim("Run");
             IsAir = false;
+
+            Debug.Log(Time.time);
+
+            _coll = null;
         }
     }
 
     private void CheckNoteContact()
     {
         // 상단 충돌일 경우
-        if (_coll.TryGetComponent<Note>(out Note note) && !IsDamaged && !IsDied)
+        if (_coll != null && _coll.TryGetComponent<Note>(out Note note) && !IsDamaged && !IsDied)
         {
             _judge.SetComboReset();
             SetAnim("OnDamage");
@@ -232,7 +236,10 @@ public class WGH_PlayerController : MonoBehaviour
             StartCoroutine(CantMoveTime());
             StartCoroutine(Invincibility());
             StartCoroutine(Clicker());
+
+            _coll = null;
         }
+
     }
 
     public void JumpMove()

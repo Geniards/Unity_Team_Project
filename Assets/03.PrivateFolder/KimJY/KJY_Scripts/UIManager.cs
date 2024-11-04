@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour, IManager
 {
     #region BINDING KEY
 
-    
+    public const string LOBBY_IDX_KEY = "LobbyIDX";
 
     #endregion
 
