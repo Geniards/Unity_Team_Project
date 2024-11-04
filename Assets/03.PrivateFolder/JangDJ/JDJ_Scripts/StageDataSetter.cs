@@ -18,11 +18,19 @@ public class StageDataSetter : MonoBehaviour
         if(_nextSetter != null)
             _stage.SetNextStage(_nextSetter);
 
+        Path path = GetComponent<Path>();
+
         _button.onClick.AddListener(() =>
         {
-            DataManager.Instance.SelectedStageData = this._stage;
-            DataManager.Instance.NextStageData = _stage.NextStage;
-            _targetPopup.SetActive(true);
+            path.SetDest();
+            path.Pointer.SaveLastPosIdx();
         });
+    }
+
+    public void ShowDetail()
+    {
+        DataManager.Instance.SelectedStageData = this._stage;
+        DataManager.Instance.NextStageData = _stage.NextStage;
+        _targetPopup.SetActive(true);
     }
 }
