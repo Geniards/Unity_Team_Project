@@ -45,6 +45,7 @@ public class AnimationManager : MonoBehaviour
         }
 
         Debug.LogWarning("해당 조건에 맞는 애니메이션 데이터를 찾을 수 없습니다.");
+        Debug.LogWarning($"들어온 조건은 {noteType} : {notePosition} : {stageNumber}");
         return overrideController;
     }
 
