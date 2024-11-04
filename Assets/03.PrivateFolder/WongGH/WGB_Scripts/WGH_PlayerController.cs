@@ -97,7 +97,7 @@ public class WGH_PlayerController : MonoBehaviour
         _initPos = transform.position;
         _collapsPos = _jumpPos;
 
-        //_inAirTime = GameManager.Director.GetBPMtoIntervalSec() / DataManager.Instance.SelectedStageData.NoteSpeed;
+        _inAirTime = GameManager.Director.GetBPMtoIntervalSec() / DataManager.Instance.SelectedStageData.NoteSpeed;
 
         float dist = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM).x - transform.position.x;
 

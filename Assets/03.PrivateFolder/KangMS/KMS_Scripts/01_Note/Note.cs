@@ -15,6 +15,18 @@ public abstract class Note : MonoBehaviour
     [Header("애니메이션 세팅")]
     public Animator animator;
 
+    //private void OnEnable()
+    //{
+    //    ResetAnimation();
+    //}
+    //private void ResetAnimation()
+    //{
+    //    if (animator != null)
+    //    {
+    //        animator.Play("Run", -1, 0f);
+    //    }
+    //}
+
     public virtual void Initialize(Vector3 endPoint, float speed, float scoreValue, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM, float damage = 0)
 
     {
@@ -34,7 +46,9 @@ public abstract class Note : MonoBehaviour
         if (overrideController != null)
         {
             animator.runtimeAnimatorController = overrideController;
+            //animator.Play("Run", -1, 0f);
         }
+
         double startDspTime = AudioSettings.dspTime;
         double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
         double endDspTime = startDspTime + travelDuration;

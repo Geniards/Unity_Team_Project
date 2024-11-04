@@ -412,14 +412,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_GravityScale
-      value: 21
-      objectReference: {fileID: 0}
     - target: {fileID: 3781673102463711252, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: _downBoxSize.x
       value: 0.928
@@ -435,6 +427,10 @@ PrefabInstance:
     - target: {fileID: 3781673102463711252, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: _downRayOffset.y
       value: 0.059
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781673102463711252, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
+      propertyPath: _collLayer.m_Bits
+      value: 65600
       objectReference: {fileID: 0}
     - target: {fileID: 4958838427282727952, guid: 03112f059b93fa54882bfad1ad8371d9, type: 3}
       propertyPath: m_Offset.y

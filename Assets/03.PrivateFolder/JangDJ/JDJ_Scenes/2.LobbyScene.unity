@@ -372,7 +372,7 @@ MonoBehaviour:
     SongTitle: "\uC800 \uAD34\uB85C\uC6CC\uC694"
     StageName: "\uB9C8\uC744"
     Description: "\uC790 \uC774\uC81C \uC2DC\uC791\uC774\uC57C \\n \u3147\u3147"
-    NoteSpeed: 15
+    NoteSpeed: 8
     _meleeCount: 10
     _bossStat:
       _hp: 3
