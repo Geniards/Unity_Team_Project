@@ -15,6 +15,7 @@ public class SwordWaveNote : Note
         this.damage = damage;
         this.curbossTransform = DataManager.Instance.Boss.transform;
         if (!curbossTransform) Debug.Log("보스위치가 존재하지 않습니다.");
+        GameManager.AnimationChanger.GetAnimationController(0, 0);
         gameObject.SetActive(true);
         lastDspTime = AudioSettings.dspTime;
     }
