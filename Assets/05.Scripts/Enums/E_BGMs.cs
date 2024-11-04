@@ -20,7 +20,7 @@ public enum E_MainBGM
 {
     NONE = -1,
     OPEN,
-    ROBBY,
+    LOBBY,
     STAGE_CLEAR,
     STAGE_FAIL,
     E_MAINBGM_MAX,

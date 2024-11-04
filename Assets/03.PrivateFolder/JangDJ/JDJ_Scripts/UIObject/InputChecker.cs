@@ -26,6 +26,7 @@ public class InputChecker : MonoBehaviour
 
         if(Input.anyKeyDown)
         {
+            SoundManager.Instance.FadeBGM(false, 0.25f, 0.05f);
             SceneController.Instance.LoadScene(E_SceneType.LOAD);
         }
     }
