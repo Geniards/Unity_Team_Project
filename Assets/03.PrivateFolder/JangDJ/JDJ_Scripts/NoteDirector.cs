@@ -35,6 +35,7 @@ public class NoteDirector : MonoBehaviour
         _bpm = DataManager.Instance.BPM;
         _noteSpeed = DataManager.Instance.GameSpeed;
         EventManager.Instance.AddAction(E_Event.SPAWN_STOP, () => { _isSkipSpawn = true; }, this);
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, () => { Note.isBoss = false; }, this);
         EventManager.Instance.AddAction(E_Event.SPAWN_START, () => { _isSkipSpawn = false; }, this);
         EventManager.Instance.AddAction
             (E_Event.CHANGED_BGM, ChangeBGM, this);
