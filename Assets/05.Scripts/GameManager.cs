@@ -81,8 +81,9 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartProgressTimer()
     {
         float timer = 0;
-        float breakPoint = SoundManager.Instance.CurrentBgmLength -
-            DataManager.Instance.SkipSpawnTimeOffset;
+        //float breakPoint = SoundManager.Instance.CurrentBgmLength -
+        //    DataManager.Instance.SkipSpawnTimeOffset;
+        float breakPoint = DataManager.Instance.BGMBreakTime;
 
         bool isBreaked = false;
         float progress;
