@@ -17,6 +17,10 @@ public class WGH_FloatCombo : MonoBehaviour
         EventManager.Instance.AddAction(E_Event.STAGE_END, ResetCombo, this);
     }
 
+    private void OnDestroy()
+    {
+        ResetCombo();
+    }
     /// <summary>
     /// 콤보를 리셋하는 메서드
     /// </summary>

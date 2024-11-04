@@ -110,13 +110,14 @@ public class WGH_AreaJudge : MonoBehaviour
                 Note = note;
                 float _distance = Vector2.Distance(_curPos, hit.transform.position);
                 Debug.DrawLine(aPoint + new Vector2(0, _greatDistance / 4), bPoint - new Vector2(0, _greatDistance / 4), Color.blue, 0.5f);
+
                 if (_distance <= _perfectDistance)
                 {
                     AddCombo();
                     _perfectCount++;
                     _FloatCombo.SpawnCombo(Combo);
                     Note.OnHit(E_NoteDecision.Perfect, button);
-                    _floatResult.SpawnResult(E_NoteDecision.Perfect, hit.transform.position + new Vector3(0, 2, 0)); // PERFECT 프리팹 띄우기
+                    _floatResult.SpawnResult(E_NoteDecision.Perfect, hit.transform.position + new Vector3(0, 2, 0));  // PERFECT 프리팹 띄우기
                     if (hit.TryGetComponent(out ScoreNote score))                                                     // 스코어 노트 퍼펙트 점수 처리
                     {
                         CalculateScoreNote(E_NoteDecision.Perfect);
@@ -132,7 +133,7 @@ public class WGH_AreaJudge : MonoBehaviour
                     _greatCount++;
                     _FloatCombo.SpawnCombo(Combo);
                     Note.OnHit(E_NoteDecision.Great, button);
-                    _floatResult.SpawnResult(E_NoteDecision.Great, hit.transform.position + new Vector3(0, 2, 0));  // GREAT 프리팹 띄우기
+                    _floatResult.SpawnResult(E_NoteDecision.Great, hit.transform.position + new Vector3(0, 2, 0));   // GREAT 프리팹 띄우기
                     if (hit.TryGetComponent(out ScoreNote score))                                                    // 몬스터 노트 퍼펙트 점수 처리
                     {
                         CalculateScoreNote(E_NoteDecision.Great);
@@ -199,8 +200,7 @@ public class WGH_AreaJudge : MonoBehaviour
     private void GetBossScore()
     {
         int score = 0;
-        score = DataManager.Instance.Boss.Score;
-        score += _playerController.GetHpScore();
+        score = DataManager.Instance.Boss.Score + _playerController.GetHpScore();
         DataManager.Instance.AddScore(score);
 
         Debug.Log(DataManager.Instance.CurScore);
