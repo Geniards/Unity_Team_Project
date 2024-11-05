@@ -39,7 +39,7 @@ public class WGH_AreaJudge : MonoBehaviour
         _checkBottomPos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
         _floatResult = GetComponent<WGH_FloatJudgeResult>();
-        _FloatCombo = FindAnyObjectByType<WGH_FloatCombo>();
+        _FloatCombo = GetComponent<WGH_FloatCombo>();
         _FloatCombo.SpawnCombo(Combo);
         _isSendedScore = false;
 

@@ -85,7 +85,7 @@ public class WGH_PlayerController : MonoBehaviour
         _jumpPos = transform.position + Vector3.up * (NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.TOP).y + _jumpPosOffsetDist);
         _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.8f, -1, 0);
         StartPos = transform.position;
-        _judge = FindAnyObjectByType<WGH_AreaJudge>();
+        _judge = FindObjectOfType<WGH_AreaJudge>();
         _approachDur = DataManager.Instance.ApproachDuration; // 임시 0.2
         _contactDur = DataManager.Instance.ContactDuration; // 임시 4
         _meleeCount = DataManager.Instance.MeleeCount; // 임시 2

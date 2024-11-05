@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
 public class SwordWaveNote : Note
 {
     [Header("보스의 위치")]
