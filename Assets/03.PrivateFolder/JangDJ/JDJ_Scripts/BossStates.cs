@@ -27,7 +27,7 @@ public class BossIntoField : BossState, IState
         _duration = 10f;
         _time = 0;
         _t = 0;
-        _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.BOTTOM);
+        _destination = NoteDirector.Instance.GetBossPoses(E_SpawnerPosY.BOTTOM);
     }
 
     public void Exit()
@@ -101,7 +101,7 @@ public class BossMove : BossState, IState
         _t = 0;
         _duration = 4f;
         //int rand = Random.Range(0, (int)E_SpawnerPosY.E_SpawnerPosY_MAX);
-        _destination = GameManager.Director.GetBossPoses((E_SpawnerPosY.BOTTOM));
+        _destination = NoteDirector.Instance.GetBossPoses((E_SpawnerPosY.BOTTOM));
     }
 
     public void Exit()
@@ -170,7 +170,7 @@ public class BossRushReady : BossState, IState
         _time = 0;
         _t = 0;
         _duration = 2f;
-        _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.MIDDLE);
+        _destination = NoteDirector.Instance.GetBossPoses(E_SpawnerPosY.MIDDLE);
     }
 
     public void Exit()
@@ -321,7 +321,7 @@ public class BossDead : BossState, IState
         _t = 0;
         _duration = 0.2f;
         _startPosition = _boss.transform.position;
-        _destination = GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
+        _destination = NoteDirector.Instance.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
     }
 
     public void Exit()
@@ -368,7 +368,7 @@ public class BossRecover : BossState, IState
         _t = 0;
         _duration = 0.2f;
         _startPosition = _boss.transform.position;
-        _destination = GameManager.Director.GetBossPoses(E_SpawnerPosY.BOTTOM);
+        _destination = NoteDirector.Instance.GetBossPoses(E_SpawnerPosY.BOTTOM);
     }
 
     public void Exit()

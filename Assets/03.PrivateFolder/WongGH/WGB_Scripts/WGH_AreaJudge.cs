@@ -17,9 +17,8 @@ public class WGH_AreaJudge : MonoBehaviour
     private Vector3 _curPos;
 
     public Note Note { get; private set; }
-    private WGH_PlayerController _playerController = null;
+    [SerializeField] private WGH_PlayerController _playerController = null;
     private WGH_FloatJudgeResult _floatResult = null;
-    //private Rigidbody2D //_playerRigid = null;
     public WGH_FloatCombo _FloatCombo { get; private set; }
 
     private KeyCode _inputKey;
@@ -31,29 +30,25 @@ public class WGH_AreaJudge : MonoBehaviour
     [SerializeField] private GameObject _great;
     [SerializeField] private GameObject _perfect;
 
+    private bool _isSendedScore = false;
+
     private void Start()
     {
-        _checkTopPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.TOP);
-        _checkMiddlePos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
-        _checkBottomPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM);
+        _checkTopPos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.TOP);
+        _checkMiddlePos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        _checkBottomPos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
         _floatResult = GetComponent<WGH_FloatJudgeResult>();
-        EventManager.Instance.AddAction(E_Event.BOSSDEAD, GetBossScore, this);
-        EventManager.Instance.AddAction(E_Event.STAGE_END, SentCount, this);
         _FloatCombo = FindAnyObjectByType<WGH_FloatCombo>();
         _FloatCombo.SpawnCombo(Combo);
+        _isSendedScore = false;
+
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, GetBossScore, this);
+        EventManager.Instance.AddAction(E_Event.STAGE_END, SentCount, this);
     }
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            _FloatCombo.SpawnCombo(Combo);
-        }
-        else if(Input.GetMouseButtonDown(1))
-        {
-            AddCombo();
-        }
         if (_isInputProcessing == false && _playerController.IsCanMove&& !_playerController.IsDied && !_playerController.IsContact)
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -110,13 +105,14 @@ public class WGH_AreaJudge : MonoBehaviour
                 Note = note;
                 float _distance = Vector2.Distance(_curPos, hit.transform.position);
                 Debug.DrawLine(aPoint + new Vector2(0, _greatDistance / 4), bPoint - new Vector2(0, _greatDistance / 4), Color.blue, 0.5f);
+
                 if (_distance <= _perfectDistance)
                 {
                     AddCombo();
                     _perfectCount++;
                     _FloatCombo.SpawnCombo(Combo);
                     Note.OnHit(E_NoteDecision.Perfect, button);
-                    _floatResult.SpawnResult(E_NoteDecision.Perfect, hit.transform.position + new Vector3(0, 2, 0)); // PERFECT 프리팹 띄우기
+                    _floatResult.SpawnResult(E_NoteDecision.Perfect, hit.transform.position + new Vector3(0, 2, 0));  // PERFECT 프리팹 띄우기
                     if (hit.TryGetComponent(out ScoreNote score))                                                     // 스코어 노트 퍼펙트 점수 처리
                     {
                         CalculateScoreNote(E_NoteDecision.Perfect);
@@ -132,7 +128,7 @@ public class WGH_AreaJudge : MonoBehaviour
                     _greatCount++;
                     _FloatCombo.SpawnCombo(Combo);
                     Note.OnHit(E_NoteDecision.Great, button);
-                    _floatResult.SpawnResult(E_NoteDecision.Great, hit.transform.position + new Vector3(0, 2, 0));  // GREAT 프리팹 띄우기
+                    _floatResult.SpawnResult(E_NoteDecision.Great, hit.transform.position + new Vector3(0, 2, 0));   // GREAT 프리팹 띄우기
                     if (hit.TryGetComponent(out ScoreNote score))                                                    // 몬스터 노트 퍼펙트 점수 처리
                     {
                         CalculateScoreNote(E_NoteDecision.Great);
@@ -198,9 +194,13 @@ public class WGH_AreaJudge : MonoBehaviour
     /// </summary>
     private void GetBossScore()
     {
+        if (_isSendedScore == true)
+            return;
+
+        _isSendedScore = true;
+
         int score = 0;
-        score = DataManager.Instance.Boss.Score;
-        score += _playerController.GetHpScore();
+        score = DataManager.Instance.Boss.Score + _playerController.GetHpScore();
         DataManager.Instance.AddScore(score);
         DataManager.Instance.ClearBossData();
 

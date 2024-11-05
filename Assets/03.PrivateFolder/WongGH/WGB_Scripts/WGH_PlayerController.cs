@@ -20,6 +20,8 @@ public class WGH_PlayerController : MonoBehaviour
     [Header("참조")]
     [SerializeField] private Animator _anim = null;
     [SerializeField] private WGH_AreaJudge _judge = null;
+    [SerializeField] private WGH_FloatCombo _floatCombo = null;
+    [SerializeField] private WGH_FloatJudgeResult _floatResult = null;
 
     [Header("Ray")]
     [SerializeField] private LayerMask _collLayer;
@@ -39,7 +41,6 @@ public class WGH_PlayerController : MonoBehaviour
     public Vector3 _jumpPos { get; private set; }
     private Vector3 _collapsPos;
 
-
     public float CurHP
     {
         get { return _curHp; }
@@ -49,7 +50,7 @@ public class WGH_PlayerController : MonoBehaviour
             if (_curHp != DataManager.Instance.PlayerMaxHP)
                 DataManager.Instance.UpdatePlayerHP(_curHp);
 
-            if (value == 0)
+            if (value <= 0)
                 StartCoroutine(Die());
         }
     }
@@ -78,28 +79,33 @@ public class WGH_PlayerController : MonoBehaviour
         CurHP = DataManager.Instance.PlayerMaxHP;
         _anim = GetComponent<Animator>();
     }
+
     private void Start()
     {
-        _jumpPos = transform.position + Vector3.up * (GameManager.Director.GetCheckPoses(E_SpawnerPosY.TOP).y + _jumpPosOffsetDist);
-        EventManager.Instance.AddAction(E_Event.BOSSRUSH, ApproachBoss, this);
-        EventManager.Instance.AddAction(E_Event.ENTERCONTACT, ContactBoss, this);
-        EventManager.Instance.AddAction(E_Event.CONTACTEND, ContactEnd, this);
+        _jumpPos = transform.position + Vector3.up * (NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.TOP).y + _jumpPosOffsetDist);
         _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.8f, -1, 0);
         StartPos = transform.position;
         _judge = FindAnyObjectByType<WGH_AreaJudge>();
         _approachDur = DataManager.Instance.ApproachDuration; // 임시 0.2
         _contactDur = DataManager.Instance.ContactDuration; // 임시 4
         _meleeCount = DataManager.Instance.MeleeCount; // 임시 2
-        EventManager.Instance.AddAction(E_Event.BOSSDEAD, PlayerOut, this);
+        
         IsCanMove = true;
         _initPos = transform.position;
         _collapsPos = _jumpPos;
+        
+        _floatCombo = _judge._FloatCombo;
+        _floatResult = _judge.GetComponent<WGH_FloatJudgeResult>();
+        _inAirTime = NoteDirector.Instance.GetBPMtoIntervalSec() / DataManager.Instance.SelectedStageData.NoteSpeed;
 
-        _inAirTime = GameManager.Director.GetBPMtoIntervalSec() / DataManager.Instance.SelectedStageData.NoteSpeed;
-
-        float dist = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM).x - transform.position.x;
+        float dist = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.BOTTOM).x - transform.position.x;
 
         _prevAirTime = dist / DataManager.Instance.SelectedStageData.NoteSpeed;
+
+        EventManager.Instance.AddAction(E_Event.BOSSRUSH, ApproachBoss, this);
+        EventManager.Instance.AddAction(E_Event.ENTERCONTACT, ContactBoss, this);
+        EventManager.Instance.AddAction(E_Event.CONTACTEND, ContactEnd, this);
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, PlayerOut, this);
     }
 
     /// <summary>
@@ -114,31 +120,6 @@ public class WGH_PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // 테스트용
-        //if(Input.GetKeyDown(KeyCode.Alpha9))
-        //{
-        //    StartCoroutine(PlayerOutMove());
-        //}
-        //if(Input.GetKeyDown(KeyCode.Alpha6))
-        //{
-        //    EventManager.Instance.PlayEvent(E_Event.BOSSRUSH);
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha7))
-        //{
-        //    EventManager.Instance.PlayEvent(E_Event.ENTERCONTACT);
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha8))
-        //{
-        //    EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
-        //}
-        //if(Input.GetKeyDown(KeyCode.Alpha5))
-        //{
-        //    CurHP -= 100;
-        //}
-        //if(Input.GetKeyDown(KeyCode.Alpha3))
-        //{
-        //    Note.isBoss = true;
-        //}
         DebugBoxRay(_topRayOffset, _topBoxSize, Color.blue);
         DebugBoxRay(_botRayOffset, _botBoxSize, Color.green);
         DebugBoxRay(_rightRayOffset, _rightBoxSize, Color.red);
@@ -152,7 +133,7 @@ public class WGH_PlayerController : MonoBehaviour
             // 전방 충돌일 경우
             CheckNoteContact();
         }
-        else if (RayCheck(_botRayOffset, _botBoxSize, out _coll) || IsAir == false)
+        else if (RayCheck(_botRayOffset, _botBoxSize, out _coll) || IsAir == true)
         {
             // 하단 충돌일 경우 2개
             CheckNoteContact();
@@ -185,6 +166,7 @@ public class WGH_PlayerController : MonoBehaviour
 
         // 시간에 따른 변위 계산
         _deltaY = 0.5f * gravity * _time * _time; // 가속도에 의한 이동 거리
+
         
         // 현재 위치 업데이트
         transform.position = _collapsPos - new Vector3(0, _deltaY, 0);
@@ -196,7 +178,7 @@ public class WGH_PlayerController : MonoBehaviour
         }
 
         // 목표 시간에 도달하면 위치를 초기화
-        if (_time >= duration)
+        if (_time >= duration || IsAir == false)
         {
             transform.position = _initPos;
             _time = 0f; // 시간 초기화
@@ -208,34 +190,35 @@ public class WGH_PlayerController : MonoBehaviour
         if (_coll != null && _coll.gameObject.layer == 16 && IsAir == true)
         {
             _anim.SetBool("IsAir", false);
-            //SetAnim("Run");
             IsAir = false;
-
-            Debug.Log(Time.time);
-
             _coll = null;
         }
     }
-
+    /// <summary>
+    /// 노트 충돌
+    /// </summary>
     private void CheckNoteContact()
     {
         // 상단 충돌일 경우
         if (_coll != null && _coll.TryGetComponent<Note>(out Note note) && !IsDamaged && !IsDied)
         {
-            _judge.SetComboReset();
+            _floatCombo.ResetCombo();
             SetAnim("OnDamage");
             IsDamaged = true;
             IsCanMove = false;
             float _dmg = note.GetDamage();
-            
+
             if (!Note.isBoss)
-            { CurHP -= _dmg; }
+            { CurHP -= 10; }
             else
-            { CurHP -= _dmg * 2; }
+            { CurHP -= 20; }
             
-            StartCoroutine(CantMoveTime());
-            StartCoroutine(Invincibility());
-            StartCoroutine(Clicker());
+            if(CurHP > 0)
+            {
+                StartCoroutine(CantMoveTime());
+                StartCoroutine(Invincibility());
+                StartCoroutine(Clicker());
+            }
 
             _coll = null;
         }
@@ -266,7 +249,9 @@ public class WGH_PlayerController : MonoBehaviour
 
         return true;
     }
-
+    /// <summary>
+    /// Ray확인용 메서드
+    /// </summary>
     public void DebugBoxRay(Vector2 offset, Vector2 size, Color color)
     {
         Vector2 boxCenter = transform.position + new Vector3(offset.x, offset.y, 0);
@@ -282,11 +267,14 @@ public class WGH_PlayerController : MonoBehaviour
         Debug.DrawRay(topLeft + Vector2.right * size.x, Vector3.down * size.y, color);
     }
 
-
+    /// <summary>
+    /// 클리어시 플레이어가 앞으로 뛰어나가는 메서드
+    /// </summary>
     private void PlayerOut()
     {
         StartCoroutine(PlayerOutMove());
     }
+    // 앞으로 뛰어나가는 코루틴
     IEnumerator PlayerOutMove()
     {
         float _time = 0;
@@ -297,7 +285,7 @@ public class WGH_PlayerController : MonoBehaviour
             if (_time < _playerOutTime)
             {
                 transform.position = Vector3.Lerp(transform.position, transform.position + 
-                    Vector3.right * GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM).x, t);
+                    Vector3.right * NoteDirector.Instance.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM).x, t);
             }
             else
             {
@@ -308,6 +296,7 @@ public class WGH_PlayerController : MonoBehaviour
             yield return null;
         }
     }
+    // 플레이어 사망 코루틴
     IEnumerator Die()
     {
         
@@ -323,6 +312,7 @@ public class WGH_PlayerController : MonoBehaviour
         EventManager.Instance.PlayEvent(E_Event.STAGE_END);
         yield break;
     }
+    // 사망시 씬 왼쪽으로 빠지는 움직임 코루틴
     IEnumerator DieMove()
     {
         float _time = 0;
@@ -351,11 +341,13 @@ public class WGH_PlayerController : MonoBehaviour
         SetAnim("ConfrontBoss");
         StartCoroutine(ApproachMove());
     }
+    // 보스 직면 코루틴
     IEnumerator ApproachMove()
     {
         _judge.enabled = false;
         float _time = 0;
 
+        _meleeCount = DataManager.Instance.MeleeCount;
         while (true)
         {
             _time += Time.deltaTime;
@@ -371,6 +363,7 @@ public class WGH_PlayerController : MonoBehaviour
             yield return null;
         }
     }
+
     /// <summary>
     /// 보스 직면 끝
     /// </summary>
@@ -378,6 +371,7 @@ public class WGH_PlayerController : MonoBehaviour
     {
         StartCoroutine(EndMelee());
     }
+    // 보스 난투 끝 처리 코루틴
     IEnumerator EndMelee()
     {
         if (_meleeCount <= 0)
@@ -387,14 +381,16 @@ public class WGH_PlayerController : MonoBehaviour
         else
         {
             DataManager.Instance.Boss.GetMeleeResult(false);
-            _judge.SetComboReset();
+            _floatCombo.ResetCombo();
             CurHP -= 50;
             Debug.Log("보스 난투 격파 실패");
         }
         
-        
         float _time = 0;
-        SetAnim("Run");
+        if(CurHP > 0)
+        {
+            SetAnim("Run");
+        }
         while (true)
         {
             _time += Time.deltaTime;
@@ -420,6 +416,7 @@ public class WGH_PlayerController : MonoBehaviour
     {
         StartCoroutine(Melee());
     }
+    // 보스 난투 코루틴
     IEnumerator Melee()
     {
         float _contactTime = 0;
@@ -435,7 +432,9 @@ public class WGH_PlayerController : MonoBehaviour
                     SetAnim("GroundAttack");
                     _judge.AddCombo();
                     _judge.AddPerfectCount();
-                    _judge._FloatCombo.SpawnCombo(_judge.Combo);
+                    _floatCombo.SpawnCombo(_judge.Combo);
+                    _floatResult.SpawnResult(E_NoteDecision.Perfect, DataManager.Instance.Boss.transform.position + new Vector3(0,1,0));
+                    
                     DataManager.Instance.AddScore(Mathf.RoundToInt(10 * 2 * ((_judge.CheckCurCombo() * 0.1f) + 1)));
                 }
                 else if (Input.GetKeyDown(KeyCode.F))
@@ -444,7 +443,8 @@ public class WGH_PlayerController : MonoBehaviour
                     SetAnim("JumpAttack");
                     _judge.AddCombo();
                     _judge.AddPerfectCount();
-                    _judge._FloatCombo.SpawnCombo(_judge.Combo);
+                    _floatCombo.SpawnCombo(_judge.Combo);
+                    _floatResult.SpawnResult(E_NoteDecision.Perfect, DataManager.Instance.Boss.transform.position + new Vector3(0, 1, 0));
                     DataManager.Instance.AddScore(Mathf.RoundToInt(10 * 2 * ((_judge.CheckCurCombo() * 0.1f) + 1)));
                 }
                 else if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.J))

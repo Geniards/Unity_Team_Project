@@ -48,7 +48,7 @@ public class ScoreNote : Note, IPoolingObj, IReflective
 
     public override void ReturnToPool()
     {
-        GameManager.Mediator.Unregister(this);
+        NoteMediator.Instance.Unregister(this);
         Return();
     }
 }

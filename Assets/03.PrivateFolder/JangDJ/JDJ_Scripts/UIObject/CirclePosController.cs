@@ -11,7 +11,7 @@ public class CirclePosController : MonoBehaviour
 
     private void Start()
     {
-        _initWorldPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        _initWorldPos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.MIDDLE);
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _base as RectTransform,
@@ -24,8 +24,8 @@ public class CirclePosController : MonoBehaviour
 
     private void SetSubCircle()
     {
-        Vector3 topPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.TOP);
-        Vector3 botPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM);
+        Vector3 topPos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.TOP);
+        Vector3 botPos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.BOTTOM);
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _topCircle.parent as RectTransform,

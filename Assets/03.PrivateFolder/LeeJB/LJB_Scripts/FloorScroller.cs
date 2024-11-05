@@ -13,10 +13,12 @@ public class FloorScroller : MonoBehaviour
 
     private void Start()
     {
-        InitializeTiles();
-        StartCoroutine(StartScrollingAfterDelay(_scrollDelay));
         EventManager.Instance.AddAction(E_Event.BOSSDEAD, StopScrolling, this);
         EventManager.Instance.AddAction(E_Event.PLAYERDEAD, StopScrolling, this);
+
+        InitializeTiles();
+        StartCoroutine(StartScrollingAfterDelay(_scrollDelay));
+        
     }
 
     private void Update()
