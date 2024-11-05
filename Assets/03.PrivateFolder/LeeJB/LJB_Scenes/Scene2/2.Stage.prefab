@@ -139,7 +139,7 @@ MonoBehaviour:
   - {fileID: 1787252044395500816}
   _scrollSpeed: 1
   _tileWidth: 30
-  _scrollDelay: 1
+  _scrollDelay: 0
 --- !u!1 &1787252043506155630
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
     _minSpacing: 3
     _maxSpacing: 7
   _parentTransform: {fileID: 1787252043342808981}
-  _scrollDelay: 1
+  _scrollDelay: 0
   _destroyOffset: 20
   _spawnOffset: 20
 --- !u!1 &1787252043655667360
@@ -672,7 +672,7 @@ MonoBehaviour:
   - {fileID: 658056308181171102}
   _scrollSpeed: 5
   _tileWidth: 0.9
-  _scrollDelay: 1
+  _scrollDelay: 0
 --- !u!1001 &1787252042860823108
 PrefabInstance:
   m_ObjectHideFlags: 0

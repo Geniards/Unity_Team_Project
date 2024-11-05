@@ -89,7 +89,7 @@ MonoBehaviour:
   - {fileID: 8908505061698879409}
   _scrollSpeed: 5
   _tileWidth: 0.9
-  _scrollDelay: 1
+  _scrollDelay: 0
 --- !u!1 &7902232259340504763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,7 +1457,7 @@ MonoBehaviour:
     _minSpacing: 8
     _maxSpacing: 10
   _parentTransform: {fileID: 8908505062442746627}
-  _scrollDelay: 1
+  _scrollDelay: 0
   _destroyOffset: 50
   _spawnOffset: 20
 --- !u!1 &8908505062309372929
@@ -3940,7 +3940,7 @@ MonoBehaviour:
   - {fileID: 8908505063082643948}
   _scrollSpeed: 1
   _tileWidth: 14
-  _scrollDelay: 1
+  _scrollDelay: 0
 --- !u!1 &8908505063545187166
 GameObject:
   m_ObjectHideFlags: 0
@@ -4090,7 +4090,7 @@ MonoBehaviour:
   - {fileID: 7902232259340504763}
   _scrollSpeed: 0.5
   _tileWidth: 25
-  _scrollDelay: 1
+  _scrollDelay: 0
 --- !u!1 &8908505063597351887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4145,7 +4145,7 @@ MonoBehaviour:
     _minSpacing: 10
     _maxSpacing: 15
   _parentTransform: {fileID: 8908505063210621818}
-  _scrollDelay: 1
+  _scrollDelay: 0
   _destroyOffset: 50
   _spawnOffset: 20
 --- !u!1 &8908505063636120729
