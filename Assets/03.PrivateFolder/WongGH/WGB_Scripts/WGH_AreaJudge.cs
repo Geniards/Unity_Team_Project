@@ -202,6 +202,7 @@ public class WGH_AreaJudge : MonoBehaviour
         score = DataManager.Instance.Boss.Score;
         score += _playerController.GetHpScore();
         DataManager.Instance.AddScore(score);
+        DataManager.Instance.ClearBossData();
 
         Debug.Log(DataManager.Instance.CurScore);
     }

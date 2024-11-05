@@ -51,6 +51,12 @@ public class SoundManager : MonoBehaviour, IManager
         PlayerPrefs.SetFloat(MASTER_VOLUME_PLAYERPREFAB, volume);
     }
 
+    private void Awake()
+    {
+        EventManager.Instance.AddAction
+            (E_Event.STAGE_END, () => { FadeBGM(false, 1f, 0); }, this);
+    }
+
     public void Init() 
     { 
         Instance = this;
@@ -107,8 +113,47 @@ public class SoundManager : MonoBehaviour, IManager
         else
         {
             _fadeRoutine = StartCoroutine(FadeOutBGMVolume(duration, volume));
-        }
-            
+        }       
+    }
+
+    public void FadeChangeBGM
+        (E_StageBGM bgm, float fadeinDuration = 0.25f, float fadeoutDuration = 0.25f)
+    {
+        if (_fadeRoutine != null)
+            StopCoroutine(_fadeRoutine);
+
+        _fadeRoutine = StartCoroutine(FadeChangeRoutine(bgm, fadeinDuration, fadeoutDuration));
+    }
+
+    public void FadeChangeBGM
+        (E_MainBGM bgm,float fadeinDuration = 0.25f, float fadeoutDuration = 0.25f)
+    {
+        if (_fadeRoutine != null)
+            StopCoroutine(_fadeRoutine);
+
+        _fadeRoutine = StartCoroutine(FadeChangeRoutine(bgm, fadeinDuration, fadeoutDuration));
+    }
+
+    private IEnumerator FadeChangeRoutine(E_StageBGM bgm, float fadeInTime, float fadeOutTime)
+    {
+        float lastVolume = _bgmSource.volume;
+
+        yield return FadeOutBGMVolume(fadeOutTime, lastVolume);
+
+        PlayBGM(bgm);
+
+        yield return FadeInBGMVolume(fadeInTime, lastVolume);
+    }
+
+    private IEnumerator FadeChangeRoutine(E_MainBGM bgm, float fadeInTime, float fadeOutTime)
+    {
+        float lastVolume = _bgmSource.volume;
+
+        yield return FadeOutBGMVolume(fadeOutTime, lastVolume);
+
+        PlayBGM(bgm);
+
+        yield return FadeInBGMVolume(fadeInTime, lastVolume);
     }
      
      public void SetBGMVolume(float value)

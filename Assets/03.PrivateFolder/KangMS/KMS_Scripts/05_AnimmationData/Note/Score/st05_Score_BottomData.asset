@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f286dc51532e7439d1411d60b58979, type: 3}
   m_Name: st05_Score_BottomData
   m_EditorClassIdentifier: 
-  stageNumber: 0
+  stageNumber: 5
   noteType: 1
   notePosition: 0
   playAnimClip:

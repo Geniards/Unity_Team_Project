@@ -35,6 +35,7 @@ public class BossController : MonoBehaviour
     private void RegistMyData()
     {
         DataManager.Instance.SetBossData(this);
+        this._stat.SetHp(DataManager.Instance.SelectedStageData.BossHP);
     }
 
     private void InitStates()
@@ -99,8 +100,6 @@ public class BossController : MonoBehaviour
 
     public void GetMeleeResult(bool result)
     {
-        Debug.Log(result);
-
         if (result == true)
             SetState(DeadState);
         else

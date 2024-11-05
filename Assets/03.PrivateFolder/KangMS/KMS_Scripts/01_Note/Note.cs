@@ -15,7 +15,6 @@ public abstract class Note : MonoBehaviour
     public Animator animator;
 
     public virtual void Initialize(Vector3 endPoint, float speed, float damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
-
     {
         _isHit = false;
         gameObject.SetActive(true);

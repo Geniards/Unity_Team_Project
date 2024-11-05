@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static Note;
-using static TreeEditor.TreeEditorHelper;
 
 public class DBScoreNote : Note, IPoolingObj
 {

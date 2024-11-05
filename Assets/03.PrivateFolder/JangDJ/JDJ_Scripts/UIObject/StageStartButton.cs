@@ -16,5 +16,6 @@ public class StageStartButton : MonoBehaviour
     {
         DataManager.Instance.ApplySelectStageData();
         SceneController.Instance.LoadScene(E_SceneType.STAGE);
+        SoundManager.Instance.FadeBGM(false, 0.25f, 0);
     }
 }

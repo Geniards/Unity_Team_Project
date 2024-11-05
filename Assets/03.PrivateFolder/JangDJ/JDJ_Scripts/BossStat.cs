@@ -20,6 +20,12 @@ public class BossStat
         return _hp;
     }
 
+    public float SetHp(float value)
+    {
+        this._hp = value;
+        return _hp;
+    }
+
     /// <summary>
     /// 현재 개체의 데이터를 target으로 복사합니다.
     /// </summary>
