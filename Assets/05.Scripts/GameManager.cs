@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartStage()
     {
+        EventManager.Instance.CleanNulls();
         StartCoroutine(DelayStartStage());
     }
 
@@ -81,8 +82,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartProgressTimer()
     {
         float timer = 0;
-        //float breakPoint = SoundManager.Instance.CurrentBgmLength -
-        //    DataManager.Instance.SkipSpawnTimeOffset;
         float breakPoint = DataManager.Instance.BGMBreakTime;
 
         bool isBreaked = false;

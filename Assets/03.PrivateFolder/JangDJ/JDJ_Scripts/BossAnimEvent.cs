@@ -8,6 +8,7 @@ public class BossAnimEvent : MonoBehaviour
 
     public void DeadEnd()
     {
+        Debug.Log("보스 애님 종료");
         _boss.DeadActionEnd();
     }
 }

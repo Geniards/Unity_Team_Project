@@ -39,6 +39,7 @@ public class DataManager : MonoBehaviour, IManager
         _stageProgress = 0;
         _curScore = 0;
         _gameStartTime = Time.time;
+        
     }
 
     public void LoadPrevData() // 기존 값들 데이터 바인딩
@@ -56,6 +57,7 @@ public class DataManager : MonoBehaviour, IManager
     public void ApplySelectStageData()
     {
         SelectedStageData.CopyData(_stageData);
+
         Debug.Log(_stageData.MeleeCount);
     }
 
@@ -101,6 +103,8 @@ public class DataManager : MonoBehaviour, IManager
     public void SetBossData(BossController boss) { this._boss = boss; }
     public void SetPlayerMaxHP(float value) { this._playerMaxHp = value; } // 상점 기능 대응
     
+    public void ClearBossData() { this._boss = null; }
+
     #endregion
 
     #region 게임진행 상황 데이터
