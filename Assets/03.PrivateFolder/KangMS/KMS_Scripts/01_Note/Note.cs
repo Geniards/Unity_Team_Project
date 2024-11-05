@@ -33,10 +33,11 @@ public abstract class Note : MonoBehaviour
         {
             animator.runtimeAnimatorController = overrideController;
 
-        double startDspTime = AudioSettings.dspTime;
-        double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
-        double endDspTime = startDspTime + travelDuration;
-        StartCoroutine(MoveToLeft(startDspTime, endDspTime));
+            double startDspTime = AudioSettings.dspTime;
+            double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
+            double endDspTime = startDspTime + travelDuration;
+            StartCoroutine(MoveToLeft(startDspTime, endDspTime));
+        }
     }
     /// <summary>
     /// 시작과 동시에 _endPoint를 향하여 날아가도록 설정.
