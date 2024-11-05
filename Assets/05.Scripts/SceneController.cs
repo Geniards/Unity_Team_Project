@@ -120,54 +120,6 @@ public class SceneController : MonoBehaviour, IManager
             LoadScene(E_SceneType.FAIL);
         }
     }
-
-    
-
-    //private ISceneState CurScene = null;
-    //private Dictionary<E_SceneType, ISceneState> _sceneTable = new Dictionary<E_SceneType, ISceneState>();
-    //private List<ISceneState> _sceneStatesList = new List<ISceneState>
-    //{
-    //    { new StartSceneState() },
-    //    { new LoadSceneState() },
-    //    { new LobbySceneState() },
-    //};
-
-    //private void RegistScenesToTable()
-    //{
-    //    for (int i = 0; i < (int)E_SceneType.E_SCENETYPE_MAX; i++)
-    //    {
-    //        _sceneTable.Add((E_SceneType)i, _sceneStatesList[i]); 
-    //    }
-    //}
-
-    //private void Update()
-    //{
-    //    CurScene.Update();
-    //}
-
-    //private void StartSceneFadeInFX()
-    //{
-    //    if (_fadeRoutine != null)
-    //        StopCoroutine(_fadeRoutine);
-
-    //    float duration = _screenFadeTimes[(int)_curScene].FadeInTime;
-
-    //    _fadeRoutine = StartCoroutine(FadeRoutine(duration));
-    //}
-
-    //private void StartSceneFadeOutFX()
-    //{
-    //    if (_fadeRoutine != null)
-    //        StopCoroutine(_fadeRoutine);
-
-    //    float duration = _screenFadeTimes[(int)_curScene].FadeOutTime;
-
-    //    _fadeRoutine = StartCoroutine(FadeRoutine(duration));
-    //}
-
-
-
-
 }
 
 [System.Serializable]
@@ -177,29 +129,3 @@ public class ScreenFadeList
     public float FadeInTime;
     public float FadeOutTime;
 }
-
-//public interface ISceneState
-//{
-//    public void Enter();
-//    public void Update();
-//    public void Exit();
-//}
-
-//public class StartSceneState : ISceneState
-//{
-//    public void Enter()
-//    {
-//    }
-
-//    public void Exit()
-//    {
-//    }
-
-//    public void Update()
-//    {
-//        //if(Input.anyKeyDown)
-//        //{
-//        //    SceneController.Instance.LoadScene(E_SceneType.LOAD);
-//        //}
-//    }
-//}

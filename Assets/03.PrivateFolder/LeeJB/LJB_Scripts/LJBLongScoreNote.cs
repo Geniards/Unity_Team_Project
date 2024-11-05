@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class LJBLongScoreNote : Note
 {
     [Header("노트 파트 배열")]
@@ -12,7 +13,7 @@ public class LJBLongScoreNote : Note
 
     private void Awake()
     {
-        Initialize(endPoint, speed, scoreValue, 10);
+        Initialize(endPoint, speed, 10);
     }
 
     private void Update()
@@ -50,7 +51,6 @@ public class LJBLongScoreNote : Note
             // 모든 파트를 제거한 경우 처리
             if (currentPartIndex >= noteParts.Length)
             {
-                CalculateScore(E_NoteDecision.Perfect);  // decision 값 전달
                 gameObject.SetActive(false);
             }
         }
@@ -77,3 +77,4 @@ public class LJBLongScoreNote : Note
         // Return();
     }
 }
+*/

@@ -21,6 +21,7 @@ public class BossIntoField : BossState, IState
 
     public void Enter()
     {
+        Debug.Log("등장");
         _boss.Stat.InitScore(DataManager.Instance.SelectedStageData.BossScore);
 
         _duration = 10f;
@@ -160,6 +161,8 @@ public class BossRushReady : BossState, IState
 
     public void Enter()
     {
+        Debug.Log("러쉬준비");
+
         _boss.Anim.PlayRushReadyAnim();
         EventManager.Instance.PlayEvent(E_Event.NOTE_CLEAR);
         EventManager.Instance.PlayEvent(E_Event.SPAWN_STOP);
@@ -209,6 +212,8 @@ public class BossRush : BossState, IState
 
     public void Enter()
     {
+        Debug.Log("러쉬");
+
         EventManager.Instance.PlayEvent(E_Event.BOSSRUSH);
         SoundManager.Instance.FadeBGM(false, 2f, 0.01f);
         _time = 0;
@@ -281,6 +286,7 @@ public class BossClosedPlayer : BossState, IState
     {
         if(_timer >= _duration)
         {
+            Debug.Log("컨텍 종료");
             EventManager.Instance.PlayEvent(E_Event.CONTACTEND);
             return;
         }

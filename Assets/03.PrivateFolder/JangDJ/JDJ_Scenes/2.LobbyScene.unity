@@ -370,14 +370,16 @@ MonoBehaviour:
     StageNumber: 1
     BGM: 0
     BPM: 120
-    SongTitle: "\uC800 \uAD34\uB85C\uC6CC\uC694"
+    SongTitle: Dawn of the Journey
     StageName: "\uB9C8\uC744"
-    Description: "\uC790 \uC774\uC81C \uC2DC\uC791\uC774\uC57C \\n \u3147\u3147"
+    Description: "\uBAA8\uD5D8\uAC00\uC758 \uC704\uB300\uD55C \uC5EC\uC815\uC774
+      \uC2DC\uC791\uB418\uB294 \uACF3!\n\t\uC774\uC81C\uBD80\uD130 \uC2DC\uC791\uC774\uC57C!"
     NoteSpeed: 8
+    BreakTime: 10
     _meleeCount: 10
     _bossStat:
-      _hp: 10
-      _name: "\uC7A5\uB3D9\uC9C4"
+      _hp: 2
+      _name: "\uC218\uC870\uC5D0\uC11C \uD0C8\uCD9C\uD55C \uD0B9\uD06C\uB7A9"
       _score: 100000
 --- !u!114 &78987410
 MonoBehaviour:
@@ -671,13 +673,16 @@ MonoBehaviour:
     StageNumber: 4
     BGM: 6
     BPM: 150
-    SongTitle: 
-    StageName: 
-    Description: 
-    NoteSpeed: 5
+    SongTitle: Path of Destiny
+    StageName: "\uC232"
+    Description: "\uBAAC\uC2A4\uD130\uAC00 \uB9CE\uC740 \uC232\uC18D,\n   \uD558\uC9C0\uB9CC
+      \uBAA8\uD5D8\uC744 \uC704\uD574\uC11C\uB77C\uBA74 \n       \uC774\uB97C \uB6AB\uACE0
+      \uAC08 \uC6A9\uAE30\uAC00 \uD544\uC694\uD574!"
+    NoteSpeed: 15
+    BreakTime: 10
     _meleeCount: 10
     _bossStat:
-      _hp: 3
+      _hp: 2
       _name: "\uC6D0\uAD11\uD76C"
       _score: 160000
 --- !u!114 &99593396
@@ -970,13 +975,16 @@ MonoBehaviour:
     StageNumber: 2
     BGM: 2
     BPM: 120
-    SongTitle: 
-    StageName: 
-    Description: 
-    NoteSpeed: 5
+    SongTitle: Wanderer's Overture
+    StageName: "\uB9C8\uC744 \uC678\uACFD"
+    Description: "\uAC00\uB054 \uB098\uB4E4\uC774\uB97C \uC704\uD574 \uB098\uC628
+      \uACF3\uC774\uC9C0\uB9CC,\n   \uC774\uC820 \uB2E8\uC21C\uD55C \uB098\uB4E4\uC774\uAC00
+      \uC544\uB2C8\uC57C!"
+    NoteSpeed: 12
+    BreakTime: 10
     _meleeCount: 10
     _bossStat:
-      _hp: 3
+      _hp: 2
       _name: "\uAC15\uBBFC\uC131"
       _score: 120000
 --- !u!114 &168193067
@@ -1425,13 +1433,15 @@ MonoBehaviour:
     StageNumber: 5
     BGM: 8
     BPM: 180
-    SongTitle: 
-    StageName: 
-    Description: 
-    NoteSpeed: 5
+    SongTitle: The Last Stand
+    StageName: "\uB3D9\uAD74"
+    Description: "\uAC00\uC7A5 \uC704\uD5D8\uD55C \uBAAC\uC2A4\uD130\uAC00 \uC0AC\uB294
+      \uACF3,\n\uD558\uC9C0\uB9CC \uB098\uB77C\uBA74 \uD560 \uC218 \uC788\uC744 \uAC70\uC57C.\n\t\t\uAC71\uC815\uB9C8!"
+    NoteSpeed: 19
+    BreakTime: 10
     _meleeCount: 10
     _bossStat:
-      _hp: 3
+      _hp: 2
       _name: "\uC774\uC815\uBE48"
       _score: 200000
 --- !u!114 &237924245
@@ -1850,13 +1860,15 @@ MonoBehaviour:
     StageNumber: 3
     BGM: 4
     BPM: 150
-    SongTitle: 
-    StageName: 
-    Description: 
-    NoteSpeed: 5
+    SongTitle: Beyond the Horizon
+    StageName: "\uCD08\uC6D0"
+    Description: "\uD478\uB978 \uCD08\uC6D0\uC774 \uB9C8\uCE58 \n      \uB098\uC758
+      \uBAA8\uD5D8\uC744 \uBC18\uAE30\uB294 \uAC83 \uAC19\uC544!"
+    NoteSpeed: 12
+    BreakTime: 10
     _meleeCount: 10
     _bossStat:
-      _hp: 3
+      _hp: 2
       _name: "\uAE40\uC9C0\uC724"
       _score: 140000
 --- !u!114 &732802695
@@ -4006,6 +4018,24 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2652974406300478240, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
+      propertyPath: m_text
+      value: "\uAC00\uC7A5 \uC704\uD5D8\uD55C \uBAAC\uC2A4\uD130\uAC00 \uC0AC\uB294
+        \uACF3,\n\uD558\uC9C0\uB9CC \uB098\uB77C\uBA74 \uD560 \uC218 \uC788\uC744
+        \uAC70\uC57C.\n\t\t\uAC71\uC815\uB9C8!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652974406300478240, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
+      propertyPath: m_lineSpacing
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652974406300478240, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652974406300478241, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -2.63
+      objectReference: {fileID: 0}
     - target: {fileID: 2652974407158697395, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
       propertyPath: m_Type
       value: 1
@@ -4154,63 +4184,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9024615561873270578}
   m_CullTransparentMesh: 1
---- !u!1001 &7927865376500350017
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375144181820641351, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7478646689139926271, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
-      propertyPath: m_Name
-      value: NOTE_FX
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 06aa76d1ba29dfc4eaa0617203811033, type: 3}
 --- !u!1 &9024615561873270578
 GameObject:
   m_ObjectHideFlags: 0
