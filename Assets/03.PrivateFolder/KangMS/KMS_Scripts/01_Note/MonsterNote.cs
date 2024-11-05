@@ -8,7 +8,7 @@ public class MonsterNote : Note, IPoolingObj
 
     public override float GetDamage()
     {
-        Debug.Log($"몬스터와 충돌! 데미지 : {damage} 전달");
+        //Debug.Log($"몬스터와 충돌! 데미지 : {damage} 전달");
         return damage;
     }
 
@@ -31,7 +31,7 @@ public class MonsterNote : Note, IPoolingObj
 
     public override void ReturnToPool()
     {
-        GameManager.Mediator.Unregister(this);
+        NoteMediator.Instance.Unregister(this);
         Return();
     }
 }

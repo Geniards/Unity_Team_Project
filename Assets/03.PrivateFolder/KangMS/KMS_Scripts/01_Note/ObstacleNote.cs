@@ -21,7 +21,7 @@ public class ObstacleNote : Note, IPoolingObj
 
     public override void ReturnToPool()
     {
-        GameManager.Mediator.Unregister(this);
+        NoteMediator.Instance.Unregister(this);
         Return();
     }
 }

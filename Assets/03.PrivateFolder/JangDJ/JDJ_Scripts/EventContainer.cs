@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class EventContainer : MonoBehaviour, IPoolingObj
 {
-    private MonoBehaviour _targetObj;
+    [SerializeField] private MonoBehaviour _targetObj;
     private Action _myAction;
     
     public E_Pool MyPoolType => E_Pool.EVENT;
+    public E_Event MyEvent { get; private set; } 
 
     /// <summary>
     /// 초기화 작업, 기능등록과 사용하는 대상을 저장합니다.
     /// </summary>
-    public void Initialize(Action action, MonoBehaviour user)
+    public void Initialize(E_Event eventType, Action action, MonoBehaviour user)
     {
         this._myAction = action;
         _targetObj = user;
+        MyEvent = eventType;
     }
     
     /// <summary>
@@ -45,6 +47,8 @@ public class EventContainer : MonoBehaviour, IPoolingObj
     {
         if (_targetObj == null || _targetObj.isActiveAndEnabled == false)
         {
+            EventManager.Instance.RemoveContainer( MyEvent , this);
+
             Return();
             return true;
         }
