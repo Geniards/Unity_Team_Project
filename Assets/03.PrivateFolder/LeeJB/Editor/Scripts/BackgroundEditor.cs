@@ -5,17 +5,18 @@ using UnityEngine;
 
 public class BackgroundEditor : EditorWindow
 {
-    private GameObject _tilePrefab;        // 타일 프리팹
-    private int _tileCount;                // 생성할 타일 개수
-    private float _tileSpacing;            // 타일 간격
-    private Vector3 _tileScale = Vector3.one;     // 타일 스케일
-    private Vector3 _tileRotation = Vector3.zero; // 타일 회전
-    private MonoScript _scriptToAdd;       // 추가할 스크립트
+    private GameObject _tilePrefab;                // 타일 프리팹
+    private int _tileCount;                        // 생성할 타일 개수
+    private float _tileSpacing;                    // 타일 간격
+    private Vector3 _tileScale = Vector3.one;      // 타일 스케일
+    private Vector3 _tileRotation = Vector3.zero;  // 타일 회전
+    private string _tileParentName = "GameObject"; // 빈 오브젝트 이름
+    private MonoScript _scriptToAdd;               // 추가할 스크립트
 
     [MenuItem("도구/배경 에디터")]
     public static void ShowWindow()
     {
-        GetWindow<BackgroundEditor>("배경 편집기");
+        GetWindow<BackgroundEditor>("백그라운드 에디터");
     }
 
     private void OnGUI()
@@ -27,6 +28,7 @@ public class BackgroundEditor : EditorWindow
         _tileSpacing = EditorGUILayout.FloatField("타일 간격", _tileSpacing);
         _tileScale = EditorGUILayout.Vector3Field("타일 스케일", _tileScale);
         _tileRotation = EditorGUILayout.Vector3Field("타일 회전", _tileRotation);
+        _tileParentName = EditorGUILayout.TextField("상위 오브젝트 이름", _tileParentName);
         _scriptToAdd = (MonoScript)EditorGUILayout.ObjectField("추가할 스크립트", _scriptToAdd, typeof(MonoScript), false);
 
         if (GUILayout.Button("타일 생성"))
@@ -43,11 +45,15 @@ public class BackgroundEditor : EditorWindow
             return;
         }
 
+        // 생성 된 타일을 빈 게임 오브젝트 자식으로 설정
+        GameObject tileParent = new GameObject(_tileParentName);
+
         for (int i = 0; i < _tileCount; i++)
         {
             Vector3 position = new Vector3(i * _tileSpacing, 0, 0);
             GameObject newTile = Instantiate(_tilePrefab, position, Quaternion.Euler(_tileRotation));
             newTile.transform.localScale = _tileScale;
+            newTile.transform.parent = tileParent.transform; // 게임 오브젝트의 자식으로 설정
 
             if (_scriptToAdd != null)
             {
