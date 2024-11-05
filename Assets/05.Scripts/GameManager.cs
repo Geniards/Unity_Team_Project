@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance => _instance;
 
-    public static NoteDirector Director;
-    public static NoteMediator Mediator;
     public static AnimationManager AnimationChanger;
 
     private Coroutine _stageTimeRoutine;
@@ -71,8 +69,8 @@ public class GameManager : MonoBehaviour
         DataManager.Instance.SetPlayState(true);
         SoundManager.Instance.PlayBGM(bgm);
         SoundManager.Instance.FadeBGM(true, 0.25f, 0.2f);
-        Director.Initailize();
-        Director.StartSpawnNotes(bgm, 4);
+        NoteDirector.Instance.Initailize();
+        NoteDirector.Instance.StartSpawnNotes(bgm, 4);
         _stageTimeRoutine = StartCoroutine(StartProgressTimer());
     }
 

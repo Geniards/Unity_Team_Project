@@ -15,6 +15,7 @@ public class WGH_FloatCombo : MonoBehaviour
     {
         _judge = GetComponent<WGH_AreaJudge>();
         EventManager.Instance.AddAction(E_Event.STAGE_END, ResetCombo, this);
+        ResetCombo();
     }
 
     /// <summary>

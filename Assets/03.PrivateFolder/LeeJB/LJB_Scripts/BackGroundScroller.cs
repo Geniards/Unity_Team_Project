@@ -13,12 +13,13 @@ public class BackGroundScroller : MonoBehaviour
 
     private void Start()
     {
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, StopScrolling, this);
+        EventManager.Instance.AddAction(E_Event.PLAYERDEAD, StopScrolling, this);
+
         InitializeTiles();
         StartCoroutine(StartScrollingAfterDelay(_scrollDelay));
 
         // 보스사망 및 플레이어 사망 이벤트가 발생하면 StopScrolling 메서드 실행
-        EventManager.Instance.AddAction(E_Event.BOSSDEAD, StopScrolling, this);
-        EventManager.Instance.AddAction(E_Event.PLAYERDEAD, StopScrolling, this);
     }
 
     private void Update()

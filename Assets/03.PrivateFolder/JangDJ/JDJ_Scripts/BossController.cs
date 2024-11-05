@@ -25,11 +25,12 @@ public class BossController : MonoBehaviour
 
     public void Initialize()
     {
+        CurrentState = null;
         InitStates();
         SetInitState(IntoField);
         RegistMyData();
         this.transform.position 
-            = GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
+            = NoteDirector.Instance.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM);
     }
 
     private void RegistMyData()
@@ -55,8 +56,12 @@ public class BossController : MonoBehaviour
 
     private void SetInitState(IState state)
     {
+        Debug.Log(state.GetType().Name);
+
         this.CurrentState = state;
         this.CurrentState.Enter();
+
+        Debug.Log(state.GetType().Name);
     }
 
     public void SetState(IState nextState)

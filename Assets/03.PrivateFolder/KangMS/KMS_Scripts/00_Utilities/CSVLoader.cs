@@ -95,7 +95,7 @@ public class CSVLoader : MonoBehaviour
             if (pattern != null)
             {
                 DataManager.Instance.CSVData.RegistPattern(stageNumber, pattern);
-                Debug.Log($"{stageNumber} , {pattern}");
+                //Debug.Log($"{stageNumber} , {pattern}");
             }
         }
     }
