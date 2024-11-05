@@ -130,6 +130,8 @@ MonoBehaviour:
   _jumpPosOffsetDist: 1.5
   _anim: {fileID: 0}
   _judge: {fileID: 0}
+  _floatCombo: {fileID: 0}
+  _floatResult: {fileID: 0}
   _collLayer:
     serializedVersion: 2
     m_Bits: 65600
@@ -137,8 +139,8 @@ MonoBehaviour:
   _botRayOffset: {x: -0.35, y: 0}
   _rightRayOffset: {x: 0.157, y: 1.203}
   _topBoxSize: {x: 0.928, y: 0.046}
-  _botBoxSize: {x: 0.928, y: 0.1}
-  _rightBoxSize: {x: 0.046, y: 0.928}
+  _botBoxSize: {x: 0.928, y: 0.046}
+  _rightBoxSize: {x: 0.046, y: 0.9}
 --- !u!70 &209978658
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

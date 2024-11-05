@@ -19,7 +19,6 @@ public class WGH_AreaJudge : MonoBehaviour
     public Note Note { get; private set; }
     private WGH_PlayerController _playerController = null;
     private WGH_FloatJudgeResult _floatResult = null;
-    //private Rigidbody2D //_playerRigid = null;
     public WGH_FloatCombo _FloatCombo { get; private set; }
 
     private KeyCode _inputKey;
@@ -46,14 +45,6 @@ public class WGH_AreaJudge : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            _FloatCombo.SpawnCombo(Combo);
-        }
-        else if(Input.GetMouseButtonDown(1))
-        {
-            AddCombo();
-        }
         if (_isInputProcessing == false && _playerController.IsCanMove&& !_playerController.IsDied && !_playerController.IsContact)
         {
             if (Input.GetKeyDown(KeyCode.F))
