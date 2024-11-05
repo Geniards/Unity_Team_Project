@@ -251,15 +251,15 @@ public class WGH_AreaJudge : MonoBehaviour
                 // 판정했을 때 노트가 없을 경우 && 땅에 있는 상태일 경우 "일반 점프" 애니메이션
                 if (Note == null /*&& !_playerController.IsAir*/)
                 {
-                    _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerController.JumpMove();
+                    _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerController.SetAnim("Jump");
                 }
                 // 판정했을 때 노트가 있을 경우 && 땅에 있는 상태일 경우 "점프 공격" 애니메이션
                 else if (Note != null/* && !_playerController.IsAir*/)
                 {
-                    _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerController.JumpMove();
+                    _playerController.IsAirControl(true);                        // 플레이어 체공상태 여부 true
                     _playerController.SetAnim("JumpAttack");
                 }
             }

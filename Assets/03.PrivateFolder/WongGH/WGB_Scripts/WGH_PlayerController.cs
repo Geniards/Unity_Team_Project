@@ -123,8 +123,13 @@ public class WGH_PlayerController : MonoBehaviour
         DebugBoxRay(_topRayOffset, _topBoxSize, Color.blue);
         DebugBoxRay(_botRayOffset, _botBoxSize, Color.green);
         DebugBoxRay(_rightRayOffset, _rightBoxSize, Color.red);
-
-        if (RayCheck(_topRayOffset, _topBoxSize, out _coll))
+        if (RayCheck(_botRayOffset, _botBoxSize, out _coll) || IsAir == true)
+        {
+            // 하단 충돌일 경우 2개
+            CheckNoteContact();
+            CheckGroundContact();
+        }
+        if(RayCheck(_topRayOffset, _topBoxSize, out _coll))
         {
             CheckNoteContact();
         }
@@ -133,12 +138,7 @@ public class WGH_PlayerController : MonoBehaviour
             // 전방 충돌일 경우
             CheckNoteContact();
         }
-        else if (RayCheck(_botRayOffset, _botBoxSize, out _coll) || IsAir == true)
-        {
-            // 하단 충돌일 경우 2개
-            CheckNoteContact();
-            CheckGroundContact();
-        }
+         
 
         Fall();
     }
@@ -170,9 +170,11 @@ public class WGH_PlayerController : MonoBehaviour
         
         // 현재 위치 업데이트
         transform.position = _collapsPos - new Vector3(0, _deltaY, 0);
+        
         if (Input.GetKeyDown(KeyCode.F))
         {
             transform.position = _jumpPos;
+            _anim.SetBool("IsAir",false);
             _time = 0;
             return;
         }
@@ -227,9 +229,8 @@ public class WGH_PlayerController : MonoBehaviour
 
     public void JumpMove()
     {
-        if(IsAir)
+        if (!IsAir)
         {
-            SetAnim("Jump");
             ResetCollapsPos();
             transform.position = _jumpPos;
         }
@@ -479,7 +480,6 @@ public class WGH_PlayerController : MonoBehaviour
     // 무적
     IEnumerator Invincibility()
     {
-        SetAnim("Run");
         yield return new WaitForSeconds(_invincivilityTime);
         IsDamaged = false;
         yield break;
