@@ -17,7 +17,7 @@ public class WGH_AreaJudge : MonoBehaviour
     private Vector3 _curPos;
 
     public Note Note { get; private set; }
-    private WGH_PlayerController _playerController = null;
+    [SerializeField] private WGH_PlayerController _playerController = null;
     private WGH_FloatJudgeResult _floatResult = null;
     public WGH_FloatCombo _FloatCombo { get; private set; }
 
@@ -30,17 +30,21 @@ public class WGH_AreaJudge : MonoBehaviour
     [SerializeField] private GameObject _great;
     [SerializeField] private GameObject _perfect;
 
+    private bool _isSendedScore = false;
+
     private void Start()
     {
-        _checkTopPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.TOP);
-        _checkMiddlePos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
-        _checkBottomPos = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM);
+        _checkTopPos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.TOP);
+        _checkMiddlePos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        _checkBottomPos = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.BOTTOM);
         _playerController = FindAnyObjectByType<WGH_PlayerController>();
         _floatResult = GetComponent<WGH_FloatJudgeResult>();
-        EventManager.Instance.AddAction(E_Event.BOSSDEAD, GetBossScore, this);
-        EventManager.Instance.AddAction(E_Event.STAGE_END, SentCount, this);
         _FloatCombo = FindAnyObjectByType<WGH_FloatCombo>();
         _FloatCombo.SpawnCombo(Combo);
+        _isSendedScore = false;
+
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, GetBossScore, this);
+        EventManager.Instance.AddAction(E_Event.STAGE_END, SentCount, this);
     }
 
     private void Update()
@@ -190,9 +194,15 @@ public class WGH_AreaJudge : MonoBehaviour
     /// </summary>
     private void GetBossScore()
     {
+        if (_isSendedScore == true)
+            return;
+
+        _isSendedScore = true;
+
         int score = 0;
         score = DataManager.Instance.Boss.Score + _playerController.GetHpScore();
         DataManager.Instance.AddScore(score);
+        DataManager.Instance.ClearBossData();
 
         Debug.Log(DataManager.Instance.CurScore);
     }

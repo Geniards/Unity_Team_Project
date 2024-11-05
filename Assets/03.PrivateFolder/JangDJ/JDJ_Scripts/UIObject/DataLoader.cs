@@ -36,5 +36,6 @@ public class DataLoader : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         SceneController.Instance.LoadScene(E_SceneType.LOBBY);
+        SoundManager.Instance.FadeChangeBGM(E_MainBGM.LOBBY);
     }
 }

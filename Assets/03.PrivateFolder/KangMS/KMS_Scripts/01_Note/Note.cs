@@ -15,14 +15,13 @@ public abstract class Note : MonoBehaviour
     public Animator animator;
 
     public virtual void Initialize(Vector3 endPoint, float speed, float damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
-
     {
         _isHit = false;
         gameObject.SetActive(true);
         this.endPoint = endPoint;
         this.speed = speed;
         // Note 생성 시 중재자에 등록
-        GameManager.Mediator.Register(this);
+        NoteMediator.Instance.Register(this);
         if (!animator)
         {
             animator = GetComponent<Animator>();
@@ -56,7 +55,7 @@ public abstract class Note : MonoBehaviour
             transform.position = startPosition + direction * coveredDistance;
             if (Vector3.Distance(transform.position, endPoint) <= 0.001f)
             {
-                GameManager.Mediator.Unregister(this);
+                NoteMediator.Instance.Unregister(this);
                 ReturnToPool();
                 yield break;
             }
@@ -86,6 +85,6 @@ public abstract class Note : MonoBehaviour
     /// </summary>
     protected void ShowEffect()
     {
-        Debug.Log("이펙트 동작");
+        //Debug.Log("이펙트 동작");
     }
 }

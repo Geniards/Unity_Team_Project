@@ -16,5 +16,4 @@ MonoBehaviour:
   noteType: 2
   notePosition: 2
   playAnimClip:
-  - {fileID: 7400000, guid: af96f47e3c65028418179610cd398998, type: 2}
   - {fileID: 7400000, guid: 4e1a5d90724a20842bc2d9740505f97e, type: 2}

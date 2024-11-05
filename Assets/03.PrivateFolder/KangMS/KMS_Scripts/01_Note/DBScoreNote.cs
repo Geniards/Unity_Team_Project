@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static Note;
-using static TreeEditor.TreeEditorHelper;
 
 public class DBScoreNote : Note, IPoolingObj
 {
@@ -30,7 +28,7 @@ public class DBScoreNote : Note, IPoolingObj
         downNote.SetActive(true);
 
         //    // TotalHeight를 기준으로 upNote와 downNote의 위치 설정
-        float halfHeight = GameManager.Director.TotalHeight / 2f;
+        float halfHeight = NoteDirector.Instance.TotalHeight / 2f;
 
         // upNote는 위쪽에 배치
         if (upNote != null)
@@ -137,7 +135,7 @@ public class DBScoreNote : Note, IPoolingObj
     /// </summary>
     public override void ReturnToPool()
     {
-        GameManager.Mediator.Unregister(this);
+        NoteMediator.Instance.Unregister(this);
         Return();
     }
 }

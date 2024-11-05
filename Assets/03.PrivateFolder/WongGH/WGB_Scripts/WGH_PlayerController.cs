@@ -41,7 +41,6 @@ public class WGH_PlayerController : MonoBehaviour
     public Vector3 _jumpPos { get; private set; }
     private Vector3 _collapsPos;
 
-
     public float CurHP
     {
         get { return _curHp; }
@@ -80,29 +79,33 @@ public class WGH_PlayerController : MonoBehaviour
         CurHP = DataManager.Instance.PlayerMaxHP;
         _anim = GetComponent<Animator>();
     }
+
     private void Start()
     {
-        _jumpPos = transform.position + Vector3.up * (GameManager.Director.GetCheckPoses(E_SpawnerPosY.TOP).y + _jumpPosOffsetDist);
-        EventManager.Instance.AddAction(E_Event.BOSSRUSH, ApproachBoss, this);
-        EventManager.Instance.AddAction(E_Event.ENTERCONTACT, ContactBoss, this);
-        EventManager.Instance.AddAction(E_Event.CONTACTEND, ContactEnd, this);
+        _jumpPos = transform.position + Vector3.up * (NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.TOP).y + _jumpPosOffsetDist);
         _bossApproachPos = DataManager.Instance.ContactPos + new Vector3(-0.8f, -1, 0);
         StartPos = transform.position;
         _judge = FindAnyObjectByType<WGH_AreaJudge>();
         _approachDur = DataManager.Instance.ApproachDuration; // 임시 0.2
         _contactDur = DataManager.Instance.ContactDuration; // 임시 4
         _meleeCount = DataManager.Instance.MeleeCount; // 임시 2
-        EventManager.Instance.AddAction(E_Event.BOSSDEAD, PlayerOut, this);
+        
         IsCanMove = true;
         _initPos = transform.position;
         _collapsPos = _jumpPos;
+        
         _floatCombo = _judge._FloatCombo;
         _floatResult = _judge.GetComponent<WGH_FloatJudgeResult>();
-        _inAirTime = GameManager.Director.GetBPMtoIntervalSec() / DataManager.Instance.SelectedStageData.NoteSpeed;
+        _inAirTime = NoteDirector.Instance.GetBPMtoIntervalSec() / DataManager.Instance.SelectedStageData.NoteSpeed;
 
-        float dist = GameManager.Director.GetCheckPoses(E_SpawnerPosY.BOTTOM).x - transform.position.x;
+        float dist = NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.BOTTOM).x - transform.position.x;
 
         _prevAirTime = dist / DataManager.Instance.SelectedStageData.NoteSpeed;
+
+        EventManager.Instance.AddAction(E_Event.BOSSRUSH, ApproachBoss, this);
+        EventManager.Instance.AddAction(E_Event.ENTERCONTACT, ContactBoss, this);
+        EventManager.Instance.AddAction(E_Event.CONTACTEND, ContactEnd, this);
+        EventManager.Instance.AddAction(E_Event.BOSSDEAD, PlayerOut, this);
     }
 
     /// <summary>
@@ -282,7 +285,7 @@ public class WGH_PlayerController : MonoBehaviour
             if (_time < _playerOutTime)
             {
                 transform.position = Vector3.Lerp(transform.position, transform.position + 
-                    Vector3.right * GameManager.Director.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM).x, t);
+                    Vector3.right * NoteDirector.Instance.GetStartSpawnPoses(E_SpawnerPosY.BOTTOM).x, t);
             }
             else
             {
@@ -360,6 +363,7 @@ public class WGH_PlayerController : MonoBehaviour
             yield return null;
         }
     }
+
     /// <summary>
     /// 보스 직면 끝
     /// </summary>

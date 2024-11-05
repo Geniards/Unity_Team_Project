@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteMediator : MonoBehaviour
+public class NoteMediator : MonoBehaviour,IManager
 {
-    private List<Note> _notesList = new List<Note>();
+    private static NoteMediator _instance = null;
+    public static NoteMediator Instance => _instance;
 
-    private void Start()
-    {
-        GameManager.Mediator = this;
-        EventManager.Instance.AddAction(E_Event.NOTE_CLEAR, AllNoteReturn, this);
-    }
+    private List<Note> _notesList = new List<Note>();
 
     /// <summary>
     /// 노트 등록
@@ -43,5 +40,11 @@ public class NoteMediator : MonoBehaviour
         {
             _notesList[i].ReturnToPool();
         }
+    }
+
+    public void Init()
+    {
+        _instance = this;
+        EventManager.Instance.AddAction(E_Event.NOTE_CLEAR, AllNoteReturn, this);
     }
 }

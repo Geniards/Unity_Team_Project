@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
-public class NoteDirector : MonoBehaviour
+public class NoteDirector : MonoBehaviour, IManager
 {
+    private static NoteDirector _instance = null;
+    public static NoteDirector Instance => _instance;
+
     [SerializeField] private NoteSpawner _spawner = null;
     [SerializeField] private NoteSpawnPosController _posController = null;
     private int _bpm;
@@ -27,19 +30,7 @@ public class NoteDirector : MonoBehaviour
     {
         return _posController.GetSpawnerPos(E_SpawnerPosX.BOSS, posY);
     }
-    private void Awake()
-    {
-        if (GameManager.Director != null)
-            Destroy(GameManager.Director);
-        GameManager.Director = this;
-        _bpm = DataManager.Instance.BPM;
-        _noteSpeed = DataManager.Instance.GameSpeed;
-        EventManager.Instance.AddAction(E_Event.SPAWN_STOP, () => { _isSkipSpawn = true; }, this);
-        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, () => { Note.isBoss = false; }, this);
-        EventManager.Instance.AddAction(E_Event.SPAWN_START, () => { _isSkipSpawn = false; }, this);
-        EventManager.Instance.AddAction
-            (E_Event.CHANGED_BGM, ChangeBGM, this);
-    }
+    
     private void ChangeBGM()
     {
         StartSpawnNotes(DataManager.Instance.SelectedStageData.BGM+1);
@@ -55,6 +46,7 @@ public class NoteDirector : MonoBehaviour
     {
         if (_spawnRoutine != null)
             StopCoroutine(_spawnRoutine);
+
         _spawnRoutine = StartCoroutine(AutoSpawnRoutine(bgm, restBeatCount));
     }
 
@@ -124,5 +116,24 @@ public class NoteDirector : MonoBehaviour
     {
         if (_spawnRoutine != null)
             StopCoroutine(_spawnRoutine);
+    }
+
+    public void Init()
+    {
+        _instance = this;
+
+        EventManager.Instance.AddAction(E_Event.SPAWN_STOP, () => { _isSkipSpawn = true; }, this);
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, () => { Note.isBoss = false; }, this);
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, ResetDatas, this);
+        EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, () => { _isSkipSpawn = false; }, this);
+        EventManager.Instance.AddAction(E_Event.SPAWN_START, () => { _isSkipSpawn = false; }, this);
+        EventManager.Instance.AddAction
+            (E_Event.CHANGED_BGM, ChangeBGM, this);
+    }
+
+    private void ResetDatas()
+    {
+        _bpm = DataManager.Instance.BPM;
+        _noteSpeed = DataManager.Instance.GameSpeed;
     }
 }

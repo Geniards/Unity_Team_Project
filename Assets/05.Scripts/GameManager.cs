@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance => _instance;
 
-    public static NoteDirector Director;
-    public static NoteMediator Mediator;
     public static AnimationManager AnimationChanger;
 
     private Coroutine _stageTimeRoutine;
@@ -55,6 +53,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartStage()
     {
+        EventManager.Instance.CleanNulls();
         StartCoroutine(DelayStartStage());
     }
 
@@ -69,8 +68,9 @@ public class GameManager : MonoBehaviour
 
         DataManager.Instance.SetPlayState(true);
         SoundManager.Instance.PlayBGM(bgm);
-        Director.Initailize();
-        Director.StartSpawnNotes(bgm, 4);
+        SoundManager.Instance.FadeBGM(true, 0.25f, 0.2f);
+        NoteDirector.Instance.Initailize();
+        NoteDirector.Instance.StartSpawnNotes(bgm, 4);
         _stageTimeRoutine = StartCoroutine(StartProgressTimer());
     }
 
@@ -80,8 +80,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartProgressTimer()
     {
         float timer = 0;
-        float breakPoint = SoundManager.Instance.CurrentBgmLength -
-            DataManager.Instance.SkipSpawnTimeOffset;
+        float breakPoint = DataManager.Instance.BGMBreakTime;
 
         bool isBreaked = false;
         float progress;

@@ -43,9 +43,16 @@ public class EventManager : MonoBehaviour, IManager
         if (_events.ContainsKey(eventType) == false)
             return;
 
-        foreach (var eventObject in _events[eventType])
+        try
         {
-            eventObject.Run();
+            foreach (var eventObject in _events[eventType])
+            {
+                eventObject.Run();
+            }
+        }
+        catch(InvalidOperationException except)
+        {
+            
         }
     }
 
@@ -65,7 +72,7 @@ public class EventManager : MonoBehaviour, IManager
             GetObject<EventContainer>(E_Pool.EVENT);
         newEvent.transform.SetParent(_directorys[eventType]);
 
-        newEvent.Initialize(action, user);
+        newEvent.Initialize(eventType, action, user);
         _events[eventType].Add(newEvent);
     }
 
@@ -87,6 +94,11 @@ public class EventManager : MonoBehaviour, IManager
         }
 
         throw new Exception("대상 이벤트가 없으나 기능을 삭제하려 합니다.");
+    }
+
+    public void RemoveContainer(E_Event eventType, EventContainer container)
+    {
+        _events[eventType].Remove(container);
     }
 
     /// <summary>
@@ -121,9 +133,9 @@ public class EventManager : MonoBehaviour, IManager
     {
         foreach (var eventList in _events)
         {
-            foreach (var eventObject in eventList.Value)
+            for (int i = eventList.Value.Count - 1; i >= 0; i--)
             {
-                eventObject.AutoDestroy();
+                eventList.Value[i].AutoDestroy();
             }
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class LJBLongScoreNote : Note
 {
     [Header("노트 파트 배열")]
@@ -76,3 +77,4 @@ public class LJBLongScoreNote : Note
         // Return();
     }
 }
+*/

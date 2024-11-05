@@ -39,6 +39,7 @@ public class DataManager : MonoBehaviour, IManager
         _stageProgress = 0;
         _curScore = 0;
         _gameStartTime = Time.time;
+        _settingData.BGMVolume = 0.2f;
     }
 
     public void LoadPrevData() // 기존 값들 데이터 바인딩
@@ -56,7 +57,8 @@ public class DataManager : MonoBehaviour, IManager
     public void ApplySelectStageData()
     {
         SelectedStageData.CopyData(_stageData);
-        Debug.Log(_stageData.MeleeCount);
+
+        //Debug.Log(_stageData.MeleeCount);
     }
 
     #region 프로그램 기본 설정
@@ -77,7 +79,7 @@ public class DataManager : MonoBehaviour, IManager
     public float ContactDuration => 4;
     public float ApproachDuration => 0.2f;
     //120bpm이며 * 6 일경우 (0.5f * 6) 음원종료 3 초전에 스폰중단
-    public float SkipSpawnTimeOffset => GameManager.Director.BeatInterval * 6;
+    //public float SkipSpawnTimeOffset => NoteDirector.Instance.BeatInterval * 6;
     
     #endregion
 
@@ -91,15 +93,18 @@ public class DataManager : MonoBehaviour, IManager
     public string StageName => SelectedStageData.StageName;
     public string SongTitle => SelectedStageData.SongTitle;
     public string StageDescription => SelectedStageData.Description;
+    public float BGMBreakTime => SelectedStageData.BreakTime;
     public int NormalPatternLastIdx => 2;
     public int BossPatternLastIdx => 19;
     private BossController _boss;
     public BossController Boss => _boss;
     public Vector3 ContactPos =>
-        GameManager.Director.GetCheckPoses(E_SpawnerPosY.MIDDLE);
+        NoteDirector.Instance.GetCheckPoses(E_SpawnerPosY.MIDDLE);
     public void SetBossData(BossController boss) { this._boss = boss; }
     public void SetPlayerMaxHP(float value) { this._playerMaxHp = value; } // 상점 기능 대응
     
+    public void ClearBossData() { this._boss = null; }
+
     #endregion
 
     #region 게임진행 상황 데이터
@@ -169,8 +174,9 @@ public class StageData
     public int BPM;
     public string SongTitle;
     public string StageName;
-    public string Description;
+    [TextArea]public string Description;
     [Range(0.1f, 20f)] public float NoteSpeed = 5f;
+    public float BreakTime;
 
     [Space(10f), Header("게임 내 데이터 설정")]
     [SerializeField] private int _meleeCount = 10;

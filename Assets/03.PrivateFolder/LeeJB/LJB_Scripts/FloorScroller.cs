@@ -13,10 +13,12 @@ public class FloorScroller : MonoBehaviour
 
     private void Start()
     {
-        InitializeTiles();
-        StartCoroutine(StartScrollingAfterDelay(_scrollDelay));
         EventManager.Instance.AddAction(E_Event.BOSSDEAD, StopScrolling, this);
         EventManager.Instance.AddAction(E_Event.PLAYERDEAD, StopScrolling, this);
+
+        InitializeTiles();
+        StartCoroutine(StartScrollingAfterDelay(_scrollDelay));
+        
     }
 
     private void Update()
@@ -29,6 +31,7 @@ public class FloorScroller : MonoBehaviour
 
     private void InitializeTiles()
     {
+        // 현재 위치 그대로 타일들을 초기화
         for (int index = 0; index < _tiles.Length; index++)
         {
             _tiles[index].transform.position = new Vector3(
@@ -49,9 +52,11 @@ public class FloorScroller : MonoBehaviour
     {
         for (int index = 0; index < _tiles.Length; index++)
         {
+            // 타일을 왼쪽으로 이동
             _tiles[index].transform.position += Vector3.left * _scrollSpeed * Time.deltaTime;
 
-            if (_tiles[index].transform.position.x <= -_tileWidth * 15f)
+            // 왼쪽으로 이동한 타일을 오른쪽 끝 타일 옆으로 이동
+            if (_tiles[index].transform.position.x <= -_tileWidth * (_tiles.Length - 1) + 18f)
             {
                 float rightMost = GetRightMostTile();
                 _tiles[index].transform.position = new Vector3(rightMost + _tileWidth, _tiles[index].transform.position.y, _tiles[index].transform.position.z);

@@ -33,7 +33,7 @@ public class CSVLoader : MonoBehaviour
     {
         if (_isLoaded)
         {
-            Debug.Log("CSV 데이터는 이미 로드되었습니다.");
+            //Debug.Log("CSV 데이터는 이미 로드되었습니다.");
             yield break;
         }
 
@@ -56,22 +56,22 @@ public class CSVLoader : MonoBehaviour
             // 요청 실패 확인
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
-                Debug.LogError($"데이터를 불러오는데 실패 : {request.error}");
+                //Debug.LogError($"데이터를 불러오는데 실패 : {request.error}");
                 yield break;
             }
         }
-        Debug.Log("모든 CSV 데이터 로드 완료 시작...");
+        //Debug.Log("모든 CSV 데이터 로드 완료 시작...");
         // 요청이 완료된 모든 데이터를 처리.
         for (int i = 0; i < requests.Count; i++)
         {
             string csvData = requests[i].downloadHandler.text;
             int stageNumber = i + 1;
             ParseCSVData(csvData, stageNumber);
-            Debug.Log($"CSV 데이터 로드 완료 (스테이지 {stageNumber}).");
+            //Debug.Log($"CSV 데이터 로드 완료 (스테이지 {stageNumber}).");
         }
         // 데이터 로드 완료 상태로 설정.
         _isLoaded = true;
-        Debug.Log("모든 스테이지의 CSV 데이터 로드 및 저장 완료.");
+        //Debug.Log("모든 스테이지의 CSV 데이터 로드 및 저장 완료.");
     }
     /// <summary>
     /// CSV 데이터를 파싱하여 NotePattern 리스트로 변환합니다.
@@ -95,7 +95,7 @@ public class CSVLoader : MonoBehaviour
             if (pattern != null)
             {
                 DataManager.Instance.CSVData.RegistPattern(stageNumber, pattern);
-                Debug.Log($"{stageNumber} , {pattern}");
+                //Debug.Log($"{stageNumber} , {pattern}");
             }
         }
     }

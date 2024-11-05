@@ -1,8 +1,8 @@
 public enum E_StageBGM
 {
     NONE = -1,
-    //NORMAL_1,
-    TEST_NORMAL_01,
+    NORMAL_1,
+    //TEST_NORMAL_01,
     BOSS_1,
     NORMAL_2,
     BOSS_2,
@@ -20,7 +20,7 @@ public enum E_MainBGM
 {
     NONE = -1,
     OPEN,
-    ROBBY,
+    LOBBY,
     STAGE_CLEAR,
     STAGE_FAIL,
     E_MAINBGM_MAX,

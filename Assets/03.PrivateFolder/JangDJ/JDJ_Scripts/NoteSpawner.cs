@@ -29,7 +29,7 @@ public class NoteSpawner : MonoBehaviour
         _innerNoteList = new List<NoteData>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         EventManager.Instance.AddAction(E_Event.CHANGED_BGM, Initalize, this);
         EventManager.Instance.AddAction(E_Event.OPENED_STAGESCENE, Initalize, this);
@@ -45,7 +45,7 @@ public class NoteSpawner : MonoBehaviour
     {
         int idx = Random.Range(_patternIdx, _patternIdx + 10);
 
-        Debug.Log($"패턴 번호 {idx}");
+        //Debug.Log($"패턴 번호 {idx}");
 
         List<NoteData> newNotes =
             DataManager.Instance.CSVData[idx];
