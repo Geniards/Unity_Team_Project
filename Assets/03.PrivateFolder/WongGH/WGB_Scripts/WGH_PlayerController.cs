@@ -204,25 +204,28 @@ public class WGH_PlayerController : MonoBehaviour
         // 상단 충돌일 경우
         if (_coll != null && _coll.TryGetComponent<Note>(out Note note) && !IsDamaged && !IsDied)
         {
-            _floatCombo.ResetCombo();
-            SetAnim("OnDamage");
-            IsDamaged = true;
-            IsCanMove = false;
-            float _dmg = note.GetDamage();
-
-            if (!Note.isBoss)
-            { CurHP -= 10; }
-            else
-            { CurHP -= 20; }
-            
-            if(CurHP > 0)
+            if(!_coll.TryGetComponent(out ScoreNote scNote))
             {
-                StartCoroutine(CantMoveTime());
-                StartCoroutine(Invincibility());
-                StartCoroutine(Clicker());
-            }
+                _floatCombo.ResetCombo();
+                SetAnim("OnDamage");
+                IsDamaged = true;
+                IsCanMove = false;
+                float _dmg = note.GetDamage();
 
-            _coll = null;
+                if (!Note.isBoss)
+                { CurHP -= 10; }
+                else
+                { CurHP -= 20; }
+
+                if (CurHP > 0)
+                {
+                    StartCoroutine(CantMoveTime());
+                    StartCoroutine(Invincibility());
+                    StartCoroutine(Clicker());
+                }
+
+                _coll = null;
+            }
         }
 
     }
