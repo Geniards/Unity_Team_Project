@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+
 public abstract class Note : MonoBehaviour
 {
     [Header("노트 세부 조정")]
@@ -10,10 +11,8 @@ public abstract class Note : MonoBehaviour
     public Vector3 endPoint;
     public bool _isHit = false;
     public static bool isBoss = false;   //false가 기본값
-
     [Header("애니메이션 세팅")]
     public Animator animator;
-
     public virtual void Initialize(Vector3 endPoint, float speed, float damage = 0, int stageNumber = 1, E_NoteType noteType = E_NoteType.None, E_SpawnerPosY notePosition = E_SpawnerPosY.BOTTOM)
     {
         _isHit = false;
@@ -31,7 +30,6 @@ public abstract class Note : MonoBehaviour
         if (overrideController != null)
         {
             animator.runtimeAnimatorController = overrideController;
-
             double startDspTime = AudioSettings.dspTime;
             double travelDuration = Vector3.Distance(transform.position, endPoint) / speed;
             double endDspTime = startDspTime + travelDuration;
@@ -62,29 +60,39 @@ public abstract class Note : MonoBehaviour
             yield return null;
         }
     }
-
     /// <summary>
     /// 버튼 입력에 따른 판정 처리
     /// </summary>
     public abstract void OnHit(E_NoteDecision decision, E_Boutton button = E_Boutton.None);
-
     /// <summary>
     /// Damage 전달 메서드
     /// </summary>
     public abstract float GetDamage();
-
+    /// <summary>
+    /// 공통된 피격 판정에 대한 데미지 처리
+    /// </summary>
+    protected virtual void CalculateDamage(E_NoteDecision decision)
+    {
+        if (isBoss)
+        {
+            damage *= (float)decision;
+        }
+        else
+        {
+            damage *= (float)decision;
+        }
+        //Debug.Log($"Hit된 결과 : {decision}, 점수 : {scoreValue}");
+    }
     public void SetDamage(float damage) { this.damage = damage; }
-
     /// <summary>
     /// 오브젝트 풀로 반환하는 메서드
     /// </summary>
     public abstract void ReturnToPool();
-
     /// <summary>
     // 이펙트 처리 (애니메이션 또는 파티클)
     /// </summary>
     protected void ShowEffect()
     {
-        //Debug.Log("이펙트 동작");
+        Debug.Log("이펙트 동작");
     }
 }
