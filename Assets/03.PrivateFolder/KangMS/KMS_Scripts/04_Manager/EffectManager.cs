@@ -15,22 +15,27 @@ public class EffectManager : MonoBehaviour, IManager
     /// </summary>
     public void PlayFX(Vector3 requestPos, E_VFX fxType) // 이펙트 발생요인 = 노트 파괴, 마우스 입력, 반격노트 이펙트, 입력할때 발생, 리턴 전에 
     {
-        Animation anim = null;
+        FxObject fx = null;
 
         switch (fxType)
         {
             case E_VFX.NOTE:
-                anim = ObjPoolManager.Instance.GetObject(E_Pool.NOTE_FX).GetComponent<FxObject>().Anim;
+                fx = ObjPoolManager.Instance.GetObject<FxObject>(E_Pool.NOTE_FX);
                 break;
             case E_VFX.SWORD:
-                anim = ObjPoolManager.Instance.GetObject(E_Pool.SWORD_FX).GetComponent<FxObject>().Anim;
+                fx = ObjPoolManager.Instance.GetObject<FxObject>(E_Pool.SWORD_FX);
                 break;
             case E_VFX.MOUSE_INPUT:
-                anim = ObjPoolManager.Instance.GetObject(E_Pool.MOUSE_INPUT_FX).GetComponent<FxObject>().Anim;
+                fx = ObjPoolManager.Instance.GetObject<FxObject>(E_Pool.MOUSE_INPUT_FX);
                 break;
         }
 
-        anim.Play();
+        fx.transform.position = requestPos;
+
+        if(fx.TryGetComponent<IUIFxObject>(out IUIFxObject uifx))
+        { uifx.SetPos(requestPos); }
+
+        fx.Play();
 
         //ParticleSystem fx = ObjPoolManager.Instance.GetObject<ParticleSystem>(E_Pool.HIT_VFX);
         //fx.gameObject.transform.position = requestPos;
@@ -47,5 +52,14 @@ public class EffectManager : MonoBehaviour, IManager
     //    fx.transform.SetParent(requestTr);
     //    fx.transform.position = requestTr.position;
     //    fx.Play();
+    //}
+
+    //private void Update()
+    //{
+    //    if(Input.GetMouseButtonDown(0))
+    //    {
+    //        PlayFX(Input.mousePosition, E_VFX.MOUSE_INPUT);
+    //    }
+            
     //}
 }

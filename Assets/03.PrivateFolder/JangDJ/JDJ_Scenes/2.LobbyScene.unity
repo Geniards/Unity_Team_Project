@@ -4148,6 +4148,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: fb6d77219555f584fb475729458af69b, type: 3}
+    - target: {fileID: 2652974407921822469, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
+      propertyPath: m_text
+      value: "\uAC70\uB108\uBA54\uC774\uD0B7\uAC70\uB108\uBA54\uC774\uD0B7\uAC70\uB108\uAC70\uB108"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652974407921822469, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652974407921822469, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652974407921822469, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
+      propertyPath: m_characterSpacing
+      value: -10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8489aa2ba3c82074689490136bc3453d, type: 3}
 --- !u!1 &2652974406653602932 stripped

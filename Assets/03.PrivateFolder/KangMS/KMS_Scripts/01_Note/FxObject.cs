@@ -8,15 +8,23 @@ public class FxObject : MonoBehaviour, IPoolingObj
     [SerializeField] private E_Pool _poolType;
     public E_Pool MyPoolType => _poolType;
 
-    public Animation Anim { get; private set; }
+    [SerializeField] private Animation _anim;
 
-    private void Start()
+    public void Play()
     {
-        Anim = GetComponentInChildren<Animation>();
+        _anim.Play();
     }
 
     public void Return()
     {
         ObjPoolManager.Instance.ReturnObj(MyPoolType, this.gameObject);
     }
+}
+
+
+
+public interface IUIFxObject
+{
+    public Canvas Canvas { get; }
+    public void SetPos(Vector3 standardPos);
 }

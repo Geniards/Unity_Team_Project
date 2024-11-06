@@ -93,6 +93,6 @@ public abstract class Note : MonoBehaviour
     /// </summary>
     protected void ShowEffect()
     {
-        Debug.Log("이펙트 동작");
+
     }
 }
